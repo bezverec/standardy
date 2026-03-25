@@ -12,7 +12,7 @@ Zde v repozitáři do [Issues](https://github.com/bezverec/standardy/issues).
 
 ## Upozornění
 
-Jedná se o osobní *passion project*, informace zde uvedené budou obsahovat nedostatky (někdy i zásadní), nejsou jako celek žádným způsobem adoptované ani shválené paměťovými institucemi.
+Jedná se o osobní *passion project*, informace zde uvedené budou obsahovat nedostatky (někdy i zásadní), nejsou jako celek žádným způsobem adoptované ani schválené paměťovými institucemi.
 
 ## Licence
 
