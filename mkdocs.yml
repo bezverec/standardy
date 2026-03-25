@@ -1,0 +1,53 @@
+site_name: Standardy digitalizace kulturního dědictví
+site_url: https://standardy.digitalizaty.cz
+
+repo_name: bezverec/standardy/
+repo_url: https://github.com/bezverec/standardy/
+
+copyright: CC BY-SA 4.0
+
+theme:
+  name: material
+  language: cs
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+
+plugins:
+  - search
+
+extra:
+  generator: false
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - Domů: index.md
