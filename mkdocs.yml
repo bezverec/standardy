@@ -18,6 +18,20 @@ theme:
     - search.highlight
     - content.code.copy
     - content.action.edit
+  palette:
+    - scheme: default
+      primary: grey
+      accent: blue grey
+      toggle:
+        icon: material/weather-night
+        name: Přepnout na tmavý režim
+
+    - scheme: slate
+      primary: black
+      accent: grey
+      toggle:
+        icon: material/weather-sunny
+        name: Přepnout na světlý režim
 
 plugins:
   - search
