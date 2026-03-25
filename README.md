@@ -8,7 +8,7 @@ Repo obsahuje návrhy a interpretace různých standardů, doporučení a norem 
 
 ## Kde hlásit chyby a návrhy
 
-Zde v repozitáři do Issues.
+Zde v repozitáři do [Issues](https://github.com/bezverec/standardy/issues).
 
 ## Upozornění
 
