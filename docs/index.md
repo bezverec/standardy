@@ -865,8 +865,6 @@ Pro lepší orientaci se v této verzi doporučuje používat v hlavním textu t
 - **Příloha A** – ICC profily, barevné prostory a související výkladové schéma
 - **Příloha B** – TIFF 6.0 a související technické minimum
 
-Při dalších redakcích je vhodné odkazovat buď na celou přílohu (například „viz Příloha A“), nebo na její konkrétní podkapitolu (například „viz A.3“), ale oba způsoby nemíchat v jedné větě bez důvodu.
-
 ## 14. Redakční a terminologické zásady této verze
 
 Tato redakce vychází ze sloučení obsahu předchozích verzí 0.1.2 a 0.1.3 do jedné pracovní verze.
