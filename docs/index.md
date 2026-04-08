@@ -1,6 +1,6 @@
 # Metodika tvorby preservation masterů obrazových dat kulturního dědictví
 
-**Verze:** 0.2.2
+**Verze:** 0.2.3  
 **Formát:** markdown  
 **Licence:** <a href="https://standardy.digitalizaty.cz">Metodika tvorby preservation masterů obrazových dat kulturního dědictví</a> © 2026 by <a href="https://github.com/bezverec">Jan Houserek</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
@@ -10,7 +10,7 @@
 
 Tento dokument představuje pracovní návrh metodiky pro tvorbu preservation masterů při digitalizaci kulturního dědictví. Jeho cílem je formulovat odborně konzistentní a terminologicky přesný rámec pro vznik digitálních reprodukcí, které budou dlouhodobě použitelné jako archivní reprezentace fyzických předloh. Metodika vychází z mezinárodně uznávaných doporučení a standardů v oblasti obrazové kvality, správy barev, technické kontroly a dlouhodobé správy digitálních objektů, zejména z dokumentů FADGI, Metamorfoze, ISO 19264 a z principů ICC color managementu.^1^,^2^,^3^,^4^,^5
 
-Dokument je koncipován jako podrobný odborný text. Neomezuje se na stručný soupis parametrů, ale usiluje také o výklad důvodů jednotlivých požadavků, jejich vzájemných vazeb a jejich významu pro institucionální praxi. Zvláštní pozornost je věnována rozdílu mezi device-dependent a device-independent přístupy, roli ICC profilů, vztahu mezi technickou měřitelností a vizuálním hodnocením, a odlišení preservation masteru od pracovních a uživatelských derivátů.^1^,^2^,^4^,^5
+Dokument je koncipován jako podrobný odborný text. Neomezuje se na stručný soupis parametrů, ale usiluje také o výklad důvodů jednotlivých požadavků, jejich vzájemných vazeb a jejich významu pro institucionální praxi. Zvláštní pozornost je věnována rozdílu mezi device-dependent a device-independent přístupy, roli ICC profilů, vztahu mezi technickou měřitelností a vizuálním hodnocením, odlišení preservation masteru od pracovních a uživatelských derivátů a stručnému vysvětlení různých typů ICC charakterizace, zejména matrix/TRC a LUT profilů.^1^,^2^,^4^,^5
 
 ---
 
@@ -18,7 +18,7 @@ Dokument je koncipován jako podrobný odborný text. Neomezuje se na stručný 
 
 Digitalizace kulturního dědictví již dávno nepředstavuje pouze technický proces převodu analogové předlohy do digitálního obrazového souboru. V současném institucionálním prostředí je chápána jako řízená odborná činnost, jejímž výsledkem má být standardizovaná, věrohodná, měřitelná a dlouhodobě spravovatelná digitální reprezentace originálu. Tato reprezentace musí vyhovět nejen bezprostředním potřebám zpřístupnění nebo badatelského využití, ale také budoucím požadavkům na re-use, migraci, reprocessing, validaci a důvěryhodnou archivaci.^1^,^2^,^3
 
-Klíčovým pojmem v tomto kontextu je preservation master, tedy archivní master soubor první generace, z něhož mají být odvozovány další reprodukce, deriváty a uživatelské výstupy. Preservation master nelze chápat jako libovolný „nejlepší dostupný soubor“, nýbrž jako výsledek řízeného pracovní postup, které zahrnuje kalibraci zařízení, standardizovanou správu barev, kontrolu obrazové kvality, důslednou dokumentaci a institucionálně obhajitelná rozhodnutí o formátu, barevném prostoru, bitové hloubce, samplingu a přípustných zásazích do obrazu.^1^,^2
+Klíčovým pojmem v tomto kontextu je preservation master, tedy archivní master soubor první generace, z něhož mají být odvozovány další reprodukce, deriváty a uživatelské výstupy. Preservation master nelze chápat jako libovolný „nejlepší dostupný soubor“, nýbrž jako výsledek řízeného pracovního postupu, který zahrnuje kalibraci zařízení, standardizovanou správu barev, kontrolu obrazové kvality, důslednou dokumentaci a institucionálně obhajitelná rozhodnutí o formátu, barevném prostoru, bitové hloubce, samplingu a přípustných zásazích do obrazu.^1^,^2
 
 ---
 
@@ -50,7 +50,7 @@ Device-dependent data jsou taková obrazová data, jejichž barevný význam je 
 
 ### 3.5 ICC profil
 
-ICC profil je standardizovaný popis barevné charakteristiky zařízení, barevného prostoru nebo transformačního vztahu, umožňující řízenou interpretaci a převod barevných dat.^4
+ICC profil je standardizovaný popis barevné charakteristiky zařízení, barevného prostoru nebo transformačního vztahu, umožňující řízenou interpretaci a převod barevných dat. V praxi je vhodné rozlišovat zejména profily založené na matici a tónových přenosových křivkách (matrix/TRC) a profily využívající tabulkové transformace (LUT).^4
 
 ### 3.6 White balance, neutralita a color cast
 
@@ -76,7 +76,7 @@ Nesouosost barevných kanálů vedoucí k barevným lemům nebo nepřesnému př
 #### DeltaE / ΔE
 Souhrnné označení pro metriky vyjadřující barevnou odchylku mezi dvěma body v barevném prostoru.
 
-#### eciRGBv2
+#### eciRGB v2
 Standardní RGB barevný prostor doporučovaný v evropském prostředí pro archivní a kvalitní produkční pracovní postup.
 
 #### Embedded ICC profil
@@ -91,11 +91,14 @@ Míra tonální rovnoměrnosti a reprodukční správnosti v průběhu jasové �
 #### Geometrická přesnost
 Míra, s jakou digitální reprodukce zachovává tvarové a rozměrové vlastnosti originálu bez zkreslení.
 
+#### LUT profil
+ICC profil využívající tabulkové transformace (look-up tables), který může detailněji modelovat nelineární barevné chování zařízení než jednoduchý matrix/TRC model.
+
 #### MTF / SFR
 Modulation Transfer Function, resp. Spatial Frequency Response. Soubor parametrů popisujících schopnost systému přenášet kontrast a detail při různých prostorových frekvencích.^2^,^3
 
 #### PCS
-Profile Connection Space. Referenční mezilehlý prostor používaný v ICC pracovní postup při transformacích mezi zdrojovým a cílovým profilem.^4
+Profile Connection Space. Referenční mezilehlý prostor používaný v ICC pracovním postupu při transformacích mezi zdrojovým a cílovým profilem.^4
 
 #### Profil monitoru
 ICC profil charakterizující konkrétní monitor pro účely správného zobrazení.
@@ -129,7 +132,7 @@ Tento dokument vychází z kombinace standardů, doporučení a metodik, které 
 
 ### 4.1 FADGI
 
-Doporučení FADGI představují komplexní technický rámec pro digitalizaci kulturního dědictví, zejména v oblasti obrazové kvality, samplingu, tonality, správy barev a dokumentace pracovní postup.^1
+Doporučení FADGI představují komplexní technický rámec pro digitalizaci kulturního dědictví, zejména v oblasti obrazové kvality, samplingu, tonality, správy barev a dokumentace pracovního postupu.^1
 
 ### 4.2 Metamorfoze
 
@@ -141,7 +144,7 @@ Normy ISO 19264 poskytují standardizovaný rámec pro měření obrazové kvali
 
 ### 4.4 ICC Consortium
 
-Dokumenty ICC Consortium poskytují teoretický i praktický rámec pro správu barev v RGB pracovní postup.^4^,^5
+Dokumenty ICC Consortium poskytují teoretický i praktický rámec pro správu barev v RGB pracovním postupu.^4^,^5
 
 ---
 
@@ -157,27 +160,62 @@ Dokumenty ICC Consortium poskytují teoretický i praktický rámec pro správu 
 
 ## 6. Barevné řízení a role ICC profilů
 
-### 6.1 Správa barev jako součást preservation pracovní postup
+### 6.1 Správa barev jako součást preservation workflow
 
-Správa barev není volitelným doplňkem, ale základní součástí pracovní postup tvorby preservation masterů.^1^,^4^,^5
+Správa barev není volitelným doplňkem, ale základní součástí workflow tvorby preservation masterů.^1^,^4^,^5
 
 ### 6.2 Role vstupního profilu zařízení
 
-Vstupní profil zařízení má charakteristiku snímání systému popsat a umožnit řízenou transformaci do cílového pracovního prostoru. Není automaticky optimálním dlouhodobým prostorem pro archivaci masteru.^1^,^4^,^5
+Vstupní profil zařízení má charakteristiku snímacího systému popsat a umožnit řízenou transformaci do cílového pracovního prostoru. Není automaticky optimálním dlouhodobým prostorem pro archivaci masteru.^1^,^4^,^5 Vstupní profil zařízení slouží k charakterizaci snímacího systému; preservation master se však zpravidla neukládá v device-dependent prostoru zařízení, ale po řízené transformaci do standardního pracovního RGB prostoru.
 
 ### 6.3 Standardní pracovní a archivní RGB prostor
 
-FADGI doporučuje vytvářet master obrazové soubory ve standardním barevném prostoru a výslovně uvádí Adobe RGB (1998), ProPhoto a ECIRGB_v2 jako vhodné profily pro ukládání RGB image files.^1 Metamorfoze stanovuje, že preservation masters mají používat v rámci projektu konzistentní barevný prostor; pro Full je povinný eciRGBv2, pro Light je přípustný eciRGBv2 nebo Adobe RGB (1998), pro Extra Light též sRGB IEC61966-2.1.^2
+FADGI doporučuje vytvářet master obrazové soubory ve standardním barevném prostoru a výslovně uvádí Adobe RGB (1998), ProPhoto a eciRGB v2 jako vhodné profily pro ukládání RGB image files.^1 Metamorfoze stanovuje, že preservation masters mají používat v rámci projektu konzistentní barevný prostor; pro Full je povinný eciRGB v2, pro Light je přípustný eciRGB v2 nebo Adobe RGB (1998), pro Extra Light též sRGB IEC61966-2.1.^2
 
+### 6.3a Praktické postavení eciRGB v2 mimo paměťové instituce
 
-### 6.3a Praktické postavení eciRGB_v2 mimo paměťové instituce
+Pro tuto metodiku je důležité rozlišovat mezi **metodickou preferencí** a **obecnou rozšířeností v komerční praxi**. eciRGB v2 má silnou legitimitu v evropském standardizačním, polygrafickém a paměťovém kontextu; samotná ECI jej na svém webu výslovně uvádí jako **pracovní barevný prostor doporučený ECI**. Současně však tato metodika nepracuje s tvrzením, že by eciRGB v2 byl dominantním pracovním RGB prostorem v celém širším komerčním prostředí.
 
-Pro tuto metodiku je důležité rozlišovat mezi **metodickou preferencí** a **obecnou rozšířeností v komerční praxi**. eciRGB_v2 má silnou legitimitu v evropském standardizačním, polygrafickém a paměťovém kontextu; samotná ECI jej na svém webu výslovně uvádí jako **pracovní barevný prostor doporučený ECI**. Současně však tato metodika nepracuje s tvrzením, že by eciRGB_v2 byl dominantním pracovním RGB prostorem v celém širším komerčním prostředí.
+V běžném komerčním ekosystému Adobe jsou mnohem viditelnější především **sRGB**, **Adobe RGB (1998)** a **ProPhoto RGB**. Photoshop uvádí, že je obecně nejlepší volit pro RGB working space spíše **Adobe RGB nebo sRGB** než profil konkrétního zařízení, a současně říká, že v nabídce pracovních prostorů standardně zobrazuje profily doporučené a otestované Adobe pro většinu workflow. Adobe Camera Raw mezi „standard color spaces“ z dřívějších verzí uvádí **Adobe RGB (1998), ColorMatch RGB, ProPhoto RGB a sRGB**. Lightroom Classic pak používá **Adobe RGB** v řadě modulů a **ProPhoto RGB** v modulu Develop.
 
-V běžném komerčním ekosystému Adobe jsou mnohem viditelnější především **sRGB**, **Adobe RGB (1998)** a **ProPhoto RGB**. Photoshop uvádí, že je obecně nejlepší volit pro RGB working space spíše **Adobe RGB nebo sRGB** než profil konkrétního zařízení, a současně říká, že v nabídce pracovních prostorů standardně zobrazuje profily doporučené a otestované Adobe pro většinu workflow. Adobe Camera Raw mezi „standard color spaces“ z dřívějších verzí uvádí **Adobe RGB (1998), ColorMatch RGB, ProPhoto RGB a sRGB**. Lightroom Classic pak používá **Adobe RGB** v řadě modulů a **ProPhoto RGB** v modulu Develop. 
+Z toho plyne praktický závěr pro tuto metodiku: **eciRGB v2 je vhodné preferovat jako institucionálně a metodicky zdůvodněnou volbu pro preservation workflow, nikoli jako domněle univerzální komerční standard**. Současně je vhodné výslovně uznat, že **Adobe RGB (1998)** je v širší profesionální praxi velmi běžná a legitimní alternativa, zejména tam, kde organizace pracuje převážně v Adobe ekosystému.
 
-Z toho plyne praktický závěr pro tuto metodiku: **eciRGB_v2 je vhodné preferovat jako institucionálně a metodicky zdůvodněnou volbu pro preservation workflow, nikoli jako domněle univerzální komerční standard**. Současně je vhodné výslovně uznat, že **Adobe RGB (1998)** je v širší profesionální praxi velmi běžná a legitimní alternativa, zejména tam, kde organizace pracuje převážně v Adobe ekosystému. 
+### 6.3b Matrix/TRC profil a LUT profil
 
+V praxi ICC správy barev je důležité rozlišovat mezi dvěma základními typy profilové charakterizace: **matrix/TRC profilem** a **LUT profilem**.
+
+**Matrix/TRC profil** popisuje barevné chování zařízení nebo pracovního prostoru pomocí kombinace:
+- barevných primárek nebo ekvivalentní maticové transformace,
+- bílého bodu,
+- a tónových přenosových křivek (**TRC**, tone response curves) pro jednotlivé kanály.
+
+Tento typ profilu je výpočetně jednodušší, transparentnější a velmi rozšířený u standardních RGB pracovních prostorů, jako jsou **sRGB**, **Adobe RGB (1998)** nebo **eciRGB v2**. Je vhodný tam, kde lze barevné chování prostoru nebo zařízení dostatečně dobře popsat relativně jednoduchým modelem.
+
+**LUT profil** (**Look-Up Table profile**) naproti tomu používá tabulkové transformace, které mohou detailněji modelovat nelineární a vzájemně provázané barevné chování reálného zařízení. V ICC architektuře bývají tyto převody reprezentovány zejména pomocí tabulek typu **A2B** a **B2A**, tedy transformací mezi zařízením definovaným prostorem a referenčním prostorem ICC workflow přes PCS.
+
+Z metodického hlediska to znamená, že:
+- **matrix/TRC profil** bývá vhodný pro standardní pracovní RGB prostory a pro jednodušší, dobře predikovatelné transformace,
+- **LUT profil** bývá vhodný zejména pro přesnější charakterizaci vstupních a výstupních zařízení, pokud jednoduchý maticový model nestačí.
+
+U digitalizačních zařízení může LUT profil lépe popsat:
+- nelinearity snímacího řetězce,
+- složitější vztahy mezi kanály,
+- lokální odchylky v barevném chování,
+- a problematická místa gamutu, která jednoduchá matice s TRC vystihuje jen přibližně.
+
+Současně je však třeba upozornit, že LUT profil není automaticky „lepší“ ve všech ohledech. Oproti maticovým profilům může být:
+- méně transparentní při odborné interpretaci,
+- více závislý na kvalitě konkrétní profilace,
+- a v některých softwarech nebo workflow méně předvídatelný z hlediska interoperability.
+
+Pro tuto metodiku z toho plyne důležitý závěr:
+
+**Volba mezi matrix/TRC a LUT profilem nemá být vedena představou, že jeden typ je absolutně správný, ale tím, zda zvolený profil dostatečně přesně, stabilně a opakovatelně charakterizuje konkrétní zařízení a zda je kompatibilní s institucionálním workflow.**
+
+V institucionální praxi lze doporučit tento princip:
+1. **pracovní RGB prostory preservation masterů** mají být standardní a široce interpretovatelné, typicky založené na dobře definovaném ICC prostoru,  
+2. **vstupní profil zařízení** může být maticový nebo LUT podle výsledku profilace a chování zařízení,  
+3. rozhodující je, aby převod ze vstupního profilu do standardního archivního RGB prostoru byl **řízený, dokumentovaný a reprodukovatelný**.
 
 ### 6.4 Profil monitoru
 
@@ -191,6 +229,10 @@ Rozlišování mezi „Assign Profile“ a „Convert to Profile“ je zásadní
 
 FADGI uvádí, že perceptual intent obvykle funguje lépe pro fotografické obrazy, zatímco absolute colorimetric často pro textové dokumenty a grafiku; současně doporučuje intent ověřovat podle konkrétního souboru nebo skupiny souborů.^1
 
+### 6.7 Praktická poznámka k širokým gamutům a bitové hloubce
+
+Širší gamut sám o sobě automaticky neznamená vyšší věrnost nebo vyšší archivní kvalitu. Jeho přínos se projeví pouze tehdy, pokud je workflow dostatečně disciplinované, barevně řízené a pracuje s odpovídající bitovou hloubkou. U širokých pracovních prostorů proto obecně roste význam 16bitového zpracování a opatrného zacházení s převody, editací i exportem.
+
 ---
 
 ## 7. Formátové a technické parametry preservation masteru
@@ -201,7 +243,7 @@ Metamorfoze předpokládá pro preservation masters primárně TIFF 6.0 uncompre
 
 ### 7.2 Bitová hloubka
 
-Metamorfoze Full vyžaduje 16 bitů; Light a Extra Light 8 bitů na kanál. Zároveň uvádí, že fotografie a výtvarné předlohy by měly být vždy digitalizovány a ukládány při 16 bitech na kanál.^2 FADGI doporučuje pracovat co nejdéle ve 48-bit RGB nebo 16-bit grayscale a snížení bitové hloubky provádět až na konci pracovní postup.^1
+Metamorfoze Full vyžaduje 16 bitů; Light a Extra Light 8 bitů na kanál. Zároveň uvádí, že fotografie a výtvarné předlohy by měly být vždy digitalizovány a ukládány při 16 bitech na kanál.^2 FADGI doporučuje pracovat co nejdéle ve 48-bit RGB nebo 16-bit grayscale a snížení bitové hloubky provádět až na konci workflow.^1
 
 ### 7.3 Rozlišení a sampling
 
@@ -217,9 +259,7 @@ Metamorfoze řadí kontrolu file format, technical metadata, embedded barevný p
 
 Metamorfoze uvádí přehled vhodných targetů pro jednotlivé testy: UTT, ColorChecker Digital SG / DCSG, Golden Thread FADGI 19264 target, QA-62 MTF test target a QA-2 Metric.^2 FADGI požaduje rutinní digital image conformance evaluation a doporučuje snímat appropriate target na začátku snímací session; target má být zkontrolován a musí projít ještě před zahájením produkčního snímání.^1
 
-FADGI navíc doporučuje testovat na začátku každého pracovního dne nebo na začátku každé dávka, podle toho, co nastane dříve, a testování opakovat po aktualizaci software/device drivers i při indikaci problému.^1
-
----
+FADGI navíc doporučuje testovat na začátku každého pracovního dne nebo na začátku každé dávky, podle toho, co nastane dříve, a testování opakovat po aktualizaci software/device drivers i při indikaci problému.^1
 
 ### 8.5 Je nutné snímat target u každého dokumentu?
 
@@ -270,58 +310,58 @@ Metamorfoze používá ColorChecker Digital SG v centru obrazového pole a metri
 
 ### 9.6 SFR, MTF, sharpening, misregistration a geometrická přesnost
 
-### 9.6.1 Proč nelze kvalitu redukovat na ppi
+#### 9.6.1 Proč nelze kvalitu redukovat na ppi
 
 Samotné deklarované rozlišení nestačí pro posouzení kvality. FADGI uvádí sampling frequency jako parametr, který informuje o potenciální spatial resolution, ale současně jej váže k dalším metrikám, zejména reproduction scale accuracy a SFR parametrům.^1 Metamorfoze obdobně rozlišuje mezi required sampling rate, difference between claimed and obtained sampling rate, sampling efficiency, MTF50, maximum modulation, color misregistration a geometric distortion.^2
 
-### 9.6.2 SFR10 a sampling efficiency
+#### 9.6.2 SFR10 a sampling efficiency
 
 FADGI používá SFR10 (Sampling Efficiency) jako ratio %, s orientačními prahy > 70 %, > 80 % a > 90 % podle úrovně.^1 Metamorfoze používá sampling efficiency definovanou jako resolution measured as frequency where 10% modulation is reached (MTF10) according to ISO 16067-1 a stanovuje hranici ≥ 85 % pro Full, Light i Extra Light.^2
 
-### 9.6.3 Claimed vs. obtained sampling rate a reproduction scale accuracy
+#### 9.6.3 Claimed vs. obtained sampling rate a reproduction scale accuracy
 
 Metamorfoze stanovuje rozdíl mezi claimed a obtained sampling rate ≤ 2 %.^2 FADGI používá reproduction scale accuracy jako % difference from header PPI a uvádí přibližně ±3 %, ±2 % a ±1 % podle úrovně.^1
 
-### 9.6.4 MTF50 a praktický význam ostrosti
+#### 9.6.4 MTF50 a praktický význam ostrosti
 
 Metamorfoze uvádí, že pokud se při tvorbě preservation masteru používá sharpening, má platit MTF50 ≥ 45 % of the minimum required MTF10 performance expressed in lp/mm; při 300 ppi to odpovídá požadovanému MTF50 ≥ 2.25 lp/mm v obou směrech.^2
 
-### 9.6.5 Maximum modulation a sharpening
+#### 9.6.5 Maximum modulation a sharpening
 
 Metamorfoze stanovuje maximum modulation ≤ 1.05 pro všechny tři kvalitativní úrovně.^2 FADGI uvádí sharpening (Units Max Modulation) < 1.1 / < 1.05 / < 1.02 podle úrovně.^1 Metamorfoze současně uvádí, že excessive sharpening can cause unwanted artefacts, such as halos, a doporučuje sharpening spíše pro uživatelské deriváty než pro preservation masters.^2
 
-### 9.6.6 Color misregistration
+#### 9.6.6 Color misregistration
 
 Metamorfoze stanovuje pro Full color misregistration ≤ 0.35 px a pro Light/Extra Light ≤ 0.50 px per color channel.^2 FADGI uvádí color channel misregistration < 0.8 px / < 0.5 px / < 0.33 px podle úrovně.^1
 
-### 9.6.7 Geometrická přesnost a zkreslení
+#### 9.6.7 Geometrická přesnost a zkreslení
 
-Metamorfoze uvádí příklady barrel distortion, pincushion distortion i posunů horizontálních a vertikálních linií a stanovuje pro Full a Light geometric distortion ≤ 2 %, pro Extra Light ≤ 4 %.^2 FADGI používá reproduction scale accuracy jako klíčový měřítkový ukazatel a současně doporučuje průběžnou ověřování konformity s technickými targety.^1
+Metamorfoze uvádí příklady barrel distortion, pincushion distortion i posunů horizontálních a vertikálních linií a stanovuje pro Full a Light geometric distortion ≤ 2 %, pro Extra Light ≤ 4 %.^2 FADGI používá reproduction scale accuracy jako klíčový měřítkový ukazatel a současně doporučuje průběžné ověřování konformity s technickými targety.^1
 
-### 9.6.8 Praktická interpretační zásada
+#### 9.6.8 Praktická interpretační zásada
 
 Preservation master musí obstát jako celek: claimed sampling, obtained sampling, SFR10, MTF50, modulation, misregistration a geometrie musejí být interpretovány společně.^1^,^2^,^3
 
 ---
 
-### 9.2 Srovnávací tabulky standardů, rolí a kvalitativních úrovní
+### 9.7 Srovnávací tabulky standardů, rolí a kvalitativních úrovní
 
-### 9B.1 Standardy podle role ve pracovní postup
+#### 9.7.1 Standardy podle role ve workflow
 
 | Standard nebo metodika | Primární role | Typ normativity | Typické použití v praxi |
 |---|---|---|---|
-| FADGI | praktický technický rámec a ověřování konformity | doporučení / guidelines | snímání pracovní postup, QA, targetově založené validace |
+| FADGI | praktický technický rámec a ověřování konformity | doporučení / guidelines | snímací workflow, QA, targetově založené validace |
 | Metamorfoze | preservation imaging metodika s kvalitativními režimy | metodika / guidelines | definice preservation masteru, provozní rozhodování |
 | ISO 19264-1 | analytický rámec image quality analysis | mezinárodní norma | měření SFR, tonality, noise, color accuracy, geometrie |
-| ICC White Papers | teoretický a pracovní postup rámec barevného řízení | odborné doporučení | role profilů, PCS, RGB pracovní postup, konverze |
+| ICC White Papers | teoretický a workflow rámec barevného řízení | odborné doporučení | role profilů, PCS, RGB workflow, konverze |
 
-### 9B.2 Standardy podle hlavních rozhodnutí
+#### 9.7.2 Standardy podle hlavních rozhodnutí
 
 | Oblast rozhodování | FADGI | Metamorfoze | ISO 19264-1 | ICC |
 |---|---|---|---|---|
 | Co je preservation master | nepřímo, přes master obrazové soubory | explicitně | neřeší provozně | neřeší |
 | Color space masteru | ano | ano, velmi explicitně | ne | nepřímo |
-| ICC pracovní postup | ano | ano | ne | ano, zásadně |
+| ICC workflow | ano | ano | ne | ano, zásadně |
 | White balance | ano | ano, explicitně | analyticky nepřímo | ne |
 | Color accuracy | ano | ano | ano | ne |
 | SFR / MTF | ano | ano | ano | ne |
@@ -329,7 +369,7 @@ Preservation master musí obstát jako celek: claimed sampling, obtained samplin
 | QA frekvence a provoz | ano | částečně | ne | ne |
 | Doporučené formáty | ano | ano | ne | ne |
 
-### 9B.3 Metamorfoze vs. FADGI – vybrané metriky
+#### 9.7.3 Metamorfoze vs. FADGI – vybrané metriky
 
 | Parametr | Metamorfoze Full | Metamorfoze Light | Metamorfoze Extra Light | FADGI – orientační úrovně |
 |---|---|---|---|---|
@@ -343,47 +383,45 @@ Preservation master musí obstát jako celek: claimed sampling, obtained samplin
 
 ---
 
-### 9.3 ISO 19264 jako analytický rámec
+### 9.8 ISO 19264 jako analytický rámec
 
 ISO 19264-1:2021 popisuje metody pro image quality analysis u reflective originals a vztahuje se na skenery i digitální kamery v oblasti kulturního dědictví.^3 Pro tuto metodiku má význam především v tom, že sjednocuje měření více parametrů v rámci jednoho analytického rámce. Metamorfoze se na ISO 19264-1 výslovně odvolává a má samostatnou část věnovanou vztahu „Metamorfoze and ISO 19264-1(E) 2021.“^2 FADGI ISO 19264 výslovně uvádí mezi relevantními standardy pro digital image conformance evaluation.^1
 
----
+### 9.9 RAW skeny a zdrojová snímací data
 
-### 9.4. RAW skeny a zdrojová snímání data
+Pojem „RAW sken“ je třeba používat opatrně, protože v praxi může označovat dvě různé situace. U kamerových workflow obvykle znamená senzorová data před demosaicingem a před většinou interpretačních kroků. U skenerů bývá význam méně jednoznačný a často označuje spíše minimálně zpracovaný nebo device-dependent výstup zařízení než skutečně „syrová“ data v úzkém technickém smyslu.^1^,^2
 
-Pojem „RAW sken“ je třeba používat opatrně, protože v praxi může označovat dvě různé situace. U kamerových pracovní postup obvykle znamená senzorová data před demosaicingem a před většinou interpretačních kroků. U skenerů bývá význam méně jednoznačný a často označuje spíše minimálně zpracovaný nebo device-dependent výstup zařízení než skutečně „syrová“ data v úzkém technickém smyslu.^1^,^2
-
-FADGI upozorňuje, že i raw image files ze skenerů a kamer nebývají zcela nezpracované a samy o sobě obvykle nepředstavují obraz, který by odpovídal vzhledu originálu při běžném zobrazení.^1 Z toho plyne důležitý metodický závěr: RAW nebo device-dependent snímání data mohou být cenným zdrojovým materiálem pro budoucí reprocessing, kontrolu pracovní postup nebo výzkumné účely, ale samy o sobě obvykle nepředstavují vhodnou hlavní archivní reprezentaci kulturní předlohy.
+FADGI upozorňuje, že i raw image files ze skenerů a kamer nebývají zcela nezpracované a samy o sobě obvykle nepředstavují obraz, který by odpovídal vzhledu originálu při běžném zobrazení.^1 Z toho plyne důležitý metodický závěr: RAW nebo device-dependent snímací data mohou být cenným zdrojovým materiálem pro budoucí reprocessing, kontrolu workflow nebo výzkumné účely, ale samy o sobě obvykle nepředstavují vhodnou hlavní archivní reprezentaci kulturní předlohy.
 
 V rámci této metodiky se proto doporučuje rozlišovat dvě vrstvy uchování:
-- **zdrojová snímání data** (RAW, device-dependent nebo jiná interní pracovní data), pokud jejich uchování dává technický nebo výzkumný smysl,
+- **zdrojová snímací data** (RAW, device-dependent nebo jiná interní pracovní data), pokud jejich uchování dává technický nebo výzkumný smysl,
 - **preservation master** jako standardizovaný, interpretovatelný a dlouhodobě použitelný archivní soubor se standardním formátem a embedded ICC profilem.^1^,^2^,^4^,^5
 
-Metamorfoze formuluje preservation master explicitně jako soubor první generace určený k dlouhodobému uchování a další derivaci, přičemž požaduje standardizované parametry formátu, bitové hloubky a barevný prostor.^2 FADGI současně doporučuje používat pro archivní mastery standardní RGB barevné prostory namísto device-dependent vstupní prostor.^1 Z těchto důvodů tato metodika nepovažuje samotný RAW sken za náhradu preservation masteru.
+Metamorfoze formuluje preservation master explicitně jako soubor první generace určený k dlouhodobému uchování a další derivaci, přičemž požaduje standardizované parametry formátu, bitové hloubky a barevného prostoru.^2 FADGI současně doporučuje používat pro archivní mastery standardní RGB barevné prostory namísto device-dependent vstupních prostorů.^1 Z těchto důvodů tato metodika nepovažuje samotný RAW sken za náhradu preservation masteru.
 
 Uchování RAW dat může být doporučeno zejména tehdy, když:
-- instituce používá kamerový systém, jehož RAW pracovní postup je stabilní a dobře zdokumentované,
+- instituce používá kamerový systém, jehož RAW workflow je stabilní a dobře zdokumentované,
 - instituce chce zachovat možnost budoucího nového vyvolání nebo nové profilace,
 - jde o mimořádně náročný materiál, u nějž může být budoucí reprocessing věcně přínosný,
-- existuje dostatečná kapacita pro dlouhodobou správu nejen samotných dat, ale i souvisejících technických metadat a dokumentace pracovní postup.
+- existuje dostatečná kapacita pro dlouhodobou správu nejen samotných dat, ale i souvisejících technických metadat a dokumentace workflow.
 
 Naopak není vhodné:
 - zaměňovat RAW za hotový preservation master,
 - uchovávat RAW bez dokumentace, jak vznikl a jak má být interpretován,
 - předpokládat, že device-dependent data budou dlouhodobě srozumitelnější než standardizovaný TIFF master,
-- používat RAW jako omluvu pro nekonzistentní nebo nedostatečně standardizované preservation pracovní postup.
+- používat RAW jako omluvu pro nekonzistentní nebo nedostatečně standardizované preservation workflow.
 
-Z hlediska institucionální praxe tedy tato metodika doporučuje model „**RAW případně navíc, standardizovaný preservation master vždy**“. To znamená, že pokud instituce uchovává RAW nebo jiná zdrojová snímání data, měla by je chápat jako doplňkovou vrstvu archivace a nikoli jako jedinou nebo hlavní archivní reprezentaci digitalizovaného objektu.^1^,^2
+Z hlediska institucionální praxe tedy tato metodika doporučuje model „**RAW případně navíc, standardizovaný preservation master vždy**“. To znamená, že pokud instituce uchovává RAW nebo jiná zdrojová snímací data, měla by je chápat jako doplňkovou vrstvu archivace a nikoli jako jedinou nebo hlavní archivní reprezentaci digitalizovaného objektu.^1^,^2
 
-### 9.5 Vybrané technické parametry a jejich interpretace
+### 9.10 Vybrané technické parametry a jejich interpretace
 
-### 9E.1 PPI a sampling rate
+#### 9.10.1 PPI a sampling rate
 
 V digitalizační praxi je třeba důsledně rozlišovat mezi hodnotou PPI zapsanou v hlavičce souboru, deklarovaným sampling rate a skutečně dosaženým přenosem detailu. Samotná hodnota PPI neříká nic o optické kvalitě systému, o vlivu sharpeningu ani o tom, zda je reálně dosažený sampling v souladu s deklarovaným nastavením.^1^,^2^,^3
 
 Metamorfoze používá pojem required sampling rate a současně sleduje rozdíl mezi claimed a obtained sampling rate, který má být pro Full i Light nejvýše 2 %.^2 FADGI obdobně pracuje s reproduction scale accuracy a se sampling-related SFR metrikami.^1 Z metodického hlediska tedy PPI nepředstavuje samostatný cíl, ale pouze jeden z parametrů širšího systému měření kvality.
 
-### 9E.1a PPI vs. DPI
+#### 9.10.2 PPI vs. DPI
 
 V odborné i provozní praxi bývají pojmy **PPI** a **DPI** často zaměňovány, což vede k nejasnostem při popisu digitalizační kvality. Pro účely této metodiky je vhodné tyto pojmy důsledně rozlišovat.
 
@@ -397,102 +435,106 @@ Pro digitalizační metodiku je tedy správné používat:
 
 Tam, kde starší dokumentace nebo software používá z historických důvodů „dpi“ i pro digitální soubor, je vhodné tento zápis v metodice interpretovat jako nepřesný nebo legacy termín a v nových dokumentech dávat přednost pojmu **ppi**. Zároveň je třeba zdůraznit, že ani správně uvedené PPI samo o sobě neprokazuje kvalitu. O kvalitě rozhoduje až souběh PPI se skutečným přenosem detailu, tedy se SFR/MTF, sampling efficiency a dalšími metrikami.^1^,^2
 
-### 9E.2 Color space
+#### 9.10.3 Color space
 
-Volba barevný prostor je klíčová pro dlouhodobou interpretovatelnost masteru. FADGI doporučuje pro archivní RGB mastery standardní prostory, například Adobe RGB (1998), ProPhoto nebo ECIRGB_v2, namísto device-dependent vstupní prostor.^1 Metamorfoze stanovuje pro Full povinně eciRGBv2, pro Light eciRGBv2 nebo Adobe RGB (1998), pro Extra Light také sRGB IEC61966-2.1.^2
+Volba barevného prostoru je klíčová pro dlouhodobou interpretovatelnost masteru. FADGI doporučuje pro archivní RGB mastery standardní prostory, například Adobe RGB (1998), ProPhoto nebo eciRGB v2, namísto device-dependent vstupních prostorů.^1 Metamorfoze stanovuje pro Full povinně eciRGB v2, pro Light eciRGB v2 nebo Adobe RGB (1998), pro Extra Light také sRGB IEC61966-2.1.^2
 
 Z hlediska institucionální praxe je důležité, aby instituce neřešila volbu barevného prostoru ad hoc po jednotlivých projektech, ale aby zavedla konzistentní interní politiku. Color space není jen technické metadata pole; je to základní podmínka budoucí reprodukovatelnosti, zobrazení a převoditelnosti.
 
-### 9E.3 Color depth / bitová hloubka
+#### 9.10.4 Color depth / bitová hloubka
 
-Bitová hloubka určuje, s jakou jemností mohou být zapsány tonální a barevné rozdíly. Metamorfoze Full vyžaduje 16 bitů na kanál, zatímco Light a Extra Light standardně 8 bitů; současně však doporučuje 16 bitů pro fotografie a výtvarné předlohy.^2 FADGI doporučuje pracovat co nejdéle ve 48-bit RGB nebo 16-bit grayscale a případné snížení provádět až na konci pracovní postup.^1
+Bitová hloubka určuje, s jakou jemností mohou být zapsány tonální a barevné rozdíly. Metamorfoze Full vyžaduje 16 bitů na kanál, zatímco Light a Extra Light standardně 8 bitů; současně však doporučuje 16 bitů pro fotografie a výtvarné předlohy.^2 FADGI doporučuje pracovat co nejdéle ve 48-bit RGB nebo 16-bit grayscale a případné snížení provádět až na konci workflow.^1
 
 V metodice kulturního dědictví je vhodné chápat vyšší bitovou hloubku jako prostředek zachování tonální rezervy a snížení rizika posterizace, zejména u materiálů s jemnými přechody, vyšší denzitou nebo nejistým budoucím užitím.
 
-### 9E.4 SFR, MTF a praktické čtení výsledků
+#### 9.10.5 SFR, MTF a praktické čtení výsledků
 
 SFR a MTF nelze číst izolovaně. SFR10 nebo sampling efficiency vypovídá o tom, jak účinně systém převádí deklarovaný sampling do užitečného detailu. MTF50 vypovídá o chování systému v jiné části frekvenční odezvy a může být významně ovlivněna sharpeningem.^1^,^2
 
 Metamorfoze proto správně nesleduje jen jednu ostrostní metriku, ale celý soubor: difference between claimed and obtained sampling rate, sampling efficiency, MTF50, maximum modulation, color misregistration a geometric distortion.^2 FADGI pracuje obdobně se SFR10, SFR50, sharpening a reproduction scale accuracy.^1 V praxi to znamená, že „dobrá ostrost“ musí být posuzována v kontextu celého snímacího a validačního řetězce, nikoli podle jediného čísla.
 
+---
+
+## 10. Specifika podle typu předloh a formátová politika
+
 ### 10.1 Specifika podle typu předloh
 
-### 10A.1 Rukopisy a knihy
+#### 10.1.1 Rukopisy a knihy
 
 U rukopisů a knih je zásadní především čitelnost textu, věrnost papírového tónu, stabilní neutralita a kontrola geometrie v oblasti textového bloku a okrajů. Zvláštní pozornost vyžaduje vazba, zakřivení listu, stínování v hřbetu a riziko lokálního neostření v krajích stránky. U těchto předloh je třeba hodnotit nejen formální metriky, ale i konzistenci celého produkčního celku, zejména u rozsáhlých sekvencí stran.^1^,^2
 
-### 10A.2 Fotografie
+#### 10.1.2 Fotografie
 
 U fotografických předloh má zásadní význam tonální bohatost, přesnost barevného podání, práce ve vyšší bitové hloubce a pečlivé zacházení se světly a stíny. Metamorfoze výslovně doporučuje 16 bitů na kanál pro fotografický materiál a výtvarné předlohy.^2 U historických fotografií je navíc nutné rozlišovat mezi barevným nádechem způsobeným degradací originálu a technickým color castem vzniklým při snímání.
 
-### 10A.3 Mapy, plány a technická dokumentace
+#### 10.1.3 Mapy, plány a technická dokumentace
 
 U map, plánů a technických dokumentů je obvykle zvýšený důraz na geometrickou přesnost, reproduction scale accuracy a rovnoměrný přenos jemných lineárních struktur. Tyto materiály bývají citlivé na lokální zkreslení, neostrost v rozích a chyby měřítka. Samotná dobrá barevná reprodukce zde nestačí, pokud systém nevykazuje dostatečnou metrickou spolehlivost.^1^,^2
 
-### 10A.4 Grafiky a výtvarná díla
+#### 10.1.4 Grafiky a výtvarná díla
 
-U grafik a výtvarných předloh je důležitá nejen barevná přesnost, ale i schopnost zachytit povrchovou strukturu, jemné tonální vztahy a subtilní přechody v kresbě nebo malbě. Z metodického hlediska je vhodné preferovat 16bitové pracovní postup, standardní archivní RGB prostor a přísnější vizuální posuzování, protože čistě souhrnné technické metriky nemusí plně vystihnout kvalitu výsledku.^1^,^2
+U grafik a výtvarných předloh je důležitá nejen barevná přesnost, ale i schopnost zachytit povrchovou strukturu, jemné tonální vztahy a subtilní přechody v kresbě nebo malbě. Z metodického hlediska je vhodné preferovat 16bitové workflow, standardní archivní RGB prostor a přísnější vizuální posuzování, protože čistě souhrnné technické metriky nemusí plně vystihnout kvalitu výsledku.^1^,^2
 
 ### 10.2 Doporučené výchozí parametry podle typů předloh
 
-Následující tabulky nepředstavují absolutní a univerzálně závazné limity pro všechny instituce a všechny projekty. Jejich účelem je nabídnout výchozí orientační rámec pro interní rozhodování tam, kde instituce potřebuje přenést obecné principy FADGI, Metamorfoze a ISO 19264 do typologicky diferencované praxe. Konkrétní projekt může od těchto parametrů odchýlit, pokud je odchylka věcně odůvodněná, zdokumentovaná a kompatibilní s cílem preservation masteru.^1^,^2^,^3
+Následující tabulky nepředstavují absolutní a univerzálně závazné limity pro všechny instituce a všechny projekty. Jejich účelem je nabídnout výchozí orientační rámec pro interní rozhodování tam, kde instituce potřebuje přenést obecné principy FADGI, Metamorfoze a ISO 19264 do typologicky diferencované praxe. Konkrétní projekt se může od těchto parametrů odchýlit, pokud je odchylka věcně odůvodněná, zdokumentovaná a kompatibilní s cílem preservation masteru.^1^,^2^,^3
 
-### 10B.1 Knihy, rukopisy, periodika a běžné archiválie
+#### 10.2.1 Knihy, rukopisy, periodika a běžné archiválie
 
 | Parametr | Doporučené výchozí nastavení | Komentář |
 |---|---|---|
 | Formát masteru | TIFF 6.0 | bezeztrátový archivní formát |
-| Barevný prostor | eciRGBv2 | Adobe RGB možné při zdůvodněném pracovní postup |
+| Barevný prostor | eciRGB v2 | Adobe RGB možné při zdůvodněném workflow |
 | Bitová hloubka | 8 nebo 16 bitů/kanál podle režimu projektu | 16 bitů vhodné u náročnějších předloh |
 | Sampling | minimálně 300 ppi | vyšší podle velikosti detailu a typu písma |
 | White balance | neutralita bez color castu | kontrolovat samostatně vůči color accuracy |
 | Geometrie | vysoká důležitost | zejména textový blok, okraje, tabulky |
 | Sharpening | minimální | vyhnout se halo efektům v textu |
 
-### 10B.2 Fotografické předlohy
+#### 10.2.2 Fotografické předlohy
 
 | Parametr | Doporučené výchozí nastavení | Komentář |
 |---|---|---|
-| Formát masteru | TIFF 6.0 | u interního pracovní postup lze navíc uchovávat RAW |
-| Barevný prostor | eciRGBv2 | Adobe RGB jako přijatelná alternativa |
+| Formát masteru | TIFF 6.0 | u interního workflow lze navíc uchovávat RAW |
+| Barevný prostor | eciRGB v2 | Adobe RGB jako přijatelná alternativa |
 | Bitová hloubka | 16 bitů/kanál | silně doporučeno |
 | Sampling | minimálně 300 ppi, často více | podle rozměru a jemnosti detailu |
 | White balance | velmi vysoká důležitost | nutno odlišovat degradaci originálu od technického castu |
 | Color accuracy | vysoká důležitost | hodnotit spolu s tonalitou |
 | Sharpening | velmi opatrný | raději až pro deriváty |
 
-### 10B.3 Mapy, plány a technické dokumenty
+#### 10.2.3 Mapy, plány a technické dokumenty
 
 | Parametr | Doporučené výchozí nastavení | Komentář |
 |---|---|---|
 | Formát masteru | TIFF 6.0 | priorita metrické stability |
-| Barevný prostor | eciRGBv2 | podle projektu lze Adobe RGB |
+| Barevný prostor | eciRGB v2 | podle projektu lze Adobe RGB |
 | Bitová hloubka | 8 nebo 16 bitů/kanál | podle barevné a tonální náročnosti |
 | Sampling | minimálně 300 ppi, často více | jemné linie a malé popisy mohou vyžadovat vyšší sampling |
 | Reproduction scale accuracy | velmi vysoká důležitost | klíčové pro měřítko a přesnost |
 | Geometric distortion | velmi vysoká důležitost | zvlášť u velkoformátových předloh |
 | Sharpening | omezený | nesmí deformovat lineární kresbu |
 
-### 10B.4 Grafiky a výtvarná díla
+#### 10.2.4 Grafiky a výtvarná díla
 
 | Parametr | Doporučené výchozí nastavení | Komentář |
 |---|---|---|
 | Formát masteru | TIFF 6.0 | standardní archivní varianta |
-| Barevný prostor | eciRGBv2 | široký gamut je žádoucí |
+| Barevný prostor | eciRGB v2 | široký gamut je žádoucí |
 | Bitová hloubka | 16 bitů/kanál | doporučeno |
 | Sampling | minimálně 300 ppi, podle detailu více | kresba, textura a jemné přechody mohou vyžadovat vyšší sampling |
 | Color accuracy | velmi vysoká důležitost | sledovat i vizuální věrnost |
 | Tonalita | velmi vysoká důležitost | důležité zejména u akvarelů, kreseb a fotografických tisků |
 | Sharpening | minimální | kvůli zachování přirozeného charakteru povrchu |
 
-### 10B.5 Zjednodušené doporučení pro institucionální výchozí nastavení
+#### 10.2.5 Zjednodušené doporučení pro institucionální výchozí nastavení
 
 | Typ předlohy | Color space | Bit depth | Sampling | Poznámka |
 |---|---|---|---|---|
-| Běžné knihy a archiválie | eciRGBv2 | 8/16 bit | 300 ppi+ | rozhoduje čitelnost, neutralita, geometrie |
-| Fotografie | eciRGBv2 | 16 bit | 300 ppi+ | vysoká tonalita a barevná citlivost |
-| Mapy a plány | eciRGBv2 | 8/16 bit | 300 ppi+ | priorita geometrie a měřítkové přesnosti |
-| Grafiky a výtvarná díla | eciRGBv2 | 16 bit | 300 ppi+ | důležitá tonalita, gamut a vizuální věrnost |
+| Běžné knihy a archiválie | eciRGB v2 | 8/16 bit | 300 ppi+ | rozhoduje čitelnost, neutralita, geometrie |
+| Fotografie | eciRGB v2 | 16 bit | 300 ppi+ | vysoká tonalita a barevná citlivost |
+| Mapy a plány | eciRGB v2 | 8/16 bit | 300 ppi+ | priorita geometrie a měřítkové přesnosti |
+| Grafiky a výtvarná díla | eciRGB v2 | 16 bit | 300 ppi+ | důležitá tonalita, gamut a vizuální věrnost |
 
 ### 10.3 Archivní formáty, JPEG 2000 v rámci NDK a volba preservation masteru
 
@@ -504,13 +546,13 @@ Otázku archivních formátů je třeba formulovat přesněji, než bývá zvyke
 
 Nerozlišování těchto tří rovin vede v praxi k častým nedorozuměním při posuzování vztahu mezi TIFF, JPEG 2000 a dalšími formáty.
 
-### 10C.1 TIFF jako preferovaná výchozí varianta preservation imagingu
+#### 10.3.1 TIFF jako preferovaná výchozí varianta preservation imagingu
 
-Metamorfoze výslovně uvádí, že guidelines „assume that preservation masters are primarily created using the TIFF 6.0 uncompressed file format.“^2 Podobně i v širší preservation imaging praxi představuje TIFF nejčastěji preferovaný výchozí formát pro vznik preservation masteru, protože je široce interoperabilní, technicky transparentní a metodicky přímo spjatý se snímacím pracovním postupem.^1^,^2
+Metamorfoze výslovně uvádí, že guidelines „assume that preservation masters are primarily created using the TIFF 6.0 uncompressed file format.“^2 Podobně i v širší preservation imaging praxi představuje TIFF nejčastěji preferovaný výchozí formát pro vznik preservation masteru, protože je široce interoperabilní, technicky transparentní a metodicky přímo spjatý se snímacím workflow.^1^,^2
 
-V rámci této metodiky se proto **TIFF 6.0** nadále považuje za **preferovanou výchozí variantu preservation masteru**, zejména tam, kde instituce neváže své pracovní postupy na jiný výslovně definovaný národní nebo institucionální standard.
+V rámci této metodiky se proto **TIFF 6.0** nadále považuje za **preferovanou výchozí variantu preservation masteru**, zejména tam, kde instituce neváže své workflow na jiný výslovně definovaný národní nebo institucionální standard.
 
-### 10C.2 Přípustné alternativy podle Metamorfoze
+#### 10.3.2 Přípustné alternativy podle Metamorfoze
 
 Zároveň je však nutné výslovně říci, že Metamorfoze nepřipouští pouze TIFF. Pro **Metamorfoze Full a Light** uvádí jako možné formáty při schválení klientem také:
 - **TIFF 6.0 with LZW compression,**
@@ -523,19 +565,19 @@ Pro **Metamorfoze Extra Light** jsou navíc uvedeny také:
 
 Z toho plyne, že u Metamorfoze není správné tvrdit, že by JPEG 2000 byl pouze okrajovou nebo nelegitimní výjimkou. Přesnější je říci, že **TIFF je preferovaná výchozí forma**, ale **JP2 patří mezi výslovně povolené alternativy**, pokud to odpovídá projektovému rámci a je to klientem schváleno.^2
 
-### 10C.3 FADGI a širší formátová politika
+#### 10.3.3 FADGI a širší formátová politika
 
 FADGI rovněž nepracuje s představou jediného povoleného archivního formátu. V tabulkách pro **Documents (Unbound): General Collections** uvádí jako master file formats **TIFF, JPEG 2000, PDF/A**; u **Oversize Items** uvádí jako master file formats **TIFF, JPEG 2000**.^1
 
-FADGI tedy podporuje širší formátový rámec, v němž je rozhodující spíše to, zda zvolený formát odpovídá typu materiálu, institucionálnímu pracovnímu postupu a kvalitativnímu režimu, než rigidní vazba na jediný kontejner.
+FADGI tedy podporuje širší formátový rámec, v němž je rozhodující spíše to, zda zvolený formát odpovídá typu materiálu, institucionálnímu workflow a kvalitativnímu režimu, než rigidní vazba na jediný kontejner.
 
-### 10C.4 NDK a role JPEG 2000 v českém prostředí
+#### 10.3.4 NDK a role JPEG 2000 v českém prostředí
 
 V českém prostředí je nutné zohlednit také standardy a metodické postupy spojené s **NDK**. Ty pracují s **JP2** jako s významným archivním formátem a řeší jeho technickou validaci, mapování technických metadat i jeho roli v institucionální infrastruktuře. V pracovních podkladech z prostředí NDK, které byly při přípravě této metodiky konzultovány, se objevuje model **archivních kopií ve formátu JP2 v bezeztrátové kompresi**, včetně validačních nástrojů **JHOVE** a **jpylyzer** a mapování technických metadat pro **TIFF** i **JP2**. Proto je vhodné s JPEG 2000 v českém prostředí počítat jako s reálně používanou archivní reprezentací; před finální verzí metodiky je však vhodné tuto pasáž opřít o přesně identifikované veřejné zdroje z portálu NDK.
 
 Z hlediska této metodiky proto nelze JPEG 2000 v českém institucionálním prostředí redukovat pouze na distribuční formát. V řadě infrastruktur může být **plnohodnotnou archivní reprezentací**, pokud je jeho použití metodicky definováno a technicky kontrolováno.
 
-### 10C.5 Bezeztrátový vs. ztrátový JPEG 2000
+#### 10.3.5 Bezeztrátový vs. ztrátový JPEG 2000
 
 Metamorfoze připouští u JPEG 2000 jak **lossless**, tak **lossy** variantu.^2 To je důležitá informace, ale současně je třeba ji interpretovat metodicky obezřetně. Ztrátová komprese může být sice v některých projektech nebo režimech přípustná, avšak její dopad na obrazovou kvalitu musí být vždy hodnocen v souvislosti s technickými parametry výsledného obrazu.
 
@@ -543,7 +585,7 @@ V rámci této metodiky se proto doporučuje:
 - **pro archivní a preservation účely preferovat lossless JPEG 2000,**
 - **lossy JPEG 2000 připustit pouze tehdy, pokud je tento režim výslovně definován v institucionálním nebo projektovém rámci a je zdokumentováno, proč je takové řešení považováno za akceptovatelné.**
 
-### 10C.6 Doporučené rozlišení tří úrovní archivního rozhodnutí
+#### 10.3.6 Doporučené rozlišení tří úrovní archivního rozhodnutí
 
 Pro redakční i institucionální čistotu je vhodné v metodice rozlišovat tyto formulace:
 
@@ -553,7 +595,7 @@ Pro redakční i institucionální čistotu je vhodné v metodice rozlišovat ty
 
 Takové rozlišení pomáhá předejít falešnému sporu typu „TIFF versus JP2“. V mnoha případech totiž nejde o vzájemně se vylučující alternativy, ale o různé vrstvy téhož archivního ekosystému.
 
-### 10C.7 Doporučení této metodiky
+#### 10.3.7 Doporučení této metodiky
 
 Na základě FADGI, Metamorfoze i českého prostředí NDK doporučuje tato metodika následující formulaci:
 
@@ -569,37 +611,37 @@ Na základě FADGI, Metamorfoze i českého prostředí NDK doporučuje tato met
 4. **Distribuční a přístupové reprezentace:**  
    mají být metodicky odděleny od otázky preservation masteru, i když mohou v některých infrastrukturách používat tentýž technický formát.
 
-### 10C.8 Srovnávací tabulka archivních formátů
+#### 10.3.8 Srovnávací tabulka archivních formátů
 
 | Formát / rámec | Metamorfoze | FADGI | NDK / české prostředí | Doporučení této metodiky |
 |---|---|---|---|---|
 | TIFF 6.0 uncompressed | preferovaný výchozí formát preservation masteru | běžný master formát | relevantní a podporovaný formát | výchozí preferovaná varianta |
-| TIFF 6.0 LZW | povoleno při schválení klientem | obecně kompatibilní s archivní logikou | možné podle pracovního postupu | přípustná bezeztrátová alternativa |
+| TIFF 6.0 LZW | povoleno při schválení klientem | obecně kompatibilní s archivní logikou | možné podle workflow | přípustná bezeztrátová alternativa |
 | JP2 lossless | povoleno při schválení klientem | uváděno jako master file format | archivní kopie v JP2 je relevantní a validovaná | plně legitimní archivní alternativa |
 | JP2 lossy | povoleno při schválení klientem | formálně možné v širším rámci | nutno posuzovat podle konkrétního standardu a rizika | jen při výslovném zdůvodnění |
 | PDF/A | u Extra Light povoleno | v některých tabulkách master file format | významné spíše pro dokumentové balíčky a zpřístupnění | nikoli výchozí preservation imaging master |
 | JPEG | povoleno v některých režimech Metamorfoze | spíše nearchivní nebo omezené použití | obvykle nevhodné jako hlavní preservation master | pouze výjimečně, pokud to rámec výslovně připouští |
 
-### 10C.9 Praktický závěr
+#### 10.3.9 Praktický závěr
 
-Praktickým závěrem této kapitoly je, že **TIFF má být v textu metodiky formulován jako preferovaný výchozí formát preservation masteru, nikoli jako jediný legitimní archivní formát.** JPEG 2000 je třeba vnímat jako metodicky obhajitelnou a v některých institucionálních kontextech plně legitimní archivní reprezentaci. Rozhodující není samotný název formátu, ale to, zda je jeho použití standardizované, zdokumentované, validovatelné a dlouhodobě udržitelné.^1^,^2^,
+Praktickým závěrem této kapitoly je, že **TIFF má být v textu metodiky formulován jako preferovaný výchozí formát preservation masteru, nikoli jako jediný legitimní archivní formát.** JPEG 2000 je třeba vnímat jako metodicky obhajitelnou a v některých institucionálních kontextech plně legitimní archivní reprezentaci. Rozhodující není samotný název formátu, ale to, zda je jeho použití standardizované, zdokumentované, validovatelné a dlouhodobě udržitelné.^1^,^2
 
 ### 10.4 Institucionální formátová politika
 
 Vedle samotné volby formátu preservation masteru je vhodné, aby každá instituce formulovala vlastní **institucionální formátovou politiku**. Ta má vyjasnit, jaké formáty instituce používá při vzniku digitálních obrazů, jaké formáty jsou určeny pro dlouhodobé uložení, jaké pro repozitářovou reprezentaci a jaké pro zpřístupnění. Bez takové politiky vzniká riziko, že stejný formát bude v různých projektech chápán různě a bez dostatečné dokumentace.
 
-### 10D.1 Minimální otázky, které má formátová politika zodpovědět
+#### 10.4.1 Minimální otázky, které má formátová politika zodpovědět
 
 Institucionální formátová politika by měla alespoň výslovně stanovit:
 
 - jaký je **preferovaný výchozí formát preservation masteru při vzniku snímku**,
 - které formáty jsou **přípustné jako archivní reprezentace**,
-- zda instituce rozlišuje mezi **capture masterem**, **archivní kopií**, **reprezentační kopií v repozitáři** a **uživatelským derivátem**,
+- zda instituce rozlišuje mezi **capture masterem**, **archivní kopií**, **repozitářovou reprezentací** a **uživatelským derivátem**,
 - jaké formáty a kompresní režimy jsou dovoleny pro **JPEG 2000**,
 - jaké validační nástroje a kontrolní mechanismy jsou povinné,
 - jak jsou formátová rozhodnutí zapisována do metadat a projektové dokumentace.
 
-### 10D.2 Doporučený minimální model
+#### 10.4.2 Doporučený minimální model
 
 Pro většinu institucí lze jako výchozí model doporučit následující schéma:
 
@@ -612,7 +654,7 @@ Pro většinu institucí lze jako výchozí model doporučit následující sch�
 
 Tento model není závazný, ale pomáhá vyjasnit role jednotlivých vrstev. Zvlášť důležité je, aby instituce nepoužívala termín „master“ současně pro capture TIFF, archivní JP2 i uživatelskou kopii bez dalšího rozlišení.
 
-### 10D.3 Validační a metadata politika ve vztahu k formátům
+#### 10.4.3 Validační a metadata politika ve vztahu k formátům
 
 Formátová politika musí být provázána s politikou validace a metadat. Pokud instituce používá TIFF i JP2, měla by:
 - určit, které validační nástroje jsou povinné pro každý formát,
@@ -622,7 +664,7 @@ Formátová politika musí být provázána s politikou validace a metadat. Poku
 
 V prostředí repozitářových standardů typu NDK je právě vazba mezi formátem, validací a PREMIS/MIX metadata vrstvou klíčová pro dlouhodobou důvěryhodnost objektu.
 
-### 10D.4 Praktické doporučení této metodiky
+#### 10.4.4 Praktické doporučení této metodiky
 
 Tato metodika doporučuje, aby každá instituce přijala krátkou, ale výslovnou formátovou politiku alespoň v následující podobě:
 
@@ -658,7 +700,9 @@ Pro interní provozní pravidla lze doporučit jednoduchou formulaci:
 
 **Operátor má při digitalizaci používat tmavý, matný a nereflexní oděv, zejména při snímání lesklých, fotografických nebo jinak odrazivých předloh, aby se minimalizovalo riziko odlesků a parazitních reflexů v digitální reprodukci.**
 
-## 10. Workflow tvorby preservation masteru
+---
+
+## 11. Workflow tvorby preservation masteru
 
 1. Příprava instituce, zařízení a předlohy.  
 2. Kontrola prostředí a ověření kalibračního stavu zařízení.  
@@ -673,21 +717,21 @@ Pro interní provozní pravidla lze doporučit jednoduchou formulaci:
 
 ---
 
-## 11. Kontrola kvality, QA protokol a provozní doporučení
+## 12. Kontrola kvality, QA protokol a provozní doporučení
 
 FADGI doporučuje vytvořit quality monitoring system založený na digital image conformance evaluation a vést záznamy kvality i kvantity.^1 Metamorfoze rozlišuje denní a týdenní targety a výslovně uvádí, že preservation master musí být hodnocen analyzováním více technických image criteria ve správném pořadí.^2
 
 Z toho pro interní praxi plyne minimálně toto:
 
-- na začátku snímací session nebo dávka snímat a vyhodnotit target,
+- na začátku snímací session nebo dávky snímat a vyhodnotit target,
 - po aktualizaci software/driverů znovu charakterizovat zařízení,
 - při podezření na problém opakovat conformance test,
 - vést průběžný záznam o white balance, color accuracy, SFR/MTF, misregistration a geometrii,
-- neměnit pracovní postup po potvrzení konformity bez nového testování.^1^,^2
+- neměnit workflow po potvrzení konformity bez nového testování.^1^,^2
 
 ---
 
-## 12. Přílohy
+## 13. Přílohy
 
 ### Příloha A. Návrh protokolu měření: denní technická kontrola
 
@@ -698,8 +742,8 @@ Z toho pro interní praxi plyne minimálně toto:
 - identifikace instituce,
 - operátor,
 - zařízení, objektiv / skenerová hlava,
-- verze snímání software,
-- použitý ICC pracovní postup,
+- verze capture software,
+- použitý ICC workflow,
 - použitý target,
 - pozice targetu,
 - white balance výsledek,
@@ -721,7 +765,7 @@ Z toho pro interní praxi plyne minimálně toto:
 - reproduction scale accuracy,
 - kontrola targetů na fyzické poškození a znečištění,
 - kontrola monitoru a data poslední kalibrace,
-- revize změn ve pracovní postup od poslední kontroly,
+- revize změn ve workflow od poslední kontroly,
 - podpis odpovědné osoby za QA.
 
 ### Příloha C. Doporučené targety
@@ -730,7 +774,7 @@ Z toho pro interní praxi plyne minimálně toto:
 |---|---|---|
 | Color accuracy | ColorChecker Digital SG / DCSG | s odpovídajícím L*a*b* referenčním souborem |
 | White balance / neutralita | UTT, DCSG, Golden Thread target | důležité sledovat i neutrální pole |
-| SFR / MTF / sampling efficiency | QA-62 MTF test target, Golden Thread FADGI 19264 target | podle pracovní postup a použitého analyzačního software |
+| SFR / MTF / sampling efficiency | QA-62 MTF test target, Golden Thread FADGI 19264 target | podle workflow a použitého analyzačního software |
 | Geometrie / měřítko | QA-2 Metric a další metrické targety | pro scale accuracy i lokální zkreslení |
 | Rovnoměrnost / color cast | frame-filling white sheet, UTT | vhodné pro více míst v obrazovém poli |
 
@@ -746,25 +790,25 @@ Za doporučené se považují targety, které:
 Za nevhodné nebo nepřípustné se považují targety:
 - bez spolehlivých referenčních hodnot,
 - poškozené, vyšisované nebo neudržované,
-- používající se mimo svůj určený účel,
-- zaměňované mezi pracovní postup bez validace s používaným softwarem.
+- používané mimo svůj určený účel,
+- zaměňované mezi workflow bez validace s používaným softwarem.
 
 ### Příloha E. Doporučený software
 
 | Oblast | Doporučený typ software | Poznámka |
 |---|---|---|
-| Capture | software výrobce zařízení nebo validovaný snímání software instituce | musí podporovat stabilní a dokumentovaný pracovní postup |
+| Capture | software výrobce zařízení nebo validovaný snímací software instituce | musí podporovat stabilní a dokumentovaný workflow |
 | QA analýza | software kompatibilní s ISO 19264 / FADGI / Metamorfoze targety | klíčová je konzistence a validace měření |
 | Správa barev / profilace | ICC-kompatibilní software pro profilaci vstupu a konverzi | musí umožňovat kontrolu embedded profilů a řízenou konverzi |
 | Obrazová kontrola a editace | Adobe Photoshop nebo ekvivalent s plnou ICC správou | pouze pro kontrolované a zdokumentované operace |
-| Metadata / archivace | software podporující technická a administrativní metadata | musí být napojen na institucionální pracovní postup |
+| Metadata / archivace | software podporující technická a administrativní metadata | musí být napojen na institucionální workflow |
 
 ### Příloha F. Minimální doporučené nastavení software
 
 **Capture software**
 - vypnout nezdokumentované automatické korekce,
 - evidovat sharpening, noise reduction a tonal corrections,
-- udržovat konzistentní nastavení mezi dávka.
+- udržovat konzistentní nastavení mezi dávkami.
 
 **QA software**
 - používat stejné referenční soubory pro stejné targety,
@@ -820,7 +864,7 @@ Tento formát je vhodný tam, kde instituce nechce nebo nemůže archivovat prop
 **Signatura / identifikátor objektu:**  
 **Datum měření:**  
 **Operátor:**  
-**Zařízení a pracovní postup:**  
+**Zařízení a workflow:**  
 
 **Použitý target a validace referenčních dat:**  
 ...  
@@ -852,20 +896,22 @@ Při převodu výstupů validačního software do textového dokumentu se doporu
 
 Smyslem textového protokolu není nahradit originální report, ale vytvořit dlouhodobě srozumitelnou, citovatelnou a institucionálně přenositelnou podobu validačního výsledku.^1^,^2
 
-## 13. Závěr
+---
+
+## 14. Závěr
 
 Tvorba preservation masterů kulturního dědictví vyžaduje propojení technické disciplíny, odborného úsudku a institucionální odpovědnosti. Nestačí dosáhnout pouze nominálně vysokého rozlišení nebo obrazu, který na první pohled působí přesvědčivě. Rozhodující je, zda je digitální reprezentace standardizovaná, měřitelná, barevně interpretovatelná, dokumentovaná a dlouhodobě důvěryhodná.^1^,^2^,^3
 
 ---
 
-## 13. Odkazy na přílohy v této verzi
+## 15. Odkazy na přílohy v této verzi
 
 Pro lepší orientaci se v této verzi doporučuje používat v hlavním textu tyto ustálené odkazy:
 
 - **Příloha A** – ICC profily, barevné prostory a související výkladové schéma
 - **Příloha B** – TIFF 6.0 a související technické minimum
 
-## 14. Redakční a terminologické zásady této verze
+## 16. Redakční a terminologické zásady této verze
 
 Tato redakce vychází ze sloučení obsahu předchozích verzí 0.1.2 a 0.1.3 do jedné pracovní verze.
 
@@ -878,9 +924,11 @@ Dokument se současně snaží důsledně rozlišovat mezi:
 
 Tabulky v této verzi mají orientační a rozhodovací funkci. Nenahrazují plný výklad v hlavním textu, ale slouží jako rychlá referenční vrstva pro provozní praxi a připomínkové řízení.
 
+V této verzi 0.2.3 byly oproti verzi 0.2.2 provedeny pouze omezené redakční zásahy. Hlavní změnou je doplnění stručného výkladu rozdílu mezi **matrix/TRC** a **LUT** profily v rámci ICC workflow a sjednocení číslování hlavních kapitol v závěrečné části dokumentu.
+
 ---
 
-## 15. Poznámka k bibliografii
+## 17. Poznámka k bibliografii
 
 Bibliografie v této verzi plní dvojí funkci: jednak identifikuje hlavní normativní a metodické opory dokumentu, jednak slouží jako pracovní základ pro budoucí zpřesnění citačního aparátu. U mezinárodních dokumentů je zápis stabilnější; u některých českých metodických materiálů, zejména v prostředí NDK, je vhodné v další fázi doplnit definitivní bibliografické údaje podle zvoleného citačního standardu a podle způsobu, jakým budou tyto dokumenty v instituci evidovány.
 
@@ -888,13 +936,13 @@ Bibliografie v této verzi plní dvojí funkci: jednak identifikuje hlavní norm
 
 ## Příloha A. ICC profily a barevné prostory
 
-### 1.1 Účel této přílohy
+### A.1 Účel této přílohy
 
 Tato příloha rozšiřuje hlavní metodický text o souvislejší vysvětlení role ICC profilů, pracovních barevných prostorů a jejich praktických důsledků pro digitalizaci kulturního dědictví. Jejím cílem není nahradit specializované dokumenty ICC, ECI ani Adobe, ale nabídnout institucionálně použitelný výklad, který propojuje teorii barevného řízení s praxí preservation masterů.
 
 Diagramy v této příloze jsou záměrně **schematické**. Nejde o plnou kolorimetrickou analýzu ani o přesné geometrické rekonstrukce gamutů. Mermaid zde slouží jako čitelná textová vrstva pro metodický dokument.
 
-### 1.2 ICC profil a barevný prostor nejsou totéž
+### A.2 ICC profil a barevný prostor nejsou totéž
 
 ICC profil je standardizovaný datový popis, který umožňuje interpretovat barevná data a převádět je mezi zdrojovým a cílovým prostředím. Profil nefunguje jako „vylepšovač obrazu“, ale jako popis významu číselných hodnot a transformačních pravidel mezi barevnými reprezentacemi.
 
@@ -904,7 +952,7 @@ Barevný prostor je naopak definovaný systém, v němž mají obrazová data v�
 - pracovní RGB prostor,
 - výstupní nebo tiskový prostor.
 
-### 1.3 PCS, CIE XYZ a CIE Lab
+### A.3 PCS, CIE XYZ a CIE Lab
 
 ICC workflow používá **PCS (Profile Connection Space)** jako mezilehlý referenční prostor, přes který se provádějí převody mezi zdrojem a cílem. V klasickém ICC modelu jde o prostor založený na **CIE XYZ** nebo **CIE Lab**.
 
@@ -913,7 +961,7 @@ Pro účely metodiky je důležité rozumět rozdílu mezi těmito vrstvami:
 - **CIE Lab** je device-independent prostor navržený tak, aby byl přibližně perceptuálně uniformní,
 - **RGB pracovní prostory** jsou praktické kódovací prostory pro editaci, ukládání a výměnu obrazů.
 
-### 1.4 Schéma vztahu mezi zdrojem, pracovním RGB prostorem, PCS a cílem
+### A.4 Schéma vztahu mezi zdrojem, pracovním RGB prostorem, PCS a cílem
 
 ```mermaid
 flowchart LR
@@ -931,7 +979,7 @@ flowchart LR
 
 **Smysl schématu je jednoduchý:** pracovní RGB prostor není totéž co profil monitoru ani totéž co profil zařízení. ICC workflow používá PCS jako referenční mezivrstvu pro řízené převody mezi zdrojem a cílem.
 
-### 1.5 Gamut a vztah k lidskému vidění
+### A.5 Gamut a vztah k lidskému vidění
 
 Gamut barevného prostoru vyjadřuje množinu barev, které lze v daném prostoru reprezentovat. Různé RGB prostory mají různě velký gamut a různý tvar v kolorimetrických diagramech. To má praktické důsledky při převodech, při editaci i při volbě pracovního prostoru.
 
@@ -940,7 +988,7 @@ Je užitečné rozlišovat tři tvrzení, která se v praxi často směšují:
 2. menší gamut může být pro některé workflow stabilnější,
 3. žádný běžný RGB pracovní prostor není totožný s plným rozsahem lidského vidění.
 
-### 1.6 Schematické srovnání vybraných RGB prostorů
+### A.6 Schematické srovnání vybraných RGB prostorů
 
 ```mermaid
 mindmap
@@ -966,16 +1014,28 @@ mindmap
       vyšší nároky na disciplínu workflow
 ```
 
-### 1.7 Tone response, gamma a L\*
+### A.7 Matrix/TRC a LUT v praktické správě barev
+
+Vedle rozdílů mezi samotnými pracovními prostory je vhodné rozlišovat také rozdíl mezi **typem profilu** a **typem pracovního prostoru**. Standardní RGB prostory, jako **sRGB**, **Adobe RGB (1998)** nebo **eciRGB v2**, jsou typicky reprezentovány jako relativně jednoduché **matrix/TRC profily**. To znamená, že jejich chování lze popsat pomocí primárek, bílého bodu a tónových přenosových křivek.
+
+Naproti tomu profily konkrétních zařízení — zejména vstupních a výstupních — mohou být vytvářeny jako **LUT profily**, pokud je třeba zachytit složitější a méně lineární barevné chování. LUT profil může být přesnější, ale současně bývá méně názorný a více závislý na kvalitě konkrétní profilace.
+
+Pro tuto metodiku je proto důležité nezaměňovat:
+- **standardní pracovní RGB prostor**, který slouží k ukládání a dlouhodobé interpretaci preservation masteru,
+- a **vstupní profil zařízení**, který má co nejlépe charakterizovat konkrétní snímací řetězec.
+
+Jinými slovy: preservation master může být uložen v dobře definovaném standardním RGB prostoru, i když samotná vstupní profilace zařízení využívá LUT charakterizaci.
+
+### A.8 Tone response, gamma a L\*
 
 Pracovní RGB prostory se neliší jen gamutem, ale také **tone response curve**, tedy přenosovou charakteristikou. V běžném provozu se to často zjednodušeně označuje jako „gamma“, i když přesnější popis může být složitější než jediná mocninná hodnota.
 
 - **sRGB** používá standardizovanou přenosovou charakteristiku určenou pro běžné zobrazovací workflow.
 - **Adobe RGB (1998)** používá přenosovou charakteristiku odpovídající jednoduchému gamma modelu 2.2.
-- **eciRGB_v2** je podle ECI doporučený pracovní prostor s tone response založenou na přístupu odvozeném od **L\***, nikoli na běžné jednoduché gamma křivce.
+- **eciRGB v2** je podle ECI doporučený pracovní prostor s tone response založenou na přístupu odvozeném od **L\***, nikoli na běžné jednoduché gamma křivce.
 - **ROMM / ProPhoto RGB** pracuje s velmi širokým gamutem a historicky se váže k gamma 1.8.
 
-### 1.8 Schematické srovnání tonálního chování
+### A.9 Schematické srovnání tonálního chování
 
 ```mermaid
 xychart-beta
@@ -985,17 +1045,17 @@ xychart-beta
     line "sRGB TRC" [0.00, 0.20, 0.48, 0.67, 0.82, 0.93, 1.00]
     line "Gamma 2.2 (Adobe RGB)" [0.00, 0.18, 0.45, 0.64, 0.79, 0.91, 1.00]
     line "Gamma 1.8 (ROMM / ProPhoto)" [0.00, 0.24, 0.51, 0.69, 0.83, 0.93, 1.00]
-    line "L* odvozená křivka (eciRGB_v2)" [0.00, 0.27, 0.52, 0.70, 0.84, 0.93, 1.00]
+    line "L* odvozená křivka (eciRGB v2)" [0.00, 0.27, 0.52, 0.70, 0.84, 0.93, 1.00]
 ```
 
 Tento diagram je pouze orientační. Má ukázat rozdíl mezi jednoduchými gamma křivkami a L\*-odvozeným chováním, ne přesnou matematickou definici jednotlivých TRC.
 
-### 1.9 D50 a D65
+### A.10 D50 a D65
 
 Volba bílého bodu souvisí s tím, k jakému referenčnímu prostředí je pracovní prostor orientován.
 
 - **D65** je běžný pro zobrazovací a monitorová workflow, například u sRGB a Adobe RGB.
-- **D50** je běžný v tiskových a některých archivních workflow a používá se například u eciRGB_v2 a ROMM/ProPhoto RGB.
+- **D50** je běžný v tiskových a některých archivních workflow a používá se například u eciRGB v2 a ROMM/ProPhoto RGB.
 
 ```mermaid
 flowchart TB
@@ -1010,7 +1070,7 @@ flowchart TB
     C --> C2["ROMM / ProPhoto RGB"]
 ```
 
-### 1.10 Dokumentový, fotografický a tiskový workflow
+### A.11 Dokumentový, fotografický a tiskový workflow
 
 Stejné snímání může vést k různým následným rozhodnutím podle toho, zda je cílem čitelný dokumentový derivát, fotograficky věrný master nebo příprava na konkrétní tiskový výstup.
 
@@ -1032,16 +1092,16 @@ flowchart TB
     D1 --> D2[Softproof / tiskový výstup]
 ```
 
-### 1.11 Praktické srovnání pracovních prostorů
+### A.12 Praktické srovnání pracovních prostorů
 
 | Prostor | Typické použití | Silná stránka | Riziko / omezení |
 |---|---|---|---|
 | sRGB | web, běžné zobrazení, deriváty | široká kompatibilita | menší gamut a menší rezerva |
 | Adobe RGB (1998) | profesionální editace, tisk, některé mastery | dobrý kompromis mezi rozsahem a stabilitou | na necitlivých systémech hrozí chybná interpretace |
-| eciRGB_v2 | archivní a kvalitní pracovní workflow | silná metodická volba pro paměťové instituce | vyšší nároky na důsledné ICC workflow |
+| eciRGB v2 | archivní a kvalitní workflow | silná metodická volba pro paměťové instituce | vyšší nároky na důsledné ICC workflow |
 | ROMM / ProPhoto RGB | náročná fotografická editace | velmi široký gamut | větší riziko chyb v méně kontrolovaném prostředí |
 
-### 1.12 Stručný slovník pojmů
+### A.13 Stručný slovník pojmů
 
 **CIE**  
 Commission Internationale de l'Éclairage. Mezinárodní komise pro osvětlování, která vytvořila základní kolorimetrické modely a standardy používané v ICC workflow i v popisu barevných prostorů.
@@ -1088,27 +1148,28 @@ Tone Response Curve. Přenosová charakteristika barevného prostoru nebo zaří
 **Gamut**  
 Soubor barev, které lze v daném barevném prostoru nebo zařízení reprezentovat.
 
-### 1.13 Doporučení této metodiky
+**LUT**  
+Look-Up Table. Tabulkový způsob popisu nebo transformace barev, používaný zejména u složitějších ICC profilů zařízení.
+
+### A.14 Doporučení této metodiky
 
 Na základě FADGI, Metamorfoze, ICC a ECI lze pro institucionální digitalizační praxi formulovat toto doporučení:
 
 1. pro preservation master preferovat standardní, zařízení-nezávislý pracovní prostor,
-2. za výchozí volbu považovat eciRGB_v2,
+2. za výchozí volbu považovat eciRGB v2,
 3. Adobe RGB (1998) připustit jako legitimní alternativu v dobře zdokumentovaném workflow,
 4. sRGB používat primárně pro deriváty, zpřístupnění a běžné zobrazovací scénáře,
 5. pracovat s ICC profily jako s nástrojem interpretace a konverze, nikoli jako s náhradou za správně nastavené snímání a kalibraci.
 
+### A.15 eciRGB v2 v praxi mimo paměťové instituce
 
-### 1.13a eciRGB_v2 v praxi mimo paměťové instituce
+Tato metodika preferuje eciRGB v2 z důvodů metodických a standardizačních, nikoli proto, že by šlo o dominantní praktický standard ve veškerém komerčním prostředí. ECI jej výslovně uvádí jako pracovní barevný prostor doporučený ECI, což je silná opora pro evropský standardizační a archivní kontext. Současně však nelze bez dalšího tvrdit, že je eciRGB v2 běžnější než Adobe RGB v širším profesionálním kreativním workflow.
 
-Tato metodika preferuje eciRGB_v2 z důvodů metodických a standardizačních, nikoli proto, že by šlo o dominantní praktický standard ve veškerém komerčním prostředí. ECI jej výslovně uvádí jako pracovní barevný prostor doporučený ECI, což je silná opora pro evropský standardizační a archivní kontext. Současně však nelze bez dalšího tvrdit, že je eciRGB_v2 běžnější než Adobe RGB v širším profesionálním kreativním workflow.
+Adobe dokumentace ukazuje, že v běžném Adobe prostředí jsou nejviditelnější především **sRGB**, **Adobe RGB (1998)** a **ProPhoto RGB**. Photoshop obecně doporučuje volit jako RGB working space spíše Adobe RGB nebo sRGB než profil konkrétního zařízení. Camera Raw mezi standardními prostory uvádí Adobe RGB (1998), ColorMatch RGB, ProPhoto RGB a sRGB. Lightroom Classic používá Adobe RGB v některých modulech a ProPhoto RGB v modulu Develop. To podporuje opatrný závěr, že mimo specializované standardizační a paměťové prostředí je eciRGB v2 pravděpodobně méně rozšířený než Adobe RGB (1998).
 
-Adobe dokumentace ukazuje, že v běžném Adobe prostředí jsou nejviditelnější především **sRGB**, **Adobe RGB (1998)** a **ProPhoto RGB**. Photoshop obecně doporučuje volit jako RGB working space spíše Adobe RGB nebo sRGB než profil konkrétního zařízení. Camera Raw mezi standardními prostory uvádí Adobe RGB (1998), ColorMatch RGB, ProPhoto RGB a sRGB. Lightroom Classic používá Adobe RGB v některých modulech a ProPhoto RGB v modulu Develop. To podporuje opatrný závěr, že mimo specializované standardizační a paměťové prostředí je eciRGB_v2 pravděpodobně méně rozšířený než Adobe RGB (1998).
+Pro tuto metodiku je proto vhodné formulovat doporučení takto: **eciRGB v2 je preferovaná volba pro preservation workflow této metodiky, zatímco Adobe RGB (1998) je uznána jako legitimní a v širší profesionální praxi často běžnější alternativa.**
 
-Pro tuto metodiku je proto vhodné formulovat doporučení takto: **eciRGB_v2 je preferovaná volba pro preservation workflow této metodiky, zatímco Adobe RGB (1998) je uznána jako legitimní a v širší profesionální praxi často běžnější alternativa.**
-
-
-### 1.14 Praktický závěr
+### A.16 Praktický závěr
 
 Pro potřeby této metodiky je zásadní, že ICC profil a pracovní barevný prostor nejsou totéž co profil monitoru ani totéž co profil konkrétního snímacího zařízení. Správná archivní praxe nespočívá v „uložení všeho v profilu skeneru“, ale ve standardizovaném, zařízení-nezávislém RGB workflow, které umožňuje dlouhodobou interpretovatelnost, kontrolovanou konverzi a důvěryhodnou archivaci.
 
@@ -1220,7 +1281,7 @@ Pro běžnou institucionální praxi není nutné, aby každý operátor studova
 - správci workflow a validace znali specifikaci podrobněji,
 - a instituce měla jasně definováno, jaké varianty TIFF jsou v jejím preservation workflow přípustné.
 
-## 16. Bibliografie
+## 18. Bibliografie
 
 Aldus Corporation. *TIFF Revision 6.0. Final — June 3, 1992*. Autor/editor/arbitrátor: Steve Carlsen. Volně dostupné PDF přes veřejný dokumentový server ITU.
 
@@ -1240,7 +1301,7 @@ Van Dormolen, Hans. *Metamorfoze Preservation Imaging Guidelines: Image Quality*
 
 ---
 
-## 17. Poznámky
+## 19. Poznámky
 
 1. Federal Agencies Digital Guidelines Initiative, *Technical Guidelines for Digitizing Cultural Heritage Materials: Creation of Raster Image Files*, 3rd ed. (Washington, DC: FADGI, 2023).
 2. Hans van Dormolen, *Metamorfoze Preservation Imaging Guidelines: Image Quality*, version 2.0 (The Hague: Metamorfoze, April 2025).
