@@ -1,8 +1,8 @@
 # Metodika tvorby preservation masterů obrazových dat kulturního dědictví
 
-**Verze:** 0.2.3  
-**Poslední aktualizace:** 2026-04-08  
-**Formát:** markdown  
+**Verze:** 0.2.4<br>
+**Poslední aktualizace:** 2026-04-29<br>
+**Formát:** markdown<br>
 **Licence:** <a href="https://standardy.digitalizaty.cz">Metodika tvorby preservation masterů obrazových dat kulturního dědictví</a> © 2026 by <a href="https://github.com/bezverec">Jan Houserek</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
 ---
@@ -262,7 +262,92 @@ Metamorfoze uvádí přehled vhodných targetů pro jednotlivé testy: UTT, Colo
 
 FADGI navíc doporučuje testovat na začátku každého pracovního dne nebo na začátku každé dávky, podle toho, co nastane dříve, a testování opakovat po aktualizaci software/device drivers i při indikaci problému.^1
 
-### 8.5 Je nutné snímat target u každého dokumentu?
+### 8.1 Typy targetů podle role ve workflow
+
+Targety není vhodné chápat jako jeden zaměnitelný druh pomůcky. Metamorfoze rozlišuje dvě základní skupiny technických targetů: **kalibrační a validační targety** pro posouzení zařízení nebo snímací sestavy a **workflow targety / object-level targety** pro průběžné sledování stability konkrétních snímků nebo sérií.^2
+
+Pro tuto metodiku je užitečné rozlišovat následující praktické role:
+
+| Role targetu | Co kontroluje | Doporučené targety podle Metamorfoze | Referenční data |
+|---|---|---|---|
+| Tonální výkon | white balance, expozici, OECF, gain modulation, noise | UTT, ColorChecker Digital SG / DCSG, DT Next Generation Target V2, Golden Thread FADGI 19264 target, frame-filling white sheet, frame-filling black sheet | u tonálních a barevných targetů vždy target-specific L\*a\*b\* referenční soubor; u bílých/černých ploch změřené L\*a\*b\* hodnoty |
+| Barevný výkon | color accuracy a stabilitu barevné reprodukce | ColorChecker Digital SG / DCSG jako standard; další barevné targety pouze při projektovém schválení | target-specific L\*a\*b\* referenční soubor je povinný |
+| MTF / sampling | MTF10, sampling efficiency, MTF50, sharpening, color misregistration | UTT, QA-62 MTF test target, Golden Thread FADGI 19264 target | podle targetu a použitého software; u UTT a kombinovaných targetů odpovídající referenční data |
+| Geometrie a měřítko | sampling rate, distortion, scale accuracy, vizuální ostrost | QA-2 Metric, UTT, metrické device-level targety | geometrická specifikace targetu a kompatibilita s vyhodnocovacím softwarem |
+| Rovnoměrnost pole | illumination, color cast, lokální rozdíly v ploše | frame-filling white sheet, frame-filling black sheet, UTT, device-level targety | změřené L\*a\*b\* hodnoty ploch nebo referenční data targetu |
+| Workflow / object-level kontrola | stabilitu snímání v průběhu série, zejména expozici, neutralitu, tonální chování a sampling | Munsell Linear Gray Scale (MLGS), Object Level Target (OLT) | pro nejvyšší kvalitu doporučen target-specific L\*a\*b\* referenční soubor; u režimu odpovídajícího Metamorfoze Full je vyžadován |
+
+Jeden fyzický target může plnit více rolí, pokud obsahuje odpovídající prvky a pokud je podporován používaným analyzačním softwarem. Rozhodující není obchodní název targetu, ale jeho metrologická vhodnost, dostupnost referenčních dat, fyzický stav a kompatibilita s konkrétním vyhodnocovacím postupem.
+
+### 8.2 Object-level targety a workflow targety
+
+V Metamorfoze jsou **workflow targets** a **object-level targets** chápány jako tatáž provozní skupina: malé technické targety umísťované během digitalizace přímo do obrazového pole k originálu. Je třeba rozlišovat tuto skupinu od konkrétní rodiny targetů nazvané **Object Level Target (OLT)**. Standardními workflow/object-level targety podle Metamorfoze jsou:
+
+- **Munsell Linear Gray Scale (MLGS)**, formát přibližně 25,5 × 3,2 cm,
+- **Object Level Target (OLT)**, dostupný ve více velikostech, přibližně 11,75 × 1,6 cm, 23,5 × 2,54 cm a 47 × 4,45 cm.^2
+
+Workflow/object-level targety slouží ke srovnání stability obrazového výkonu napříč sérií obrazů nebo skenů. Protože jsou malé, neposkytují informaci o výkonu celého obrazového pole a nesmějí nahrazovat periodické QA měření, device-level validaci ani kontrolu rovnoměrnosti osvětlení v celé ploše.^2
+
+Metamorfoze pro režimy Full a Light vyžaduje workflow target v každém preservation master souboru a pro Full požaduje použití target-specific L\*a\*b\* reference file. Tato metodika tento požadavek nepřejímá jako obecně povinný. Pro české institucionální prostředí jej formuluje jako **doporučený vyšší režim** pro projekty s nejvyššími nároky na barevnou věrnost, auditovatelnost a dlouhodobou prokazatelnost kvality.^2
+
+Pro tuto metodiku tedy platí:
+
+- object-level/workflow target není povinnou součástí každého preservation masteru,
+- u nejvyšších kvalitativních režimů je však MLGS, OLT nebo jiný schválený workflow target důrazně doporučen,
+- u nejvyšší kvality má být použit target-specific L\*a\*b\* referenční soubor, pokud je pro konkrétní target dostupný,
+- pokud je použit jiný workflow target než MLGS nebo OLT, musí být jeho použití schváleno v projektové specifikaci,
+- pro uživatelské deriváty lze target podle projektových pravidel odstranit ořezem.^1^,^2
+
+### 8.3 Umístění object-level targetu při snímání
+
+Object-level/workflow target má být umístěn **ve stejném obrazovém poli jako originál**, typicky dole, nahoře nebo po straně. Pokud je to možné, má být v celé sérii kladen stále na stejné místo, preferenčně ke spodnímu okraji obrazu. Vzdálenost mezi targetem a originálem nemá podle Metamorfoze přesáhnout **5 cm**.^2
+
+Pro provozní použití z toho plyne:
+
+- target má ležet ve stejné rovině jako snímaná předloha,
+- nemá překrývat originál, text, okraje, poškození ani jiné informačně významné části,
+- má být celý viditelný, nepoškozený, ve stejné rovině ostrosti jako předloha a rovnoměrně osvětlený,
+- má být natočen konzistentně vůči snímku a nemá být záměrně umisťován šikmo,
+- nesmí být tak daleko od originálu, aby zbytečně zvětšoval obrazové pole, datový objem nebo rozsah následného ořezu,
+- u vázaných předloh má být umístěn mimo hřbetní stín a mimo oblasti deformované vazbou,
+- u snímání pod sklem má být target snímán ve srovnatelných podmínkách jako originál; pokud to není možné, musí být omezení zapsáno v projektové dokumentaci.
+
+Velikost OLT nebo MLGS má odpovídat formátu originálu a sampling rate. U malých předloh je vhodné volit menší OLT, aby target nepřiměřeně nezvětšoval obrazové pole; u velkoformátových předloh může být vhodný větší target, aby byly jeho patchy dostatečně čitelné a vyhodnotitelné.
+
+### 8.4 Quality assurance, device-level a kalibrační targety
+
+Quality assurance targety mají ověřit, zda digitalizační sestava splňuje požadované parametry před zahájením produkce a zda se v čase významně nemění. Nejsou totéž co object-level targety. Jejich role je širší: mají doložit technickou konformitu snímacího systému, nikoli pouze stabilitu jednotlivého snímku nebo série.^1^,^2^,^3
+
+Metamorfoze uvádí pro kalibraci a validaci tonálního a barevného výkonu zejména:
+
+- **Universal Test Target (UTT)**,
+- **ColorChecker Digital SG / Digital ColorChecker SG (CCSG/DCSG)**,
+- **DT Next Generation Target V2 (NGT2)**,
+- **Golden Thread FADGI 19264 target**,
+- **frame-filling black sheet** s hodnotou přibližně L\* 25,
+- **frame-filling white sheet** s hodnotou přibližně L\* 95.^2
+
+Pro MTF, sampling a geometrický výkon uvádí zejména:
+
+- **Universal Test Target (UTT)**,
+- **QA-62 MTF test target**,
+- **QA-2 Metric**.^2
+
+Targety používané ke kalibraci nebo validaci tonálního a barevného výkonu mají být používány s odpovídajícím target-specific L\*a\*b\* referenčním souborem. Targety, které nejsou frame-filling, mají být při kalibraci nebo validaci umístěny na celoplošném černém pozadí; Metamorfoze doporučuje černou plochu okolo L\* 25, co nejnižší a\* a b\* hodnoty, rovnoměrnou texturu a bez struktury vláken či tkaniny.^2
+
+Referenční soubor má být kompatibilní s použitým vyhodnocovacím softwarem a nemá být upravován. Metamorfoze požaduje, aby obsahoval zejména identifikaci měřicího přístroje, informaci o absenci filtrů, světelný zdroj D50, pozorovací úhel 2°, číslování a lokalizaci patchů, L\*a\*b\* hodnoty a datum měření. Název referenčního souboru má obsahovat zkratku a číslo targetu; běžné zkratky zahrnují například DCSG, CCSG, FADGI, NGT2, UTTA0 až UTTA3, MLGS a OLT. Target používaný s referenčním souborem má mít na přední straně viditelné číslo odpovídající tomuto souboru a referenční soubory mají být pravidelně obnovovány, podle Metamorfoze přibližně každé dva roky.^2
+
+### 8.5 Doporučené targetové workflow
+
+Tato metodika doporučuje rozlišit tři praktické vrstvy targetového workflow:
+
+1. **Před zahájením projektu nebo po významné změně workflow** provést charakterizaci a ověření zařízení pomocí vhodných kalibračních a device-level targetů. Výsledky uložit jako součást projektové dokumentace.
+2. **Na začátku pracovního dne, session nebo dávky** sejmout a vyhodnotit QA targety odpovídající požadovaným metrikám. Produkční snímání má začít až po ověření, že systém splňuje požadované parametry.
+3. **V průběhu produkce** používat object-level/workflow targety podle náročnosti projektu. U běžných projektů mohou být nahrazeny pravidelným QA režimem; u nejvyšších kvalitativních režimů, fotografických předloh, výtvarných děl, map, unikátů a auditně citlivých zakázek se doporučuje jejich snímání přímo s objektem nebo v bezprostřední vazbě na něj.
+
+Metamorfoze ukládá snímky QA targetů spolu s preservation mastery a zdůrazňuje, že musí být možné propojit produkční den, snímky technických targetů a konkrétní preservation mastery. Tuto vazbu lze v praxi zajistit produkčním přehledem, názvovou konvencí a uložením validačních reportů.^2
+
+### 8.6 Je nutné snímat target u každého dokumentu?
 
 Tato otázka vyžaduje přesnou odpověď, protože v praxi se často směšují dva různé požadavky:
 1. **průběžná technická kontrola digitalizačního systému**,  
@@ -273,6 +358,7 @@ Pro tuto metodiku se doporučuje následující rozlišení:
 - **Target není nutné chápat jako absolutně povinnou součást každého jednotlivého master souboru**, pokud instituce používá stabilní a dokumentovaný systém průběžné validace.
 - **Targetově založená kontrola je však nutná jako součást řízení kvality**: minimálně na začátku snímací session, na začátku pracovního dne nebo dávky a vždy po změně nastavení, zařízení, software nebo podmínek snímání.
 - **Silnější režim** představuje workflow, v němž je referenční target zachycen přímo s digitalizovaným objektem nebo v bezprostřední vazbě na něj; to je zvlášť vhodné u náročných předloh, fotografického materiálu, výtvarných děl, zakázek s vysokými požadavky na auditovatelnost nebo tam, kde to vyžaduje projektový standard.
+- **Object-level target / workflow target** se v této metodice doporučuje pro nejvyšší kvalitativní režimy, ale nepovažuje se za univerzálně povinný požadavek pro každý preservation master.
 
 FADGI doporučuje po zavedení systému provádět digital image conformance evaluation na začátku každého pracovního dne nebo na začátku každé dávky, podle toho, co nastane dříve; target má být před produkčním snímáním zkontrolován a musí projít. Současně FADGI ve svých doporučeních uvádí i silnější variantu: zahrnout referenční targety do každého snímku originálu, minimálně šedou škálu, barevnou referenci a měřítko, přičemž access deriváty lze následně o target oříznout.
 
@@ -701,6 +787,56 @@ Pro interní provozní pravidla lze doporučit jednoduchou formulaci:
 
 **Operátor má při digitalizaci používat tmavý, matný a nereflexní oděv, zejména při snímání lesklých, fotografických nebo jinak odrazivých předloh, aby se minimalizovalo riziko odlesků a parazitních reflexů v digitální reprodukci.**
 
+### 10.6 Zásady skenování a post-processingu
+
+Vedle měřitelných parametrů obrazové kvality je nutné věnovat pozornost také zdánlivě provozním rozhodnutím při samotném snímání a následném základním zpracování. Právě zde mohou vzniknout ztráty informace, které pozdější validace formátu, profilu nebo barevné přesnosti již neodhalí nebo neodstraní. Tato část proto shrnuje minimální zásady pro pozadí, ořez, natočení, narovnání a práci s velkoformátovými předlohami.^1^,^2^,^3
+
+#### 10.6.1 Pozadí a podložení předlohy
+
+Plošné předlohy se mají snímat na rovnoměrném černém kartonu nebo černé textilní podložce. Černé pozadí nesmí být v obraze oříznuto tak, aby docházelo ke clippingu ve stínech; Metamorfoze uvádí jako orientační hodnotu světlosti pozadí přibližně **L\* 25**.^2 Cílem není vytvořit efektní kontrast, ale stabilní vizuální a měřitelný rámec, který umožní rozpoznat okraj originálu, deformace a případná poškození.
+
+U velmi tenkých nebo prosvítajících papírů může černé pozadí prosvítat skrz originál a způsobit ztrátu informace nebo zkreslení tonality. Míra průsvitnosti má být posouzena už ve fázi přípravy. Pokud hrozí ztráta informačního obsahu, je vhodné použít světlejší nebo bílé podložení, a to po dohodě s objednatelem nebo odpovědným kurátorem projektu.^2
+
+Černá podložka může být naopak metodicky užitečná tam, kde je třeba zřetelně odlišit malý list od většího listu, zvýraznit okraj předlohy nebo vizuálně zpřístupnit poškození, perforace a ztráty materiálu. Takové rozhodnutí má být součástí projektové specifikace, nikoli ad hoc úpravou jednotlivého operátora.
+
+#### 10.6.2 Vázané předlohy, hřbet a čitelnost u vazby
+
+Při digitalizaci vázaných předloh je nutné věnovat zvláštní pozornost oblasti hřbetu. Text, poznámky, ilustrace ani jiné informačně významné prvky nesmějí mizet v ohybu listu nebo se stávat nečitelnými kvůli stínu, neostrosti či geometrické deformaci. Pokud je taková ztráta při daném technickém nastavení nevyhnutelná, musí být problém eskalován v rámci projektu a řešen s objednatelem nebo odborným garantem, nikoli tiše akceptován jako běžná provozní odchylka.^2
+
+#### 10.6.3 Ořez preservation masteru
+
+Ořez je odstranění nadbytečných částí snímku. Přesné ořezové parametry, včetně toho, zda se ve výsledném souboru ponechávají nebo odstraňují workflow targety, mají být určeny projektově. Obecně však platí, že ořez preservation masteru nesmí odstranit žádnou část originálu ani informaci potřebnou k posouzení jeho fyzické podoby.^1^,^2
+
+Pro kvalitativní režimy odpovídající Metamorfoze Full a Metamorfoze Light má celý originál zůstat viditelný a kolem něj má být ponechán okraj přibližně **0,3 až 0,5 cm**. Při 300 ppi to odpovídá přibližně **35 až 59 pixelům**, při 600 ppi přibližně **71 až 118 pixelům**. U silnějších knih nebo specifických vazeb může být viditelná část knižního bloku; pokud je součástí fyzické situace originálu při snímání, nemá být mechanicky odřezávána.^2
+
+U režimů odpovídajících Metamorfoze Extra Light nejsou vyžadovány tak přesné ořezové okraje. Ani zde však nesmí dojít ke ztrátě textové nebo jiné informačně významné části předlohy.^2 FADGI zároveň řadí cropping, orientaci, skew, úplnost obrazu, přítomnost targetů a chybějící stránky mezi oblasti, které mají být kontrolovány při vizuální a technické inspekci dávky.^1
+
+#### 10.6.4 Rotace, narovnání a geometrická zdrženlivost
+
+Rotace obrazu o 90° nebo 180° je přípustná, pokud slouží ke správné orientaci výsledného souboru. Narovnávání, tedy deskew nebo straightening, má být u preservation masteru používáno zdrženlivě a pouze tehdy, pokud je povoleno projektovou specifikací nebo objednatelem. Důvodem je riziko negativního vlivu na ostrost, interpolaci a lokální geometrické vlastnosti obrazu.^2
+
+Základní pravidlo proto zní: předloha má být co nejlépe ustavena již při snímání. U volných listů by šikmost neměla přesáhnout přibližně jeden stupeň. U vázaných knih a novin snímaných v kolébce může být levá a pravá strana mírně natočena odlišně; v takovém případě je cílem dosáhnout co nejlepší čitelnosti a přirozené geometrie obou stran, nikoli mechanicky vynutit jeden globální úhel za cenu dalších deformací.^2
+
+#### 10.6.5 Velkoformátové předlohy a překryvné snímání
+
+Velkoformátové předlohy, které nelze zachytit jedním snímkem, mají být digitalizovány soustavou překryvných snímků. Snímání má postupovat zleva doprava a shora dolů; překryv mezi sousedními snímky má být nejméně **15 %**.^2 Překryv musí být dostatečný pro orientaci, kontrolu úplnosti a případné vytvoření uživatelského derivátu.
+
+Pro preservation master však platí, že jednotlivé překryvné snímky nemají být slučovány do jednoho skládaného obrazu, pokud metodika projektu výslovně nestanoví jinak. Stitching může být vhodný pro uživatelské nebo prezentační soubory, ale u preservation masteru by mohl zakrýt lokální chyby, interpolace, geometrické kompromisy nebo rozhodnutí učiněná při skládání.^2
+
+Pokud projekt vedle samostatných překryvných preservation masterů vytváří také spojený pracovní, uživatelský nebo prezentační soubor, lze pro takový odvozený výstup použít **JPEG 2000** nebo **BigTIFF**, zejména tehdy, kdy velikost skládaného obrazu překračuje 4GB limit klasického TIFF. Použití BigTIFF v této souvislosti nemění základní pravidlo této metodiky: preservation master má zachovat jednotlivé zdrojové překryvné snímky a skládaný obraz má být chápán jako derivát nebo zvlášť zdokumentovaná pracovní reprezentace, nikoli jako běžný výchozí preservation master.
+
+#### 10.6.6 Minimální doporučení této metodiky
+
+Pro institucionální praxi lze doporučit následující minimální pravidla:
+
+1. pozadí, podložení, ořez, narovnání a zacházení s targety definovat v projektové specifikaci před zahájením produkce,
+2. u běžných plošných předloh používat rovnoměrné černé pozadí bez clippingu, orientačně okolo L\* 25,
+3. u průsvitných materiálů volit podložení podle ochrany informačního obsahu, nikoli podle jednotného estetického pravidla,
+4. ořez preservation masteru provádět tak, aby byl zachován celý originál a přiměřený okraj,
+5. narovnávání používat pouze se schválením a preferovat správné ustavení předlohy při snímání,
+6. u velkoformátových předloh uchovávat překryvné snímky jako preservation mastery a stitching ponechat primárně pro deriváty,
+7. pro skládané odvozené soubory připustit JPEG 2000 nebo BigTIFF, pokud je to technicky zdůvodněné velikostí souboru a zdokumentované v projektové specifikaci.
+
 ---
 
 ## 11. Workflow tvorby preservation masteru
@@ -771,13 +907,16 @@ Z toho pro interní praxi plyne minimálně toto:
 
 ### Příloha C. Doporučené targety
 
-| Oblast testu | Doporučené targety | Poznámka |
-|---|---|---|
-| Color accuracy | ColorChecker Digital SG / DCSG | s odpovídajícím L*a*b* referenčním souborem |
-| White balance / neutralita | UTT, DCSG, Golden Thread target | důležité sledovat i neutrální pole |
-| SFR / MTF / sampling efficiency | QA-62 MTF test target, Golden Thread FADGI 19264 target | podle workflow a použitého analyzačního software |
-| Geometrie / měřítko | QA-2 Metric a další metrické targety | pro scale accuracy i lokální zkreslení |
-| Rovnoměrnost / color cast | frame-filling white sheet, UTT | vhodné pro více míst v obrazovém poli |
+| Oblast / role | Doporučené targety | Referenční data | Poznámka |
+|---|---|---|---|
+| Tonální výkon | UTT, ColorChecker Digital SG / DCSG, DT Next Generation Target V2, Golden Thread FADGI 19264 target | target-specific L\*a\*b\* referenční soubor | white balance, expozice, OECF, gain modulation, noise |
+| Barevný výkon | ColorChecker Digital SG / DCSG jako standard, případně Golden Thread FADGI 19264 target | target-specific L\*a\*b\* referenční soubor | jiné barevné targety jen při projektovém schválení |
+| MTF / sampling | QA-62 MTF test target, UTT, Golden Thread FADGI 19264 target | podle targetu a vyhodnocovacího software | sampling efficiency, MTF50, modulation, misregistration |
+| Geometrie / měřítko | QA-2 Metric, UTT, metrické device-level targety | geometrická specifikace targetu a kompatibilní software | pro scale accuracy i lokální zkreslení |
+| Rovnoměrnost / color cast | frame-filling white sheet, frame-filling black sheet, UTT | změřené L\*a\*b\* hodnoty ploch nebo referenční data targetu | vhodné pro více míst v obrazovém poli |
+| Device-level kontrola | UTT A3/A2/A1/A0, ColorChecker Digital SG / DCSG, DT Next Generation Target V2, Golden Thread FADGI 19264 target, QA-62, QA-2 Metric | podle měřené metriky; pro tonalitu a barvu target-specific L\*a\*b\* | benchmarking a periodická kontrola celé sestavy |
+| Object-level / workflow kontrola | Munsell Linear Gray Scale (MLGS), Object Level Target (OLT) | pro nejvyšší kvalitu doporučen target-specific L\*a\*b\*; u Metamorfoze Full povinný | doporučeno pro nejvyšší kvalitativní režimy, nikoli obecně povinné |
+| Měřítko u objektu | pravítko nebo metrický target vhodný pro daný formát | technická specifikace měřítka, pokud se používá k měření | nenahrazuje QA měření, ale pomáhá interpretovat rozměr |
 
 ### Příloha D. Povolené a doporučené targety
 
@@ -786,13 +925,24 @@ Za doporučené se považují targety, které:
 - jsou kompatibilní s používaným analyzačním softwarem,
 - odpovídají měřené metrice,
 - jsou fyzicky v dobrém stavu a nejsou znečištěné nebo degradované,
-- jsou používány konzistentně v rámci projektu.^1^,^2
+- jsou používány konzistentně v rámci projektu,
+- mají evidovanou identifikaci, verzi nebo sériové číslo, pokud je výrobce poskytuje,
+- jsou umísťovány v odpovídající rovině a světelných podmínkách vůči snímané předloze.^1^,^2
 
 Za nevhodné nebo nepřípustné se považují targety:
 - bez spolehlivých referenčních hodnot,
 - poškozené, vyšisované nebo neudržované,
 - používané mimo svůj určený účel,
 - zaměňované mezi workflow bez validace s používaným softwarem.
+
+Pokud projekt používá object-level targety, má být v projektové dokumentaci výslovně určeno:
+
+- zda zůstávají součástí preservation masteru,
+- zda se odstraňují pouze z uživatelských derivátů,
+- kde mají být v obrazovém poli umístěny; preferenčně stále na stejném místě a u spodního okraje obrazu,
+- že vzdálenost mezi targetem a originálem nemá přesáhnout 5 cm,
+- jaká referenční data a jaký software se používají pro jejich vyhodnocení,
+- zda je použit MLGS, OLT nebo jiný projektově schválený workflow target.
 
 ### Příloha E. Doporučený software
 
@@ -925,7 +1075,13 @@ Dokument se současně snaží důsledně rozlišovat mezi:
 
 Tabulky v této verzi mají orientační a rozhodovací funkci. Nenahrazují plný výklad v hlavním textu, ale slouží jako rychlá referenční vrstva pro provozní praxi a připomínkové řízení.
 
-V této verzi 0.2.3 byly oproti verzi 0.2.2 provedeny pouze omezené redakční zásahy. Hlavní změnou je doplnění stručného výkladu rozdílu mezi **matrix/TRC** a **LUT** profily v rámci ICC workflow a sjednocení číslování hlavních kapitol v závěrečné části dokumentu.
+V této verzi 0.2.4 byly oproti verzi 0.2.3 doplněny zejména tyto oblasti:
+
+- zásady skenování a post-processingu podle Metamorfoze, včetně pozadí, ořezu, rotace, narovnání, práce s vazbou a velkoformátových překryvných snímků,
+- přesnější rozlišení kalibračních, validačních, QA, device-level a object-level/workflow targetů včetně doporučených druhů targetů a role referenčních L\*a\*b\* dat,
+- formulace institucionální politiky, podle níž object-level/workflow targety nejsou obecně povinné, ale jsou doporučené pro nejvyšší kvalitativní režimy,
+- doplnění pravidel pro umístění object-level targetů při snímání,
+- upřesnění, že skládané odvozené soubory z překryvného snímání mohou při překročení limitů klasického TIFF používat JPEG 2000 nebo BigTIFF, zatímco preservation master má zpravidla zůstat tvořen samostatnými zdrojovými překryvnými snímky.
 
 ---
 
