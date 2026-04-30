@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1500" viewBox="0 0 1800 1500">
+<rect width="100%" height="100%" fill="white"/>
+<text x="900.0" y="45" text-anchor="middle" font-family="Arial" font-size="34">CIE 1931 xy Chromaticity Diagram with RGB Color Spaces</text>
+<line x1="150" y1="90" x2="150" y2="1320" stroke="#ddd"/>
+<line x1="343" y1="90" x2="343" y2="1320" stroke="#ddd"/>
+<line x1="535" y1="90" x2="535" y2="1320" stroke="#ddd"/>
+<line x1="728" y1="90" x2="728" y2="1320" stroke="#ddd"/>
+<line x1="921" y1="90" x2="921" y2="1320" stroke="#ddd"/>
+<line x1="1113" y1="90" x2="1113" y2="1320" stroke="#ddd"/>
+<line x1="1306" y1="90" x2="1306" y2="1320" stroke="#ddd"/>
+<line x1="1499" y1="90" x2="1499" y2="1320" stroke="#ddd"/>
+<line x1="1691" y1="90" x2="1691" y2="1320" stroke="#ddd"/>
+<line x1="150" y1="1320" x2="1730" y2="1320" stroke="#ddd"/>
+<line x1="150" y1="1210" x2="1730" y2="1210" stroke="#ddd"/>
+<line x1="150" y1="1100" x2="1730" y2="1100" stroke="#ddd"/>
+<line x1="150" y1="991" x2="1730" y2="991" stroke="#ddd"/>
+<line x1="150" y1="881" x2="1730" y2="881" stroke="#ddd"/>
+<line x1="150" y1="771" x2="1730" y2="771" stroke="#ddd"/>
+<line x1="150" y1="661" x2="1730" y2="661" stroke="#ddd"/>
+<line x1="150" y1="551" x2="1730" y2="551" stroke="#ddd"/>
+<line x1="150" y1="441" x2="1730" y2="441" stroke="#ddd"/>
+<line x1="150" y1="332" x2="1730" y2="332" stroke="#ddd"/>
+<line x1="150" y1="222" x2="1730" y2="222" stroke="#ddd"/>
+<line x1="150" y1="112" x2="1730" y2="112" stroke="#ddd"/>
+<line x1="150" y1="1210" x2="1730" y2="1210" stroke="#000" stroke-width="3"/>
+<line x1="150" y1="90" x2="150" y2="1320" stroke="#000" stroke-width="3"/>
+<path d="M485,1205 L485,1205 L485,1205 L484,1205 L484,1205 L483,1205 L480,1205 L475,1203 L472,1201 L467,1198 L460,1195 L452,1191 L441,1185 L427,1178 L411,1166 L389,1147 L361,1115 L326,1064 L282,990 L237,886 L195,757 L166,619 L158,491 L177,386 L225,318 L293,294 L370,303 L448,325 L522,352 L592,382 L662,415 L731,450 L800,487 L869,524 L937,563 L1006,601 L1073,639 L1138,676 L1200,711 L1258,744 L1312,774 L1358,801 L1399,824 L1433,843 L1460,859 L1482,872 L1500,881 L1514,889 L1526,896 L1535,902 L1543,906 L1549,909 L1553,912 L1557,914 L1566,919" fill="none" stroke="#282828" stroke-width="4"/>
+<line x1="1566" y1="919" x2="485" y2="1205" stroke="#666" stroke-width="3"/>
+<polygon points="1383,848 728,551 439,1144" fill="#2378dc" fill-opacity="0.10" stroke="#2378dc" stroke-width="5"/>
+<polygon points="1383,848 555,430 439,1144" fill="#1e9650" fill-opacity="0.10" stroke="#1e9650" stroke-width="5"/>
+<polygon points="1441,848 555,430 420,1122" fill="#e68c14" fill-opacity="0.10" stroke="#e68c14" stroke-width="5"/>
+<polygon points="1566,919 458,288 221,1210" fill="#a046be" fill-opacity="0.10" stroke="#a046be" stroke-width="5"/>
+<polygon points="1524,888 468,299 397,1162" fill="#d23c46" fill-opacity="0.10" stroke="#d23c46" stroke-width="5"/>
+<polygon points="1566,919 150,112 150,1295" fill="#464646" fill-opacity="0.10" stroke="#464646" stroke-width="5"/>
+</svg>

@@ -65,3 +65,4 @@ markdown_extensions:
 
 nav:
   - Domů: index.md
+  - OpenEXR working paper: openexr-preservation-master.md
