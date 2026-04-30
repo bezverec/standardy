@@ -1,7 +1,7 @@
 # Metodika tvorby preservation masterů obrazových dat kulturního dědictví
 
-**Verze:** 0.2.4<br>
-**Poslední aktualizace:** 2026-04-29<br>
+**Verze:** 0.2.5<br>
+**Poslední aktualizace:** 2026-04-30<br>
 **Formát:** markdown<br>
 **Licence:** <a href="https://standardy.digitalizaty.cz">Metodika tvorby preservation masterů obrazových dat kulturního dědictví</a> © 2026 by <a href="https://github.com/bezverec">Jan Houserek</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
@@ -248,7 +248,22 @@ Metamorfoze Full vyžaduje 16 bitů; Light a Extra Light 8 bitů na kanál. Zár
 
 ### 7.3 Rozlišení a sampling
 
-Metamorfoze uvádí 300 ppi pro originály ≥ DIN A5 a maximálně 600 ppi pro menší originály; současně upozorňuje, že u předloh s vyšší informační hustotou může být vhodný vyšší sampling rate.^2
+Metamorfoze uvádí 300 ppi pro originály ≥ DIN A5 a maximálně 600 ppi pro menší originály; současně upozorňuje, že u předloh s vyšší informační hustotou může být vhodný vyšší sampling rate.^2 FADGI ve čtyřhvězdičkové úrovni pracuje u většiny dokumentových kategorií přibližně s 400 ppi, u fotografických předloh přibližně s 600 ppi a u některých výtvarných nebo jemně strukturovaných předloh připouští, že může být vhodná i vyšší hodnota.^1
+
+Tato metodika se v otázce výchozího samplingu přiklání spíše k opatrnějšímu, vyššímu rámci FADGI než k minimální hranici 300 ppi. Neznamená to však mechanické navyšování PPI. Vyšší sampling má metodický smysl pouze tehdy, pokud digitalizační systém při daném nastavení reálně dosahuje odpovídající sampling efficiency, SFR/MTF výkon, přijatelnou míru sharpeningu, color misregistration, geometrickou přesnost a stabilní tonalitu.^1^,^2^,^3
+
+Pro tuto metodiku lze jako výchozí institucionální rámec doporučit:
+
+| Typ předlohy | Doporučený výchozí sampling | Poznámka |
+|---|---|---|
+| Běžné knihy, rukopisy, periodika a archiválie | 400 ppi | vychází z FADGI 4* dokumentového rámce; 300 ppi lze připustit u méně náročných projektů |
+| Noviny a běžné textové dokumenty | 400 ppi | zejména tam, kde je cílem preservation master a OCR/re-use |
+| Mapy, plány a technická dokumentace | 400 ppi, podle detailu 600 ppi+ | rozhoduje jemnost linií, popisů a metrické požadavky |
+| Fotografické předlohy | 600 ppi | u malých nebo velmi jemných fotografií může být vhodné více |
+| Grafiky, kresby, výtvarná díla a jemné tiskové techniky | 600 ppi nebo více | u rytin, kreseb, textur a malých detailů může být vhodné 800 ppi+ |
+| Malé předlohy pod A5 nebo předlohy s vysokou informační hustotou | 600 ppi nebo více podle potřeby | vždy ověřit skutečný přenos detailu, nikoli jen hlavičkovou hodnotu PPI |
+
+Pokud skener nebo reprografická sestava při vyšším PPI nedosahuje odpovídajícího MTF/SFR výkonu, je vhodnější použít nižší, prokazatelně kvalitní a validované nastavení než vytvářet větší soubory s nízkou skutečnou informační hodnotou. Softwarové převzorkování nebo pouhé zvýšení hodnoty PPI v metadatech nesmí být vydáváno za vyšší kvalitu digitalizace.
 
 ### 7.4 Embedded metadata a technická identifikace
 
@@ -392,6 +407,26 @@ Metamorfoze používá ΔL* a hodnotí expozici primárně v highlights; součas
 ### 9.5 Color accuracy
 
 Metamorfoze používá ColorChecker Digital SG v centru obrazového pole a metriku CIE2000SL=1; pro Full stanovuje Mean ΔE* ≤ 3 a Max ΔE* ≤ 7, pro Light Mean ΔE* ≤ 4 a Max ΔE* ≤ 14.^2 FADGI používá Mean ΔE2000 a 90th percentile ΔE2000; orientačně < 5 / < 3.5 / < 2 pro průměr a < 10 / < 7 / < 4 pro 90. percentil.^1
+
+### 9.5a Rovnoměrnost osvětlení, color cast a kvalita světelného zdroje
+
+Rovnoměrnost osvětlení nelze redukovat na subjektivní dojem, že je stránka „dostatečně světlá“. V preservation workflow jde o měřitelný parametr, který ovlivňuje tonalitu, white balance, color accuracy, SFR/MTF i vizuální čitelnost jemných detailů. Nerovnoměrné osvětlení může způsobit lokální ztmavení, barevný posun, ztrátu kresby ve světlech nebo falešnou interpretaci tonality originálu.^1^,^2^,^3
+
+Metamorfoze hodnotí illumination jako **illumination non-uniformity** a vyjadřuje ji pomocí **ΔL\***. Pro Metamorfoze Full a Light stanovuje limity podle velikosti obrazového pole: přibližně **ΔL\* ≤ 3** pro plochu do DIN A3, **≤ 4** pro > A3 až A2, **≤ 5** pro > A2 až A1 a **≤ 6** pro > A1 až A0. Pro Extra Light stanovuje pro plochu do A3 volnější limit **ΔL\* ≤ 5**; pro větší plochy nejsou limity specifikovány. White balance v celé ploše se hodnotí samostatně jako **ΔE(ab)\*** a color cast se nemá vyskytovat nikde v obrazovém poli.^2
+
+FADGI používá metriku **Lightness Uniformity**, vyjádřenou jako standard deviation divided by mean. Konkrétní limity se liší podle kategorie a hvězdičkové úrovně, ale v typickém čtyřúrovňovém rámci se pohybují přibližně od **< 8 %** u nejnižší úrovně po **< 1 %** u čtyřhvězdičkové úrovně. FADGI současně upozorňuje, že flat-field korekce může nerovnoměrnost snížit, ale nemá nahrazovat dobré profesionální nastavení snímání; příliš agresivní korekce může zavést artefakty nebo šum.^1
+
+ISO 19264-1 poskytuje analytický rámec pro měření kvality zobrazovacích systémů u reflexních předloh pomocí specifikovaného testovacího targetu. Z hlediska této metodiky je ISO důležité především tím, že podporuje měřitelný a opakovatelný přístup k parametrům obrazové kvality, nikoli pouhé vizuální posouzení osvětlení.^3
+
+Kromě rovnoměrnosti je nutné sledovat také **kvalitu světelného zdroje**. FADGI definuje **CRI (Color Rendering Index)** jako míru blízkosti spektrálního rozložení světelného zdroje k referenci a uvádí, že hodnota **CRI nad 90** je obecně považována za vhodnou pro většinu cultural heritage imaging. Světelné zdroje se závažnými spektrálními nedostatky jsou pro kulturně-dědické snímání nevhodné, protože mohou vést k metamerickým problémům a ke zkreslení barevné reprodukce.^1
+
+Pro tuto metodiku z toho plyne následující doporučení:
+
+1. rovnoměrnost osvětlení kontrolovat samostatně, nikoli jen nepřímo přes expozici nebo color accuracy,
+2. pro kontrolu používat frame-filling white sheet, frame-filling UTT nebo jiný vhodný plošný target s měřenými L\*a\*b\* hodnotami,
+3. sledovat jak ΔL\* / lightness uniformity, tak white balance a color cast v celé ploše,
+4. používat světelné zdroje s vysokým CRI, orientačně **CRI > 90**, a dokumentovat typ světla, nastavení a případné změny,
+5. považovat flat-field korekci za kontrolovaný technický nástroj, nikoli za náhradu správné geometrie světel, odstínění odrazů, čisté optické dráhy a stabilního snímacího prostředí.
 
 ---
 
@@ -573,7 +608,7 @@ Následující tabulky nepředstavují absolutní a univerzálně závazné limi
 | Formát masteru | TIFF 6.0 | bezeztrátový archivní formát |
 | Barevný prostor | eciRGB v2 | Adobe RGB možné při zdůvodněném workflow |
 | Bitová hloubka | 8 nebo 16 bitů/kanál podle režimu projektu | 16 bitů vhodné u náročnějších předloh |
-| Sampling | minimálně 300 ppi | vyšší podle velikosti detailu a typu písma |
+| Sampling | výchozí 400 ppi | 300 ppi jen u méně náročných projektů; 600 ppi pro malé formáty nebo jemný detail |
 | White balance | neutralita bez color castu | kontrolovat samostatně vůči color accuracy |
 | Geometrie | vysoká důležitost | zejména textový blok, okraje, tabulky |
 | Sharpening | minimální | vyhnout se halo efektům v textu |
@@ -585,7 +620,7 @@ Následující tabulky nepředstavují absolutní a univerzálně závazné limi
 | Formát masteru | TIFF 6.0 | u interního workflow lze navíc uchovávat RAW |
 | Barevný prostor | eciRGB v2 | Adobe RGB jako přijatelná alternativa |
 | Bitová hloubka | 16 bitů/kanál | silně doporučeno |
-| Sampling | minimálně 300 ppi, často více | podle rozměru a jemnosti detailu |
+| Sampling | výchozí 600 ppi | u malých nebo jemně strukturovaných fotografií více podle potřeby |
 | White balance | velmi vysoká důležitost | nutno odlišovat degradaci originálu od technického castu |
 | Color accuracy | vysoká důležitost | hodnotit spolu s tonalitou |
 | Sharpening | velmi opatrný | raději až pro deriváty |
@@ -597,7 +632,7 @@ Následující tabulky nepředstavují absolutní a univerzálně závazné limi
 | Formát masteru | TIFF 6.0 | priorita metrické stability |
 | Barevný prostor | eciRGB v2 | podle projektu lze Adobe RGB |
 | Bitová hloubka | 8 nebo 16 bitů/kanál | podle barevné a tonální náročnosti |
-| Sampling | minimálně 300 ppi, často více | jemné linie a malé popisy mohou vyžadovat vyšší sampling |
+| Sampling | výchozí 400 ppi, často 600 ppi+ | jemné linie, malé popisy a metrické užití mohou vyžadovat vyšší sampling |
 | Reproduction scale accuracy | velmi vysoká důležitost | klíčové pro měřítko a přesnost |
 | Geometric distortion | velmi vysoká důležitost | zvlášť u velkoformátových předloh |
 | Sharpening | omezený | nesmí deformovat lineární kresbu |
@@ -609,7 +644,7 @@ Následující tabulky nepředstavují absolutní a univerzálně závazné limi
 | Formát masteru | TIFF 6.0 | standardní archivní varianta |
 | Barevný prostor | eciRGB v2 | široký gamut je žádoucí |
 | Bitová hloubka | 16 bitů/kanál | doporučeno |
-| Sampling | minimálně 300 ppi, podle detailu více | kresba, textura a jemné přechody mohou vyžadovat vyšší sampling |
+| Sampling | výchozí 600 ppi nebo více | kresba, textura a jemné přechody mohou vyžadovat 800 ppi+ |
 | Color accuracy | velmi vysoká důležitost | sledovat i vizuální věrnost |
 | Tonalita | velmi vysoká důležitost | důležité zejména u akvarelů, kreseb a fotografických tisků |
 | Sharpening | minimální | kvůli zachování přirozeného charakteru povrchu |
@@ -618,10 +653,10 @@ Následující tabulky nepředstavují absolutní a univerzálně závazné limi
 
 | Typ předlohy | Color space | Bit depth | Sampling | Poznámka |
 |---|---|---|---|---|
-| Běžné knihy a archiválie | eciRGB v2 | 8/16 bit | 300 ppi+ | rozhoduje čitelnost, neutralita, geometrie |
-| Fotografie | eciRGB v2 | 16 bit | 300 ppi+ | vysoká tonalita a barevná citlivost |
-| Mapy a plány | eciRGB v2 | 8/16 bit | 300 ppi+ | priorita geometrie a měřítkové přesnosti |
-| Grafiky a výtvarná díla | eciRGB v2 | 16 bit | 300 ppi+ | důležitá tonalita, gamut a vizuální věrnost |
+| Běžné knihy a archiválie | eciRGB v2 | 8/16 bit | 400 ppi | rozhoduje čitelnost, neutralita, geometrie |
+| Fotografie | eciRGB v2 | 16 bit | 600 ppi | vysoká tonalita a barevná citlivost |
+| Mapy a plány | eciRGB v2 | 8/16 bit | 400 až 600 ppi+ | priorita geometrie a měřítkové přesnosti |
+| Grafiky a výtvarná díla | eciRGB v2 | 16 bit | 600 ppi+ | důležitá tonalita, gamut a vizuální věrnost |
 
 ### 10.3 Archivní formáty, JPEG 2000 v rámci NDK a volba preservation masteru
 
@@ -883,8 +918,10 @@ Z toho pro interní praxi plyne minimálně toto:
 - použitý ICC workflow,
 - použitý target,
 - pozice targetu,
+- světelný zdroj a jeho nastavení,
 - white balance výsledek,
 - exposure / ΔL*,
+- illumination / lightness uniformity,
 - color accuracy,
 - sampling efficiency / SFR10,
 - MTF50,
@@ -899,6 +936,7 @@ Z toho pro interní praxi plyne minimálně toto:
 **Rozšířené položky oproti denní kontrole**
 - kontrola rovnoměrnosti osvětlení v obrazovém poli,
 - ověření neutrality v různých částech obrazu,
+- kontrola typu světelného zdroje, stability nastavení a dostupné hodnoty CRI,
 - reproduction scale accuracy,
 - kontrola targetů na fyzické poškození a znečištění,
 - kontrola monitoru a data poslední kalibrace,
@@ -1075,12 +1113,14 @@ Dokument se současně snaží důsledně rozlišovat mezi:
 
 Tabulky v této verzi mají orientační a rozhodovací funkci. Nenahrazují plný výklad v hlavním textu, ale slouží jako rychlá referenční vrstva pro provozní praxi a připomínkové řízení.
 
-V této verzi 0.2.4 byly oproti verzi 0.2.3 doplněny zejména tyto oblasti:
+V této verzi 0.2.5 byly oproti verzi 0.2.4 doplněny zejména tyto oblasti:
 
 - zásady skenování a post-processingu podle Metamorfoze, včetně pozadí, ořezu, rotace, narovnání, práce s vazbou a velkoformátových překryvných snímků,
 - přesnější rozlišení kalibračních, validačních, QA, device-level a object-level/workflow targetů včetně doporučených druhů targetů a role referenčních L\*a\*b\* dat,
 - formulace institucionální politiky, podle níž object-level/workflow targety nejsou obecně povinné, ale jsou doporučené pro nejvyšší kvalitativní režimy,
 - doplnění pravidel pro umístění object-level targetů při snímání,
+- doplnění doporučeného nastavení PPI podle typu předlohy s orientací na vyšší rámec FADGI, za podmínky ověřené sampling efficiency, SFR/MTF, sharpeningu a geometrické přesnosti,
+- doplnění samostatné části k rovnoměrnosti osvětlení, color castu, flat-field korekci a kvalitě světelného zdroje včetně orientačního požadavku CRI > 90,
 - upřesnění, že skládané odvozené soubory z překryvného snímání mohou při překročení limitů klasického TIFF používat JPEG 2000 nebo BigTIFF, zatímco preservation master má zpravidla zůstat tvořen samostatnými zdrojovými překryvnými snímky.
 
 ---
