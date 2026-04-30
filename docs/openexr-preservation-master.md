@@ -1,9 +1,10 @@
 # OpenEXR, Color Management and Preservation Masters: A Candidate Architecture for Cultural Heritage Imaging
 
-**Author:** Jan Houserek
-**Version:** 0.3 draft
-**Date:** 2026-04-26
-**Status:** Working paper / discussion draft
+**Author:** Jan Houserek   
+**Version:** 0.3 draft   
+**Date:** 2026-04-26   
+**Status:** Working paper / discussion draft   
+**License:** CC BY-SA 4.0   
 
 ---
 
