@@ -1,7 +1,7 @@
 # Metodika tvorby preservation masterů obrazových dat kulturního dědictví
 
-**Verze:** 0.2.5<br>
-**Poslední aktualizace:** 2026-04-30<br>
+**Verze:** 0.2.6<br>
+**Poslední aktualizace:** 2026-05-18<br>
 **Formát:** markdown<br>
 **Licence:** <a href="https://standardy.digitalizaty.cz">Metodika tvorby preservation masterů obrazových dat kulturního dědictví</a> © 2026 by <a href="https://github.com/bezverec">Jan Houserek</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
@@ -143,6 +143,8 @@ Metamorfoze je evropská metodika preservation imagingu, která propojuje požad
 
 Normy ISO 19264 poskytují standardizovaný rámec pro měření obrazové kvality digitalizačních systémů. Důležité jsou zejména pro definování samplingu, MTF, noise, tonality, color accuracy a dalších parametrů technické výkonnosti zobrazovacího řetězce.^3
 
+V redakční přípravě této verze byl zohledněn také dostupný pracovní návrh další edice ISO 19264-1.^7 Protože nejde o finálně vydanou mezinárodní normu, tato metodika jím nenahrazuje citaci ISO 19264-1:2021. Návrh je však důležitý jako signál vývoje směrem k větší nezávislosti na konkrétních obchodních názvech targetů: rozhodující mají být měřitelné vlastnosti testovacího targetu, dostupnost referenčních dat, vhodnost pro konkrétní metriky a kompatibilita s vyhodnocovacím softwarem, nikoli samotný fakt, že jde například o UTT nebo jiný známý target.
+
 ### 4.4 ICC Consortium
 
 Dokumenty ICC Consortium poskytují teoretický i praktický rámec pro správu barev v RGB pracovním postupu.^4^,^5
@@ -214,9 +216,17 @@ Pro tuto metodiku z toho plyne důležitý závěr:
 **Volba mezi matrix/TRC a LUT profilem nemá být vedena představou, že jeden typ je absolutně správný, ale tím, zda zvolený profil dostatečně přesně, stabilně a opakovatelně charakterizuje konkrétní zařízení a zda je kompatibilní s institucionálním workflow.**
 
 V institucionální praxi lze doporučit tento princip:
-1. **pracovní RGB prostory preservation masterů** mají být standardní a široce interpretovatelné, typicky založené na dobře definovaném ICC prostoru,  
-2. **vstupní profil zařízení** může být maticový nebo LUT podle výsledku profilace a chování zařízení,  
+1. **pracovní RGB prostory preservation masterů** mají být standardní a široce interpretovatelné, typicky založené na dobře definovaném ICC prostoru,
+2. **vstupní profil zařízení** může být maticový nebo LUT podle výsledku profilace a chování zařízení,
 3. rozhodující je, aby převod ze vstupního profilu do standardního archivního RGB prostoru byl **řízený, dokumentovaný a reprodukovatelný**.
+
+### 6.3c Standardizovaný ICC profil masteru a profil snímače
+
+Tato metodika nadále vychází z praktické linie FADGI a Metamorfoze: preservation master má být zpravidla uložen ve standardizovaném pracovním RGB prostoru s vloženým ICC profilem, nikoli v nedokumentovaném device-dependent prostoru konkrétního snímače.^1^,^2^,^4^,^5
+
+Je však nutné výslovně rozlišit dvě různé role ICC profilů. **Vstupní profil zařízení** popisuje konkrétní snímací řetězec a slouží jako nástroj charakterizace a řízeného převodu. **Standardizovaný profil preservation masteru** naproti tomu popisuje výsledný pracovní nebo archivní barevný prostor souboru. Správný postup tedy není prosté dodatečné přiřazení standardního profilu k libovolným výstupním datům, ale řízená transformace z validovaného vstupního stavu do zvoleného standardního prostoru.
+
+Za metodicky rizikové se považuje zejména workflow, v němž zařízení provede skryté nebo nezdokumentované interní úpravy tonality, kontrastu, saturace, clippingu, odšumění nebo zostření a výslednému souboru je následně pouze přiřazen standardní ICC profil. V takovém případě profil nemusí věrně popisovat skutečný význam obrazových dat. Pokud se používá standardní profil typu eciRGB v2, Adobe RGB (1998), ProPhoto RGB nebo sRGB, má být zřejmé, jakou profilací, kalibrací nebo konverzí se do tohoto prostoru data skutečně dostala.
 
 ### 6.4 Profil monitoru
 
@@ -277,6 +287,8 @@ Metamorfoze uvádí přehled vhodných targetů pro jednotlivé testy: UTT, Colo
 
 FADGI navíc doporučuje testovat na začátku každého pracovního dne nebo na začátku každé dávky, podle toho, co nastane dříve, a testování opakovat po aktualizaci software/device drivers i při indikaci problému.^1
 
+V návaznosti na vývoj ISO 19264 je vhodné chápat seznamy targetů jako doporučené příklady, nikoli jako uzavřený katalog. UTT zůstává prakticky významný kombinovaný target, ale tato metodika jej nepovažuje za jediný referenční model konformity. Stejnou roli může plnit i jiný target nebo kombinace targetů, pokud prokazatelně pokrývá požadované metriky, má odpovídající referenční data, je kompatibilní s vyhodnocovacím softwarem a odpovídá zamýšlené sampling rate.
+
 ### 8.1 Typy targetů podle role ve workflow
 
 Targety není vhodné chápat jako jeden zaměnitelný druh pomůcky. Metamorfoze rozlišuje dvě základní skupiny technických targetů: **kalibrační a validační targety** pro posouzení zařízení nebo snímací sestavy a **workflow targety / object-level targety** pro průběžné sledování stability konkrétních snímků nebo sérií.^2
@@ -293,6 +305,8 @@ Pro tuto metodiku je užitečné rozlišovat následující praktické role:
 | Workflow / object-level kontrola | stabilitu snímání v průběhu série, zejména expozici, neutralitu, tonální chování a sampling | Munsell Linear Gray Scale (MLGS), Object Level Target (OLT) | pro nejvyšší kvalitu doporučen target-specific L\*a\*b\* referenční soubor; u režimu odpovídajícího Metamorfoze Full je vyžadován |
 
 Jeden fyzický target může plnit více rolí, pokud obsahuje odpovídající prvky a pokud je podporován používaným analyzačním softwarem. Rozhodující není obchodní název targetu, ale jeho metrologická vhodnost, dostupnost referenčních dat, fyzický stav a kompatibilita s konkrétním vyhodnocovacím postupem.
+
+U nově pořizovaných nebo projektově schvalovaných targetů má být vedle názvu a výrobce ověřeno také to, pro jakou maximální sampling rate je target určen, jaká referenční data jsou k dispozici, zda existuje možnost recertifikace, zda target obsahuje prvky pro požadované metriky a zda jeho fyzický rozměr odpovídá snímanému obrazovému poli. Pokud jedna deska nebo karta nepokrývá všechny metriky, je přípustné použít více vzájemně zdokumentovaných targetů.
 
 ### 8.2 Object-level targety a workflow targety
 
@@ -362,6 +376,8 @@ Tato metodika doporučuje rozlišit tři praktické vrstvy targetového workflow
 
 Metamorfoze ukládá snímky QA targetů spolu s preservation mastery a zdůrazňuje, že musí být možné propojit produkční den, snímky technických targetů a konkrétní preservation mastery. Tuto vazbu lze v praxi zajistit produkčním přehledem, názvovou konvencí a uložením validačních reportů.^2
 
+Při vstupní charakterizaci zařízení nebo při periodické plné validaci má targetové workflow pokrýt nejen tonalitu, barvu, SFR/MTF a geometrii, ale také metriky, které se v běžném denním provozu často přehlížejí: dynamický rozsah, banding, vadné pixely, reproduction scale, illumination non-uniformity a chrominance non-uniformity. Tyto metriky není nutné vyžadovat u každého snímku, ale mají být součástí důkazu, že digitalizační sestava je pro daný typ předloh technicky způsobilá.
+
 ### 8.6 Je nutné snímat target u každého dokumentu?
 
 Tato otázka vyžaduje přesnou odpověď, protože v praxi se často směšují dva různé požadavky:
@@ -416,7 +432,7 @@ Metamorfoze hodnotí illumination jako **illumination non-uniformity** a vyjadř
 
 FADGI používá metriku **Lightness Uniformity**, vyjádřenou jako standard deviation divided by mean. Konkrétní limity se liší podle kategorie a hvězdičkové úrovně, ale v typickém čtyřúrovňovém rámci se pohybují přibližně od **< 8 %** u nejnižší úrovně po **< 1 %** u čtyřhvězdičkové úrovně. FADGI současně upozorňuje, že flat-field korekce může nerovnoměrnost snížit, ale nemá nahrazovat dobré profesionální nastavení snímání; příliš agresivní korekce může zavést artefakty nebo šum.^1
 
-ISO 19264-1 poskytuje analytický rámec pro měření kvality zobrazovacích systémů u reflexních předloh pomocí specifikovaného testovacího targetu. Z hlediska této metodiky je ISO důležité především tím, že podporuje měřitelný a opakovatelný přístup k parametrům obrazové kvality, nikoli pouhé vizuální posouzení osvětlení.^3
+ISO 19264-1 poskytuje analytický rámec pro měření kvality zobrazovacích systémů u reflexních předloh pomocí specifikovaného testovacího targetu. Z hlediska této metodiky je ISO důležité především tím, že podporuje měřitelný a opakovatelný přístup k parametrům obrazové kvality, nikoli pouhé vizuální posouzení osvětlení.^3 V návaznosti na připravovanou revizi ISO je vhodné rozlišovat **illuminance non-uniformity** jako rozdíl světlosti v ploše a **chrominance non-uniformity** jako barevnou nerovnoměrnost pole. Plná charakterizace systému má proto sledovat nejen ΔL\*, ale také barevné odchylky neutrální plochy napříč obrazovým polem.
 
 Kromě rovnoměrnosti je nutné sledovat také **kvalitu světelného zdroje**. FADGI definuje **CRI (Color Rendering Index)** jako míru blízkosti spektrálního rozložení světelného zdroje k referenci a uvádí, že hodnota **CRI nad 90** je obecně považována za vhodnou pro většinu cultural heritage imaging. Světelné zdroje se závažnými spektrálními nedostatky jsou pro kulturně-dědické snímání nevhodné, protože mohou vést k metamerickým problémům a ke zkreslení barevné reprodukce.^1
 
@@ -426,7 +442,8 @@ Pro tuto metodiku z toho plyne následující doporučení:
 2. pro kontrolu používat frame-filling white sheet, frame-filling UTT nebo jiný vhodný plošný target s měřenými L\*a\*b\* hodnotami,
 3. sledovat jak ΔL\* / lightness uniformity, tak white balance a color cast v celé ploše,
 4. používat světelné zdroje s vysokým CRI, orientačně **CRI > 90**, a dokumentovat typ světla, nastavení a případné změny,
-5. považovat flat-field korekci za kontrolovaný technický nástroj, nikoli za náhradu správné geometrie světel, odstínění odrazů, čisté optické dráhy a stabilního snímacího prostředí.
+5. při plné validaci systému hodnotit i chrominance non-uniformity, tedy barevnou nerovnoměrnost pole,
+6. považovat flat-field korekci za kontrolovaný technický nástroj, nikoli za náhradu správné geometrie světel, odstínění odrazů, čisté optické dráhy a stabilního snímacího prostředí.
 
 ---
 
@@ -508,6 +525,17 @@ Preservation master musí obstát jako celek: claimed sampling, obtained samplin
 ### 9.8 ISO 19264 jako analytický rámec
 
 ISO 19264-1:2021 popisuje metody pro image quality analysis u reflective originals a vztahuje se na skenery i digitální kamery v oblasti kulturního dědictví.^3 Pro tuto metodiku má význam především v tom, že sjednocuje měření více parametrů v rámci jednoho analytického rámce. Metamorfoze se na ISO 19264-1 výslovně odvolává a má samostatnou část věnovanou vztahu „Metamorfoze and ISO 19264-1(E) 2021.“^2 FADGI ISO 19264 výslovně uvádí mezi relevantními standardy pro digital image conformance evaluation.^1
+
+Pracovní návrh další edice ISO 19264-1 potvrzuje, že ISO je vhodné chápat především jako analytickou a reportovací vrstvu.^7 Vedle běžně sledovaných parametrů, jako jsou white balance, tonalita, color accuracy, sampling rate, MTF/SFR, sharpening, misregistration a distortion, je vhodné u plné validace systému výslovně evidovat také:
+
+- **dynamic range**, tedy schopnost snímacího systému zachytit kontrastní rozsah předloh bez ztráty kresby,
+- **banding**, zejména u skenerů a liniových systémů,
+- **defect pixels**, tedy vadné nebo odchylné pixely a jejich hustotu,
+- **acutance**, jako doplňkový ukazatel vnímané ostrosti navázaný na SFR,
+- **illuminance non-uniformity** a **chrominance non-uniformity**,
+- **reproduction scale**, tedy vztah mezi fyzickou velikostí originálu a velikostí reprezentovanou v obrazových datech.
+
+Tyto metriky nemají automaticky rozšířit každodenní provozní kontrolu do nepoužitelné šíře. Doporučuje se rozlišovat mezi denní kontrolou stability workflow a plnou charakterizací zařízení, která se provádí při zavedení workflow, po zásadní změně zařízení nebo nastavení a periodicky podle institucionální politiky.
 
 ### 9.9 RAW skeny a zdrojová snímací data
 
@@ -876,16 +904,27 @@ Pro institucionální praxi lze doporučit následující minimální pravidla:
 
 ## 11. Workflow tvorby preservation masteru
 
-1. Příprava instituce, zařízení a předlohy.  
-2. Kontrola prostředí a ověření kalibračního stavu zařízení.  
+1. Příprava instituce, zařízení a předlohy.
+2. Kontrola prostředí a ověření kalibračního stavu zařízení.
 3. Snímání a vyhodnocení technického targetu.  
 4. Nastavení white balance, expozice a základních parametrů snímání.  
 5. Ověření neutrality, tonality a základní barevné správnosti.  
 6. Capture originálu ve vysoké bitové hloubce.  
 7. Řízená profilace a konverze do standardního archivního RGB prostoru.  
 8. Uložení preservation masteru ve standardním formátu s embedded ICC profilem.  
-9. Objektivní a vizuální kontrola kvality.  
+9. Objektivní a vizuální kontrola kvality.
 10. Tvorba derivátů až z validovaného preservation masteru.^1^,^2
+
+Před zahájením produkčního snímání má být v projektové dokumentaci nebo denním QA záznamu ověřeno zejména:
+
+- stabilita mechanické sestavy, čistota optické dráhy a omezení rušivého okolního světla,
+- konzistentní nastavení capture software, včetně vypnutí nezdokumentovaných automatických korekcí,
+- expozice bez clippingu ve světlech i ve stínech u relevantních typů předloh,
+- white balance a její pravidelná obnova podle stability světelného zdroje,
+- platnost vstupního profilu zařízení nebo jiného kalibračního modelu,
+- ostření, rovinnost předlohy a kontrola hloubky ostrosti,
+- ověření declared/obtained sampling rate a reproduction scale u dané sestavy,
+- návaznost targetových snímků, validačních reportů a produkčních souborů.
 
 ---
 
@@ -900,6 +939,8 @@ Z toho pro interní praxi plyne minimálně toto:
 - při podezření na problém opakovat conformance test,
 - vést průběžný záznam o white balance, color accuracy, SFR/MTF, misregistration a geometrii,
 - neměnit workflow po potvrzení konformity bez nového testování.^1^,^2
+
+U plné charakterizace zařízení se doporučuje, aby report obsahoval také identifikaci skeneru nebo kamery včetně sériového čísla, identifikaci objektivu nebo snímací hlavy, verzi capture a QA software, target a jeho sériové číslo, verzi referenčního souboru, datum měření referenčních dat, bitovou hloubku, barevný prostor, embedded ICC profil, deklarovanou a dosaženou sampling rate, rozměry výsledného obrazu a jednoznačnou vazbu mezi reportem a testovacími soubory.
 
 ---
 
@@ -922,6 +963,7 @@ Z toho pro interní praxi plyne minimálně toto:
 - white balance výsledek,
 - exposure / ΔL*,
 - illumination / lightness uniformity,
+- chrominance non-uniformity, pokud je součástí použitého QA režimu,
 - color accuracy,
 - sampling efficiency / SFR10,
 - MTF50,
@@ -935,8 +977,13 @@ Z toho pro interní praxi plyne minimálně toto:
 
 **Rozšířené položky oproti denní kontrole**
 - kontrola rovnoměrnosti osvětlení v obrazovém poli,
+- kontrola chrominance non-uniformity v obrazovém poli,
 - ověření neutrality v různých částech obrazu,
 - kontrola typu světelného zdroje, stability nastavení a dostupné hodnoty CRI,
+- dynamic range,
+- banding,
+- defect pixels,
+- acutance, pokud jej podporuje použitý software,
 - reproduction scale accuracy,
 - kontrola targetů na fyzické poškození a znečištění,
 - kontrola monitoru a data poslední kalibrace,
@@ -962,6 +1009,8 @@ Za doporučené se považují targety, které:
 - mají jasně dohledatelný původ a referenční data,
 - jsou kompatibilní s používaným analyzačním softwarem,
 - odpovídají měřené metrice,
+- mají uvedenou nebo ověřitelnou maximální sampling rate, pro kterou jsou vhodné,
+- umožňují recertifikaci nebo pravidelnou kontrolu referenčních hodnot, pokud je to pro daný typ targetu relevantní,
 - jsou fyzicky v dobrém stavu a nejsou znečištěné nebo degradované,
 - jsou používány konzistentně v rámci projektu,
 - mají evidovanou identifikaci, verzi nebo sériové číslo, pokud je výrobce poskytuje,
@@ -1032,6 +1081,8 @@ Tato příloha předpokládá, že validační software standardně exportuje ta
 - exposure / ΔL*
 - mean color accuracy
 - upper metric (max nebo 90th percentile podle metodiky)
+- dynamic range, pokud je součástí plné validace
+- banding a defect pixels, pokud je podporuje použitý QA software
 - claimed sampling rate
 - obtained sampling rate
 - sampling efficiency / SFR10
@@ -1063,10 +1114,11 @@ Tento formát je vhodný tam, kde instituce nechce nebo nemůže archivovat prop
 - Exposure:...  
 - Color accuracy:...  
 - Sampling efficiency / SFR10:...  
-- MTF50:...  
-- Max modulation:...  
-- Color misregistration:...  
-- Geometric distortion:...  
+- MTF50 / acutance, pokud je sledována:...
+- Max modulation:...
+- Dynamic range / banding / defect pixels, pokud jsou součástí validace:...
+- Color misregistration:...
+- Geometric distortion:...
 
 **Celkové posouzení:**  
 ...  
@@ -1113,7 +1165,7 @@ Dokument se současně snaží důsledně rozlišovat mezi:
 
 Tabulky v této verzi mají orientační a rozhodovací funkci. Nenahrazují plný výklad v hlavním textu, ale slouží jako rychlá referenční vrstva pro provozní praxi a připomínkové řízení.
 
-V této verzi 0.2.5 byly oproti verzi 0.2.4 doplněny zejména tyto oblasti:
+Ve verzi 0.2.5 byly oproti verzi 0.2.4 doplněny zejména tyto oblasti:
 
 - zásady skenování a post-processingu podle Metamorfoze, včetně pozadí, ořezu, rotace, narovnání, práce s vazbou a velkoformátových překryvných snímků,
 - přesnější rozlišení kalibračních, validačních, QA, device-level a object-level/workflow targetů včetně doporučených druhů targetů a role referenčních L\*a\*b\* dat,
@@ -1122,6 +1174,14 @@ V této verzi 0.2.5 byly oproti verzi 0.2.4 doplněny zejména tyto oblasti:
 - doplnění doporučeného nastavení PPI podle typu předlohy s orientací na vyšší rámec FADGI, za podmínky ověřené sampling efficiency, SFR/MTF, sharpeningu a geometrické přesnosti,
 - doplnění samostatné části k rovnoměrnosti osvětlení, color castu, flat-field korekci a kvalitě světelného zdroje včetně orientačního požadavku CRI > 90,
 - upřesnění, že skládané odvozené soubory z překryvného snímání mohou při překročení limitů klasického TIFF používat JPEG 2000 nebo BigTIFF, zatímco preservation master má zpravidla zůstat tvořen samostatnými zdrojovými překryvnými snímky.
+
+V této verzi 0.2.6 byly oproti verzi 0.2.5 doplněny zejména tyto oblasti:
+
+- pracovní poznámky k vývoji ISO 19264-1 a k posunu od konkrétních obchodních názvů targetů k měřitelným požadavkům na target, referenční data a vyhodnocovací workflow,
+- zpřesnění vztahu mezi vstupním profilem snímacího zařízení a standardizovaným ICC profilem preservation masteru,
+- doplnění požadavků na výběr targetů, zejména maximální vhodnou sampling rate, recertifikaci, referenční data a možnost kombinovat více targetů pro různé metriky,
+- doplnění metrik vhodných pro plnou charakterizaci zařízení: dynamic range, banding, defect pixels, acutance, reproduction scale a chrominance non-uniformity,
+- rozšíření doporučeného workflow a QA protokolů o kontrolu nastavení systému před snímáním a o úplnější reportování měřicích podmínek.
 
 ---
 
@@ -1492,6 +1552,8 @@ International Color Consortium. *The Role of ICC Profiles*. ICC White Paper 7. I
 
 International Organization for Standardization. *ISO 19264-1:2021 Photography—Archiving Systems—Image Quality Analysis—Part 1: Reflective Originals*. Geneva: ISO, 2021.
 
+International Organization for Standardization. *ISO/DIS 19264-1:2026 Photography—Archiving Systems—Image Quality Analysis—Part 1: Reflective Originals*. Draft International Standard. Geneva: ISO, 2026.
+
 Kočišová, Pavlína, Zdeněk Vašek, Václav Jiroušek, Vojtěch Kopský, Jan Bilwachs, Filip Pavčík a Petr Cajthaml. *Zachováno navěky? Teorie a praxe dlouhodobého uchování digitálních dokumentů*. Praha: Národní knihovna České republiky, 2023.
 
 Van Dormolen, Hans. *Metamorfoze Preservation Imaging Guidelines: Image Quality*. Version 2.0. The Hague: Metamorfoze, April 2025.
@@ -1506,3 +1568,4 @@ Van Dormolen, Hans. *Metamorfoze Preservation Imaging Guidelines: Image Quality*
 4. International Color Consortium, *The Role of ICC Profiles*, ICC White Paper 7.
 5. International Color Consortium, *RGB Workflow*, ICC White Paper 23.
 6. Pavlína Kočišová et al., *Zachováno navěky? Teorie a praxe dlouhodobého uchování digitálních dokumentů* (Praha: Národní knihovna České republiky, 2023).
+7. International Organization for Standardization, *ISO/DIS 19264-1:2026 Photography—Archiving Systems—Image Quality Analysis—Part 1: Reflective Originals*, Draft International Standard (Geneva: ISO, 2026). Tento dokument je pracovní návrh a nemá být interpretován jako finálně vydaná mezinárodní norma.
