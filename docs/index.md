@@ -1,7 +1,7 @@
 # Metodika tvorby preservation masterů obrazových dat kulturního dědictví
 
-**Verze:** 0.2.6<br>
-**Poslední aktualizace:** 2026-05-18<br>
+**Verze:** 0.3.0<br>
+**Poslední aktualizace:** 2026-05-25<br>
 **Formát:** markdown<br>
 **Licence:** <a href="https://standardy.digitalizaty.cz">Metodika tvorby preservation masterů obrazových dat kulturního dědictví</a> © 2026 by <a href="https://github.com/bezverec">Jan Houserek</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
@@ -76,6 +76,9 @@ Nesouosost barevných kanálů vedoucí k barevným lemům nebo nepřesnému př
 
 #### DeltaE / ΔE
 Souhrnné označení pro metriky vyjadřující barevnou odchylku mezi dvěma body v barevném prostoru.
+
+#### DPIR
+Digital Preservation Imaging Rating. Pracovní ratingový model této metodiky pro hodnocení důvěryhodnosti obrazového výstupu, workflow nebo produkční dávky.
 
 #### eciRGB v2
 Standardní RGB barevný prostor doporučovaný v evropském prostředí pro archivní a kvalitní produkční pracovní postup.
@@ -902,7 +905,489 @@ Pro institucionální praxi lze doporučit následující minimální pravidla:
 
 ---
 
-## 11. Workflow tvorby preservation masteru
+## 11. Obrazové vady, artefakty a provozní stabilita
+
+### 11.1 Účel kontroly artefaktů
+
+Kontrola obrazových vad a artefaktů je nedílnou součástí tvorby preservation masteru. Preservation master nemá být pouze obrazem s odpovídajícím rozlišením, barevným prostorem a formátem, ale také obrazem, který neobsahuje technické vady vzniklé snímáním, zpracováním, kompresí, chybným nastavením zařízení nebo neodůvodněnými zásahy do obrazových dat.
+
+Artefaktem se v této metodice rozumí takový obrazový jev, který není vlastností digitalizované předlohy, ale vznikl v důsledku snímacího zařízení, optiky, osvětlení, zpracování, komprese, manipulace se souborem nebo nekonzistentního provozního workflow. Artefakty je třeba odlišovat od vlastností originálu, například skvrn, poškození papíru, foxingu, stárnutí fotografického materiálu, tiskového rastru, deformace vazby, průsvitu textu z rubové strany nebo nerovnoměrností ruční výroby papíru.
+
+Cílem kontroly artefaktů není vytvořit vizuálně „čistší“ obraz než originál, ale zabránit tomu, aby preservation master obsahoval technické vady, které zkreslují informační, vizuální, tonální, barevnou nebo metrickou hodnotu předlohy.
+
+### 11.2 Vlastnosti originálu a vady digitalizace
+
+Při hodnocení obrazové kvality je nutné důsledně rozlišovat mezi:
+
+- vlastnostmi originálu, které mají být zachovány,
+- poškozeními originálu, která mají být dokumentována,
+- artefakty digitalizace, které mají být minimalizovány nebo odstraněny opakováním snímání,
+- záměrnými zásahy, které mohou být přípustné u derivátů, ale zpravidla nejsou přípustné u preservation masteru.
+
+Za vlastnosti nebo stopy originálu lze považovat například tón a strukturu papíru, skvrny, foxing, zatečení, zažloutnutí, mechanické poškození, tiskový rastr, fotografickou zrnitost, nerovnosti pergamenu nebo papíru, stopy vazby, razítka, vpisky, opravy a jiné historické nebo uživatelské zásahy.
+
+Za artefakty digitalizace se naproti tomu považují zejména pruhy vzniklé snímačem, barevné lemy způsobené color misregistration nebo optikou, halo po doostření, posterizace, clipping světel nebo stínů, kompresní artefakty, ztráta textury vlivem odšumění, neodůvodněná změna barevnosti, příliš těsný nebo nekonzistentní ořez a chybějící části obrazu způsobené chybným snímáním.
+
+Preservation master má dokumentovat originál, nikoli opravovat jeho fyzický stav. Retuše, digitální doplňování, odstraňování skvrn, vyhlazování povrchu, umělé bělení papíru nebo rekonstrukce chybějících částí se pro preservation master považují za nepřípustné, pokud nejsou výslovně součástí zvláštního konzervačního, restaurátorského nebo výzkumného režimu a nejsou uloženy jako samostatná odvozená reprezentace.
+
+### 11.3 Snímací artefakty
+
+Snímací artefakty vznikají přímo při převodu fyzické předlohy do digitálního obrazu. Mohou být způsobeny vlastnostmi snímače, mechaniky skeneru, světelného zdroje, elektroniky, pohybu, chybným zaostřením nebo nečistotami v optické cestě.
+
+| Artefakt | Popis | Dopad |
+|---|---|---|
+| Banding | pravidelné pruhy nebo pásy v obraze | narušuje tonalitu a může zakrýt jemné informace |
+| Streaking | podélné šmouhy nebo linky, často u liniových skenerů | znehodnocuje plochy i text |
+| Missing scan lines | chybějící nebo vadné řádky snímání | může způsobit ztrátu obsahu |
+| Defect pixels | vadné pixely nebo subpixely | rušivé body, případně clustery |
+| Sensor dust | stopy prachu na snímači nebo optice | opakující se skvrny v sérii |
+| Newton rings | interferenční obrazce při kontaktu s krycím sklem | závažné zejména u fotografií |
+| Motion blur | rozmazání způsobené pohybem | ztráta detailu |
+| Focus falloff | pokles ostrosti mimo rovinu zaostření | časté u knih, vazeb a nerovných předloh |
+
+U nejvyšších kvalitativních režimů musí být snímací artefakty sledovány nejen vizuálně, ale také pomocí měřitelných parametrů, pokud jsou pro daný jev dostupné. ISO 19264 zahrnuje mimo jiné banding, defect pixels, noise, dynamic range a další charakteristiky jako součást širší analýzy zobrazovacího systému.^3
+
+### 11.4 Optické a geometrické artefakty
+
+Optické a geometrické artefakty vznikají zejména v důsledku objektivu, snímací geometrie, nekolmosti osy snímání, nerovinnosti předlohy, nevhodného osvětlení nebo nesprávného mechanického nastavení zařízení.
+
+Mezi hlavní optické a geometrické artefakty patří chromatická aberace, color misregistration, geometrické zkreslení, nekolmost snímání, rotace a skew, nerovnoměrné měřítko v ploše, vinětace, flare, lokální neostrost, nerovnoměrné osvětlení a barevná nerovnoměrnost osvětlení.
+
+U map, plánů, technické dokumentace, grafik a velkoformátových předloh mají optické a geometrické artefakty zásadní význam. U těchto typů předloh nestačí hodnotit pouze čitelnost nebo barevnost; digitální reprezentace musí být také metrická, stabilní a geometricky spolehlivá.
+
+U knih a rukopisů je třeba věnovat zvláštní pozornost oblasti hřbetu, zakřivení listu, stínům, lokálnímu rozostření a deformaci textového bloku. Pokud je fyzická deformace originálu součástí jeho aktuálního stavu, nemá být mechanicky ani digitálně potlačována způsobem, který by zkresloval dokumentační hodnotu záznamu.
+
+### 11.5 Procesní artefakty
+
+Procesní artefakty vznikají v důsledku softwarového nebo hardwarového zpracování obrazu. Mohou být zavedeny skenerem, kamerou, ovladačem, RAW konvertorem, skenovacím softwarem, dávkovým postprocessingem nebo exportním modulem.
+
+| Artefakt | Příčina | Riziko pro preservation master |
+|---|---|---|
+| Over-sharpening | agresivní doostření | halo, falešné hrany, deformace textury |
+| Denoising artifacts | odšumění | ztráta papírové textury, kresby nebo zrna |
+| Posterization | nízká bitová hloubka nebo špatné převody | ztráta jemných přechodů |
+| Clipping | nevhodná expozice nebo tonalita | ztráta kresby ve světlech nebo stínech |
+| Black crush | stlačení tmavých tónů | ztráta detailu v tmavých partiích |
+| Artificial contrast enhancement | automatické úpravy kontrastu | zkreslení tonální věrnosti |
+| Color cast | chybný white balance nebo profilace | systematická barevná odchylka |
+| Channel clipping | ořez v jednom nebo více kanálech | barevné posuny a ztráta informace |
+
+Pro preservation master se za rizikové považují zejména automatické nebo skryté úpravy obrazu, které nejsou dokumentované a které mění tonalitu, barevnost, ostrost, šum, texturu nebo informační obsah předlohy.
+
+Pokud zařízení nebo software provádí interní korekce, musí být známo, jaké korekce jsou aktivní a zda jsou kompatibilní s cílem preservation masteru. Nastavení typu automatický kontrast, automatická saturace, automatické doostření, potlačení šumu, odstranění prachu, vybělení pozadí nebo vylepšení čitelnosti nejsou pro preservation master přípustná, pokud nejsou výslovně zdůvodněná, řízená a dokumentovaná.
+
+### 11.6 Kompresní artefakty
+
+Kompresní artefakty vznikají při ztrátové nebo nevhodně nastavené kompresi. U preservation masteru je třeba preferovat nekomprimovaná nebo bezeztrátově komprimovaná data, případně takovou kompresní politiku, která je výslovně schválená, validovaná a dlouhodobě obhajitelná.
+
+Mezi kompresní artefakty patří zejména blokové artefakty u JPEG, ringing, ztráta jemné textury, změna hran a linií, rozpad drobného písma, vznik falešných struktur, ztráta tonální plynulosti a zhoršení dalšího zpracování, například OCR nebo metrické analýzy.
+
+JPEG 2000 může být v některých institucionálních a národních rámcích použit jako archivní reprezentace, zejména v bezeztrátovém režimu. Pokud je použit ztrátový JPEG 2000, musí být jeho použití zdůvodněno, testováno a vizuálně i technicky ověřeno tak, aby kompresní artefakty nezasahovaly informační hodnotu předlohy.
+
+Pro rating platí, že nejvyšší úrovně kvality nelze udělit výstupu, u něhož jsou patrné kompresní artefakty nebo u něhož není kompresní režim zdokumentován.
+
+### 11.7 Noise a denoising
+
+Šum je přirozenou nebo technickou součástí snímacího systému, ale jeho hodnocení musí být opatrné. Nízký šum nemusí vždy znamenat kvalitní snímání; může být také důsledkem agresivního odšumění, které odstranilo jemnou kresbu, texturu papíru, zrnitost fotografie nebo jiné vlastnosti originálu.
+
+Preservation master nemá být vyhlazen tak, aby ztratil charakter fyzické předlohy. Zvláště u fotografií, grafik, kreseb, pergamenů, starých papírů a výtvarných děl může být přirozená textura nebo zrnitost významnou součástí dokumentační hodnoty.
+
+Za rizikové se považuje zejména plošné vyhlazení papíru, ztráta vláken, potlačení fotografického zrna, plastický nebo voskový vzhled, zánik jemných čar a rozpad hran po kombinaci odšumění a doostření.
+
+Pro preservation master má být odšumění buď vypnuto, nebo omezeno na technicky zdůvodněnou a dokumentovanou úroveň, která nezasahuje informační obsah ani charakter originálu.
+
+### 11.8 Tonální artefakty a clipping
+
+Tonální věrnost je základní podmínkou preservation masteru. Obraz nesmí ztrácet kresbu ve světlech, stínech ani v barevných kanálech. Hodnocení tonality proto nemá být omezeno na subjektivní dojem, ale má být spojeno s kontrolou expozice, OECF/TRC, dynamického rozsahu, šumu a bitové hloubky.
+
+Za tonální artefakty se považují zejména clipping světel, clipping stínů, clipping jednotlivých barevných kanálů, black crush, posterizace, nežádoucí zvýšení kontrastu, příliš plochá nebo deformovaná tonální odezva a ztráta kresby v tmavých nebo světlých oblastech.
+
+U předloh s vysokým dynamickým rozsahem, například u fotografických materiálů, tmavých tisků, lesklých povrchů nebo degradovaných dokumentů, je třeba ověřit, zda systém skutečně zachycuje potřebný rozsah bez nevratné ztráty informace.
+
+### 11.9 Manipulační a retušovací zásahy
+
+Preservation master nesmí být zaměňován s restaurátorskou nebo prezentační rekonstrukcí. Uživatelé i budoucí správci digitálních objektů musí být schopni důvěřovat tomu, že master reprezentuje aktuální fyzický stav originálu v definovaném technickém režimu.
+
+Za nepřípustné zásahy do preservation masteru se zpravidla považují odstraňování skvrn originálu, digitální bělení papíru, vyhlazování struktury, doplňování chybějících částí, retuš trhlin, odstraňování razítek nebo vpisků, změna barevnosti s cílem „vylepšit“ vzhled, lokální zesvětlování nebo ztmavování obsahu, kreativní barevná korekce a neodůvodněný ořez zasahující do fyzických okrajů předlohy.
+
+Takové zásahy mohou být přípustné u uživatelských derivátů, edičních výstupů, výstavních reprodukcí nebo badatelských rekonstrukcí, ale musí být odlišeny od preservation masteru.
+
+### 11.10 Sekvenční konzistence produkční dávky
+
+U vícestránkových, vícesnímkových a dávkově zpracovaných objektů nestačí hodnotit izolované obrazy. Kvalita preservation masteru se projevuje také konzistencí celé sekvence.
+
+U knih, rukopisů, periodik, archivních složek a obdobných celků je třeba sledovat zejména stabilitu expozice, white balance, barevného profilu, ořezu, natočení, měřítka, pozadí, názvů souborů, úplnost sekvence, správné pořadí stran a absenci duplicit nebo chybějících snímků.
+
+Sekvenční nekonzistence může snížit rating celé dávky, i pokud jednotlivé snímky splňují dílčí technické parametry. U nejvyšších ratingových úrovní musí být konzistence produkční dávky součástí kontroly kvality.
+
+### 11.11 Artefakty jako diskvalifikační podmínka ratingu
+
+Artefakty se v ratingovém modelu nehodnotí pouze jako dílčí bodové skóre. Některé vady mají charakter kritické brány. Pokud jsou přítomny, nelze udělit nejvyšší rating bez ohledu na dobré výsledky v jiných metrikách.
+
+Za diskvalifikační pro rating DPIR-AAA se považují zejména viditelný banding, missing scan lines, systémové pruhy nebo šmouhy, clipping informačně významných oblastí, zjevné halo po doostření, agresivní denoising, viditelné kompresní artefakty, nezdokumentované retuše, zásah do obsahu originálu, nestabilní white balance v rámci série, chybějící QA report a chybějící nebo neověřený targetový režim.
+
+Pro nižší ratingové úrovně mohou být některé artefakty tolerovány, pokud nezasahují zásadní informační obsah a jsou popsány jako omezení kvality.
+
+## 12. DPIR – rating kvality preservation imaging workflow
+
+### 12.1 Význam zkratky DPIR
+
+DPIR znamená **Digital Preservation Imaging Rating**. Jde o pracovní ratingový model pro hodnocení důvěryhodnosti obrazového výstupu a workflow při digitalizaci kulturního dědictví. Rating DPIR vyjadřuje, do jaké míry lze konkrétní obrazový výstup, digitalizační workflow nebo produkční dávku považovat za vhodné pro dlouhodobé uchování, další zpracování, audit a budoucí interpretaci.
+
+DPIR nehodnotí pouze jeden parametr, například PPI, formát souboru, barevný prostor nebo velikost obrazu. Hodnotí souběh měřitelných technických vlastností, provozní stability, použití targetů, kontroly artefaktů, bitové hloubky a dokumentace.
+
+### 12.2 Smysl ratingu
+
+Rating DPIR je hodnoticí model, který vyjadřuje celkovou důvěryhodnost digitální obrazové reprodukce a pracovního postupu, jímž vznikla. Jeho cílem není mechanicky přepsat jednu konkrétní metodiku, ale vytvořit praktický rámec, který propojí požadavky FADGI, Metamorfoze a ISO 19264 do srozumitelné a institucionálně použitelné škály.
+
+Rating má sloužit zejména pro interní specifikaci digitalizačních projektů, porovnání úrovní workflow, dokumentaci kvality produkční dávky, komunikaci mezi zadavatelem a dodavatelem, audit a dlouhodobou správu digitálních objektů a rozhodování, zda výstup lze považovat za preservation master.
+
+### 12.3 Co DPIR hodnotí
+
+Rating DPIR hodnotí osm hlavních oblastí:
+
+| Oblast | Obsah |
+|---|---|
+| Sampling a detail | obtained PPI, SFR/MTF, sampling efficiency, sharpening |
+| Bitová hloubka | 8 nebo 16 bitů na kanál RGB, tonální rezerva, reprocessing |
+| Tonalita a dynamic range | expozice, OECF/TRC, clipping, šum, posterizace |
+| Barva | white balance, color accuracy, ICC workflow, barevný prostor |
+| Geometrie | distortion, reproduction scale, skew, color misregistration |
+| Artefakty | banding, streaks, defect pixels, denoising, kompresní artefakty |
+| Targety a QA režim | device-level, object-level, workflow target, frekvence kontrol |
+| Dokumentace a audit | QA report, metadata, zařízení, software, verze, pass/fail |
+
+Barevná bitová hloubka je samostatnou součástí hodnocení DPIR, protože určuje jemnost tonálního a barevného zápisu. U RGB obrazů se v této metodice vyjadřuje jako počet bitů na jeden barevný kanál. Hodnota 8 bitů na kanál odpovídá 24bit RGB obrazu, zatímco 16 bitů na kanál odpovídá 48bit RGB obrazu.
+
+Vyšší bitová hloubka sama o sobě nezaručuje vyšší obrazovou kvalitu, ale poskytuje větší tonální rezervu, snižuje riziko posterizace a je vhodnější pro barevně, tonálně nebo badatelsky náročné preservation workflow. Proto je pro vyšší úrovně DPIR vyžadována 16bitová RGB reprezentace.
+
+### 12.4 Rating zařízení, workflow a produkční dávky
+
+Je nutné rozlišovat tři různé typy ratingu:
+
+- **DPIR rating zařízení** vyjadřuje technickou schopnost konkrétní snímací sestavy dosáhnout určité úrovně kvality za definovaných podmínek. Rating zařízení neznamená, že všechny výstupy z tohoto zařízení automaticky dosahují stejné úrovně.
+- **DPIR rating workflow** hodnotí celý pracovní postup: přípravu předlohy, nastavení zařízení, targetový režim, snímání, zpracování, správu barev, validaci, formátovou politiku a ukládání výsledků.
+- **DPIR rating produkční dávky** hodnotí konkrétní výstup, například jednu knihu, mapovou sadu, fotografickou kolekci nebo digitalizační zakázku. Tento rating je pro dlouhodobé uchování nejdůležitější, protože dokládá kvalitu skutečně vzniklých dat.
+
+Produkční dávka může dostat rating pouze tehdy, pokud existuje dostatečná dokumentace jejího vzniku a kontroly.
+
+### 12.5 Princip kritických bran
+
+Rating DPIR se neurčuje prostým aritmetickým průměrem dílčích metrik. Některé požadavky mají charakter kritických bran. Pokud nejsou splněny, nelze udělit vyšší rating, i kdyby jiné parametry dosahovaly výborných hodnot.
+
+Tento princip je důležitý zejména u nejvyšších úrovní. Vysoký sampling nemůže kompenzovat chybějící barevnou kontrolu, chybějící targety, clipping, viditelné artefakty, nízkou bitovou hloubku nebo neauditovatelné workflow.
+
+Základní pravidlo zní:
+
+**Rating DPIR nemůže být vyšší než nejslabší kritická brána.**
+
+Vážené skóre může sloužit k jemnějšímu rozlišení uvnitř ratingové úrovně, ale nesmí obejít nesplněné minimální požadavky.
+
+### 12.6 Ratingová stupnice DPIR
+
+| Rating | Význam |
+|---|---|
+| DPIR-AAA | referenční preservation kvalita |
+| DPIR-AA | velmi vysoká institucionální preservation kvalita |
+| DPIR-A | standardní preservation master |
+| DPIR-BBB | dobrá produkční digitalizace |
+| DPIR-BB | použitelná digitalizace s omezeními |
+| DPIR-B | základní dokumentační nebo pracovní kvalita |
+| DPIR-C | nevyhovuje pro preservation master |
+
+Ratingy DPIR-AAA, DPIR-AA a DPIR-A se vztahují k výstupům, které mohou být za splnění dalších institucionálních podmínek považovány za preservation master.
+
+Rating DPIR-BBB označuje dobrou produkční kvalitu, která může být vhodná pro zpřístupnění, OCR nebo interní potřeby, ale nemusí splňovat všechny požadavky na plně auditovatelný preservation master. Ratingy DPIR-BB, DPIR-B a DPIR-C označují výstupy s rostoucími omezeními.
+
+## 13. Výchozí numerické hodnoty DPIR
+
+### 13.1 Princip výběru hodnot
+
+Výchozí numerické hodnoty DPIR jsou odvozeny z nejpřísnějších prakticky použitelných hodnot obsažených ve FADGI, Metamorfoze a ISO 19264. Pokud se jednotlivé metodiky liší v definici nebo způsobu výpočtu metriky, tato metodika nepřevádí hodnoty mechanicky, ale stanovuje preferovanou metriku pro rating a v případě potřeby uvádí doplňkovou interpretační hodnotu.
+
+Při přebírání nejpřísnějších hodnot je nutné rozlišovat mezi metrikami, které jsou přímo srovnatelné, a metrikami, které vycházejí z odlišného výpočtu. Například mean ΔE2000 ve FADGI, mean ΔE CIE2000 SL=1 v Metamorfoze a colour reproduction v ISO 19264 jsou významově blízké, ale nejsou vždy plně totožné z hlediska targetu, výběru patchů a reportovací praxe. Podobně MTF50 může být vyjadřováno jako procento Nyquistovy frekvence nebo jako poměr k požadovanému MTF10 výkonu.
+
+ISO/DIS 19264-1:2026 je v této metodice chápán jako důležitý pracovní návrh a signál vývoje analytického rámce, nikoli jako finálně vydaná mezinárodní norma.^7
+
+**DPIR používá nejpřísnější hodnoty jako výchozí referenční práh, nikoli jako nekritický mechanický průměr rozdílných metodik.**
+
+### 13.2 Hlavní výchozí tabulka DPIR
+
+| Metrika | DPIR-AAA | DPIR-AA | DPIR-A | DPIR-BBB |
+|---|---|---|---|---|
+| Obtained sampling rate | ≥ 400 ppi | ≥ 400 ppi / zdůvodněně ≥ 300 ppi | ≥ 300 ppi | ≥ 300 ppi |
+| Barevná bitová hloubka RGB | 16 bit/kanál | 16 bit/kanál | 8 bit/kanál minimum; 16 bit/kanál doporučeno | 8 bit/kanál |
+| Claimed vs. obtained sampling | ≤ 1 % | ≤ 2 % | ≤ 2–3 % | ≤ 4 % |
+| Tone response ΔL\* | < 1,5 | ≤ 2 | ≤ 3 | ≤ 4 |
+| Gain modulation – highlights | 0,8–1,1 | 0,8–1,1 | 0,7–1,2 | 0,6–1,3 |
+| Gain modulation – ostatní neutrály | 0,7–1,3 | 0,7–1,3 | 0,6–1,4 | 0,3–1,6 |
+| White balance | < 2 ΔE(a\*b\*) | ≤ 3 | ≤ 4 | ≤ 5 |
+| Mean color accuracy | < 2 ΔE2000 | ≤ 3 | ≤ 3,5 / ≤ 4 | ≤ 5 |
+| Color accuracy 90th percentile | < 4 ΔE2000 | < 7 | < 10 | < 13 |
+| Max color error | ≤ 7 ΔE2000 | ≤ 7–10 | ≤ 14 | ≤ 14 |
+| SFR10 / sampling efficiency | > 90 % | ≥ 85 % | ≥ 80–85 % | ≥ 70 % |
+| SFR response at Nyquist | < 0,2 | < 0,3 | < 0,4 | < 0,5 |
+| SFR50 / MTF50 | >45 % a <65 % Nyquist | >40 % a <75 % | >35 % a <85 % | >30 % a <95 % |
+| MTF50 podle Metamorfoze interpretace | ≥ 45 % požadovaného MTF10 | ≥ 45 % | sledovat | sledovat |
+| Sharpening / max modulation | cílově ≤ 1,0; průchodně < 1,02 | ≤ 1,05 | ≤ 1,05 | ≤ 1,1 |
+| Noise upper limit | < 1 L\* std dev | ≤ 1,6 | ≤ 2 | ≤ 2,2–3 |
+| Noise lower warning | > 0,25 | > 0,25 | > 0,25 | > 0,25 |
+| Dynamic range | ≥ 2,3 D | ≥ 2,3 D | ≥ 2,1 D | ≥ 1,9 D |
+| Illumination non-uniformity ≤ A3 | ΔL\* ≤ 3 | ΔL\* ≤ 3 | ΔL\* ≤ 3 | ΔL\* ≤ 5 |
+| Illumination non-uniformity > A3 ≤ A2 | ΔL\* ≤ 4 | ΔL\* ≤ 4–5 | ΔL\* ≤ 5 | ΔL\* ≤ 5 |
+| Illumination non-uniformity > A2 ≤ A0 | ΔL\* ≤ 5 | ΔL\* ≤ 5–6 | ΔL\* ≤ 6 | ΔL\* ≤ 6 |
+| Color misregistration | < 0,33 px | ≤ 0,35–0,4 px | ≤ 0,5 px | ≤ 0,8 px |
+| Geometric distortion | ≤ 1,5 % | ≤ 2 % | ≤ 2 % | ≤ 5 % |
+| Reproduction scale accuracy | < ±1 % | ≤ ±2 % | ≤ ±2–3 % | ≤ ±5 % |
+| Banding | žádný viditelný | žádný viditelný | žádný systémový | slabý tolerovaný |
+| Defect pixels | žádné měřitelné | < 0,1 / mil. | < 1 / mil. | < 1 / mil. |
+| Artefakty | žádné | žádné systémové | žádné významné | přípustné drobné |
+
+### 13.3 DPIR-AAA – referenční preservation kvalita
+
+Rating DPIR-AAA představuje nejvyšší úroveň této metodiky. Označuje výstup a workflow, které jsou vhodné pro dlouhodobé uchování jako referenční preservation master s vysokou mírou důvěryhodnosti, měřitelnosti a auditovatelnosti.
+
+Rating DPIR-AAA vyžaduje minimálně:
+
+- obtained sampling rate ≥ 400 ppi,
+- barevnou bitovou hloubku RGB 16 bitů na kanál,
+- rozdíl claimed vs. obtained sampling rate ≤ 1 %,
+- tone response ΔL\* < 1,5,
+- white balance < 2 ΔE(a\*b\*),
+- mean color accuracy < 2 ΔE2000,
+- 90th percentile color accuracy < 4 ΔE2000,
+- max color error ≤ 7 ΔE2000,
+- SFR10 / sampling efficiency > 90 %,
+- SFR response at Nyquist < 0,2,
+- SFR50 v pásmu >45 % a <65 % half-sampling frequency,
+- max modulation cílově ≤ 1,0, průchodně < 1,02,
+- color misregistration < 0,33 pixelu,
+- reproduction scale accuracy < ±1 %,
+- geometric distortion ≤ 1,5 %,
+- žádný viditelný banding,
+- žádné měřitelné defect pixels,
+- žádné viditelné obrazové artefakty.
+
+U fotografií, grafik, map, plánů, výtvarných děl, drobných předloh nebo předloh s vysokou informační hustotou může být pro DPIR-AAA požadováno více než 400 ppi, typicky 600 ppi nebo více podle typu materiálu a účelu digitalizace.
+
+DPIR-AAA vyžaduje denní device-level kontrolu, workflow nebo object-level target podle typu předlohy, doložený target ID, doloženou platnost nebo recertifikaci targetu, pokud je relevantní, uložený QA report svázaný s dávkou nebo objektem, dokumentovaný ICC workflow a dokumentované nastavení zařízení a software.
+
+Rating DPIR-AAA nelze udělit, pokud obtained sampling rate nedosahuje 400 ppi, výsledný master je uložen pouze v 8bit RGB nebo jiné nižší barevné bitové hloubce, není doložena měřená barevná kontrola, není doložen ICC workflow, nejsou použity odpovídající targety, není provedena denní device-level kontrola, není uložen QA report, jsou přítomny viditelné kompresní artefakty, je přítomen clipping významných oblastí, je patrný over-sharpening nebo agresivní denoising, jsou přítomny systémové pruhy, missing lines nebo výrazné defect pixels, nebo byly provedeny nezdokumentované retuše či obsahové zásahy.
+
+### 13.4 DPIR-AA – velmi vysoká institucionální preservation kvalita
+
+Rating DPIR-AA označuje velmi kvalitní preservation workflow, které splňuje většinu požadavků nejvyšší úrovně, ale může mít mírnější režim targetů, frekvence kontrol nebo některých metrických tolerancí.
+
+Typické požadavky DPIR-AA jsou:
+
+- obtained sampling rate ≥ 400 ppi, případně zdůvodněně ≥ 300 ppi u méně náročných textových předloh,
+- barevná bitová hloubka RGB 16 bitů na kanál,
+- rozdíl claimed vs. obtained sampling rate ≤ 2 %,
+- white balance ≤ 3 ΔE(a\*b\*),
+- mean color accuracy ≤ 3 ΔE,
+- max color error ≤ 7–10 ΔE,
+- sampling efficiency ≥ 85 %,
+- color misregistration ≤ 0,35–0,4 px,
+- geometric distortion ≤ 2 %,
+- reproduction scale accuracy ≤ ±2 %,
+- žádné systémové nebo obsahově významné artefakty,
+- pravidelná device-level kontrola, ideálně denní,
+- workflow target pro dávku,
+- QA report pro dávku nebo projekt.
+
+DPIR-AA se od DPIR-AAA liší zejména tím, že nemusí vyžadovat object-level target u každého jednotlivého objektu nebo snímku, pokud je kvalita dostatečně doložena workflow targetem, device-level kontrolou a stabilitou produkčního procesu.
+
+### 13.5 DPIR-A – standardní preservation master
+
+Rating DPIR-A označuje standardní preservation master vytvořený v řízeném workflow. Nemusí splňovat nejpřísnější požadavky na targety a metrické tolerance, ale musí být dostatečně kvalitní, konzistentní, dokumentovaný a dlouhodobě interpretovatelný.
+
+Typické požadavky DPIR-A jsou:
+
+- obtained sampling rate typicky ≥ 300 ppi,
+- barevná bitová hloubka RGB nejméně 8 bitů na kanál,
+- 16 bitů na kanál doporučeno u fotografií, grafik, map, výtvarných děl, tmavých předloh, předloh s jemnými tonálními přechody a materiálů s předpokládaným budoucím reprocessingem,
+- rozdíl claimed vs. obtained sampling rate ≤ 2–3 %,
+- white balance ≤ 4 ΔE(a\*b\*),
+- mean color accuracy ≤ 3,5 až 4 ΔE,
+- max color error ≤ 14 ΔE,
+- SFR10 / sampling efficiency ≥ 80–85 %,
+- color misregistration ≤ 0,5 px,
+- reproduction scale accuracy ≤ ±2–3 %,
+- bez zjevné ztráty kresby ve světlech a stínech,
+- bez významných systémových vad,
+- definovaný barevný prostor a embedded ICC profil,
+- kontrola při zahájení projektu, po změně sestavy a periodicky,
+- minimální technický QA protokol.
+
+Rating DPIR-A je minimální úroveň, kterou tato metodika doporučuje pro běžný preservation master v institucionálním prostředí.
+
+### 13.6 DPIR-BBB – dobrá produkční digitalizace
+
+Rating DPIR-BBB označuje kvalitní digitalizaci vhodnou pro zpřístupnění, OCR, běžnou produkci nebo interní institucionální potřeby. Nemusí však splňovat všechny požadavky na plně auditovatelný preservation master.
+
+Typické požadavky DPIR-BBB jsou obtained sampling rate obvykle ≥ 300 ppi, barevná bitová hloubka RGB nejméně 8 bitů na kanál, white balance ≤ 5 ΔE(a\*b\*), mean color accuracy ≤ 5 ΔE, SFR10 / sampling efficiency ≥ 70 %, color misregistration ≤ 0,8 px, reproduction scale accuracy ≤ ±5 %, absence artefaktů zásadně omezujících čitelnost nebo informační obsah, vizuálně přijatelná ostrost, základní evidence workflow a periodické nebo namátkové targety.
+
+DPIR-BBB může být velmi dobrá uživatelská nebo produkční digitalizace, ale pro označení preservation masteru je nutné opatrné individuální posouzení.
+
+### 13.7 DPIR-BB, DPIR-B a DPIR-C
+
+**DPIR-BB** označuje výstup použitelný pro zpřístupnění, orientační badatelskou práci, OCR nebo pracovní účely, ale se zřetelnými omezeními. Typickými omezeními jsou nižší sampling, chybějící měřená barevná kontrola, pouze vizuální kontrola, neúplná dokumentace, drobné artefakty, nestabilní ořez nebo white balance, ztrátová komprese a omezená metrická spolehlivost.
+
+**DPIR-B** označuje základní dokumentační výstup. Může být vhodný pro evidenci, rychlou kontrolu, pracovní komunikaci nebo orientační čtení, ale není vhodný jako archivní master. Typickými znaky jsou proměnlivý sampling, chybějící targety, chybějící QA report, nekonzistentní barevnost, zjevné provozní odchylky, možnost artefaktů, nejasný nebo nevhodný barevný prostor, ztrátová komprese a omezená dlouhodobá interpretovatelnost.
+
+**DPIR-C** označuje výstup, který nevyhovuje požadavkům této metodiky pro dlouhodobé uchování ani pro spolehlivé zpřístupnění. Důvody mohou být zejména nečitelnost nebo ztráta obsahu, zásadní clipping, výrazná neostrost, výrazné kompresní artefakty, chybějící části obrazu, chybné pořadí nebo neúplnost sekvence, výrazná barevná chyba, chybějící nebo nesprávný ICC profil, neznámý původ souboru, neauditovatelné workflow, digitální zásahy měnící obsah originálu nebo bitová hloubka způsobující posterizaci a ztrátu tonálních přechodů.
+
+Výstup s ratingem DPIR-C nemá být použit jako preservation master.
+
+## 14. Interpretační poznámky k metrikám DPIR
+
+### 14.1 Barevná bitová hloubka
+
+Barevná bitová hloubka vyjadřuje počet bitů použitých pro zápis jedné barevné složky. U RGB obrazů se proto rozlišuje zejména 8 bitů na kanál, tedy 24bit RGB obraz, a 16 bitů na kanál, tedy 48bit RGB obraz.
+
+Pro účely DPIR se bitová hloubka nehodnotí pouze jako technický údaj v hlavičce souboru, ale jako součást celého workflow. Pokud byl obraz po většinu zpracování veden v 8bitovém režimu a teprve na konci uložen jako 16bitový soubor, nelze jej považovat za skutečný 16bitový preservation master v plném smyslu této metodiky.
+
+| Rating | Barevná bitová hloubka RGB |
+|---|---|
+| DPIR-AAA | 16 bitů/kanál |
+| DPIR-AA | 16 bitů/kanál |
+| DPIR-A | 8 bitů/kanál minimum, 16 bitů/kanál doporučeno |
+| DPIR-BBB | 8 bitů/kanál |
+| DPIR-BB | 8 bitů/kanál obvykle postačuje pro access/pracovní výstupy |
+| DPIR-B | proměnlivé, pracovní kvalita |
+| DPIR-C | nevyhovující nebo nejasná interpretace |
+
+Pro rating DPIR-AAA a DPIR-AA je vyžadována 16bitová RGB reprezentace. Pro rating DPIR-A je minimem 8 bitů na kanál, avšak 16 bitů na kanál je doporučeno u fotografií, grafik, map, výtvarných děl, tmavých předloh, předloh s jemnými tonálními přechody a všech materiálů, u nichž lze očekávat budoucí náročnější zpracování.
+
+### 14.2 Poznámka k MTF50
+
+MTF50 je nutné interpretovat opatrně. Nelze jej používat jako samostatný důkaz vyšší kvality. Vyšší MTF50 může znamenat dobrou ostrost, ale také nadměrné doostření.
+
+U ratingu DPIR se proto MTF50 vyhodnocuje vždy společně se SFR10, SFR response at Nyquist, max modulation, vizuální kontrolou halo artefaktů a kontrolou přenosu jemné struktury. Pro DPIR-AAA se požaduje, aby SFR50 leželo v doporučeném pásmu a současně aby max modulation nepřekračovala limit pro sharpening.
+
+### 14.3 Poznámka k sharpening / max modulation
+
+Pro rating DPIR-AAA je cílem SFR bez overshootu, tedy max modulation ideálně ≤ 1,0. Protože různé měřicí nástroje a targety mohou vykazovat drobné odchylky, jako průchodová hodnota DPIR-AAA se stanovuje < 1,02.
+
+Hodnoty 1,02–1,05 mohou být přípustné pro DPIR-AA nebo DPIR-A, ale musí být posuzovány společně s vizuální kontrolou halo artefaktů. Hodnoty nad 1,1 jsou pro preservation master problematické a obvykle ukazují na nepřiměřené doostření.
+
+### 14.4 Poznámka k noise lower warning
+
+Příliš nízký naměřený šum není automaticky pozitivní výsledek. Může znamenat, že systém nebo software aplikoval agresivní denoising. Proto tato metodika zavádí nejen horní limit šumu, ale také varovnou spodní hranici.
+
+Pokud je noise výrazně pod hodnotou 0,25 L\* standard deviation, je vhodné ověřit, zda nedošlo k nechtěnému potlačení textury, fotografického zrna, vláken papíru nebo jiných jemných vlastností originálu.
+
+### 14.5 Poznámka k artefaktům
+
+Artefakty se v DPIR nehodnotí pouze bodově. Některé vady mají charakter diskvalifikační brány. Pokud jsou přítomny, nelze udělit nejvyšší rating bez ohledu na dobré výsledky v jiných metrikách.
+
+Za diskvalifikační pro DPIR-AAA se považují zejména viditelný banding, missing scan lines, systémové pruhy nebo šmouhy, clipping informačně významných oblastí, zjevné halo po doostření, agresivní denoising, viditelné kompresní artefakty, nezdokumentované retuše, zásah do obsahu originálu, nestabilní white balance v rámci série, chybějící QA report a chybějící nebo neověřený targetový režim.
+
+## 15. QA, targety a dokumentace DPIR
+
+### 15.1 Targetový režim
+
+DPIR rozlišuje několik úrovní targetů:
+
+| Typ targetu | Funkce | Vztah k ratingu |
+|---|---|---|
+| Device-level target | kontrola zařízení a snímací sestavy | povinný denně pro DPIR-AAA |
+| Workflow/session target | kontrola konkrétní produkční dávky nebo série | povinný pro DPIR-AAA a DPIR-AA |
+| Object-level target | target přítomný u konkrétního objektu nebo snímku | vyžadovaný pro DPIR-AAA u citlivých předloh |
+| Profiling target | tvorba nebo ověření ICC profilu | povinný pro barevně věrné workflow |
+
+Pro DPIR-AAA se vyžaduje denní device-level kontrola a současně workflow nebo object-level target podle typu materiálu. U fotografií, grafik, map, výtvarných děl a dalších barevně nebo metricky náročných předloh je object-level target silně preferovaný.
+
+Pro DPIR-AA se vyžaduje pravidelná device-level kontrola, ideálně denní, a workflow target pro dávku. Pro DPIR-A se vyžaduje kontrola při zahájení projektu, po změně sestavy a periodicky podle interního plánu.
+
+### 15.2 Minimální požadavky na QA report
+
+Pro rating DPIR-A a vyšší musí být k dispozici alespoň základní QA report. Pro DPIR-AAA a DPIR-AA musí být QA report součástí auditovatelné dokumentace dávky.
+
+| Položka | DPIR-A | DPIR-AA | DPIR-AAA |
+|---|---|---|---|
+| Identifikace zařízení | ano | ano | ano |
+| Identifikace objektivu / snímací sestavy | doporučeno | ano | ano |
+| Identifikace osvětlení | doporučeno | ano | ano |
+| Datum a čas kontroly | ano | ano | ano |
+| Operátor | doporučeno | ano | ano |
+| Software a verze | ano | ano | ano |
+| ICC profil / barevný prostor | ano | ano | ano |
+| Barevná bitová hloubka | ano | ano | ano |
+| Target ID | doporučeno | ano | ano |
+| Datum recertifikace targetu | ne / podle potřeby | doporučeno | ano |
+| White balance | doporučeno | ano | ano |
+| Color accuracy | doporučeno | ano | ano |
+| Sampling / SFR / MTF | doporučeno | ano | ano |
+| Geometrie | podle typu předlohy | ano | ano |
+| Artefakty | vizuálně | vizuálně + technicky | vizuálně + technicky |
+| Pass/fail | ano | ano | ano |
+| Vazba na dávku nebo objekt | ano | ano | ano |
+
+## 16. Pomocné skóre a doporučené použití DPIR
+
+### 16.1 Vážené skóre jako pomocný nástroj
+
+Vedle ratingových bran lze použít pomocné vážené skóre. Toto skóre může být užitečné pro interní porovnání workflow, sledování vývoje kvality nebo automatizovanou kontrolu.
+
+Pokud se bitová hloubka započítává jako samostatná oblast, doporučuje se používat upravené váhy:
+
+| Oblast | Váha |
+|---|---|
+| Sampling, SFR/MTF a sharpening | 18 % |
+| Tonalita, dynamic range a noise | 18 % |
+| Barva a ICC workflow | 18 % |
+| Geometrie a měřítko | 14 % |
+| Bitová hloubka | 10 % |
+| Artefakty | 10 % |
+| Targety a QA režim | 8 % |
+| Dokumentace a audit | 4 % |
+| Celkem | 100 % |
+
+Vážené skóre nesmí nahradit kritické brány. Pokud například chybí QA report, targetový režim nebo požadovaná bitová hloubka, nelze udělit DPIR-AAA ani DPIR-AA, i kdyby numerické skóre vycházelo velmi vysoko.
+
+### 16.2 Minimální rating podle typu předlohy
+
+| Typ předlohy | Doporučený minimální rating | Doporučený cílový rating |
+|---|---|---|
+| Běžné knihy a periodika | DPIR-A | DPIR-AA |
+| Rukopisy a staré tisky | DPIR-A | DPIR-AA až DPIR-AAA |
+| Fotografie | DPIR-AA | DPIR-AAA |
+| Mapy a plány | DPIR-AA | DPIR-AAA |
+| Grafiky a výtvarná díla | DPIR-AA | DPIR-AAA |
+| Běžné archiválie | DPIR-A | DPIR-AA |
+| Interní pracovní digitalizace | DPIR-BB | DPIR-BBB |
+| Access kopie a webové deriváty | DPIR-BB | DPIR-BBB |
+
+Tato tabulka není absolutní. Konkrétní projekt může požadovat vyšší nebo nižší rating podle hodnoty předlohy, účelu digitalizace, dostupných prostředků, fyzického stavu originálu a institucionální politiky.
+
+### 16.3 Doporučený zápis ratingu
+
+Rating by měl být zapisován tak, aby bylo zřejmé, zda se vztahuje k zařízení, workflow nebo produkční dávce.
+
+Doporučené formy zápisu:
+
+- DPIR-AA / workflow / knihy a periodika / 2026-05
+- DPIR-AAA / produkční dávka / mapy / 600 ppi / 16bit RGB / device QA denně
+- DPIR-A / preservation master / běžné archiválie / 400 ppi / 8bit RGB
+
+U náročnějších projektů lze uvést také dílčí ratingy, například celkový rating, sampling/detail, bitovou hloubku, barvu, geometrii, artefakty a dokumentaci. Dílčí ratingy pomáhají přesněji popsat situace, kdy je například barevná kvalita velmi vysoká, ale geometrie, bitová hloubka nebo dokumentace nedosahuje stejné úrovně.
+
+### 16.4 Vztah ratingu k označení preservation master
+
+Za preservation master podle této metodiky lze standardně považovat výstupy s ratingem DPIR-AAA, DPIR-AA nebo DPIR-A.
+
+Výstup s ratingem DPIR-BBB může být výjimečně použit jako institucionální master pouze tehdy, pokud je to výslovně zdůvodněno, schváleno a zapsáno v projektové dokumentaci. Neměl by však být označován jako referenční preservation master nejvyšší důvěryhodnosti.
+
+Výstupy s ratingem DPIR-BB, DPIR-B a DPIR-C nejsou podle této metodiky vhodné jako preservation master. Mohou sloužit jako pracovní, náhledové, access nebo dokumentační kopie.
+
+### 16.5 Praktický závěr
+
+Rating DPIR má zabránit tomu, aby se kvalita digitalizace posuzovala podle jediného snadno dostupného údaje, například PPI, formátu, bitové hloubky nebo velikosti souboru. Skutečná preservation kvalita vzniká až kombinací měřitelného technického výkonu, stabilního workflow, správné správy barev, dostatečné bitové hloubky, kontroly artefaktů, targetového režimu a auditovatelné dokumentace.
+
+Zjednodušeně: DPIR-AAA znamená vysoký sampling, 16bit RGB, vysokou barevnou a tonální věrnost, kontrolovanou geometrii, žádné významné artefakty, targety na úrovni objektu nebo workflow, denní device-level QA a plnou auditovatelnost. DPIR-AA znamená velmi vysokou preservation kvalitu, 16bit RGB a mírně praktičtější targetový a kontrolní režim. DPIR-A znamená standardní preservation master, minimálně 8bit RGB, s doporučením 16bit RGB pro náročné předlohy. DPIR-BBB a níže znamená produkční, access nebo pracovní kvalitu s omezeními.
+
+## 17. Workflow tvorby preservation masteru
 
 1. Příprava instituce, zařízení a předlohy.
 2. Kontrola prostředí a ověření kalibračního stavu zařízení.
@@ -928,7 +1413,7 @@ Před zahájením produkčního snímání má být v projektové dokumentaci ne
 
 ---
 
-## 12. Kontrola kvality, QA protokol a provozní doporučení
+## 18. Kontrola kvality, QA protokol a provozní doporučení
 
 FADGI doporučuje vytvořit quality monitoring system založený na digital image conformance evaluation a vést záznamy kvality i kvantity.^1 Metamorfoze rozlišuje denní a týdenní targety a výslovně uvádí, že preservation master musí být hodnocen analyzováním více technických image criteria ve správném pořadí.^2
 
@@ -944,7 +1429,7 @@ U plné charakterizace zařízení se doporučuje, aby report obsahoval také id
 
 ---
 
-## 13. Přílohy
+## 19. Přílohy
 
 ### Příloha A. Návrh protokolu měření: denní technická kontrola
 
@@ -1139,20 +1624,20 @@ Smyslem textového protokolu není nahradit originální report, ale vytvořit d
 
 ---
 
-## 14. Závěr
+## 20. Závěr
 
 Tvorba preservation masterů kulturního dědictví vyžaduje propojení technické disciplíny, odborného úsudku a institucionální odpovědnosti. Nestačí dosáhnout pouze nominálně vysokého rozlišení nebo obrazu, který na první pohled působí přesvědčivě. Rozhodující je, zda je digitální reprezentace standardizovaná, měřitelná, barevně interpretovatelná, dokumentovaná a dlouhodobě důvěryhodná.^1^,^2^,^3
 
 ---
 
-## 15. Odkazy na přílohy v této verzi
+## 21. Odkazy na přílohy v této verzi
 
 Pro lepší orientaci se v této verzi doporučuje používat v hlavním textu tyto ustálené odkazy:
 
 - **Příloha A** – ICC profily, barevné prostory a související výkladové schéma
 - **Příloha B** – TIFF 6.0 a související technické minimum
 
-## 16. Redakční a terminologické zásady této verze
+## 22. Redakční a terminologické zásady této verze
 
 Tato redakce vychází ze sloučení obsahu předchozích verzí 0.1.2 a 0.1.3 do jedné pracovní verze.
 
@@ -1183,9 +1668,21 @@ V této verzi 0.2.6 byly oproti verzi 0.2.5 doplněny zejména tyto oblasti:
 - doplnění metrik vhodných pro plnou charakterizaci zařízení: dynamic range, banding, defect pixels, acutance, reproduction scale a chrominance non-uniformity,
 - rozšíření doporučeného workflow a QA protokolů o kontrolu nastavení systému před snímáním a o úplnější reportování měřicích podmínek.
 
+V této verzi 0.3.0 byly oproti verzi 0.2.6 doplněny zejména tyto oblasti:
+
+- samostatná kapitola k obrazovým vadám, artefaktům a provozní stabilitě, včetně rozlišení vlastností originálu a vad digitalizace,
+- taxonomie snímacích, optických, geometrických, procesních, kompresních, tonálních a manipulačních artefaktů,
+- doplnění sekvenční konzistence produkčních dávek jako samostatné oblasti hodnocení,
+- zavedení ratingového modelu DPIR (Digital Preservation Imaging Rating),
+- rozlišení ratingu zařízení, workflow a produkční dávky,
+- zavedení kritických bran, které nelze obejít váženým skóre,
+- doplnění výchozích numerických hodnot pro DPIR-AAA, DPIR-AA, DPIR-A a DPIR-BBB,
+- doplnění interpretačních poznámek k bitové hloubce, MTF50, sharpeningu, šumu a artefaktům,
+- doplnění minimálního targetového režimu a QA reportu pro DPIR-A až DPIR-AAA.
+
 ---
 
-## 17. Poznámka k bibliografii
+## 23. Poznámka k bibliografii
 
 Bibliografie v této verzi plní dvojí funkci: jednak identifikuje hlavní normativní a metodické opory dokumentu, jednak slouží jako pracovní základ pro budoucí zpřesnění citačního aparátu. U mezinárodních dokumentů je zápis stabilnější; u některých českých metodických materiálů, zejména v prostředí NDK, je vhodné v další fázi doplnit definitivní bibliografické údaje podle zvoleného citačního standardu a podle způsobu, jakým budou tyto dokumenty v instituci evidovány.
 
@@ -1538,7 +2035,7 @@ Pro běžnou institucionální praxi není nutné, aby každý operátor studova
 - správci workflow a validace znali specifikaci podrobněji,
 - a instituce měla jasně definováno, jaké varianty TIFF jsou v jejím preservation workflow přípustné.
 
-## 18. Bibliografie
+## 24. Bibliografie
 
 Aldus Corporation. *TIFF Revision 6.0. Final — June 3, 1992*. Autor/editor/arbitrátor: Steve Carlsen. Volně dostupné PDF přes veřejný dokumentový server ITU.
 
@@ -1560,7 +2057,7 @@ Van Dormolen, Hans. *Metamorfoze Preservation Imaging Guidelines: Image Quality*
 
 ---
 
-## 19. Poznámky
+## 25. Poznámky
 
 1. Federal Agencies Digital Guidelines Initiative, *Technical Guidelines for Digitizing Cultural Heritage Materials: Creation of Raster Image Files*, 3rd ed. (Washington, DC: FADGI, 2023).
 2. Hans van Dormolen, *Metamorfoze Preservation Imaging Guidelines: Image Quality*, version 2.0 (The Hague: Metamorfoze, April 2025).
