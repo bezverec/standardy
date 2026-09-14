@@ -5,7 +5,6 @@ import {
   compileRegistry,
   diffFields,
   loadRegistry,
-  profileAncestors,
   registryImportSql,
   semanticProfileDiff,
   validateRegistry,
@@ -21,13 +20,14 @@ describe("registry vertical slice", () => {
 
   it("compiles MIX to an NDK rule and implementation graph", async () => {
     const registry = compileRegistry(await loadRegistry(root));
-    expect(registry.standard_entities.map((entity) => entity.id)).toContain("MIX-ICC-PROFILE-VERSION");
+    expect(registry.standard_entities.map((entity) => entity.id)).toEqual(expect.arrayContaining(["MIX-ICC-PROFILE-VERSION", "ICC-PROFILE-HEADER-VERSION"]));
     expect(registry.rule_versions[0]).toMatchObject({
       rule_id: "NDK-MONO-MIX-ICC-PROFILE-VERSION",
+      version: "2.3",
       target: { entity: "MIX-ICC-PROFILE-VERSION" },
-      verification: { status: "unverified" },
+      verification: { status: "verified" },
     });
-    expect(registry.relations.map((edge) => edge.type)).toEqual(expect.arrayContaining(["defined_by", "restricts", "generated_by", "validated_by"]));
+    expect(registry.relations.map((edge) => edge.type)).toEqual(expect.arrayContaining(["defined_by", "restricts", "clarifies", "generated_by", "validated_by"]));
   });
 
   it("emits deterministic canonical JSON and idempotent D1-compatible replacement SQL", async () => {
@@ -41,9 +41,17 @@ describe("registry vertical slice", () => {
     expect(sql).not.toContain("COMMIT;");
   });
 
-  it("resolves profile inheritance without copying rules", async () => {
-    const profiles = (await loadRegistry(root)).filter((document) => document.kind === "profile");
-    expect(profileAncestors(profiles, "ndk-monograph")).toEqual(["ndk-base"]);
+  it("accepts numeric ICC format versions and rejects profile names", async () => {
+    const registry = compileRegistry(await loadRegistry(root));
+    const rule = registry.rule_versions.find((item) => item.rule_id === "NDK-MONO-MIX-ICC-PROFILE-VERSION");
+    const validations = rule?.requirement.validations as Array<{ type: string; expression: string }>;
+    const expression = validations.find((item) => item.type === "regex")?.expression;
+    expect(expression).toBeDefined();
+    const pattern = new RegExp(expression!);
+    for (const value of ["2", "2.4", "2.4.0", "4", "4.3", "4.4.0.0"]) expect(pattern.test(value)).toBe(true);
+    for (const value of ["sRGB", "Adobe RGB", "sRGB IEC61966-2.1"]) expect(pattern.test(value)).toBe(false);
+    expect(rule?.discrepancies).toHaveLength(2);
+    expect(rule?.references).toHaveLength(3);
   });
 });
 

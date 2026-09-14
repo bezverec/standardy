@@ -10,8 +10,8 @@ id: NDK-MONO-MIX-ICC-PROFILE-VERSION
 profile:
   id: ndk-monograph
 versions:
-  - version: "2.4"
-    status: draft
+  - version: "2.3"
+    status: disputed
 ```
 
 To umožní sémanticky porovnat dvě verze téhož profilu podle polí, nikoli podle textového YAML diffu.
@@ -31,14 +31,14 @@ Každá normativně relevantní verze nese úplný blok `source` a samostatný b
 ```yaml
 source:
   document: DMF Monografie
-  version: "2.4"
-  page: null
-  section: null
-  url: null
+  version: "2.3"
+  page: 83
+  section: "7.5.4 Technická metadata MIX"
+  url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
 verification:
-  status: unverified
-  date: null
-  reference: Demo záznam.
+  status: verified
+  date: "2026-09-14"
+  reference: Ověřeno proti primárnímu zdroji; rozpor v příkladu je popsán samostatně.
 ```
 
 Neověřené údaje nejsou prezentovány jako potvrzené normativní závěry.
@@ -51,7 +51,7 @@ Neověřené údaje nejsou prezentovány jako potvrzené normativní závěry.
 
 Podmínky jsou rekurzivní AST s uzly `all`, `any`, `not` a listy `field` + `operator` + `value`. Operátory jsou `exists`, `equals`, `matches`, `in`, `greater_than`, `less_than`.
 
-Typ validace je otevřený pro budoucí engine, ale schéma dnes rozlišuje `xpath`, `regex`, `value_set`, `file_exists`, `checksum`, `custom`, `external_tool`, `jpylyzer`, `jhove` a `schematron`. Registry žádný validační engine zatím nespouští.
+Typ validace je otevřený pro budoucí engine, ale schéma dnes rozlišuje `xpath`, `regex`, `value_set`, `file_exists`, `checksum`, `custom`, `external_tool`, `jpylyzer`, `jhove` a `schematron`. Pole `validations` umožňuje složit více kontrol, například povinnou přítomnost elementu a číselný tvar jeho hodnoty. Registr žádný validační engine zatím nespouští.
 
 ## Relace
 

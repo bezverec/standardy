@@ -13,9 +13,12 @@ export interface RuleVersion {
   requirement: Record<string, unknown>;
   condition?: unknown;
   source: Record<string, unknown>;
+  references?: Array<Record<string, unknown>>;
   verification: { status: string; date: string | null; reference: string | null };
   interpretation?: Record<string, string>;
   implementations?: Implementation[];
+  discrepancies?: Array<Record<string, string>>;
+  validator_behaviour?: Record<string, string>;
   fix_recommendation?: Record<string, string>;
   source_file?: string;
 }

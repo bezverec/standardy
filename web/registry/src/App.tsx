@@ -51,13 +51,13 @@ function Dashboard() {
     <section className="hero">
       <p className="eyebrow">Machine-readable knowledge base</p>
       <h1>Pravidla digitalizace,<br />dohledatelná ke zdroji.</h1>
-      <p className="lead">První funkční řez propojuje standard MIX, element <code>iccProfileVersion</code>, demonstrační profil NDK a chování implementací.</p>
+      <p className="lead">První odborně ověřené pravidlo propojuje MIX, hlavičku ICC profilu a DMF NDK — včetně přesně popsané chyby zdrojové dokumentace.</p>
       <div className="actions"><Link to="/rules" className="button">Procházet pravidla</Link><a className="button button--ghost" href="/api/v1/meta">Otevřít API</a></div>
     </section>
     <section className="vertical-flow" aria-label="Vertical slice">
-      {["MIX 2.0", "iccProfileVersion", "NDK Monografie 2.4", "Demo pravidlo", "ProArc · Validátor"].map((label, index) => <div className="flow-step" key={label}><span>0{index + 1}</span>{label}</div>)}
+      {["MIX 2.0", "iccProfileVersion", "DMF Monografie 2.3", "Ověřený rozpor", "ProArc · Validátor"].map((label, index) => <div className="flow-step" key={label}><span>0{index + 1}</span>{label}</div>)}
     </section>
-    <section className="notice"><Status tone="warn">UNVERIFIED DEMO</Status><p>Obsah prvního řezu ověřuje architekturu, nikoli normativní správnost. Každý záznam nese explicitní provenance a stav ověření.</p></section>
+    <section className="notice"><Status tone="warn">VERIFIED · KNOWN DISCREPANCY</Status><p><code>iccProfileVersion</code> má obsahovat číselnou verzi formátu (např. 2.4 nebo 4.3), nikoli název či označení profilu. Chování konkrétních implementací zůstává označeno jako neověřené.</p></section>
     <LoadingState state={meta} />
     {meta.data && <dl className="meta-grid">{Object.entries(meta.data).map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl>}
   </main>;
@@ -95,10 +95,12 @@ function RuleDetail({ id }: { id: string }) {
     <Link to="/rules" className="back">← Všechna pravidla</Link>
     <LoadingState state={state} />
     {rule && <>
-      <header className="detail-header"><div><p className="eyebrow">Rule</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze profilu<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone="warn">{rule.verification.status}</Status></div></header>
+      <header className="detail-header"><div><p className="eyebrow">Rule</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze profilu<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{rule.verification.status}</Status></div></header>
       <div className="facts"><div><span>Profil</span><Link to={`/profiles/${rule.profile_id}`}>{rule.profile_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{rule.category}</div><div><span>Závažnost</span><Status tone="error">{rule.severity}</Status></div></div>
       <section className="layer layer--normative"><p className="layer-label">NORMATIVE REQUIREMENT · {rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Strojová podmínka</h3><JsonBlock value={rule.condition} /></>}</section>
-      <section className="detail-grid"><article><p className="layer-label">INTERPRETATION</p><h2>Interpretace</h2><p>{localized(rule.interpretation)}</p></article><article><p className="layer-label">PROVENANCE</p><h2>Zdroj a ověření</h2><JsonBlock value={{ source: rule.source, verification: rule.verification }} /></article></section>
+      <section className="detail-grid"><article><p className="layer-label">INTERPRETATION</p><h2>Interpretace</h2><p>{localized(rule.interpretation)}</p></article><article><p className="layer-label">PROVENANCE</p><h2>Zdroj a ověření</h2><JsonBlock value={{ source: rule.source, references: rule.references, verification: rule.verification }} /></article></section>
+      {Boolean(rule.discrepancies?.length) && <section className="layer layer--discrepancy"><p className="layer-label">KNOWN DISCREPANCIES</p><h2>Známé rozpory ve zdrojích</h2><ul>{rule.discrepancies?.map((item, index) => <li key={index}>{localized(item)}</li>)}</ul></section>}
+      {(rule.validator_behaviour || rule.fix_recommendation) && <section className="detail-grid"><article><p className="layer-label">VALIDATOR BEHAVIOUR</p><h2>Očekávaná kontrola</h2><p>{localized(rule.validator_behaviour)}</p></article><article><p className="layer-label">FIX RECOMMENDATION</p><h2>Doporučená oprava</h2><p>{localized(rule.fix_recommendation)}</p></article></section>}
       <section className="layer layer--implementation"><p className="layer-label">IMPLEMENTATION · NON-NORMATIVE</p><h2>Implementace</h2><div className="implementation-grid">{(rule.implementations ?? []).map((item) => <article key={item.id}><Status tone="warn">{item.verification}</Status><h3>{item.application}</h3><p>{item.role} · {item.status}</p><small>{localized(item.notes)}</small></article>)}</div></section>
       <section><p className="layer-label">KNOWLEDGE GRAPH</p><h2>Vztahy</h2><div className="relations">{state.data?.relations.map((relation) => <code key={relation.id}>{relation.from} —{relation.type}→ {relation.to}</code>)}</div></section>
       {rule.source_file && <a className="button button--ghost" href={`https://github.com/bezverec/standardy/edit/main/${rule.source_file}`}>Navrhnout změnu na GitHubu ↗</a>}

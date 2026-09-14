@@ -2,25 +2,21 @@ schema_version: "1.0"
 kind: profile
 id: ndk-monograph
 title:
-  cs: NDK Monografie (demo)
-  en: NDK Monograph (demo)
+  cs: NDK DMF Monografie
+  en: NDK DMF Monograph
 description:
-  cs: Neověřený demonstrační profil pro první vertical slice registru.
+  cs: Částečný strojově čitelný přepis DMF Monografie; nyní pokrývá ověřené pravidlo pro verzi ICC profilu.
 status: draft
-inherits:
-  - profile: ndk-base
-    version: demo
-    strategy: extend
 verification:
-  status: unverified
-  date: null
-  reference: Nejde o úplný ani ověřený přepis DMF NDK.
+  status: verified
+  date: "2026-09-14"
+  reference: Identita a aktuální verze profilu ověřeny na oficiální stránce NDK; pokrytí registru zůstává záměrně částečné.
 versions:
-  - version: "2.4"
+  - version: "2.3"
     status: draft
     source:
       document: DMF Monografie
-      version: "2.4"
-      page: null
-      section: null
-      url: null
+      version: "2.3"
+      page: 83
+      section: "7.5.4 Technická metadata MIX"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"

@@ -65,4 +65,4 @@ D1 ID není tajemství, ale konfigurace používá zástupnou hodnotu, aby repoz
 
 ## Hranice první fáze
 
-První vertical slice ověřuje jediný tok MIX → `iccProfileVersion` → demo NDK pravidlo → D1 → API → detail pravidla. Nejde o úplný katalog ani validační engine. Dataset je záměrně malý a neověřený.
+První vertical slice ověřuje celý tok MIX → `iccProfileVersion` → DMF Monografie 2.3 → ICC hlavička → D1 → API → detail pravidla. Jde o jeden odborně ověřený případ, nikoli o úplný katalog ani hotový validační engine. Neověřené zůstává konkrétní chování ProArcu, Komplexního validátoru a převod výstupu externích nástrojů do MIX.

@@ -2,19 +2,13 @@ schema_version: "1.0"
 kind: vocabulary
 id: NDK-OBJECT-TYPES
 title:
-  cs: Typy objektů NDK (demo)
+  cs: Typy objektů NDK pokryté registrem
 status: draft
 verification:
-  status: unverified
-  date: null
-  reference: Demo hodnoty pro ověření datového modelu.
+  status: verified
+  date: "2026-09-14"
+  reference: Hodnota monograph označuje profil DMF Monografie; seznam není úplným slovníkem typů NDK.
 values:
   - id: monograph
     label:
       cs: monografie
-  - id: periodical
-    label:
-      cs: periodikum
-  - id: issue
-    label:
-      cs: číslo periodika
