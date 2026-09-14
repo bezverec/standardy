@@ -5,12 +5,12 @@ title:
   cs: Metadata pro obrázky v XML (MIX)
   en: NISO Metadata for Images in XML (MIX)
 description:
-  cs: Demo záznam standardu pro ověření datového modelu registru.
+  cs: XML schéma pro technická metadata digitálních obrazů spravované Library of Congress pro NISO.
 status: normative
 verification:
-  status: unverified
-  date: null
-  reference: Demo data; před odborným použitím ověřit proti autoritativní specifikaci.
+  status: verified
+  date: "2026-09-14"
+  reference: Verze, jmenný prostor a element ověřeny proti oficiální stránce a XSD MIX 2.0.
 versions:
   - version: "2.0"
     status: normative
@@ -20,7 +20,7 @@ versions:
       version: "2.0"
       page: null
       section: null
-      url: "https://www.loc.gov/standards/mix/"
+      url: "https://www.loc.gov/standards/mix/mix-home.html"
 entities:
   - id: MIX-ICC-PROFILE-VERSION
     type: element
@@ -31,16 +31,20 @@ entities:
       cs: Verze ICC profilu
       en: ICC profile version
     definition:
-      cs: Demo popis elementu. Přesný normativní význam je třeba ověřit ve specifikaci MIX.
-    status: normative
+      cs: Řetězcový element označený v MIX jako verze ICC profilu. Jeho dokumentace a historické příklady zaměňují verzi formátu profilu s názvem, označením barevného prostoru nebo rokem.
+    status: disputed
     source:
       document: NISO Metadata for Images in XML (MIX)
       version: "2.0"
       page: null
       section: null
-      url: "https://www.loc.gov/standards/mix/"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
     verification:
-      status: unverified
-      date: null
-      reference: Demo data.
-relations: []
+      status: disputed
+      date: "2026-09-14"
+      reference: Existence a typ elementu jsou ověřené; jeho textové vymezení je v rozporu s binárním polem verze definovaným ICC.
+relations:
+  - type: related_to
+    target: ICC
+    note:
+      cs: Hodnota iccProfileVersion má vycházet z čísla verze v hlavičce ICC profilu.

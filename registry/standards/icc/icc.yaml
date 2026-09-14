@@ -1,0 +1,44 @@
+schema_version: "1.0"
+kind: standard
+id: ICC
+title:
+  cs: Specifikace formátu ICC profilu
+  en: ICC profile format specification
+description:
+  cs: Normativní specifikace binárního formátu barevných profilů International Color Consortium.
+status: normative
+verification:
+  status: verified
+  date: "2026-09-14"
+  reference: Pole verze a jeho kódování ověřeny v ICC.1:2022, oddíl 7.2.4.
+versions:
+  - version: "ICC.1:2022"
+    status: normative
+    source:
+      document: Specification ICC.1:2022 (Profile version 4.4.0.0)
+      version: "ICC.1:2022"
+      page: 20
+      section: "7.2.4 Profile version field"
+      url: "https://www.color.org/specification/ICC.1-2022-05.pdf"
+entities:
+  - id: ICC-PROFILE-HEADER-VERSION
+    type: property
+    version: "ICC.1:2022"
+    name: profileVersionNumber
+    title:
+      cs: Číslo verze formátu ICC profilu
+      en: ICC profile format version number
+    definition:
+      cs: Číselná verze formátu profilu zakódovaná v bajtech 8 až 11 hlavičky ICC profilu; první bajt je hlavní verze a půlbajty následujícího bajtu jsou vedlejší a opravná verze.
+    status: normative
+    source:
+      document: Specification ICC.1:2022 (Profile version 4.4.0.0)
+      version: "ICC.1:2022"
+      page: 20
+      section: "7.2.4 Profile version field"
+      url: "https://www.color.org/specification/ICC.1-2022-05.pdf"
+    verification:
+      status: verified
+      date: "2026-09-14"
+      reference: Ověřeno přímo v normativní specifikaci ICC.1:2022.
+relations: []

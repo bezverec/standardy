@@ -124,6 +124,7 @@ export interface RuleVersion {
   requirement: Record<string, unknown>;
   condition?: Condition;
   source: Source;
+  references?: Source[];
   verification: Verification;
   interpretation?: LocalizedText;
   implementations?: Array<{

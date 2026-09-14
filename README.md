@@ -11,7 +11,7 @@ Autoritativním zdrojem strukturovaných dat je vždy Git/YAML v adresáři [`re
 
 [**standardy.digitalizaty.cz**](https://standardy.digitalizaty.cz)
 
-Interaktivní registr je navržen pro cestu [`/registry/`](https://standardy.digitalizaty.cz/registry/) a API pro `/api/v1/`. První vertical slice používá neověřená demo data pro vazbu MIX → `iccProfileVersion` → profil NDK → implementace.
+Interaktivní registr je dostupný na [`/registry/`](https://standardy.digitalizaty.cz/registry/) a API na `/api/v1/`. První odborně ověřený případ propojuje MIX → `iccProfileVersion` → DMF Monografie 2.3 → normativní verzi v hlavičce ICC profilu. Dokumentuje také známou chybu příkladu v DMF/MIX a odděluje ji od dosud neověřeného chování implementací.
 
 ## Vývoj
 
@@ -33,7 +33,7 @@ Zde v repozitáři do [Issues](https://github.com/bezverec/standardy/issues).
 
 Jedná se o osobní *passion project*, informace zde uvedené budou obsahovat nedostatky (někdy i zásadní), nejsou jako celek žádným způsobem adoptované ani schválené paměťovými institucemi.
 
-Totéž platí pro registry. Demo záznamy označené `verification.status: unverified` nejsou normativním tvrzením a před odborným použitím vyžadují ověření proti primárním zdrojům.
+Totéž platí pro registr. Stav `verification.status` je třeba číst u každého záznamu zvlášť: ověřený přepis může současně evidovat rozpor ve zdroji, zatímco neověřené údaje o implementacích nejsou prezentovány jako potvrzená fakta.
 
 ## Licence
 

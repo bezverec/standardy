@@ -141,12 +141,30 @@
                 "assertion": { "enum": ["exists", "equals", "matches", "in", "greater_than", "less_than"] },
                 "tool": { "type": "string" }
               }
+            },
+            "validations": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object", "additionalProperties": false, "required": ["type"],
+                "properties": {
+                  "type": { "enum": ["xpath", "regex", "value_set", "file_exists", "checksum", "custom", "external_tool", "jpylyzer", "jhove", "schematron"] },
+                  "expression": { "type": "string" },
+                  "assertion": { "enum": ["exists", "equals", "matches", "in", "greater_than", "less_than"] },
+                  "tool": { "type": "string" }
+                }
+              }
             }
           },
           "minProperties": 1
         },
         "condition": { "$ref": "#/$defs/condition" },
         "source": { "$ref": "#/$defs/source" },
+        "references": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/source" }
+        },
         "verification": { "$ref": "#/$defs/verification" },
         "interpretation": { "$ref": "#/$defs/localized" },
         "implementations": { "type": "array", "items": { "$ref": "#/$defs/implementation" } },

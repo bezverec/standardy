@@ -2,14 +2,14 @@ schema_version: "1.0"
 kind: rule
 id: NDK-MONO-MIX-ICC-PROFILE-VERSION
 title:
-  cs: Verze ICC profilu v MIX (demo pravidlo)
+  cs: Verze formátu ICC profilu v MIX
 description:
-  cs: Vertical-slice pravidlo demonstrující vazbu profilu NDK na element MIX.
+  cs: Ověřené pravidlo rozlišující číselnou verzi formátu ICC profilu od názvu či označení profilu.
 profile:
   id: ndk-monograph
 versions:
-  - version: "2.4"
-    status: draft
+  - version: "2.3"
+    status: disputed
     target:
       entity: MIX-ICC-PROFILE-VERSION
     relation_to_target:
@@ -20,33 +20,57 @@ versions:
       vocabulary: NDK-OBJECT-TYPES
       values: [monograph]
     normative_requirement:
-      cs: "DEMO – neověřené: element má být přítomen. Toto není autoritativní formulace NDK."
+      cs: DMF Monografie 2.3 označuje iccProfileVersion jako povinný (M) pro MC i PS s kardinalitou MIX 0–1. Je-li v MIX přítomen blok IccProfile, musí obsahovat právě jednu číselnou verzi formátu ICC profilu.
     requirement:
-      presence: required
-      validation:
-        type: xpath
-        expression: "//mix:iccProfileVersion"
-        assertion: exists
+      presence: conditional
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        - type: xpath
+          expression: "//mix:IccProfile/mix:iccProfileVersion"
+          assertion: exists
+        - type: regex
+          expression: "^[0-9]+(?:\\.[0-9]+){0,3}$"
+          assertion: matches
     condition:
       all:
         - field: object_type
           operator: equals
           value: monograph
-        - field: namespace
-          operator: equals
-          value: "http://www.loc.gov/mix/v20"
+        - field: file_role
+          operator: in
+          value: [MC, PS]
+        - field: "xpath://mix:IccProfile"
+          operator: exists
     source:
       document: DMF Monografie
-      version: "2.4"
-      page: null
-      section: null
-      url: null
+      version: "2.3"
+      page: 83
+      section: "7.5.4 Technická metadata MIX"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: iccProfileVersion
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+      - document: ANSI/NISO Z39.87-2006 (R2017), Data Dictionary – Technical Metadata for Digital Still Images
+        version: "R2017"
+        page: 21
+        section: "7.1.3.2.1.2 ICC Profile Version"
+        url: "https://www.niso.org/publications/ansiniso-z3987-2006-r2017-data-dictionary-technical-metadata-digital-still-images"
+      - document: Specification ICC.1:2022 (Profile version 4.4.0.0)
+        version: "ICC.1:2022"
+        page: 20
+        section: "7.2.4 Profile version field"
+        url: "https://www.color.org/specification/ICC.1-2022-05.pdf"
     verification:
-      status: unverified
-      date: null
-      reference: Ukázkové pravidlo; normativní znění a lokaci je nutné doplnit z primárního zdroje.
+      status: verified
+      date: "2026-09-14"
+      reference: Požadavek DMF a význam binárního pole byly ověřeny proti DMF Monografie 2.3, MIX 2.0 a ICC.1:2022; evidovaný rozpor se týká textového příkladu v DMF/MIX, nikoli existence elementu.
     interpretation:
-      cs: Ukázka oddělené interpretační vrstvy; nepoužívat jako odborný závěr.
+      cs: Hodnota musí být číslo verze formátu přečtené z hlavičky vloženého ICC profilu, například 2, 2.4, 2.4.0, 4, 4.3 nebo 4.4.0.0. Hodnoty sRGB, Adobe RGB a sRGB IEC61966-2.1 jsou názvy či označení profilů/barevných prostorů, nikoli verze formátu. Zachovává se přesnost, kterou poskytne zdrojový nástroj.
     implementations:
       - id: PROARC
         application: ProArc
@@ -54,24 +78,32 @@ versions:
         status: unknown
         verification: unverified
         notes:
-          cs: Demo vazba, skutečné chování nebylo v tomto datasetu ověřeno.
+          cs: Není ověřeno, zda ProArc hodnotu načítá z hlavičky ICC profilu, přebírá z JHOVE, nebo ji očekává ručně.
       - id: KOMPLEXNI-VALIDATOR
         application: Komplexní validátor
         role: validator
         status: unknown
         verification: unverified
         notes:
-          cs: Demo vazba, skutečné chování nebylo v tomto datasetu ověřeno.
+          cs: Není ověřeno, zda Komplexní validátor kontroluje jen přítomnost elementu, nebo také jeho číselný význam.
       - id: JHOVE-JPYLYZER
         application: JHOVE / jpylyzer
         role: external_tool
         status: related
         verification: unverified
         notes:
-          cs: Demo vazba na budoucí validaci technických metadat.
-    discrepancies: []
+          cs: Nástroje umějí charakterizovat obrazové soubory, ale konkrétní mapování výstupu na MIX 2.0 v tomto workflow nebylo ověřeno.
+    discrepancies:
+      - cs: MIX/Z39.87 používá obecný řetězec a historické příklady pod iccProfileVersion směšují rok, název či označení barevného prostoru s verzí formátu ICC profilu.
+      - cs: DMF Monografie 2.3 pole správně označuje jako „verze profilu“, ale příklad „sRGB IEC61966-2.1“ není číslem verze formátu ICC profilu.
+    validator_behaviour:
+      cs: Za uvedených podmínek vyžadovat právě jeden element a přijmout pouze jednu až čtyři číselné složky oddělené tečkou. Názvy profilů, mezery a jiné nečíselné hodnoty odmítnout.
     fix_recommendation:
-      cs: Ověřit zdrojový dokument a teprve poté doplnit konkrétní doporučení.
+      cs: V DMF nahradit příklad hodnotou 2.4 nebo 4.3 a uvést, že hodnota pochází z bajtů 8–11 hlavičky ICC profilu. V dokumentaci MIX/Z39.87 zpřesnit význam a strojově omezit hodnotu na číselnou verzi.
 relations:
   - type: related_to
     target: MIX
+  - type: clarifies
+    target: ICC-PROFILE-HEADER-VERSION
+    note:
+      cs: Pravidlo zpřesňuje obecný řetězec MIX podle normativního pole hlavičky ICC profilu.

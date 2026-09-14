@@ -69,4 +69,5 @@ nav:
   - Vývoj registru:
       - Architektura: development/architecture.md
       - Datový model: development/registry-data-model.md
+      - Případ ICC profile version: development/icc-profile-version.md
       - Lokální vývoj: development/local-development.md
