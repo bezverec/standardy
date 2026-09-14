@@ -1,0 +1,46 @@
+{
+  "name": "standardy-digitalizace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "registry:validate": "tsx scripts/validate-registry.ts",
+    "registry:check-relations": "tsx scripts/validate-registry.ts --relations-only",
+    "registry:build": "tsx scripts/build-registry.ts",
+    "registry:export": "npm run registry:build",
+    "registry:import": "tsx scripts/import-d1.ts",
+    "registry:reset": "tsx scripts/import-d1.ts --reset",
+    "build:web": "vite build --config web/registry/vite.config.ts",
+    "build:docs": "node scripts/build-docs.mjs",
+    "build": "npm run registry:validate && npm run build:docs && npm run registry:build && npm run build:web",
+    "dev:web": "vite --config web/registry/vite.config.ts",
+    "dev:worker": "wrangler dev",
+    "dev": "concurrently -n web,worker -c cyan,magenta \"npm:dev:web\" \"npm:dev:worker\"",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vite": "^7.1.0",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260911.1",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "concurrently": "^9.2.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "wrangler": "^4.34.0"
+  }
+}

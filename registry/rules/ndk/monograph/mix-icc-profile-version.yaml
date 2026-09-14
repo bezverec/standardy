@@ -1,0 +1,77 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-ICC-PROFILE-VERSION
+title:
+  cs: Verze ICC profilu v MIX (demo pravidlo)
+description:
+  cs: Vertical-slice pravidlo demonstrující vazbu profilu NDK na element MIX.
+profile:
+  id: ndk-monograph
+versions:
+  - version: "2.4"
+    status: draft
+    target:
+      entity: MIX-ICC-PROFILE-VERSION
+    relation_to_target:
+      type: restricts
+    category: technical/icc
+    severity: error
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "DEMO – neověřené: element má být přítomen. Toto není autoritativní formulace NDK."
+    requirement:
+      presence: required
+      validation:
+        type: xpath
+        expression: "//mix:iccProfileVersion"
+        assertion: exists
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: namespace
+          operator: equals
+          value: "http://www.loc.gov/mix/v20"
+    source:
+      document: DMF Monografie
+      version: "2.4"
+      page: null
+      section: null
+      url: null
+    verification:
+      status: unverified
+      date: null
+      reference: Ukázkové pravidlo; normativní znění a lokaci je nutné doplnit z primárního zdroje.
+    interpretation:
+      cs: Ukázka oddělené interpretační vrstvy; nepoužívat jako odborný závěr.
+    implementations:
+      - id: PROARC
+        application: ProArc
+        role: generator
+        status: unknown
+        verification: unverified
+        notes:
+          cs: Demo vazba, skutečné chování nebylo v tomto datasetu ověřeno.
+      - id: KOMPLEXNI-VALIDATOR
+        application: Komplexní validátor
+        role: validator
+        status: unknown
+        verification: unverified
+        notes:
+          cs: Demo vazba, skutečné chování nebylo v tomto datasetu ověřeno.
+      - id: JHOVE-JPYLYZER
+        application: JHOVE / jpylyzer
+        role: external_tool
+        status: related
+        verification: unverified
+        notes:
+          cs: Demo vazba na budoucí validaci technických metadat.
+    discrepancies: []
+    fix_recommendation:
+      cs: Ověřit zdrojový dokument a teprve poté doplnit konkrétní doporučení.
+relations:
+  - type: related_to
+    target: MIX

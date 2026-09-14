@@ -1,0 +1,20 @@
+schema_version: "1.0"
+kind: vocabulary
+id: NDK-OBJECT-TYPES
+title:
+  cs: Typy objektů NDK (demo)
+status: draft
+verification:
+  status: unverified
+  date: null
+  reference: Demo hodnoty pro ověření datového modelu.
+values:
+  - id: monograph
+    label:
+      cs: monografie
+  - id: periodical
+    label:
+      cs: periodikum
+  - id: issue
+    label:
+      cs: číslo periodika

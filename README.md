@@ -1,10 +1,29 @@
 # Standardy digitalizace
 
-Repo obsahuje návrhy a interpretace různých standardů, doporučení a norem v oblasti digitalizace kulturního, především hmotného textového kulturního dědictví.
+Repo obsahuje dvě propojené vrstvy:
+
+1. **Human-readable dokumentaci** – návrhy a interpretace standardů, doporučení a norem v oblasti digitalizace kulturního dědictví, publikované pomocí MkDocs.
+2. **Machine-readable Standards Registry** – verzovaná YAML data, veřejné JSON exporty, read-only REST API a React Registry Explorer.
+
+Autoritativním zdrojem strukturovaných dat je vždy Git/YAML v adresáři [`registry/`](registry/). Cloudflare D1 je pouze odvozený index a lze jej kompletně obnovit z repozitáře.
 
 ## Kde je najít
 
 [**standardy.digitalizaty.cz**](https://standardy.digitalizaty.cz)
+
+Interaktivní registr je navržen pro cestu [`/registry/`](https://standardy.digitalizaty.cz/registry/) a API pro `/api/v1/`. První vertical slice používá neověřená demo data pro vazbu MIX → `iccProfileVersion` → profil NDK → implementace.
+
+## Vývoj
+
+```bash
+npm install
+npm run registry:validate
+npm run build
+npm run registry:reset
+npm run dev
+```
+
+Podrobnosti jsou v [architektuře](docs/development/architecture.md), [datovém modelu](docs/development/registry-data-model.md) a [návodu pro lokální vývoj](docs/development/local-development.md).
 
 ## Kde hlásit chyby a návrhy
 
@@ -13,6 +32,8 @@ Zde v repozitáři do [Issues](https://github.com/bezverec/standardy/issues).
 ## Upozornění
 
 Jedná se o osobní *passion project*, informace zde uvedené budou obsahovat nedostatky (někdy i zásadní), nejsou jako celek žádným způsobem adoptované ani schválené paměťovými institucemi.
+
+Totéž platí pro registry. Demo záznamy označené `verification.status: unverified` nejsou normativním tvrzením a před odborným použitím vyžadují ověření proti primárním zdrojům.
 
 ## Licence
 
