@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://standardy.digitalizaty.cz/schemas/standard.schema.json",
+  "title": "Registry standard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "id", "title", "status", "verification", "versions", "entities"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "kind": { "const": "standard" },
+    "id": { "$ref": "#/$defs/id" },
+    "title": { "$ref": "#/$defs/localized" },
+    "description": { "$ref": "#/$defs/localized" },
+    "status": { "$ref": "#/$defs/status" },
+    "verification": { "$ref": "#/$defs/verification" },
+    "versions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "status", "source"],
+        "properties": {
+          "version": { "type": "string", "minLength": 1 },
+          "status": { "$ref": "#/$defs/status" },
+          "namespace": { "type": "string", "format": "uri" },
+          "introduced": { "type": ["string", "null"] },
+          "deprecated": { "type": ["string", "null"] },
+          "removed": { "type": ["string", "null"] },
+          "source": { "$ref": "#/$defs/source" }
+        }
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "version", "name", "title", "status", "source", "verification"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "type": { "enum": ["element", "attribute", "format", "property", "concept", "value"] },
+          "version": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "namespace": { "type": "string", "format": "uri" },
+          "title": { "$ref": "#/$defs/localized" },
+          "definition": { "$ref": "#/$defs/localized" },
+          "status": { "$ref": "#/$defs/status" },
+          "source": { "$ref": "#/$defs/source" },
+          "verification": { "$ref": "#/$defs/verification" }
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relation" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "localized": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "status": { "enum": ["normative", "ambiguous", "disputed", "deprecated", "draft", "implementation_defined"] },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document", "version", "page", "section", "url"],
+      "properties": {
+        "document": { "type": "string", "minLength": 1 },
+        "version": { "type": ["string", "null"] },
+        "page": { "type": ["string", "integer", "null"] },
+        "section": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"], "format": "uri" }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "date", "reference"],
+      "properties": {
+        "status": { "enum": ["verified", "unverified", "disputed"] },
+        "date": { "type": ["string", "null"], "format": "date" },
+        "reference": { "type": ["string", "null"] }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "target"],
+      "properties": {
+        "type": { "$ref": "#/$defs/relationType" },
+        "target": { "$ref": "#/$defs/id" },
+        "note": { "$ref": "#/$defs/localized" }
+      }
+    },
+    "relationType": {
+      "enum": ["defined_by", "derived_from", "restricts", "extends", "clarifies", "implements", "conflicts_with", "supersedes", "equivalent_to", "related_to", "validated_by", "generated_by", "provides_value_for"]
+    }
+  }
+}

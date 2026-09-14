@@ -1,0 +1,9 @@
+node_modules/
+.venv/
+site/
+dist/
+.wrangler/
+.dev.vars
+wrangler.deploy.jsonc
+web/registry/dist/
+coverage/

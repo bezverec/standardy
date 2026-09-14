@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "standardy-registry",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "routes": [
+    {
+      "pattern": "standardy.digitalizaty.cz",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/registry/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "standardy-registry",
+      "database_id": "77690b29-1373-4aec-b486-3f2400492644",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

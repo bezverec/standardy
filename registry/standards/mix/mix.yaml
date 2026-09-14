@@ -1,0 +1,46 @@
+schema_version: "1.0"
+kind: standard
+id: MIX
+title:
+  cs: Metadata pro obrázky v XML (MIX)
+  en: NISO Metadata for Images in XML (MIX)
+description:
+  cs: Demo záznam standardu pro ověření datového modelu registru.
+status: normative
+verification:
+  status: unverified
+  date: null
+  reference: Demo data; před odborným použitím ověřit proti autoritativní specifikaci.
+versions:
+  - version: "2.0"
+    status: normative
+    namespace: "http://www.loc.gov/mix/v20"
+    source:
+      document: NISO Metadata for Images in XML (MIX)
+      version: "2.0"
+      page: null
+      section: null
+      url: "https://www.loc.gov/standards/mix/"
+entities:
+  - id: MIX-ICC-PROFILE-VERSION
+    type: element
+    version: "2.0"
+    name: iccProfileVersion
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: Verze ICC profilu
+      en: ICC profile version
+    definition:
+      cs: Demo popis elementu. Přesný normativní význam je třeba ověřit ve specifikaci MIX.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX)
+      version: "2.0"
+      page: null
+      section: null
+      url: "https://www.loc.gov/standards/mix/"
+    verification:
+      status: unverified
+      date: null
+      reference: Demo data.
+relations: []

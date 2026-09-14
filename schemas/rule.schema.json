@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://standardy.digitalizaty.cz/schemas/rule.schema.json",
+  "title": "Registry rule with stable identity and versioned requirements",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "id", "title", "profile", "versions"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "kind": { "const": "rule" },
+    "id": { "$ref": "#/$defs/id" },
+    "title": { "$ref": "#/$defs/localized" },
+    "description": { "$ref": "#/$defs/localized" },
+    "profile": {
+      "type": "object", "additionalProperties": false, "required": ["id"],
+      "properties": { "id": { "$ref": "#/$defs/id" } }
+    },
+    "versions": {
+      "type": "array", "minItems": 1,
+      "items": { "$ref": "#/$defs/ruleVersion" }
+    },
+    "relations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relation" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "localized": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "string", "minLength": 1 } },
+    "status": { "enum": ["normative", "ambiguous", "disputed", "deprecated", "draft", "implementation_defined"] },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["document", "version", "page", "section", "url"],
+      "properties": {
+        "document": { "type": "string", "minLength": 1 },
+        "version": { "type": ["string", "null"] },
+        "page": { "type": ["string", "integer", "null"] },
+        "section": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"], "format": "uri" }
+      }
+    },
+    "verification": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "date", "reference"],
+      "properties": {
+        "status": { "enum": ["verified", "unverified", "disputed"] },
+        "date": { "type": ["string", "null"], "format": "date" },
+        "reference": { "type": ["string", "null"] }
+      }
+    },
+    "relationType": {
+      "enum": ["defined_by", "derived_from", "restricts", "extends", "clarifies", "implements", "conflicts_with", "supersedes", "equivalent_to", "related_to", "validated_by", "generated_by", "provides_value_for"]
+    },
+    "relation": {
+      "type": "object", "additionalProperties": false, "required": ["type", "target"],
+      "properties": {
+        "type": { "$ref": "#/$defs/relationType" },
+        "target": { "$ref": "#/$defs/id" },
+        "note": { "$ref": "#/$defs/localized" }
+      }
+    },
+    "condition": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false, "required": ["all"],
+          "properties": { "all": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/condition" } } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["any"],
+          "properties": { "any": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/condition" } } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["not"],
+          "properties": { "not": { "$ref": "#/$defs/condition" } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["field", "operator"],
+          "properties": {
+            "field": { "type": "string", "minLength": 1 },
+            "operator": { "enum": ["exists", "equals", "matches", "in", "greater_than", "less_than"] },
+            "value": {}
+          }
+        }
+      ]
+    },
+    "implementation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "application", "role", "status", "verification"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "application": { "type": "string", "minLength": 1 },
+        "role": { "enum": ["generator", "validator", "external_tool", "editor", "consumer"] },
+        "status": { "enum": ["implemented", "partial", "not_implemented", "unknown", "related"] },
+        "verification": { "enum": ["verified", "unverified", "disputed"] },
+        "notes": { "$ref": "#/$defs/localized" },
+        "behaviour": { "$ref": "#/$defs/localized" }
+      }
+    },
+    "ruleVersion": {
+      "type": "object", "additionalProperties": false,
+      "required": ["version", "status", "target", "relation_to_target", "category", "severity", "normative_requirement", "requirement", "source", "verification"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "status": { "$ref": "#/$defs/status" },
+        "introduced": { "type": ["string", "null"] },
+        "modified": { "type": ["string", "null"] },
+        "deprecated": { "type": ["string", "null"] },
+        "removed": { "type": ["string", "null"] },
+        "target": {
+          "type": "object", "additionalProperties": false, "required": ["entity"],
+          "properties": { "entity": { "$ref": "#/$defs/id" } }
+        },
+        "relation_to_target": {
+          "type": "object", "additionalProperties": false, "required": ["type"],
+          "properties": { "type": { "$ref": "#/$defs/relationType" } }
+        },
+        "category": { "type": "string", "pattern": "^(metadata|file|structure|technical|cross_file|semantic)(/[A-Za-z0-9._-]+)?$" },
+        "severity": { "enum": ["error", "warning", "info"] },
+        "object_types": {
+          "type": "object", "additionalProperties": false, "required": ["vocabulary", "values"],
+          "properties": {
+            "vocabulary": { "$ref": "#/$defs/id" },
+            "values": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/id" } }
+          }
+        },
+        "normative_requirement": { "$ref": "#/$defs/localized" },
+        "requirement": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "presence": { "enum": ["required", "optional", "forbidden", "conditional"] },
+            "cardinality": {
+              "type": "object", "additionalProperties": false,
+              "properties": { "min": { "type": "integer", "minimum": 0 }, "max": { "type": ["integer", "null"], "minimum": 0 } }
+            },
+            "allowed_values": { "type": "array", "items": {} },
+            "validation": {
+              "type": "object", "additionalProperties": false, "required": ["type"],
+              "properties": {
+                "type": { "enum": ["xpath", "regex", "value_set", "file_exists", "checksum", "custom", "external_tool", "jpylyzer", "jhove", "schematron"] },
+                "expression": { "type": "string" },
+                "assertion": { "enum": ["exists", "equals", "matches", "in", "greater_than", "less_than"] },
+                "tool": { "type": "string" }
+              }
+            }
+          },
+          "minProperties": 1
+        },
+        "condition": { "$ref": "#/$defs/condition" },
+        "source": { "$ref": "#/$defs/source" },
+        "verification": { "$ref": "#/$defs/verification" },
+        "interpretation": { "$ref": "#/$defs/localized" },
+        "implementations": { "type": "array", "items": { "$ref": "#/$defs/implementation" } },
+        "discrepancies": { "type": "array", "items": { "$ref": "#/$defs/localized" } },
+        "validator_behaviour": { "$ref": "#/$defs/localized" },
+        "fix_recommendation": { "$ref": "#/$defs/localized" }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: profile
+id: ndk-monograph
+title:
+  cs: NDK Monografie (demo)
+  en: NDK Monograph (demo)
+description:
+  cs: Neověřený demonstrační profil pro první vertical slice registru.
+status: draft
+inherits:
+  - profile: ndk-base
+    version: demo
+    strategy: extend
+verification:
+  status: unverified
+  date: null
+  reference: Nejde o úplný ani ověřený přepis DMF NDK.
+versions:
+  - version: "2.4"
+    status: draft
+    source:
+      document: DMF Monografie
+      version: "2.4"
+      page: null
+      section: null
+      url: null

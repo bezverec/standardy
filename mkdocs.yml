@@ -66,3 +66,7 @@ markdown_extensions:
 nav:
   - Domů: index.md
   - OpenEXR working paper: openexr-preservation-master.md
+  - Vývoj registru:
+      - Architektura: development/architecture.md
+      - Datový model: development/registry-data-model.md
+      - Lokální vývoj: development/local-development.md

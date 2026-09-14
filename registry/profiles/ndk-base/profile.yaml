@@ -1,0 +1,21 @@
+schema_version: "1.0"
+kind: profile
+id: ndk-base
+title:
+  cs: NDK – společný základ (demo)
+description:
+  cs: Technický demonstrační záznam pro ověření dědičnosti profilů.
+status: draft
+verification:
+  status: unverified
+  date: null
+  reference: Nejde o úplný ani ověřený přepis pravidel NDK.
+versions:
+  - version: "demo"
+    status: draft
+    source:
+      document: NDK – demonstrační profil
+      version: demo
+      page: null
+      section: null
+      url: null
