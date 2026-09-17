@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
   canonicalize,
@@ -19,6 +19,10 @@ if (issues.length) {
 const registry = compileRegistry(documents);
 const outputDirectory = path.join(root, "dist", "registry");
 const publicDirectory = path.join(root, "site", "data");
+await Promise.all([
+  rm(outputDirectory, { recursive: true, force: true }),
+  rm(publicDirectory, { recursive: true, force: true }),
+]);
 await Promise.all([mkdir(outputDirectory, { recursive: true }), mkdir(publicDirectory, { recursive: true })]);
 
 function serialize(value: unknown): string {
