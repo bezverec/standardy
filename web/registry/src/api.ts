@@ -1,7 +1,7 @@
 export interface RuleVersion {
   rule_id: string;
   version: string;
-  profile_id: string;
+  national_standard_id: string;
   title: Record<string, string>;
   description?: Record<string, string>;
   status: string;
@@ -41,7 +41,7 @@ export interface RuleDetailResponse {
 
 export interface KnowledgeGraphNode {
   id: string;
-  kind: "rule" | "standard" | "profile" | "standard_entity" | "implementation";
+  kind: "rule" | "standard" | "national_standard" | "standard_entity" | "implementation";
   data?: {
     title?: Record<string, string>;
     application?: string;
@@ -81,6 +81,6 @@ export const api = {
   why: (id: string) => request<KnowledgeGraphResponse>(`/rules/${encodeURIComponent(id)}/why`),
   standards: () => request<{ data: RegistryEntity[] }>("/standards"),
   standard: (id: string) => request<RegistryEntity & { entities: unknown[] }>(`/standards/${encodeURIComponent(id)}`),
-  profiles: () => request<{ data: RegistryEntity[] }>("/profiles"),
-  profile: (id: string) => request<RegistryEntity & { effective_rules: RuleVersion[] }>(`/profiles/${encodeURIComponent(id)}`),
+  nationalStandards: () => request<{ data: RegistryEntity[] }>("/national-standards"),
+  nationalStandard: (id: string) => request<RegistryEntity & { effective_rules: RuleVersion[] }>(`/national-standards/${encodeURIComponent(id)}`),
 };

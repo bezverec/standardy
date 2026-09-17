@@ -7,7 +7,7 @@ status: draft
 verification:
   status: verified
   date: "2026-09-14"
-  reference: Hodnota monograph označuje profil DMF Monografie; seznam není úplným slovníkem typů NDK.
+  reference: Hodnota monograph označuje národní standard DMF Monografie; seznam není úplným slovníkem typů NDK.
 values:
   - id: monograph
     label:

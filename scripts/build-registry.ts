@@ -30,7 +30,7 @@ const exports: Record<string, unknown> = {
   "rules.json": registry.rule_versions,
   "standards.json": registry.standards,
   "standard-entities.json": registry.standard_entities,
-  "profiles.json": registry.profiles,
+  "national-standards.json": registry.national_standards,
   "relations.json": registry.relations,
   "implementations.json": registry.implementations,
   "vocabularies.json": registry.vocabularies,

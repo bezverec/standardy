@@ -4,14 +4,14 @@
   "title": "Registry rule with stable identity and versioned requirements",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "kind", "id", "title", "profile", "versions"],
+  "required": ["schema_version", "kind", "id", "title", "national_standard", "versions"],
   "properties": {
     "schema_version": { "const": "1.0" },
     "kind": { "const": "rule" },
     "id": { "$ref": "#/$defs/id" },
     "title": { "$ref": "#/$defs/localized" },
     "description": { "$ref": "#/$defs/localized" },
-    "profile": {
+    "national_standard": {
       "type": "object", "additionalProperties": false, "required": ["id"],
       "properties": { "id": { "$ref": "#/$defs/id" } }
     },

@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://standardy.digitalizaty.cz/schemas/profile.schema.json",
-  "title": "Registry profile",
+  "$id": "https://standardy.digitalizaty.cz/schemas/national_standard.schema.json",
+  "title": "Registry national standard",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "kind", "id", "title", "status", "verification", "versions"],
   "properties": {
     "schema_version": { "const": "1.0" },
-    "kind": { "const": "profile" },
+    "kind": { "const": "national_standard" },
     "id": { "$ref": "#/$defs/id" },
     "title": { "$ref": "#/$defs/localized" },
     "description": { "$ref": "#/$defs/localized" },
@@ -18,9 +18,9 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["profile", "version", "strategy"],
+        "required": ["national_standard", "version", "strategy"],
         "properties": {
-          "profile": { "$ref": "#/$defs/id" },
+          "national_standard": { "$ref": "#/$defs/id" },
           "version": { "type": "string", "minLength": 1 },
           "strategy": { "enum": ["inherit", "add", "restrict", "override", "extend"] }
         }

@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import type {
   GraphRelation,
   NormalizedRegistry,
-  ProfileDocument,
+  NationalStandardDocument,
   RegistryDocument,
   RuleDocument,
   StandardDocument,
@@ -38,7 +38,7 @@ export function compileRegistry(documents: RegistryDocument[]): NormalizedRegist
       ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString()
       : gitValue(["show", "-s", "--format=%cI", "HEAD"], "1970-01-01T00:00:00.000Z"));
   const standards = stableSort(documents.filter((item): item is StandardDocument => item.kind === "standard"));
-  const profiles = stableSort(documents.filter((item): item is ProfileDocument => item.kind === "profile"));
+  const nationalStandards = stableSort(documents.filter((item): item is NationalStandardDocument => item.kind === "national_standard"));
   const rules = stableSort(documents.filter((item): item is RuleDocument => item.kind === "rule"));
   const vocabularies = stableSort(documents.filter((item): item is VocabularyDocument => item.kind === "vocabulary"));
   const standardEntities = standards.flatMap((standard) => standard.entities.map((entity) => ({ ...entity, standard_id: standard.id })))
@@ -46,7 +46,7 @@ export function compileRegistry(documents: RegistryDocument[]): NormalizedRegist
   const ruleVersions = rules.flatMap((rule) => rule.versions.map((version) => ({
     ...version,
     rule_id: rule.id,
-    profile_id: rule.profile.id,
+    national_standard_id: rule.national_standard.id,
     title: rule.title,
     ...(rule.description ? { description: rule.description } : {}),
     ...(rule.source_file ? { source_file: rule.source_file } : {}),
@@ -61,9 +61,9 @@ export function compileRegistry(documents: RegistryDocument[]): NormalizedRegist
       relations.push({ id: `${standard.id}|${relation.type}|${relation.target}`, from: standard.id, to: relation.target, type: relation.type, ...(relation.note ? { note: relation.note } : {}) });
     }
   }
-  for (const profile of profiles) {
-    for (const parent of profile.inherits ?? []) {
-      relations.push({ id: `${profile.id}|extends|${parent.profile}`, from: profile.id, to: parent.profile, type: "extends" });
+  for (const nationalStandard of nationalStandards) {
+    for (const parent of nationalStandard.inherits ?? []) {
+      relations.push({ id: `${nationalStandard.id}|extends|${parent.national_standard}`, from: nationalStandard.id, to: parent.national_standard, type: "extends" });
     }
   }
   for (const rule of rules) {
@@ -75,7 +75,7 @@ export function compileRegistry(documents: RegistryDocument[]): NormalizedRegist
         type: version.relation_to_target.type,
         rule_version: version.version,
       });
-      relations.push({ id: `${rule.id}@${version.version}|defined_by|${rule.profile.id}`, from: rule.id, to: rule.profile.id, type: "defined_by", rule_version: version.version });
+      relations.push({ id: `${rule.id}@${version.version}|defined_by|${rule.national_standard.id}`, from: rule.id, to: rule.national_standard.id, type: "defined_by", rule_version: version.version });
       for (const implementation of version.implementations ?? []) {
         const type = implementation.role === "generator" ? "generated_by" : "validated_by";
         relations.push({ id: `${rule.id}@${version.version}|${type}|${implementation.id}`, from: rule.id, to: implementation.id, type, rule_version: version.version });
@@ -102,7 +102,7 @@ export function compileRegistry(documents: RegistryDocument[]): NormalizedRegist
     },
     standards,
     standard_entities: standardEntities,
-    profiles,
+    national_standards: nationalStandards,
     rules,
     rule_versions: ruleVersions,
     relations,

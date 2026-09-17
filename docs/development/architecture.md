@@ -26,7 +26,7 @@ flowchart TD
 ```
 
 - Git/YAML je jediný source of truth. D1 je odvozená query vrstva.
-- `Rule` má stabilní identitu; normativní změny jsou uvnitř `RuleVersion`.
+- `Rule` má stabilní identitu; normativní změny jsou uvnitř `RuleVersion` a vážou se k `NationalStandard`.
 - Normativní požadavek, interpretace, chování implementace a známé rozpory jsou oddělená pole.
 - Stabilní URL používají string ID, nikdy databázový klíč.
 - Worker neposkytuje žádné veřejné zápisové endpointy.
