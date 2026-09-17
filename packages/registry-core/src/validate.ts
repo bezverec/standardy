@@ -3,7 +3,7 @@ import path from "node:path";
 import Ajv2020, { type ErrorObject, type ValidateFunction } from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import type {
-  ProfileDocument,
+  NationalStandardDocument,
   RegistryDocument,
   RuleDocument,
   StandardDocument,
@@ -19,7 +19,7 @@ export interface ValidationIssue {
 async function schemaValidators(root: string): Promise<Record<string, ValidateFunction>> {
   const ajv = new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true });
   addFormats(ajv);
-  const kinds = ["standard", "profile", "rule", "vocabulary"] as const;
+  const kinds = ["standard", "national_standard", "rule", "vocabulary"] as const;
   const validators: Record<string, ValidateFunction> = {};
   for (const kind of kinds) {
     const schema = JSON.parse(await readFile(path.join(root, "schemas", `${kind}.schema.json`), "utf8"));
@@ -67,7 +67,7 @@ export async function validateRegistry(
   }
 
   const standards = documents.filter((item): item is StandardDocument => item.kind === "standard");
-  const profiles = documents.filter((item): item is ProfileDocument => item.kind === "profile");
+  const nationalStandards = documents.filter((item): item is NationalStandardDocument => item.kind === "national_standard");
   const rules = documents.filter((item): item is RuleDocument => item.kind === "rule");
   const vocabularies = documents.filter((item): item is VocabularyDocument => item.kind === "vocabulary");
   const standardEntities = standards.flatMap((standard) => standard.entities ?? []);
@@ -91,7 +91,7 @@ export async function validateRegistry(
   // One application can participate in many rule versions. Repeated application
   // IDs are therefore valid, unlike duplicated primary registry entity IDs.
   const knownIds = new Set([...primaryEntityIds, ...implementationIds]);
-  const profileById = new Map(profiles.map((profile) => [profile.id, profile]));
+  const nationalStandardById = new Map(nationalStandards.map((nationalStandard) => [nationalStandard.id, nationalStandard]));
   const vocabularyById = new Map(vocabularies.map((vocabulary) => [vocabulary.id, vocabulary]));
 
   for (const standard of standards) {
@@ -103,23 +103,23 @@ export async function validateRegistry(
     }
   }
 
-  for (const profile of profiles) {
-    for (const inheritance of profile.inherits ?? []) {
-      const parent = profileById.get(inheritance.profile);
+  for (const nationalStandard of nationalStandards) {
+    for (const inheritance of nationalStandard.inherits ?? []) {
+      const parent = nationalStandardById.get(inheritance.national_standard);
       if (!parent) {
-        issues.push({ file: profile.source_file, message: `${profile.id} inherits unknown profile ${inheritance.profile}` });
+        issues.push({ file: nationalStandard.source_file, message: `${nationalStandard.id} inherits unknown national standard ${inheritance.national_standard}` });
       } else if (!parent.versions.some((version) => version.version === inheritance.version)) {
-        issues.push({ file: profile.source_file, message: `${profile.id} inherits unknown version ${inheritance.profile}@${inheritance.version}` });
+        issues.push({ file: nationalStandard.source_file, message: `${nationalStandard.id} inherits unknown version ${inheritance.national_standard}@${inheritance.version}` });
       }
     }
   }
 
   for (const rule of rules) {
-    const profile = profileById.get(rule.profile.id);
-    if (!profile) issues.push({ file: rule.source_file, message: `${rule.id} references unknown profile ${rule.profile.id}` });
+    const nationalStandard = nationalStandardById.get(rule.national_standard.id);
+    if (!nationalStandard) issues.push({ file: rule.source_file, message: `${rule.id} references unknown national standard ${rule.national_standard.id}` });
     for (const version of rule.versions) {
-      if (profile && !profile.versions.some((candidate) => candidate.version === version.version)) {
-        issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} has no matching profile version` });
+      if (nationalStandard && !nationalStandard.versions.some((candidate) => candidate.version === version.version)) {
+        issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} has no matching national standard version` });
       }
       if (!knownIds.has(version.target.entity)) {
         issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} targets unknown entity ${version.target.entity}` });

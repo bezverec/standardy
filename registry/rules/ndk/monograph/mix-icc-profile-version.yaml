@@ -5,7 +5,7 @@ title:
   cs: Verze formátu ICC profilu v MIX
 description:
   cs: Ověřené pravidlo rozlišující číselnou verzi formátu ICC profilu od názvu či označení profilu.
-profile:
+national_standard:
   id: ndk-monograph
 versions:
   - version: "2.3"

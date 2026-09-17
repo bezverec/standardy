@@ -1,4 +1,4 @@
-import { semanticProfileDiff } from "../../packages/registry-core/src/semantic-diff.ts";
+import { semanticNationalStandardDiff } from "../../packages/registry-core/src/semantic-diff.ts";
 import type { RuleVersion } from "../../packages/registry-core/src/model.ts";
 
 export interface Env {
@@ -43,7 +43,7 @@ async function listRules(requestUrl: URL, env: Env, version: string): Promise<Re
   const clauses: string[] = [];
   const bindings: unknown[] = [];
   const filters: Array<[string, string]> = [
-    ["profile", "profile_id"],
+    ["national_standard", "national_standard_id"],
     ["version", "version"],
     ["standard", "standard_id"],
     ["severity", "severity"],
@@ -69,7 +69,7 @@ async function listRules(requestUrl: URL, env: Env, version: string): Promise<Re
   const page = positiveInteger(requestUrl.searchParams.get("page"), 1, 1_000_000);
   const pageSize = positiveInteger(requestUrl.searchParams.get("page_size"), 25, 100);
   const sortMap: Record<string, string> = {
-    id: "rule_id", version: "version", profile: "profile_id", standard: "standard_id",
+    id: "rule_id", version: "version", national_standard: "national_standard_id", standard: "standard_id",
     severity: "severity", status: "status", category: "category",
   };
   const sort = sortMap[requestUrl.searchParams.get("sort") ?? "id"] ?? "rule_id";
@@ -102,12 +102,12 @@ async function ruleDetail(id: string, requestUrl: URL, env: Env, version: string
   }, version);
 }
 
-async function listEntities(table: "standards" | "profiles", env: Env, version: string): Promise<Response> {
+async function listEntities(table: "standards" | "national_standards", env: Env, version: string): Promise<Response> {
   const result = await env.DB.prepare(`SELECT data_json FROM ${table} ORDER BY id`).all();
   return json({ data: result.results.map((row) => parseJsonRow(row)) }, version);
 }
 
-async function entityDetail(table: "standards" | "profiles", id: string, env: Env, version: string): Promise<Response> {
+async function entityDetail(table: "standards" | "national_standards", id: string, env: Env, version: string): Promise<Response> {
   const row = await env.DB.prepare(`SELECT data_json FROM ${table} WHERE id = ?`).bind(id).first();
   if (!row) return json({ error: `${table.slice(0, -1)}_not_found`, id }, version, 404, QUERY_CACHE);
   const data = parseJsonRow<Record<string, unknown>>(row);
@@ -115,7 +115,7 @@ async function entityDetail(table: "standards" | "profiles", id: string, env: En
     const entities = await env.DB.prepare("SELECT data_json FROM standard_entities WHERE standard_id = ? ORDER BY id").bind(id).all();
     return json({ ...data, entities: entities.results.map((item) => parseJsonRow(item)) }, version);
   }
-  const rules = await env.DB.prepare("SELECT data_json FROM rule_versions WHERE profile_id = ? ORDER BY rule_id, version").bind(id).all();
+  const rules = await env.DB.prepare("SELECT data_json FROM rule_versions WHERE national_standard_id = ? ORDER BY rule_id, version").bind(id).all();
   return json({ ...data, effective_rules: rules.results.map((item) => parseJsonRow(item)) }, version);
 }
 
@@ -124,11 +124,11 @@ async function search(url: URL, env: Env, version: string): Promise<Response> {
   if (!query) return json({ query, data: [] }, version, 200, QUERY_CACHE);
   const pattern = `%${query.replaceAll("%", "").replaceAll("_", "\\_")}%`;
   const limit = positiveInteger(url.searchParams.get("limit"), 25, 100);
-  const [rules, entities, standards, profiles] = await Promise.all([
+  const [rules, entities, standards, nationalStandards] = await Promise.all([
     env.DB.prepare("SELECT rule_versions.rule_id AS id, rule_versions.version, rules.title_cs AS title, rule_versions.data_json AS data_json FROM rule_versions JOIN rules ON rules.id = rule_versions.rule_id WHERE rule_versions.search_text LIKE ? ESCAPE '\\' OR rule_versions.rule_id LIKE ? ESCAPE '\\' LIMIT ?").bind(pattern, pattern, limit).all(),
     env.DB.prepare("SELECT id, standard_version AS version, name AS title, data_json FROM standard_entities WHERE id LIKE ? ESCAPE '\\' OR name LIKE ? ESCAPE '\\' OR data_json LIKE ? ESCAPE '\\' LIMIT ?").bind(pattern, pattern, pattern, limit).all(),
     env.DB.prepare("SELECT id, NULL AS version, title_cs AS title, data_json FROM standards WHERE id LIKE ? ESCAPE '\\' OR title_cs LIKE ? ESCAPE '\\' OR data_json LIKE ? ESCAPE '\\' LIMIT ?").bind(pattern, pattern, pattern, limit).all(),
-    env.DB.prepare("SELECT id, NULL AS version, title_cs AS title, data_json FROM profiles WHERE id LIKE ? ESCAPE '\\' OR title_cs LIKE ? ESCAPE '\\' OR data_json LIKE ? ESCAPE '\\' LIMIT ?").bind(pattern, pattern, pattern, limit).all(),
+    env.DB.prepare("SELECT id, NULL AS version, title_cs AS title, data_json FROM national_standards WHERE id LIKE ? ESCAPE '\\' OR title_cs LIKE ? ESCAPE '\\' OR data_json LIKE ? ESCAPE '\\' LIMIT ?").bind(pattern, pattern, pattern, limit).all(),
   ]);
   return json({
     query,
@@ -136,7 +136,7 @@ async function search(url: URL, env: Env, version: string): Promise<Response> {
       ...rules.results.map((row) => ({ kind: "rule", id: row.id, version: row.version, title: row.title, data: parseJsonRow(row) })),
       ...entities.results.map((row) => ({ kind: "standard_entity", id: row.id, version: row.version, title: row.title, data: parseJsonRow(row) })),
       ...standards.results.map((row) => ({ kind: "standard", id: row.id, title: row.title, data: parseJsonRow(row) })),
-      ...profiles.results.map((row) => ({ kind: "profile", id: row.id, title: row.title, data: parseJsonRow(row) })),
+      ...nationalStandards.results.map((row) => ({ kind: "national_standard", id: row.id, title: row.title, data: parseJsonRow(row) })),
     ].slice(0, limit),
   }, version, 200, QUERY_CACHE);
 }
@@ -170,7 +170,7 @@ async function why(id: string, env: Env, version: string): Promise<Response> {
     if (!changed) break;
   }
   const nodeData = await Promise.all([...nodes].sort().map(async (nodeId) => {
-    for (const [kind, table] of [["rule", "rules"], ["standard", "standards"], ["profile", "profiles"], ["standard_entity", "standard_entities"]] as const) {
+    for (const [kind, table] of [["rule", "rules"], ["standard", "standards"], ["national_standard", "national_standards"], ["standard_entity", "standard_entities"]] as const) {
       const row = await env.DB.prepare(`SELECT data_json FROM ${table} WHERE id = ?`).bind(nodeId).first();
       if (row) return { id: nodeId, kind, data: parseJsonRow(row) };
     }
@@ -189,7 +189,7 @@ async function resolveXml(url: URL, env: Env, version: string): Promise<Response
   const entity = parseJsonRow<{ id: string }>(entityRow);
   const clauses = ["target_id = ?"];
   const bindings: string[] = [entity.id];
-  for (const [parameter, column] of [["profile", "profile_id"], ["version", "version"]] as const) {
+  for (const [parameter, column] of [["national_standard", "national_standard_id"], ["version", "version"]] as const) {
     const value = url.searchParams.get(parameter);
     if (value) { clauses.push(`${column} = ?`); bindings.push(value); }
   }
@@ -205,13 +205,13 @@ async function resolveXml(url: URL, env: Env, version: string): Promise<Response
   return json({ entity, rules: ruleData, relations: relationRows.results.map((row) => parseJsonRow(row)), implementations: implementationData }, version);
 }
 
-async function compare(profileId: string, url: URL, env: Env, version: string): Promise<Response> {
+async function compareNationalStandard(nationalStandardId: string, url: URL, env: Env, version: string): Promise<Response> {
   const versionA = url.searchParams.get("version_a");
   const versionB = url.searchParams.get("version_b");
   if (!versionA || !versionB) return json({ error: "version_a_and_version_b_required" }, version, 400, QUERY_CACHE);
-  const rows = await env.DB.prepare("SELECT data_json FROM rule_versions WHERE profile_id = ? AND version IN (?, ?) ORDER BY rule_id, version").bind(profileId, versionA, versionB).all();
-  const rules = rows.results.map((row) => parseJsonRow<RuleVersion & { rule_id: string; profile_id: string }>(row));
-  return json(semanticProfileDiff(rules, profileId, versionA, versionB), version, 200, QUERY_CACHE);
+  const rows = await env.DB.prepare("SELECT data_json FROM rule_versions WHERE national_standard_id = ? AND version IN (?, ?) ORDER BY rule_id, version").bind(nationalStandardId, versionA, versionB).all();
+  const rules = rows.results.map((row) => parseJsonRow<RuleVersion & { rule_id: string; national_standard_id: string }>(row));
+  return json(semanticNationalStandardDiff(rules, nationalStandardId, versionA, versionB), version, 200, QUERY_CACHE);
 }
 
 async function handleApi(request: Request, env: Env): Promise<Response> {
@@ -230,7 +230,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (path === "/meta") return json(meta, version);
   if (path === "/rules") return listRules(url, env, version);
   if (path === "/standards") return listEntities("standards", env, version);
-  if (path === "/profiles") return listEntities("profiles", env, version);
+  if (path === "/national-standards") return listEntities("national_standards", env, version);
   if (path === "/search") return search(url, env, version);
   if (path === "/relations") return relations(url, env, version);
   if (path === "/resolve/xml") return resolveXml(url, env, version);
@@ -246,10 +246,10 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (ruleMatch?.[1]) return ruleDetail(decodeURIComponent(ruleMatch[1]), url, env, version);
   const standardMatch = path.match(/^\/standards\/([^/]+)$/);
   if (standardMatch?.[1]) return entityDetail("standards", decodeURIComponent(standardMatch[1]), env, version);
-  const profileMatch = path.match(/^\/profiles\/([^/]+)$/);
-  if (profileMatch?.[1]) return entityDetail("profiles", decodeURIComponent(profileMatch[1]), env, version);
-  const compareMatch = path.match(/^\/compare\/([^/]+)$/);
-  if (compareMatch?.[1]) return compare(decodeURIComponent(compareMatch[1]), url, env, version);
+  const nationalStandardMatch = path.match(/^\/national-standards\/([^/]+)$/);
+  if (nationalStandardMatch?.[1]) return entityDetail("national_standards", decodeURIComponent(nationalStandardMatch[1]), env, version);
+  const compareMatch = path.match(/^\/compare\/national-standards\/([^/]+)$/);
+  if (compareMatch?.[1]) return compareNationalStandard(decodeURIComponent(compareMatch[1]), url, env, version);
   return json({ error: "not_found", path }, version, 404, QUERY_CACHE);
 }
 

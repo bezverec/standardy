@@ -6,7 +6,7 @@ import {
   diffFields,
   loadRegistry,
   registryImportSql,
-  semanticProfileDiff,
+  semanticNationalStandardDiff,
   validateRegistry,
 } from "../packages/registry-core/src/index.ts";
 
@@ -23,6 +23,7 @@ describe("registry vertical slice", () => {
     expect(registry.standard_entities.map((entity) => entity.id)).toEqual(expect.arrayContaining(["MIX-ICC-PROFILE-VERSION", "ICC-PROFILE-HEADER-VERSION"]));
     expect(registry.rule_versions[0]).toMatchObject({
       rule_id: "NDK-MONO-MIX-ICC-PROFILE-VERSION",
+      national_standard_id: "ndk-monograph",
       version: "2.3",
       target: { entity: "MIX-ICC-PROFILE-VERSION" },
       verification: { status: "verified" },
@@ -37,6 +38,9 @@ describe("registry vertical slice", () => {
     expect(first).toBe(second);
     const sql = registryImportSql(compileRegistry(documents));
     expect(sql).toContain("DELETE FROM rule_versions;");
+    expect(sql).toContain("DELETE FROM national_standards;");
+    expect(sql).toContain("national_standard_id");
+    expect(sql).not.toContain("profiles");
     expect(sql).not.toContain("BEGIN TRANSACTION;");
     expect(sql).not.toContain("COMMIT;");
   });
@@ -63,8 +67,8 @@ describe("semantic diff", () => {
   });
 
   it("separates added, removed and changed rules", () => {
-    const base: any = { profile_id: "p", status: "draft", target: { entity: "E" }, relation_to_target: { type: "restricts" }, category: "metadata", severity: "error", normative_requirement: { cs: "x" }, requirement: {}, source: {}, verification: {} };
-    const result = semanticProfileDiff([
+    const base: any = { national_standard_id: "p", status: "draft", target: { entity: "E" }, relation_to_target: { type: "restricts" }, category: "metadata", severity: "error", normative_requirement: { cs: "x" }, requirement: {}, source: {}, verification: {} };
+    const result = semanticNationalStandardDiff([
       { ...base, rule_id: "A", version: "1", requirement: { presence: "optional" } },
       { ...base, rule_id: "A", version: "2", requirement: { presence: "required" } },
       { ...base, rule_id: "B", version: "1" },

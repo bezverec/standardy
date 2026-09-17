@@ -1,6 +1,6 @@
 export const SUPPORTED_SCHEMA_VERSION = "1.0" as const;
 
-export type EntityKind = "standard" | "profile" | "rule" | "vocabulary";
+export type EntityKind = "standard" | "national_standard" | "rule" | "vocabulary";
 export type RegistryStatus =
   | "normative"
   | "ambiguous"
@@ -86,12 +86,12 @@ export interface StandardEntity {
   verification: Verification;
 }
 
-export interface ProfileDocument extends BaseDocument {
-  kind: "profile";
+export interface NationalStandardDocument extends BaseDocument {
+  kind: "national_standard";
   status: RegistryStatus;
   verification: Verification;
   inherits?: Array<{
-    profile: string;
+    national_standard: string;
     version: string;
     strategy: "inherit" | "add" | "restrict" | "override" | "extend";
   }>;
@@ -144,7 +144,7 @@ export interface RuleVersion {
 
 export interface RuleDocument extends BaseDocument {
   kind: "rule";
-  profile: { id: string };
+  national_standard: { id: string };
   versions: RuleVersion[];
   relations?: RelationDeclaration[];
 }
@@ -163,7 +163,7 @@ export interface VocabularyDocument extends BaseDocument {
 
 export type RegistryDocument =
   | StandardDocument
-  | ProfileDocument
+  | NationalStandardDocument
   | RuleDocument
   | VocabularyDocument;
 
@@ -185,11 +185,11 @@ export interface NormalizedRegistry {
   };
   standards: StandardDocument[];
   standard_entities: Array<StandardEntity & { standard_id: string }>;
-  profiles: ProfileDocument[];
+  national_standards: NationalStandardDocument[];
   rules: RuleDocument[];
   rule_versions: Array<RuleVersion & {
     rule_id: string;
-    profile_id: string;
+    national_standard_id: string;
     title: LocalizedText;
     description?: LocalizedText;
     source_file?: string | undefined;

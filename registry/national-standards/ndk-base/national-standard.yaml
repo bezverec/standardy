@@ -1,10 +1,10 @@
 schema_version: "1.0"
-kind: profile
+kind: national_standard
 id: ndk-base
 title:
   cs: NDK – společný základ (demo)
 description:
-  cs: Technický demonstrační záznam pro ověření dědičnosti profilů.
+  cs: Technický demonstrační záznam pro ověření dědičnosti národních standardů.
 status: draft
 verification:
   status: unverified
@@ -14,7 +14,7 @@ versions:
   - version: "demo"
     status: draft
     source:
-      document: NDK – demonstrační profil
+      document: NDK – demonstrační národní standard
       version: demo
       page: null
       section: null

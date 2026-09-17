@@ -21,14 +21,14 @@ export function diffFields(before: unknown, after: unknown, prefix = ""): FieldC
   return keys.flatMap((key) => diffFields(before[key], after[key], prefix ? `${prefix}.${key}` : key));
 }
 
-export function semanticProfileDiff(
-  rules: Array<{ rule_id: string; profile_id: string } & RuleVersion>,
-  profileId: string,
+export function semanticNationalStandardDiff(
+  rules: Array<{ rule_id: string; national_standard_id: string } & RuleVersion>,
+  nationalStandardId: string,
   versionA: string,
   versionB: string,
 ) {
   const select = (version: string) => new Map(
-    rules.filter((rule) => rule.profile_id === profileId && rule.version === version).map((rule) => [rule.rule_id, rule]),
+    rules.filter((rule) => rule.national_standard_id === nationalStandardId && rule.version === version).map((rule) => [rule.rule_id, rule]),
   );
   const before = select(versionA);
   const after = select(versionB);
@@ -38,5 +38,5 @@ export function semanticProfileDiff(
     const changes = diffFields(before.get(id), after.get(id)).filter((change) => !["source_file"].includes(change.field));
     return changes.length ? [{ rule: id, changes }] : [];
   });
-  return { profile: profileId, version_a: versionA, version_b: versionB, added, removed, changed };
+  return { national_standard: nationalStandardId, version_a: versionA, version_b: versionB, added, removed, changed };
 }

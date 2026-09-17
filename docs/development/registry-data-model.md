@@ -2,27 +2,29 @@
 
 ## Identita a verze
 
-Každý YAML dokument má `schema_version: "1.0"`, `kind` a stabilní `id`. ID pravidla neobsahuje verzi. Verze profilu a konkrétní podoba požadavku jsou položky pole `versions`.
+Každý YAML dokument má `schema_version: "1.0"`, `kind` a stabilní `id`. ID pravidla neobsahuje verzi. Verze národního standardu a konkrétní podoba požadavku jsou položky pole `versions`.
 
 ```yaml
 kind: rule
 id: NDK-MONO-MIX-ICC-PROFILE-VERSION
-profile:
+national_standard:
   id: ndk-monograph
 versions:
   - version: "2.3"
     status: disputed
 ```
 
-To umožní sémanticky porovnat dvě verze téhož profilu podle polí, nikoli podle textového YAML diffu.
+To umožní sémanticky porovnat dvě verze téhož národního standardu podle polí, nikoli podle textového YAML diffu.
 
 ## Entity
 
-- **Standard** popisuje specifikaci a její verzované entity (element, atribut, formát, vlastnost nebo koncept).
-- **Profile** vybírá, zpřísňuje nebo rozšiřuje standardy. Dědičnost je explicitní přes `inherits`; pravidla se nekopírují.
+- **Standard** popisuje zdrojovou specifikaci a její verzované entity (element, atribut, formát, vlastnost nebo koncept).
+- **NationalStandard** reprezentuje národní standard, který vybírá, zpřísňuje nebo rozšiřuje zdrojové standardy. Dědičnost je explicitní přes `inherits`; pravidla se nekopírují.
 - **Rule** je stabilní významová identita.
-- **RuleVersion** obsahuje požadavek platný pro konkrétní verzi profilu.
+- **RuleVersion** obsahuje požadavek platný pro konkrétní verzi národního standardu.
 - **Vocabulary** je řízený seznam hodnot, na který může pravidlo odkazovat.
+
+V uživatelském rozhraní i datovém modelu se důsledně rozlišují **zdrojové standardy** (`standard`) a **národní standardy** (`national_standard`). Národní standard může mít technickou roli aplikačního profilu, ale tato role již neurčuje jeho veřejný ani interní název.
 
 ## Provenance a epistemický stav
 

@@ -76,7 +76,7 @@ function Rules() {
     <LoadingState state={state} />
     {state.data && <>
       <div className="filters"><label>Hledat<input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ID, název, element…" /></label><label>Závažnost<select value={severity} onChange={(event) => setSeverity(event.target.value)}><option value="">Všechny</option><option value="error">error</option><option value="warning">warning</option><option value="info">info</option></select></label><span>{rules.length} / {state.data.pagination.total}</span></div>
-      <div className="table-wrap"><table><thead><tr><th>ID</th><th>Název</th><th>Profil</th><th>Verze</th><th>Standard</th><th>Kategorie</th><th>Stav</th></tr></thead><tbody>{rules.map((rule) => <tr key={`${rule.rule_id}@${rule.version}`}><td><Link to={`/rules/${rule.rule_id}`}><code>{rule.rule_id}</code></Link></td><td>{localized(rule.title)}</td><td>{rule.profile_id}</td><td>{rule.version}</td><td>{rule.target.entity.split("-")[0]}</td><td>{rule.category}</td><td><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{rule.status}</Status></td></tr>)}</tbody></table></div>
+      <div className="table-wrap"><table><thead><tr><th>ID</th><th>Název</th><th>Standard NDK</th><th>Verze</th><th>Zdrojový standard</th><th>Kategorie</th><th>Stav</th></tr></thead><tbody>{rules.map((rule) => <tr key={`${rule.rule_id}@${rule.version}`}><td><Link to={`/rules/${rule.rule_id}`}><code>{rule.rule_id}</code></Link></td><td>{localized(rule.title)}</td><td>{rule.national_standard_id}</td><td>{rule.version}</td><td>{rule.target.entity.split("-")[0]}</td><td>{rule.category}</td><td><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{rule.status}</Status></td></tr>)}</tbody></table></div>
     </>}
   </main>;
 }
@@ -87,7 +87,7 @@ function JsonBlock({ value }: { value: unknown }) {
 
 const graphKindLabels: Record<KnowledgeGraphNode["kind"], string> = {
   rule: "pravidlo",
-  profile: "profil NDK",
+  national_standard: "standard NDK",
   standard_entity: "prvek standardu",
   standard: "standard",
   implementation: "implementace",
@@ -112,7 +112,7 @@ function wrapGraphLabel(value: string, limit = 25): string[] {
 
 function RelationshipGraph({ graph }: { graph: KnowledgeGraphResponse }) {
   const nodes = [...graph.nodes].sort((a, b) => {
-    const priority = { rule: 0, standard_entity: 1, profile: 2, implementation: 3, standard: 4 };
+    const priority = { rule: 0, standard_entity: 1, national_standard: 2, implementation: 3, standard: 4 };
     return priority[a.kind] - priority[b.kind] || a.id.localeCompare(b.id);
   });
   const root = nodes.find((node) => node.id === graph.root);
@@ -132,7 +132,7 @@ function RelationshipGraph({ graph }: { graph: KnowledgeGraphResponse }) {
   return <div className="graph-scroll" aria-label="Graf vztahů pravidla">
     <svg className="knowledge-graph" viewBox={`0 0 1120 ${height}`} role="img" aria-labelledby="graph-title graph-description">
       <title id="graph-title">Vztahy pravidla {graph.root}</title>
-      <desc id="graph-description">Orientovaný graf propojující pravidlo s profilem, prvky standardů, standardy a implementacemi.</desc>
+      <desc id="graph-description">Orientovaný graf propojující pravidlo s národním standardem NDK, prvky zdrojových standardů, zdrojovými standardy a implementacemi.</desc>
       <defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker></defs>
       <g className="graph-edges">{graph.edges.map((edge, index) => {
         const from = positions.get(edge.from);
@@ -180,8 +180,8 @@ function RuleDetail({ id }: { id: string }) {
     <Link to="/rules" className="back">← Všechna pravidla</Link>
     <LoadingState state={state} />
     {rule && <>
-      <header className="detail-header"><div><p className="eyebrow">Rule</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze profilu<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{rule.verification.status}</Status></div></header>
-      <div className="facts"><div><span>Profil</span><Link to={`/profiles/${rule.profile_id}`}>{rule.profile_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{rule.category}</div><div><span>Závažnost</span><Status tone="error">{rule.severity}</Status></div></div>
+      <header className="detail-header"><div><p className="eyebrow">Rule</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze standardu NDK<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{rule.verification.status}</Status></div></header>
+      <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{rule.category}</div><div><span>Závažnost</span><Status tone="error">{rule.severity}</Status></div></div>
       <section className="layer layer--normative"><p className="layer-label">NORMATIVE REQUIREMENT · {rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Strojová podmínka</h3><JsonBlock value={rule.condition} /></>}</section>
       <section className="detail-grid"><article><p className="layer-label">INTERPRETATION</p><h2>Interpretace</h2><p>{localized(rule.interpretation)}</p></article><article><p className="layer-label">PROVENANCE</p><h2>Zdroj a ověření</h2><JsonBlock value={{ source: rule.source, references: rule.references, verification: rule.verification }} /></article></section>
       {Boolean(rule.discrepancies?.length) && <section className="layer layer--discrepancy"><p className="layer-label">KNOWN DISCREPANCIES</p><h2>Známé rozpory ve zdrojích</h2><ul>{rule.discrepancies?.map((item, index) => <li key={index}>{localized(item)}</li>)}</ul></section>}
@@ -193,15 +193,16 @@ function RuleDetail({ id }: { id: string }) {
   </main>;
 }
 
-function EntityList({ type }: { type: "standards" | "profiles" }) {
-  const state = useAsync<{ data: RegistryEntity[] }>(() => type === "standards" ? api.standards() : api.profiles(), [type]);
-  const label = type === "standards" ? "Standardy" : "Profily";
-  return <main><header className="page-header"><p className="eyebrow">Registry / {type}</p><h1>{label}</h1></header><LoadingState state={state} /><div className="card-grid">{state.data?.data.map((entity) => <Link to={`/${type}/${entity.id}`} className="entity-card" key={entity.id}><Status tone={entity.status === "draft" ? "warn" : "neutral"}>{entity.status}</Status><h2>{localized(entity.title)}</h2><code>{entity.id}</code><p>{localized(entity.description)}</p></Link>)}</div></main>;
+function EntityList({ type }: { type: "standards" | "national-standards" }) {
+  const state = useAsync<{ data: RegistryEntity[] }>(() => type === "standards" ? api.standards() : api.nationalStandards(), [type]);
+  const label = type === "standards" ? "Zdrojové standardy" : "Národní standardy";
+  return <main><header className="page-header"><p className="eyebrow">Registry / {label}</p><h1>{label}</h1></header><LoadingState state={state} /><div className="card-grid">{state.data?.data.map((entity) => <Link to={`/${type}/${entity.id}`} className="entity-card" key={entity.id}><Status tone={entity.status === "draft" ? "warn" : "neutral"}>{entity.status}</Status><h2>{localized(entity.title)}</h2><code>{entity.id}</code><p>{localized(entity.description)}</p></Link>)}</div></main>;
 }
 
-function EntityDetail({ type, id }: { type: "standards" | "profiles"; id: string }) {
-  const state = useAsync<RegistryEntity>(() => type === "standards" ? api.standard(id) : api.profile(id), [type, id]);
-  return <main><Link to={`/${type}`} className="back">← Zpět</Link><LoadingState state={state} />{state.data && <><header className="detail-header"><div><p className="eyebrow">{type.slice(0, -1)}</p><h1>{localized(state.data.title)}</h1><code className="stable-id">{state.data.id}</code></div><Status tone={state.data.status === "draft" ? "warn" : "neutral"}>{state.data.status}</Status></header><p className="lead">{localized(state.data.description)}</p><JsonBlock value={state.data} /></>}</main>;
+function EntityDetail({ type, id }: { type: "standards" | "national-standards"; id: string }) {
+  const state = useAsync<RegistryEntity>(() => type === "standards" ? api.standard(id) : api.nationalStandard(id), [type, id]);
+  const label = type === "standards" ? "Zdrojový standard" : "Národní standard";
+  return <main><Link to={`/${type}`} className="back">← Zpět</Link><LoadingState state={state} />{state.data && <><header className="detail-header"><div><p className="eyebrow">{label}</p><h1>{localized(state.data.title)}</h1><code className="stable-id">{state.data.id}</code></div><Status tone={state.data.status === "draft" ? "warn" : "neutral"}>{state.data.status}</Status></header><p className="lead">{localized(state.data.description)}</p><JsonBlock value={state.data} /></>}</main>;
 }
 
 function NotFound() {
@@ -214,13 +215,13 @@ export function App() {
   let page: ReactNode = <NotFound />;
   const rule = path.match(/^\/rules\/([^/]+)\/?$/);
   const standard = path.match(/^\/standards\/([^/]+)\/?$/);
-  const profile = path.match(/^\/profiles\/([^/]+)\/?$/);
+  const nationalStandard = path.match(/^\/national-standards\/([^/]+)\/?$/);
   if (path === "/") page = <Dashboard />;
   else if (path === "/rules" || path === "/rules/") page = <Rules />;
   else if (rule?.[1]) page = <RuleDetail id={decodeURIComponent(rule[1])} />;
   else if (path === "/standards" || path === "/standards/") page = <EntityList type="standards" />;
   else if (standard?.[1]) page = <EntityDetail type="standards" id={decodeURIComponent(standard[1])} />;
-  else if (path === "/profiles" || path === "/profiles/") page = <EntityList type="profiles" />;
-  else if (profile?.[1]) page = <EntityDetail type="profiles" id={decodeURIComponent(profile[1])} />;
-  return <div className="app-shell"><header className="topbar"><a href="/" className="brand"><span>SD</span><div>Standardy digitalizace<small>Registry Explorer</small></div></a><nav><Link to="/">Přehled</Link><Link to="/rules">Pravidla</Link><Link to="/standards">Standardy</Link><Link to="/profiles">Profily</Link><a href="/">Dokumentace ↗</a></nav></header>{page}<footer>Git/YAML je jediný source of truth · <a href="https://github.com/bezverec/standardy">GitHub</a> · <a href="/api/v1/meta">API v1</a></footer></div>;
+  else if (path === "/national-standards" || path === "/national-standards/") page = <EntityList type="national-standards" />;
+  else if (nationalStandard?.[1]) page = <EntityDetail type="national-standards" id={decodeURIComponent(nationalStandard[1])} />;
+  return <div className="app-shell"><header className="topbar"><a href="/" className="brand"><span>SD</span><div>Standardy digitalizace<small>Registry Explorer</small></div></a><nav><Link to="/">Přehled</Link><Link to="/rules">Pravidla</Link><Link to="/standards">Zdrojové standardy</Link><Link to="/national-standards">Národní standardy</Link><a href="/">Dokumentace ↗</a></nav></header>{page}<footer>Git/YAML je jediný source of truth · <a href="https://github.com/bezverec/standardy">GitHub</a> · <a href="/api/v1/meta">API v1</a></footer></div>;
 }
