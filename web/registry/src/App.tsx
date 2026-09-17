@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
-import { api, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
+import { api, type KnowledgeGraphNode, type KnowledgeGraphResponse, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
 
 function routePath(): string {
   const path = window.location.pathname.replace(/^\/registry\/?/, "/");
@@ -85,8 +85,93 @@ function JsonBlock({ value }: { value: unknown }) {
   return <pre>{JSON.stringify(value, null, 2)}</pre>;
 }
 
+const graphKindLabels: Record<KnowledgeGraphNode["kind"], string> = {
+  rule: "pravidlo",
+  profile: "profil NDK",
+  standard_entity: "prvek standardu",
+  standard: "standard",
+  implementation: "implementace",
+};
+
+function graphNodeLabel(node: KnowledgeGraphNode): string {
+  return localized(node.data?.title) !== "—"
+    ? localized(node.data?.title)
+    : node.data?.application ?? node.data?.name ?? node.id;
+}
+
+function wrapGraphLabel(value: string, limit = 25): string[] {
+  const words = value.split(/\s+/);
+  const lines: string[] = [];
+  for (const word of words) {
+    const candidate = lines.length ? `${lines.at(-1)} ${word}` : word;
+    if (candidate.length <= limit) lines[lines.length ? lines.length - 1 : 0] = candidate;
+    else lines.push(word);
+  }
+  return lines.slice(0, 2);
+}
+
+function RelationshipGraph({ graph }: { graph: KnowledgeGraphResponse }) {
+  const nodes = [...graph.nodes].sort((a, b) => {
+    const priority = { rule: 0, standard_entity: 1, profile: 2, implementation: 3, standard: 4 };
+    return priority[a.kind] - priority[b.kind] || a.id.localeCompare(b.id);
+  });
+  const root = nodes.find((node) => node.id === graph.root);
+  const middle = nodes.filter((node) => node.id !== graph.root && node.kind !== "standard");
+  const standards = nodes.filter((node) => node.kind === "standard");
+  const rowHeight = 94;
+  const height = Math.max(360, middle.length * rowHeight + 36);
+  const positions = new Map<string, { x: number; y: number; width: number; height: number }>();
+  if (root) positions.set(root.id, { x: 24, y: height / 2 - 42, width: 258, height: 84 });
+  middle.forEach((node, index) => positions.set(node.id, { x: 410, y: 18 + index * rowHeight, width: 270, height: 70 }));
+  standards.forEach((node, index) => {
+    const definingEdge = graph.edges.find((edge) => edge.to === node.id && positions.has(edge.from));
+    const source = definingEdge ? positions.get(definingEdge.from) : undefined;
+    positions.set(node.id, { x: 824, y: source?.y ?? height * ((index + 1) / (standards.length + 1)) - 35, width: 270, height: 70 });
+  });
+
+  return <div className="graph-scroll" aria-label="Graf vztahů pravidla">
+    <svg className="knowledge-graph" viewBox={`0 0 1120 ${height}`} role="img" aria-labelledby="graph-title graph-description">
+      <title id="graph-title">Vztahy pravidla {graph.root}</title>
+      <desc id="graph-description">Orientovaný graf propojující pravidlo s profilem, prvky standardů, standardy a implementacemi.</desc>
+      <defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker></defs>
+      <g className="graph-edges">{graph.edges.map((edge, index) => {
+        const from = positions.get(edge.from);
+        const to = positions.get(edge.to);
+        if (!from || !to) return null;
+        const x1 = from.x + from.width;
+        const y1 = from.y + from.height / 2;
+        const x2 = to.x;
+        const y2 = to.y + to.height / 2;
+        const sameColumn = Math.abs(x2 - x1) < 100;
+        const path = sameColumn
+          ? `M ${x1 - 8} ${y1} C ${x1 + 76} ${y1}, ${x2 + 76} ${y2}, ${x2 + 8} ${y2}`
+          : `M ${x1} ${y1} C ${(x1 + x2) / 2} ${y1}, ${(x1 + x2) / 2} ${y2}, ${x2} ${y2}`;
+        const labelX = sameColumn ? x1 + 68 : (x1 + x2) / 2;
+        const labelY = (y1 + y2) / 2 - 6;
+        const implementationEdge = edge.type === "generated_by" || edge.type === "validated_by";
+        return <g key={edge.id ?? `${edge.from}-${edge.type}-${edge.to}-${index}`} className={implementationEdge ? "graph-edge graph-edge--implementation" : "graph-edge"}>
+          <path d={path} markerEnd="url(#graph-arrow)" />
+          <text x={labelX} y={labelY} textAnchor="middle">{edge.type}</text>
+        </g>;
+      })}</g>
+      <g className="graph-nodes">{nodes.map((node) => {
+        const position = positions.get(node.id);
+        if (!position) return null;
+        const lines = wrapGraphLabel(graphNodeLabel(node));
+        return <g key={node.id} className={`graph-node graph-node--${node.kind}`} transform={`translate(${position.x} ${position.y})`}>
+          <rect width={position.width} height={position.height} rx="3" />
+          <text className="graph-node-kind" x="16" y="20">{graphKindLabels[node.kind]}</text>
+          <text className="graph-node-title" x="16" y="42">{lines.map((line, index) => <tspan x="16" dy={index === 0 ? 0 : 17} key={line}>{line}</tspan>)}</text>
+          <title>{graphKindLabels[node.kind]}: {graphNodeLabel(node)} ({node.id})</title>
+        </g>;
+      })}</g>
+    </svg>
+  </div>;
+}
+
 function RuleDetail({ id }: { id: string }) {
   const state = useAsync<RuleDetailResponse>(() => api.rule(id), [id]);
+  const graphState = useAsync<KnowledgeGraphResponse>(() => api.why(id), [id]);
   const [selectedVersion, setSelectedVersion] = useState("");
   const versions = state.data?.versions ?? [];
   const rule = versions.find((item) => item.version === selectedVersion) ?? versions[0];
@@ -102,7 +187,7 @@ function RuleDetail({ id }: { id: string }) {
       {Boolean(rule.discrepancies?.length) && <section className="layer layer--discrepancy"><p className="layer-label">KNOWN DISCREPANCIES</p><h2>Známé rozpory ve zdrojích</h2><ul>{rule.discrepancies?.map((item, index) => <li key={index}>{localized(item)}</li>)}</ul></section>}
       {(rule.validator_behaviour || rule.fix_recommendation) && <section className="detail-grid"><article><p className="layer-label">VALIDATOR BEHAVIOUR</p><h2>Očekávaná kontrola</h2><p>{localized(rule.validator_behaviour)}</p></article><article><p className="layer-label">FIX RECOMMENDATION</p><h2>Doporučená oprava</h2><p>{localized(rule.fix_recommendation)}</p></article></section>}
       <section className="layer layer--implementation"><p className="layer-label">IMPLEMENTATION · NON-NORMATIVE</p><h2>Implementace</h2><div className="implementation-grid">{(rule.implementations ?? []).map((item) => <article key={item.id}><Status tone="warn">{item.verification}</Status><h3>{item.application}</h3><p>{item.role} · {item.status}</p><small>{localized(item.notes)}</small></article>)}</div></section>
-      <section><p className="layer-label">KNOWLEDGE GRAPH</p><h2>Vztahy</h2><div className="relations">{state.data?.relations.map((relation) => <code key={relation.id}>{relation.from} —{relation.type}→ {relation.to}</code>)}</div></section>
+      <section className="graph-section"><p className="layer-label">KNOWLEDGE GRAPH</p><h2>Graf vztahů</h2><p className="graph-intro">Plné čáry zachycují normativní a významové vazby; přerušované čáry vedou k dosud neověřenému chování implementací.</p><LoadingState state={graphState} />{graphState.data && <RelationshipGraph graph={graphState.data} />}<details className="relation-data"><summary>Textový výpis vztahů</summary><div className="relations">{state.data?.relations.map((relation) => <code key={relation.id}>{relation.from} —{relation.type}→ {relation.to}</code>)}</div></details></section>
       {rule.source_file && <a className="button button--ghost" href={`https://github.com/bezverec/standardy/edit/main/${rule.source_file}`}>Navrhnout změnu na GitHubu ↗</a>}
     </>}
   </main>;

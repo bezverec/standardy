@@ -39,6 +39,23 @@ export interface RuleDetailResponse {
   implementations: Implementation[];
 }
 
+export interface KnowledgeGraphNode {
+  id: string;
+  kind: "rule" | "standard" | "profile" | "standard_entity" | "implementation";
+  data?: {
+    title?: Record<string, string>;
+    application?: string;
+    name?: string;
+    verification?: { status?: string } | string;
+  };
+}
+
+export interface KnowledgeGraphResponse {
+  root: string;
+  nodes: KnowledgeGraphNode[];
+  edges: Array<{ id?: string; from: string; to: string; type: string }>;
+}
+
 export interface RegistryEntity {
   id: string;
   title: Record<string, string>;
@@ -61,6 +78,7 @@ export const api = {
   meta: () => request<Record<string, string>>("/meta"),
   rules: () => request<{ data: RuleVersion[]; pagination: { total: number } }>("/rules?page_size=100"),
   rule: (id: string) => request<RuleDetailResponse>(`/rules/${encodeURIComponent(id)}`),
+  why: (id: string) => request<KnowledgeGraphResponse>(`/rules/${encodeURIComponent(id)}/why`),
   standards: () => request<{ data: RegistryEntity[] }>("/standards"),
   standard: (id: string) => request<RegistryEntity & { entities: unknown[] }>(`/standards/${encodeURIComponent(id)}`),
   profiles: () => request<{ data: RegistryEntity[] }>("/profiles"),
