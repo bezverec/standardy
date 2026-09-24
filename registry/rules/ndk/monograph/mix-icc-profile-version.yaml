@@ -107,3 +107,7 @@ relations:
     target: ICC-PROFILE-HEADER-VERSION
     note:
       cs: Pravidlo zpřesňuje obecný řetězec MIX podle normativního pole hlavičky ICC profilu.
+  - type: related_to
+    target: NDK-MONO-MIX-ICC-PROFILE-URI
+    note:
+      cs: Společně s pravidly pro jméno a URI tvoří skupinu popisu ICC profilu v MIX.

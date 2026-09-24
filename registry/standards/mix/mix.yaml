@@ -22,6 +22,27 @@ versions:
       section: null
       url: "https://www.loc.gov/standards/mix/mix-home.html"
 entities:
+  - id: MIX-ICC-PROFILE-NAME
+    type: element
+    version: "2.0"
+    name: iccProfileName
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: Jméno ICC profilu
+      en: ICC profile name
+    definition:
+      cs: Jméno použitého ICC profilu; jde o lidsky čitelnou identifikaci profilu, nikoli číslo verze formátu.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX)
+      version: "2.0"
+      page: null
+      section: iccProfileName
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-09-24"
+      reference: Název, jmenný prostor a umístění elementu v IccProfile byly ověřeny proti MIX 2.0 a DMF Monografie 2.3.
   - id: MIX-ICC-PROFILE-VERSION
     type: element
     version: "2.0"
@@ -43,6 +64,27 @@ entities:
       status: disputed
       date: "2026-09-14"
       reference: Existence a typ elementu jsou ověřené; jeho textové vymezení je v rozporu s binárním polem verze definovaným ICC.
+  - id: MIX-ICC-PROFILE-URI
+    type: element
+    version: "2.0"
+    name: iccProfileURI
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: URI ICC profilu
+      en: ICC profile URI
+    definition:
+      cs: URI identifikující nebo lokalizující použitý ICC profil.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX)
+      version: "2.0"
+      page: null
+      section: iccProfileURI
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-09-24"
+      reference: Název, jmenný prostor a umístění elementu v IccProfile byly ověřeny proti MIX 2.0 a DMF Monografie 2.3.
 relations:
   - type: related_to
     target: ICC

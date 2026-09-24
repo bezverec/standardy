@@ -18,10 +18,15 @@ describe("registry vertical slice", () => {
     expect(await validateRegistry(root, documents)).toEqual([]);
   });
 
-  it("compiles MIX to an NDK rule and implementation graph", async () => {
+  it("compiles the MIX ICC profile group to NDK rules and an implementation graph", async () => {
     const registry = compileRegistry(await loadRegistry(root));
-    expect(registry.standard_entities.map((entity) => entity.id)).toEqual(expect.arrayContaining(["MIX-ICC-PROFILE-VERSION", "ICC-PROFILE-HEADER-VERSION"]));
-    expect(registry.rule_versions[0]).toMatchObject({
+    expect(registry.standard_entities.map((entity) => entity.id)).toEqual(expect.arrayContaining([
+      "MIX-ICC-PROFILE-NAME",
+      "MIX-ICC-PROFILE-VERSION",
+      "MIX-ICC-PROFILE-URI",
+      "ICC-PROFILE-HEADER-VERSION",
+    ]));
+    expect(registry.rule_versions.find((item) => item.rule_id === "NDK-MONO-MIX-ICC-PROFILE-VERSION")).toMatchObject({
       rule_id: "NDK-MONO-MIX-ICC-PROFILE-VERSION",
       national_standard_id: "ndk-monograph",
       version: "2.3",
@@ -29,6 +34,37 @@ describe("registry vertical slice", () => {
       verification: { status: "verified" },
     });
     expect(registry.relations.map((edge) => edge.type)).toEqual(expect.arrayContaining(["defined_by", "restricts", "clarifies", "generated_by", "validated_by"]));
+  });
+
+  it("keeps name, version and URI as distinct ICC profile requirements", async () => {
+    const registry = compileRegistry(await loadRegistry(root));
+    const rules = Object.fromEntries(registry.rule_versions.map((rule) => [rule.rule_id, rule]));
+
+    expect(Object.keys(rules)).toEqual(expect.arrayContaining([
+      "NDK-MONO-MIX-ICC-PROFILE-NAME",
+      "NDK-MONO-MIX-ICC-PROFILE-VERSION",
+      "NDK-MONO-MIX-ICC-PROFILE-URI",
+    ]));
+    expect(rules["NDK-MONO-MIX-ICC-PROFILE-NAME"]).toMatchObject({
+      severity: "error",
+      requirement: { presence: "conditional", cardinality: { min: 1, max: 1 } },
+    });
+    expect(rules["NDK-MONO-MIX-ICC-PROFILE-URI"]).toMatchObject({
+      severity: "warning",
+      requirement: { presence: "optional", cardinality: { min: 0, max: 1 } },
+    });
+
+    const uriValidation = rules["NDK-MONO-MIX-ICC-PROFILE-URI"]?.requirement.validation as { expression: string };
+    const uriPattern = new RegExp(uriValidation.expression);
+    for (const value of ["https://www.color.org/sRGB2014.icc", "urn:example:icc:profile:1"]) expect(uriPattern.test(value)).toBe(true);
+    for (const value of ["sRGB IEC61966-2.1", "relative/profile.icc", "https://example.org/a profile.icc"]) expect(uriPattern.test(value)).toBe(false);
+
+    const groupEdges = registry.relations.filter((edge) => edge.type === "related_to" && edge.from.startsWith("NDK-MONO-MIX-ICC-PROFILE-"));
+    expect(groupEdges.map((edge) => `${edge.from}->${edge.to}`)).toEqual(expect.arrayContaining([
+      "NDK-MONO-MIX-ICC-PROFILE-NAME->NDK-MONO-MIX-ICC-PROFILE-VERSION",
+      "NDK-MONO-MIX-ICC-PROFILE-VERSION->NDK-MONO-MIX-ICC-PROFILE-URI",
+      "NDK-MONO-MIX-ICC-PROFILE-URI->NDK-MONO-MIX-ICC-PROFILE-NAME",
+    ]));
   });
 
   it("emits deterministic canonical JSON and idempotent D1-compatible replacement SQL", async () => {

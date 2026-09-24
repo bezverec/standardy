@@ -1,0 +1,91 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-ICC-PROFILE-URI
+title:
+  cs: Identifikátor ICC profilu v MIX
+description:
+  cs: Pravidlo pro doporučený URI identifikátor použitého ICC profilu.
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-ICC-PROFILE-URI
+    relation_to_target:
+      type: restricts
+    category: technical/icc
+    severity: warning
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: DMF Monografie 2.3 označuje iccProfileURI jako doporučený (R) pro MC i PS s kardinalitou MIX 0–1. Je-li v MIX přítomen blok IccProfile, má obsahovat nejvýše jeden URI identifikátor použitého profilu.
+    requirement:
+      presence: optional
+      cardinality:
+        min: 0
+        max: 1
+      validation:
+        type: regex
+        expression: "^[A-Za-z][A-Za-z0-9+.-]*:[^\\s]+$"
+        assertion: matches
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value: [MC, PS]
+        - field: "xpath://mix:IccProfile"
+          operator: exists
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 84
+      section: "7.5.4 Technická metadata MIX"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: iccProfileURI
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+      - document: ANSI/NISO Z39.87-2006 (R2017), Data Dictionary – Technical Metadata for Digital Still Images
+        version: "R2017"
+        page: 22
+        section: "7.1.3.2.1.3 ICC Profile URL"
+        url: "https://www.niso.org/publications/ansiniso-z3987-2006-r2017-data-dictionary-technical-metadata-digital-still-images"
+    verification:
+      status: verified
+      date: "2026-09-24"
+      reference: Doporučení, kardinalita a opravený název iccProfileURI byly ověřeny proti DMF Monografie 2.3; význam byl srovnán s MIX 2.0 a Z39.87.
+    interpretation:
+      cs: Hodnota má být absolutní URI jednoznačně identifikující nebo lokalizující konkrétní profil, například HTTPS URL nebo URN. Lidský název profilu patří do iccProfileName.
+    implementations:
+      - id: PROARC
+        application: ProArc
+        role: generator
+        status: unknown
+        verification: unverified
+        notes:
+          cs: Není ověřeno, zda ProArc generuje iccProfileURI a odkud hodnotu přebírá.
+      - id: KOMPLEXNI-VALIDATOR
+        application: Komplexní validátor
+        role: validator
+        status: unknown
+        verification: unverified
+        notes:
+          cs: Není ověřeno, zda Komplexní validátor kontroluje syntaxi URI nebo pouze přítomnost elementu.
+    discrepancies:
+      - cs: Starší datový slovník Z39.87 a starší verze DMF používaly název iccProfileURL; DMF Monografie 2.3 jej opravuje na iccProfileURI podle MIX 2.0.
+    validator_behaviour:
+      cs: Chybějící doporučený element hlásit jako varování. Je-li přítomen, připustit nejvýše jednu neprázdnou absolutní URI se schématem a odmítnout prostý název či hodnotu obsahující mezery.
+    fix_recommendation:
+      cs: U známých standardních profilů uvádět stabilní autoritativní URI; pokud takové URI není k dispozici, zachovat správné jméno a verzi a absenci URI hlásit pouze jako varování.
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-ICC-PROFILE-NAME
+    note:
+      cs: URI a jméno jsou doplňkové způsoby identifikace téhož ICC profilu.
