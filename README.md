@@ -11,7 +11,7 @@ Autoritativním zdrojem strukturovaných dat je vždy Git/YAML v adresáři [`re
 
 [**standardy.digitalizaty.cz**](https://standardy.digitalizaty.cz)
 
-Interaktivní registr je dostupný na [`/registry/`](https://standardy.digitalizaty.cz/registry/) a API na `/api/v1/`. První odborně ověřený případ propojuje MIX → `iccProfileVersion` → DMF Monografie 2.3 → normativní verzi v hlavičce ICC profilu. Dokumentuje také známou chybu příkladu v DMF/MIX a odděluje ji od dosud neověřeného chování implementací.
+Interaktivní registr je dostupný na [`/registry/`](https://standardy.digitalizaty.cz/registry/) a API na `/api/v1/`. První odborně ověřená skupina propojuje trojici `iccProfileName`, `iccProfileVersion` a `iccProfileURI` v MIX s požadavky DMF Monografie 2.3. U verze dokumentuje také známou chybu příkladu v DMF/MIX a odděluje ji od dosud neověřeného chování implementací.
 
 ## Vývoj
 

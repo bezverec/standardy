@@ -1,0 +1,92 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-ICC-PROFILE-NAME
+title:
+  cs: Jméno ICC profilu v MIX
+description:
+  cs: Pravidlo pro jednoznačné a neprázdné pojmenování ICC profilu použitého u obrazu.
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-ICC-PROFILE-NAME
+    relation_to_target:
+      type: restricts
+    category: technical/icc
+    severity: error
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: DMF Monografie 2.3 označuje iccProfileName jako povinný (M) pro MC i PS s kardinalitou MIX 0–1. Je-li v MIX přítomen blok IccProfile, musí obsahovat právě jedno neprázdné jméno použitého ICC profilu.
+    requirement:
+      presence: conditional
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        - type: xpath
+          expression: "//mix:IccProfile/mix:iccProfileName"
+          assertion: exists
+        - type: regex
+          expression: "^\\S(?:.*\\S)?$"
+          assertion: matches
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value: [MC, PS]
+        - field: "xpath://mix:IccProfile"
+          operator: exists
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 83
+      section: "7.5.4 Technická metadata MIX"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: iccProfileName
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+      - document: ANSI/NISO Z39.87-2006 (R2017), Data Dictionary – Technical Metadata for Digital Still Images
+        version: "R2017"
+        page: 21
+        section: "7.1.3.2.1.1 ICC Profile Name"
+        url: "https://www.niso.org/publications/ansiniso-z3987-2006-r2017-data-dictionary-technical-metadata-digital-still-images"
+    verification:
+      status: verified
+      date: "2026-09-24"
+      reference: Povinnost, kardinalita, název elementu a jeho význam byly ověřeny proti DMF Monografie 2.3, MIX 2.0 a datovému slovníku Z39.87.
+    interpretation:
+      cs: Hodnota má identifikovat konkrétní použitý profil, například „sRGB IEC61966-2.1“ nebo „Adobe RGB (1998)“. Nesmí být prázdná a nelze ji nahrazovat číslem verze formátu ICC, které patří do iccProfileVersion.
+    implementations:
+      - id: PROARC
+        application: ProArc
+        role: generator
+        status: unknown
+        verification: unverified
+        notes:
+          cs: Není ověřeno, jak ProArc jméno profilu získává a zda kontroluje jeho soulad s vloženým ICC profilem.
+      - id: KOMPLEXNI-VALIDATOR
+        application: Komplexní validátor
+        role: validator
+        status: unknown
+        verification: unverified
+        notes:
+          cs: Není ověřeno, zda Komplexní validátor kontroluje neprázdnost a soulad jména s použitým profilem.
+    validator_behaviour:
+      cs: Za uvedených podmínek vyžadovat právě jeden element, odmítnout prázdnou hodnotu a mezery na jejím začátku či konci. Samotný název není uzavřený slovník a nemá se omezovat na několik příkladů z DMF.
+    fix_recommendation:
+      cs: V DMF uvést jako příklad celý jednoznačný název profilu a výslovně jej odlišit od čísla verze formátu v iccProfileVersion.
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-ICC-PROFILE-VERSION
+    note:
+      cs: Jméno a verze popisují dvě odlišné vlastnosti téhož ICC profilu.
