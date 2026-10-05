@@ -16,6 +16,7 @@ versions:
       type: restricts
     category: technical/icc
     obligation: mandatory
+    obligation_code: M
     object_types:
       vocabulary: NDK-OBJECT-TYPES
       values: [monograph]

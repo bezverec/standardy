@@ -61,6 +61,11 @@ async function listRules(requestUrl: URL, env: Env, version: string): Promise<Re
     }
   }
   const category = requestUrl.searchParams.get("category");
+  const obligationCode = requestUrl.searchParams.get("obligation_code");
+  if (obligationCode) {
+    clauses.push("json_extract(data_json, '$.obligation_code') = ?");
+    bindings.push(obligationCode);
+  }
   if (category) {
     clauses.push("(category = ? OR category LIKE ?)");
     bindings.push(category, `${category}/%`);

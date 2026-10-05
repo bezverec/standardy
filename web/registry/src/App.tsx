@@ -4,6 +4,7 @@ import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts"
 import { changeProposalUrl } from "./contribute.ts";
 import { issueReferences, linkIssueMentions } from "./evidence.ts";
 import standardyMark from "../../../docs/assets/standardy.svg";
+import { obligationLabel, obligationOptions } from "./obligation.ts";
 
 function routePath(): string {
   const path = window.location.pathname.replace(/^\/registry\/?/, "/");
@@ -50,7 +51,7 @@ function ChangeProposal({ rule }: { rule?: { rule_id: string; version: string } 
 }
 
 function ObligationHelp() {
-  return <details className="obligation-help"><summary>Co znamená úroveň povinnosti?</summary><p>Přebírá se z citovaného standardu, není hodnocením závažnosti chyby ani výsledkem validace souboru. U DMF NDK znamená M povinný údaj a R doporučený údaj. Platí pouze za podmínek uvedených v pravidle; sporný význam hodnoty a stav ověření se evidují zvlášť.</p></details>;
+  return <details className="obligation-help"><summary>Co znamená úroveň povinnosti?</summary><p>Přebírá se z citované verze standardu, není závažností chyby ani výsledkem validace souboru. Kódy NDK: M — povinné; MA — povinné, pokud je údaj dostupný; R — doporučené; RA — doporučené, pokud je údaj dostupný; O — volitelné. Dostupnost údaje u MA/RA není totéž jako podmínka platnosti pravidla. Povinnost platí jen za uvedených podmínek; sporný význam a ověření se evidují zvlášť.</p><p>Podle <a href="https://github.com/NLCR/Standard_NDK/issues/258" target="_blank" rel="noopener noreferrer">návrhu NDK #258</a> mají nové verze DMF postupně používat M, MA a R; RA/O se v nich sjednotí na R. Starší záznamy zachovávají původní označení. Návrh sám neurčuje povinnost konkrétního pravidla.</p></details>;
 }
 
 function LoadingState({ state }: { state: { loading: boolean; error?: string } }) {
@@ -92,7 +93,7 @@ function Rules() {
         {filter("source", "Zdrojový standard", state.data.sources.map((item) => [item.id, item.id]))}
         {filter("category", "Kategorie", values("category"))}
         {filter("object", "Typ dokumentu", [...new Set(state.data.data.flatMap((rule) => rule.object_types?.values ?? []))].map((item) => [item, labels[item] ?? item]))}
-        {filter("obligation", "Úroveň povinnosti", [["mandatory", "Povinné"], ["recommended", "Doporučené"], ["optional", "Volitelné"], ["forbidden", "Zakázané"], ["unspecified", "Neurčeno"]])}
+        {filter("obligation", "Úroveň povinnosti", obligationOptions)}
         <ObligationHelp />
         {filter("verification", "Ověření přepisu", [["verified", "Ověřeno"], ["unverified", "Neověřeno"], ["disputed", "Sporné"]])}
         {filter("status", "Stav požadavku", values("status"))}
@@ -108,10 +109,8 @@ function Rules() {
 const labels: Record<string, string> = { normative: "Normativní", disputed: "Sporný požadavek", draft: "Částečné pokrytí", verified: "Ověřeno", unverified: "Neověřeno", deprecated: "Historické", ambiguous: "Nejednoznačné", error: "Chyba", warning: "Varování", info: "Informace", monograph: "Monografie", "technical/icc": "Technická metadata · ICC", related_to: "souvisí s", defined_by: "je definováno v", restricts: "omezuje", clarifies: "upřesňuje", generated_by: "je generováno v", validated_by: "je kontrolováno v", derived_from: "vychází z", extends: "rozšiřuje" };
 
 function RuleCard({ rule, relations }: { rule: RuleVersion; relations: Relation[] }) {
-  return <article className="rule-card"><div className="rule-card-heading"><div><p className="rule-meta">{rule.national_standard_id} · {rule.version} · {labels[rule.category] ?? rule.category}</p><h2><Link to={`/rules/${rule.rule_id}`}>{localized(rule.title)}</Link></h2></div><Status tone={rule.status === "disputed" ? "warn" : "neutral"}>{labels[rule.status] ?? rule.status}</Status></div><p>{localized(rule.description)}</p><div className="rule-card-footer"><code>{rule.target.entity}</code><div className="source-chips">{sourceIds(rule, relations).map((id) => <Link key={id} to={`/standards/${id}`} className="source-chip">{id}</Link>)}</div><span>{labels[rule.verification.status]} · {obligationLabels[rule.obligation] ?? rule.obligation}</span></div></article>;
+  return <article className="rule-card"><div className="rule-card-heading"><div><p className="rule-meta">{rule.national_standard_id} · {rule.version} · {labels[rule.category] ?? rule.category}</p><h2><Link to={`/rules/${rule.rule_id}`}>{localized(rule.title)}</Link></h2></div><Status tone={rule.status === "disputed" ? "warn" : "neutral"}>{labels[rule.status] ?? rule.status}</Status></div><p>{localized(rule.description)}</p><div className="rule-card-footer"><code>{rule.target.entity}</code><div className="source-chips">{sourceIds(rule, relations).map((id) => <Link key={id} to={`/standards/${id}`} className="source-chip">{id}</Link>)}</div><span>{labels[rule.verification.status]} · {obligationLabel(rule)}</span></div></article>;
 }
-
-const obligationLabels: Record<string, string> = { mandatory: "Povinné", recommended: "Doporučené", optional: "Volitelné", forbidden: "Zakázané", unspecified: "Neurčeno" };
 
 function SourceCard({ source }: { source: Record<string, unknown> }) {
   const raw = typeof source.url === "string" ? source.url : "";
@@ -241,7 +240,7 @@ function RuleDetail({ id }: { id: string }) {
     {rule && <>
       <div className="contribute-action"><ChangeProposal rule={rule} /></div>
       <header className="detail-header"><div><p className="eyebrow">Detail pravidla</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze standardu NDK<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{labels[rule.verification.status]}</Status></div></header>
-      <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Úroveň povinnosti</span><Status>{obligationLabels[rule.obligation] ?? rule.obligation}</Status><ObligationHelp /></div></div>
+      <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Úroveň povinnosti</span><Status>{obligationLabel(rule)}</Status><ObligationHelp /></div></div>
       <section className="layer layer--normative"><p className="layer-label">Požadavek NDK · {labels[rule.status] ?? rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><details><summary>Strojový zápis a podmínky platnosti</summary><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Podmínka</h3><JsonBlock value={rule.condition} /></>}</details></section>
       {issues.length > 0 && <aside className="layer"><p className="layer-label">Diskuse · nenormativní</p><h2>Související issues</h2>{issues.map((issue) => <p key={issue.url}><a href={issue.url} target="_blank" rel="noopener noreferrer">{issue.title} — otevřít diskusi</a></p>)}</aside>}
       <section className="detail-grid"><article><p className="layer-label">Výklad registru</p><h2>Interpretace</h2><p>{evidence(localized(rule.interpretation))}</p></article><article><p className="layer-label">Ověření přepisu</p><h2>Stav ověření</h2><p>{labels[rule.verification.status]} · {rule.verification.date ?? "Datum neuvedeno"}</p><p>{evidence(rule.verification.reference ?? "")}</p></article></section>

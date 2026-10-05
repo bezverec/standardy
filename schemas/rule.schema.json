@@ -115,7 +115,8 @@
           "properties": { "type": { "$ref": "#/$defs/relationType" } }
         },
         "category": { "type": "string", "pattern": "^(metadata|file|structure|technical|cross_file|semantic)(/[A-Za-z0-9._-]+)?$" },
-        "obligation": { "enum": ["mandatory", "recommended", "optional", "forbidden", "unspecified"], "description": "Úroveň povinnosti podle citovaného standardu: povinné, doporučené, volitelné, zakázané nebo neurčeno. Uplatňuje se pouze za podmínek pravidla; nejde o závažnost validačního hlášení." },
+        "obligation": { "enum": ["mandatory", "mandatory_if_available", "recommended", "recommended_if_available", "optional", "forbidden", "unspecified"], "description": "Úroveň povinnosti podle citované verze standardu. Varianty if_available rozlišují dostupnost údaje, nikoli podmínku platnosti pravidla. Historické RA/O se nepřevádějí na R; nejde o závažnost validačního hlášení." },
+        "obligation_code": { "enum": ["M", "MA", "R", "RA", "O"], "description": "Původní kód povinnosti NDK doslova z pramene této verze pravidla: M/mandatory, MA/mandatory_if_available, R/recommended, RA/recommended_if_available, O/optional. Pro jiné standardy lze vynechat; kód se neodvozuje automaticky z obecné úrovně." },
         "object_types": {
           "type": "object", "additionalProperties": false, "required": ["vocabulary", "values"],
           "properties": {

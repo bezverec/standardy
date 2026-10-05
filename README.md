@@ -23,6 +23,7 @@ API pod `/api/v1/` je veřejné, bez přihlášení a pouze pro čtení. Napří
 
 ```bash
 curl 'https://standardy.digitalizaty.cz/api/v1/rules?obligation=mandatory'
+curl 'https://standardy.digitalizaty.cz/api/v1/rules?obligation_code=MA'
 curl 'https://standardy.digitalizaty.cz/api/v1/rules/NDK-MONO-MIX-ICC-PROFILE-VERSION?version=2.3'
 curl 'https://standardy.digitalizaty.cz/api/v1/meta'
 ```
@@ -41,12 +42,15 @@ Swagger umožňuje prohlédnout datové typy a vyzkoušet GET operace. Jeho tla�
 
 | Údaj | Význam |
 |---|---|
-| Úroveň povinnosti (`obligation`) | Povinné, doporučené, volitelné, zakázané nebo neurčeno podle citovaného standardu. Platí za podmínek uvedených u pravidla. |
+| Úroveň povinnosti (`obligation`) | Povinné, povinné pokud dostupné, doporučené, doporučené pokud dostupné, volitelné, zakázané nebo neurčeno podle citované verze standardu. Platí za podmínek uvedených u pravidla. |
+| Původní kód NDK (`obligation_code`) | M, MA, R, RA nebo O doslova z pramene konkrétní verze pravidla. |
 | Stav požadavku (`status`) | Zda je požadavek normativní, nejednoznačný, sporný, pracovní, historický nebo určený implementací. |
 | Stav ověření (`verification.status`) | Stav ověření daného záznamu, nikoli výsledek validace souboru. |
 | Verze NDK (`version`) | Verze národního standardu, ke které se záznam vztahuje. |
 
 Úroveň povinnosti **není závažností validačního hlášení**. Pole `obligation` nahradilo původní `severity`; hodnoty `error`, `warning` a `info` se na povinnost automaticky nepřevádějí. Ověřený přepis může současně dokumentovat sporný požadavek. Chování nástroje není samo o sobě požadavkem standardu.
+
+MA (`mandatory_if_available`) a RA (`recommended_if_available`) rozlišují dostupnost údaje, nikoli podmínku platnosti pravidla (`condition`). Podle [návrhu NDK #258](https://github.com/NLCR/Standard_NDK/issues/258) mají nové verze DMF postupně používat jen M, MA a R, s převodem RA/O na R. Historické záznamy ale zachovávají původní povinnost; registr změnu nepředjímá ani neprovádí automaticky. Podrobné mapování je v [datovém modelu](docs/development/registry-data-model.md#podmínky-a-validace).
 
 „Počet pravidel“ počítá unikátní ID. Jedno pravidlo může mít více verzovaných záznamů, jejichž počet je uveden zvlášť; `pagination.total` v API počítá právě tyto záznamy. Verze kontraktu API, verze NDK a identita datasetu v [`/api/v1/meta`](https://standardy.digitalizaty.cz/api/v1/meta) jsou samostatné údaje, nikoli počty pravidel.
 

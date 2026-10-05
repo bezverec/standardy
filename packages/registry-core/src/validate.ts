@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Ajv2020, { type ErrorObject, type ValidateFunction } from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
+import { ndkObligations } from "./obligation.ts";
 import type {
   NationalStandardDocument,
   RegistryDocument,
@@ -118,6 +119,13 @@ export async function validateRegistry(
     const nationalStandard = nationalStandardById.get(rule.national_standard.id);
     if (!nationalStandard) issues.push({ file: rule.source_file, message: `${rule.id} references unknown national standard ${rule.national_standard.id}` });
     for (const version of rule.versions) {
+      if (!options.relationsOnly && rule.national_standard.id.startsWith("ndk-")
+        && Object.values(ndkObligations).includes(version.obligation) && !version.obligation_code) {
+        issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} must preserve the source NDK obligation_code` });
+      }
+      if (!options.relationsOnly && version.obligation_code && version.obligation !== ndkObligations[version.obligation_code]) {
+        issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} obligation ${version.obligation} does not match source code ${version.obligation_code}` });
+      }
       if (nationalStandard && !nationalStandard.versions.some((candidate) => candidate.version === version.version)) {
         issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} has no matching national standard version` });
       }

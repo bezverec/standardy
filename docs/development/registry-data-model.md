@@ -51,9 +51,23 @@ Neověřené údaje nejsou prezentovány jako potvrzené normativní závěry.
 
 ## Podmínky a validace
 
-`obligation` vyjadřuje úroveň povinnosti v citovaném standardu: `mandatory` (povinné), `recommended` (doporučené), `optional` (volitelné), `forbidden` (zakázané) nebo `unspecified` (neurčeno). Nesmí se odvozovat ze závažnosti hlášení validátoru; nahrazuje původní ručně přidělené pole `severity`. API filtr a řazení používají rovněž `obligation`. Migrace 0003 přejmenuje indexovaný sloupec a nastaví neurčenou hodnotu; následný import YAML dodá doložené úrovně.
+`obligation` vyjadřuje úroveň povinnosti v citované verzi standardu. `obligation_code` zachovává původní kód NDK, nikoli kód odhadnutý z chování nástroje:
 
-Povinnost se uplatňuje jen za podmínek `condition`. U ICC jména a verze jde o M, u URI o R podle DMF Monografie 2.3 pro MC/PS, je-li přítomen blok `IccProfile`. `presence: optional` u doporučeného URI vyjadřuje, že absence není zakázaná; nezaměňuje se s úrovní doporučení R. Sporná sémantika verze ani ověření přepisu nemění povinnost přítomnosti. Označení M/R se zde používá pro terminologii DMF, nikoli jako univerzální kód všech zdrojových standardů.
+| Kód NDK | `obligation` | Význam |
+|---|---|---|
+| M | `mandatory` | Povinné |
+| MA | `mandatory_if_available` | Povinné, pokud je údaj dostupný / lze jej plnit |
+| R | `recommended` | Doporučené |
+| RA | `recommended_if_available` | Doporučené, pokud je údaj dostupný / lze jej plnit |
+| O | `optional` | Volitelné |
+
+Obecný model navíc podporuje `forbidden` (zakázané) a `unspecified` (neurčeno); těm se žádný z kódů NDK nepřiřazuje. Mimo NDK lze `obligation_code` vynechat. Sémantická validace vyžaduje původní kód pro známé úrovně M/MA/R/RA/O u pravidel národních standardů s prefixem `ndk-` a kontroluje jeho soulad s obecnou úrovní. U neurčené povinnosti se kód nevymýšlí. Obě pole jsou součástí konkrétní `RuleVersion` a její provenance `source`.
+
+Povinnost se nesmí odvozovat ze závažnosti hlášení validátoru; nahrazuje původní ručně přidělené pole `severity`. API filtr a řazení používají `obligation`, přesný zdrojový kód lze filtrovat přes `obligation_code`. Migrace 0003 přejmenovala indexovaný sloupec; nové MA/RA nevyžadují další migraci. Původní kód se uchovává v JSON záznamu a aktualizuje importem YAML.
+
+[Issue NDK #258](https://github.com/NLCR/Standard_NDK/issues/258), zveřejněné 30. 9. 2026, plánuje v dalších verzích DMF ponechat M, MA a R a sjednotit RA/O na R. Konkrétní cílové verze v návrhu nejsou určeny. Registr proto **neprovádí zpětný ani automatický převod**. Po vydání a ověření příslušné nové DMF vznikne nová verze pravidla s vlastním kódem a zdrojem; stará verze si ponechá RA či O. Sémantické porovnání zachytí změnu obou polí. Issue je podkladem pro plánování, nikoli normativním pramenem pro již vydané DMF.
+
+Povinnost se uplatňuje jen za podmínek `condition`. Dostupnost údaje u MA/RA není totéž jako podmínka platnosti pravidla a nesmí být bez opory ve zdroji redukována na existenci XML elementu. U ICC jména a verze jde o `obligation_code: M`, u URI o `obligation_code: R` podle DMF Monografie 2.3 pro MC/PS, je-li přítomen blok `IccProfile`. `presence: optional` u doporučeného URI vyjadřuje, že absence není zakázaná; nezaměňuje se s úrovní doporučení R. Sporná sémantika verze ani ověření přepisu nemění povinnost přítomnosti.
 
 Podmínky jsou rekurzivní AST s uzly `all`, `any`, `not` a listy `field` + `operator` + `value`. Operátory jsou `exists`, `equals`, `matches`, `in`, `greater_than`, `less_than`.
 

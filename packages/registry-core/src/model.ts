@@ -112,13 +112,17 @@ export type Condition =
       value?: unknown;
     };
 
+export type Obligation = "mandatory" | "mandatory_if_available" | "recommended" | "recommended_if_available" | "optional" | "forbidden" | "unspecified";
+export type NdkObligationCode = "M" | "MA" | "R" | "RA" | "O";
+
 export interface RuleVersion {
   version: string;
   status: RegistryStatus;
   target: { entity: string };
   relation_to_target: { type: RelationType };
   category: string;
-  obligation: "mandatory" | "recommended" | "optional" | "forbidden" | "unspecified";
+  obligation: Obligation;
+  obligation_code?: NdkObligationCode;
   object_types?: { vocabulary: string; values: string[] };
   normative_requirement: LocalizedText;
   requirement: Record<string, unknown>;

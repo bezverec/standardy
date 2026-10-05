@@ -41,6 +41,7 @@ describe("source-backed obligation", () => {
       const result = await handleRequest(new Request("https://registry.test/api/v1/rules/NDK-MONO-MIX-ICC-PROFILE-VERSION"), env);
       const rule = (await result.json() as { versions: RuleVersion[] }).versions[0]!;
       expect(rule.obligation).toBe("mandatory");
+      expect(rule.obligation_code).toBe("M");
       expect(rule.status).toBe("disputed");
       expect(rule.references).toContainEqual(expect.objectContaining({ url: "https://github.com/NLCR/Standard_NDK/issues/255" }));
       for (const query of ["severity=error", "sort=severity"]) {

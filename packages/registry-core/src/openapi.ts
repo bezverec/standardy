@@ -68,8 +68,8 @@ const relationFilters = [query("from", "ID výchozího uzlu."), query("to", "ID 
 
 export const openApiDocument = {
   openapi: "3.1.1",
-  info: { title: "Standardy digitalizace – Registry API", version: "1.0.0",
-    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.0.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření.",
+  info: { title: "Standardy digitalizace – Registry API", version: "1.1.0",
+    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.1.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření.",
     contact: { name: "Návrhy a chyby", url: "https://github.com/bezverec/standardy/issues" },
   },
   servers: [{ url: "/api/v1", description: "API na stejném serveru jako dokumentace (produkce i lokální vývoj)." }],
@@ -80,7 +80,8 @@ export const openApiDocument = {
     "/rules": operation("listRules", "Pravidla", "Stránkovaný seznam verzovaných pravidel", "RulePage", [
       query("national_standard", "ID národního standardu, např. ndk-monograph."), query("version", "Verze národního standardu, např. 2.3."), query("standard", "ID zdrojového standardu cílové entity, např. MIX. Nejde o všechny citované prameny."),
       query("category", "Kategorie nebo její nadřazený prefix, např. technical nebo technical/icc."), query("object_type", "Typ dokumentu, např. monograph; současná implementace používá textové vyhledání ve strukturovaných datech."),
-      query("obligation", "Úroveň povinnosti podle citovaného standardu; ne závažnost hlášení. Platí za podmínek pravidla.", { type: "string", enum: ["mandatory", "recommended", "optional", "forbidden", "unspecified"] }), query("status", "Stav požadavku.", ref("Rule_status")),
+      query("obligation", "Úroveň povinnosti podle citované verze standardu. MA/RA mají samostatné hodnoty if_available, odlišné od condition. Historické RA/O se nepřevádějí na R.", { type: "string", enum: ruleSchema.$defs.ruleVersion.properties.obligation.enum }),
+      query("obligation_code", "Původní kód NDK v citované verzi pravidla; lze kombinovat s obligation.", { type: "string", enum: ruleSchema.$defs.ruleVersion.properties.obligation_code.enum }), query("status", "Stav požadavku.", ref("Rule_status")),
       query("sort", "Pole řazení; neznámé hodnoty použijí id. Verze se řadí textově.", { type: "string", enum: ["id", "version", "national_standard", "standard", "obligation", "status", "category"], default: "id" }),
       query("direction", "Směr řazení, jiná hodnota než desc použije ASC.", { type: "string", enum: ["asc", "desc"], default: "asc" }), page, pageSize(25, 100),
     ], "Každá položka je jedno pravidlo v jedné verzi národního standardu. pagination.total počítá tyto záznamy. Vyhledávání a filtry v Exploreru jsou klientské a mají širší možnosti než tento endpoint. Původní pole a parametr severity byly nahrazeny obligation; nejde o převod jejich hodnot. Požadavky se severity nebo sort=severity vracejí 400.", { "400": error("Odstraněný filtr či řazení severity; použijte obligation.") }),

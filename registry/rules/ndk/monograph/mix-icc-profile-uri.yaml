@@ -16,6 +16,7 @@ versions:
       type: restricts
     category: technical/icc
     obligation: recommended
+    obligation_code: R
     object_types:
       vocabulary: NDK-OBJECT-TYPES
       values: [monograph]

@@ -1,4 +1,5 @@
 import type { Relation } from "./explore.ts";
+import type { NdkObligationCode, Obligation } from "../../../packages/registry-core/src/model.ts";
 
 export interface RuleVersion {
   rule_id: string;
@@ -10,7 +11,8 @@ export interface RuleVersion {
   target: { entity: string };
   relation_to_target: { type: string };
   category: string;
-  obligation: string;
+  obligation: Obligation;
+  obligation_code?: NdkObligationCode;
   normative_requirement: Record<string, string>;
   requirement: Record<string, unknown>;
   condition?: unknown;
