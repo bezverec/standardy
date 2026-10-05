@@ -82,4 +82,5 @@ nav:
       - Identifikace, fixity a formát PREMIS Object: development/premis-object.md
       - Vznik a ochrana souboru v PREMIS: development/premis-provenance.md
       - Vazby objektů a událostí PREMIS: development/premis-relationships.md
+      - Události PREMIS Event: development/premis-events.md
       - Lokální vývoj: development/local-development.md

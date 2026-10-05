@@ -1,0 +1,104 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-EVENT-LINKING-AGENT-VALUE"
+title:
+  cs: "Hodnota identifikátoru původce události"
+description:
+  cs: "Události digitalizace podle DMF Monografie 2.3; oddělení obecných možností PREMIS 2.2, povinností NDK a obsahu vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-EVENT-LINKING-AGENT-VALUE"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-events"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Každá vazba na agenta obsahuje právě jednu hodnotu jeho identifikátoru."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "V každém linkingAgentIdentifier požadovat jeden linkingAgentIdentifierValue a spolu s typem jej použít pro určení původce události."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 80
+      section: "7.5.2 PREMIS Event — linkingAgentIdentifier/linkingAgentIdentifierValue"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "linkingAgentIdentifierComplexType/linkingAgentIdentifierValue (1–1); xs:string"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 75
+        section: "Legenda: obecná kardinalita a povinnosti DMF; povinné děti doporučeného rodiče"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 81
+        section: "7.5.3 PREMIS Agent — rozsah popisu agenta v digitalizačním SIP"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 79–81 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Výřezy první stránky dodaného SIP ověřeny XPath a otiskem souboru; externí validátor ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "Identifikátor může obsahovat název programu, ale není sám o sobě důkazem verze ani chování nástroje. Ve vzoru Kakadu-mastercopy označuje konkrétního agenta; hodnotu neodvozujeme z názvu aplikace a nezaměňujeme s XML ID obalu. Kardinalita dítěte se vyhodnocuje v každém bezprostředním rodiči cesty event/linkingAgentIdentifier/linkingAgentIdentifierValue. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-event-linking-agent-value"
+        title:
+          cs: "Hodnota identifikátoru původce události — EVT_004"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:linkingAgentIdentifierValue xmlns:premis="info:lc/xmlns/premis-v2">Kakadu-mastercopy</premis:linkingAgentIdentifierValue>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_004']/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier/premis:linkingAgentIdentifierValue"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-LINKING-AGENT"

@@ -8,7 +8,7 @@ Primární podklad je [DMF Monografie 2.3](https://standardy.ndk.cz/ndk/standard
 
 Deset pravidel se vztahuje na relationship objektů MC a ALTO. Tři pravidla linkingEventIdentifier se týkají přímých odkazů PS. Všechny platí pro souborový objekt file ve vedlejším METS monografie; role ALTO odpovídá XML v tabulce DMF. Povinnost přímých odkazů PS se nepřenáší na MC/ALTO a povinnost relationship pro MC/ALTO nezakazuje další vztahy PS.
 
-Skupina nepopisuje celý PREMIS Event ani Agent a nezavádí validační engine.
+Celý oddíl DMF pro [PREMIS Event](premis-events.md) popisuje navazující skupina 16 pravidel. Úplný PREMIS Agent zatím zpracován není; skupiny nezavádějí validační engine.
 
 ## Přehled pravidel
 

@@ -1,0 +1,127 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-EVENT-LINKING-AGENT-ROLE"
+title:
+  cs: "Role původce události"
+description:
+  cs: "Události digitalizace podle DMF Monografie 2.3; oddělení obecných možností PREMIS 2.2, povinností NDK a obsahu vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-EVENT-LINKING-AGENT-ROLE"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-events"
+    obligation: "recommended"
+    obligation_code: "R"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Doporučuje se uvést roli agenta ve vztahu k události; použité hodnoty musí pocházet z kontrolovaného slovníku."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Doporučit linkingAgentRole u každé vazby na agenta; při uvedení ověřit hodnoty podle použitého kontrolovaného slovníku. Role může být opakována."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 80
+      section: "7.5.2 PREMIS Event — linkingAgentIdentifier/linkingAgentRole"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "linkingAgentIdentifierComplexType/linkingAgentRole (0–n); xs:string"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 75
+        section: "Legenda: obecná kardinalita a povinnosti DMF; povinné děti doporučeného rodiče"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 81
+        section: "7.5.3 PREMIS Agent — rozsah popisu agenta v digitalizačním SIP"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 79–81 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Výřezy první stránky dodaného SIP ověřeny XPath a otiskem souboru; externí validátor ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "software, SW component a operator jsou příklady, nikoli uzavřený číselník. Vzor obsahuje také machine; pouhá odlišnost od příkladů neprokazuje chybu, ale ani platnost vůči konkrétnímu slovníku. Role v této události není agentType. Kardinalita dítěte se vyhodnocuje v každém bezprostředním rodiči cesty event/linkingAgentIdentifier/linkingAgentRole. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-event-linking-agent-role"
+        title:
+          cs: "Role původce události — EVT_004"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:linkingAgentRole xmlns:premis="info:lc/xmlns/premis-v2">software</premis:linkingAgentRole>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Hodnoty software a machine jsou pozorování vzoru, nikoli ověření kontrolovaného slovníku. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_004']/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier/premis:linkingAgentRole"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-event-linking-agent-role-evt_001"
+        title:
+          cs: "Role původce události — EVT_001"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:linkingAgentRole xmlns:premis="info:lc/xmlns/premis-v2">machine</premis:linkingAgentRole>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Hodnoty software a machine jsou pozorování vzoru, nikoli ověření kontrolovaného slovníku. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_001']/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier/premis:linkingAgentRole"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-LINKING-AGENT"

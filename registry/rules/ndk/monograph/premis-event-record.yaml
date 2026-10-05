@@ -1,0 +1,136 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-EVENT-RECORD"
+title:
+  cs: "Záznam události PREMIS"
+description:
+  cs: "Události digitalizace podle DMF Monografie 2.3; oddělení obecných možností PREMIS 2.2, povinností NDK a obsahu vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-EVENT-RECORD"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-events"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Pro provedené digitalizační aktivity musí být ve vedlejším METS zaznamenány události PREMIS; každá má vlastní digiprovMD."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V amdSec vedlejšího METS evidovat provedenou digitalizaci, vytvoření ALTO XML, vytvoření MC a UC a vymazání PS. Pro každou evidovanou událost požadovat vlastní digiprovMD s jedním premis:event; počet záznamů odvodit od skutečně provedených aktivit."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "79–80"
+      section: "7.5.2 PREMIS Event — event"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "eventComplexType; globální event; premisComplexType/event (0–n)"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 75
+        section: "Legenda: obecná kardinalita a povinnosti DMF; povinné děti doporučeného rodiče"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 79–81 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Výřezy první stránky dodaného SIP ověřeny XPath a otiskem souboru; externí validátor ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "Tabulka má obecné 0–n a povinnost M. Minimum 1 se vztahuje na soubor událostí ve vedlejším METS, nikoli na každou digiprovMD (ta může popisovat také agenta). Požadavek úplnosti se musí porovnat s doloženým průběhem digitalizace; pět událostí ve vzoru není univerzální předepsaný počet. Scope není omezen na file_role MC/PS/ALTO: úvod výslovně zahrnuje i vytvoření UC. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-event-record"
+        title:
+          cs: "Záznam události PREMIS — EVT_004"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:event xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:eventIdentifier>
+              <premis:eventIdentifierType>NK_eventID</premis:eventIdentifierType>
+              <premis:eventIdentifierValue>mastercopy_001</premis:eventIdentifierValue>
+            </premis:eventIdentifier>
+            <premis:eventType>migration</premis:eventType>
+            <premis:eventDateTime>2026-06-25T08:41:21</premis:eventDateTime>
+            <premis:eventDetail>migration/MC_creation</premis:eventDetail>
+            <premis:eventOutcomeInformation>
+              <premis:eventOutcome>OK</premis:eventOutcome>
+            </premis:eventOutcomeInformation>
+            <premis:linkingAgentIdentifier>
+              <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+              <premis:linkingAgentIdentifierValue>Kakadu-mastercopy</premis:linkingAgentIdentifierValue>
+              <premis:linkingAgentRole>software</premis:linkingAgentRole>
+            </premis:linkingAgentIdentifier>
+            <premis:linkingObjectIdentifier>
+              <premis:linkingObjectIdentifierType>file</premis:linkingObjectIdentifierType>
+              <premis:linkingObjectIdentifierValue>MC_1_00010003_2R</premis:linkingObjectIdentifierValue>
+            </premis:linkingObjectIdentifier>
+          </premis:event>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_004']/mets:mdWrap/mets:xmlData/premis:event"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-IDENTIFIER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-DATETIME"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-DETAIL"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-OUTCOME-INFORMATION"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-LINKING-AGENT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-LINKING-OBJECT"

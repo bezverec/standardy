@@ -1,0 +1,167 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-EVENT-DETAIL"
+title:
+  cs: "Upřesnění události"
+description:
+  cs: "Události digitalizace podle DMF Monografie 2.3; oddělení obecných možností PREMIS 2.2, povinností NDK a obsahu vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-EVENT-DETAIL"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-events"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Každá událost obsahuje právě jedno upřesnění eventDetail; hodnoty vyjmenované v DMF jsou doporučené."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "V každém event požadovat jeden eventDetail věcně odpovídající eventType a provedené činnosti. Doporučené hodnoty nepřevádět na uzavřený seznam povolených řetězců."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 80
+      section: "7.5.2 PREMIS Event — eventDetail"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "eventComplexType/eventDetail (0–1); xs:string"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 75
+        section: "Legenda: obecná kardinalita a povinnosti DMF; povinné děti doporučeného rodiče"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 79–81 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Výřezy první stránky dodaného SIP ověřeny XPath a otiskem souboru; externí validátor ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "DMF uvádí doporučená upřesnění za lomítkem v zápisech capture/digitization, capture/XML_creation, capture/TXT_creation, migration/MC_creation a deletion/PS_deletion. Vzor ukládá celé řetězce včetně typu a lomítka; zachováváme je jako pozorování, nikoli jako předepsanou syntaxi. Přítomnost elementu je M, doporučení se týká hodnot. Obecné XSD má 0–1. Kardinalita dítěte se vyhodnocuje v každém bezprostředním rodiči cesty event/eventDetail. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-event-detail"
+        title:
+          cs: "Upřesnění události — EVT_004"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:eventDetail xmlns:premis="info:lc/xmlns/premis-v2">migration/MC_creation</premis:eventDetail>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Zdroj ukládá celý řetězec typ/upřesnění; nejde o univerzálně předepsanou syntaxi. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_004']/mets:mdWrap/mets:xmlData/premis:event/premis:eventDetail"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-event-detail-evt_001"
+        title:
+          cs: "Upřesnění události — EVT_001"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:eventDetail xmlns:premis="info:lc/xmlns/premis-v2">capture/digitization</premis:eventDetail>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Zdroj ukládá celý řetězec typ/upřesnění; nejde o univerzálně předepsanou syntaxi. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_001']/mets:mdWrap/mets:xmlData/premis:event/premis:eventDetail"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-event-detail-evt_003"
+        title:
+          cs: "Upřesnění události — EVT_003"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:eventDetail xmlns:premis="info:lc/xmlns/premis-v2">deletion/PS_deletion</premis:eventDetail>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Zdroj ukládá celý řetězec typ/upřesnění; nejde o univerzálně předepsanou syntaxi. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_003']/mets:mdWrap/mets:xmlData/premis:event/premis:eventDetail"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-event-detail-evt_005"
+        title:
+          cs: "Upřesnění události — EVT_005"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:eventDetail xmlns:premis="info:lc/xmlns/premis-v2">capture/XML_creation</premis:eventDetail>
+        note:
+          cs: "Výřez vedlejšího METS první stránky, zachovaný beze změny hodnot. Zdroj ukládá celý řetězec typ/upřesnění; nejde o univerzálně předepsanou syntaxi. Nejde o potvrzení validity celého SIP ani o důkaz chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='EVT_005']/mets:mdWrap/mets:xmlData/premis:event/premis:eventDetail"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-RECORD"

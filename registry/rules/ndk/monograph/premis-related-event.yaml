@@ -134,6 +134,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-IDENTIFIER"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-RELATED-EVENT-TYPE"
   -
     type: "related_to"

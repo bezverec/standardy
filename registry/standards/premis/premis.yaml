@@ -4,7 +4,7 @@ id: "PREMIS"
 title:
   cs: "PREMIS – Preservation Metadata: Implementation Strategies"
 description:
-  cs: "Vybrané prvky souborového objektu ve verzi 2.2, na kterou odkazuje DMF Monografie 2.3, s. 5. Obecné schéma je odděleno od povinností NDK; nejde o nejnovější verzi PREMIS."
+  cs: "Vybrané prvky souborového objektu a událostí ve verzi 2.2, na kterou odkazuje DMF Monografie 2.3, s. 5. Obecné schéma je odděleno od povinností NDK; nejde o nejnovější verzi PREMIS."
 status: "normative"
 verification:
   status: "verified"
@@ -19,9 +19,345 @@ versions:
       document: "PREMIS XML Schema"
       version: "2.2"
       page: null
-      section: "file; objectIdentifierComplexType; objectCharacteristicsComplexType; fixityComplexType; formatComplexType"
+      section: "file; objectIdentifierComplexType; objectCharacteristicsComplexType; fixityComplexType; formatComplexType; eventComplexType"
       url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
 entities:
+  -
+    id: "PREMIS-EVENT-RECORD"
+    type: "element"
+    version: "2.2"
+    name: "event"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Záznam události PREMIS"
+    definition:
+      cs: "eventComplexType; globální event; premisComplexType/event (0–n). Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType; globální event; premisComplexType/event (0–n)"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-IDENTIFIER"
+    type: "element"
+    version: "2.2"
+    name: "eventIdentifier"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Identifikátor události"
+    definition:
+      cs: "eventComplexType/eventIdentifier (1–1); eventIdentifierComplexType. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType/eventIdentifier (1–1); eventIdentifierComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-IDENTIFIER-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "eventIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Typ identifikátoru události"
+    definition:
+      cs: "eventIdentifierComplexType/eventIdentifierType (1–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventIdentifierComplexType/eventIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-IDENTIFIER-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "eventIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota identifikátoru události"
+    definition:
+      cs: "eventIdentifierComplexType/eventIdentifierValue (1–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventIdentifierComplexType/eventIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "eventType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Typ události"
+    definition:
+      cs: "eventComplexType/eventType (1–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType/eventType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-DATETIME"
+    type: "element"
+    version: "2.2"
+    name: "eventDateTime"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Datum a čas události"
+    definition:
+      cs: "eventComplexType/eventDateTime (1–1); edtfSimpleType. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType/eventDateTime (1–1); edtfSimpleType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-DETAIL"
+    type: "element"
+    version: "2.2"
+    name: "eventDetail"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Upřesnění události"
+    definition:
+      cs: "eventComplexType/eventDetail (0–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType/eventDetail (0–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-OUTCOME-INFORMATION"
+    type: "element"
+    version: "2.2"
+    name: "eventOutcomeInformation"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Informace o výsledku události"
+    definition:
+      cs: "eventComplexType/eventOutcomeInformation (0–n); eventOutcomeInformationComplexType. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType/eventOutcomeInformation (0–n); eventOutcomeInformationComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-OUTCOME"
+    type: "element"
+    version: "2.2"
+    name: "eventOutcome"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Výsledek události"
+    definition:
+      cs: "eventOutcomeInformationComplexType/eventOutcome (0–1 v rámci xs:choice); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventOutcomeInformationComplexType/eventOutcome (0–1 v rámci xs:choice); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-LINKING-AGENT"
+    type: "element"
+    version: "2.2"
+    name: "linkingAgentIdentifier"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Vazba události na původce"
+    definition:
+      cs: "eventComplexType/linkingAgentIdentifier (0–n); linkingAgentIdentifierComplexType. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType/linkingAgentIdentifier (0–n); linkingAgentIdentifierComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-LINKING-AGENT-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "linkingAgentIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Typ identifikátoru původce události"
+    definition:
+      cs: "linkingAgentIdentifierComplexType/linkingAgentIdentifierType (1–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "linkingAgentIdentifierComplexType/linkingAgentIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-LINKING-AGENT-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "linkingAgentIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota identifikátoru původce události"
+    definition:
+      cs: "linkingAgentIdentifierComplexType/linkingAgentIdentifierValue (1–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "linkingAgentIdentifierComplexType/linkingAgentIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-LINKING-AGENT-ROLE"
+    type: "element"
+    version: "2.2"
+    name: "linkingAgentRole"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Role původce události"
+    definition:
+      cs: "linkingAgentIdentifierComplexType/linkingAgentRole (0–n); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "linkingAgentIdentifierComplexType/linkingAgentRole (0–n); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-LINKING-OBJECT"
+    type: "element"
+    version: "2.2"
+    name: "linkingObjectIdentifier"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Vazba události na objekt"
+    definition:
+      cs: "eventComplexType/linkingObjectIdentifier (0–n); linkingObjectIdentifierComplexType. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "eventComplexType/linkingObjectIdentifier (0–n); linkingObjectIdentifierComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-LINKING-OBJECT-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "linkingObjectIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Typ identifikátoru objektu události"
+    definition:
+      cs: "linkingObjectIdentifierComplexType/linkingObjectIdentifierType (1–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "linkingObjectIdentifierComplexType/linkingObjectIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-EVENT-LINKING-OBJECT-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "linkingObjectIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota identifikátoru objektu události"
+    definition:
+      cs: "linkingObjectIdentifierComplexType/linkingObjectIdentifierValue (1–1); xs:string. Kontext PREMIS Event; národní povinnosti DMF jsou popsány samostatnými pravidly, nikoli odvozeny jen z obecného schématu."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "linkingObjectIdentifierComplexType/linkingObjectIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
   -
     id: "PREMIS-RELATIONSHIP"
     type: "element"
