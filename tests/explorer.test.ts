@@ -45,6 +45,7 @@ describe("registry exploration", () => {
       "/api/v1/rules?page_size=100", "/api/v1/rules?page_size=100&page=2",
       "/api/v1/relations?page_size=500", "/api/v1/relations?page_size=500&page=2",
     ]);
+    expect(fetchMock).toHaveBeenCalledWith("/api/v1/rules?page_size=100", expect.objectContaining({ cache: "no-cache" }));
   });
 
   it("pages Worker relations with matching filter bindings and a total count", async () => {

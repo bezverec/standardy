@@ -72,7 +72,7 @@ export interface RegistryEntity {
 }
 
 async function request<T>(path: string): Promise<T> {
-  const response = await fetch(`/api/v1${path}`, { headers: { Accept: "application/json" } });
+  const response = await fetch(`/api/v1${path}`, { cache: "no-cache", headers: { Accept: "application/json" } });
   if (!response.ok) {
     const body = await response.json().catch(() => ({})) as { error?: string };
     throw new Error(body.error ?? `API odpovědělo ${response.status}`);
