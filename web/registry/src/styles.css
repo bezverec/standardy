@@ -11,7 +11,7 @@
 }
 
 *{box-sizing:border-box}
-body{margin:0;min-width:320px}
+body{margin:0}
 a{color:var(--primary);text-underline-offset:3px}
 a:hover{color:var(--primary-hover);text-decoration:underline}
 button,input,select{font:inherit}
@@ -20,7 +20,7 @@ button,.button{border:1px solid var(--line);border-radius:0;background:#fff;colo
 button:hover,.button:hover{background:var(--surface-quiet);border-color:var(--border-contrast);color:var(--primary-hover)}
 button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--primary);outline-offset:4px}
 input:focus,select:focus{outline:2px solid var(--primary);outline-offset:1px}
-input,select{display:block;width:100%;min-height:42px;border:1px solid var(--border-contrast);border-radius:0;background:#fff;color:var(--ink);padding:.55rem .7rem;margin-top:.4rem}
+input,select{display:block;width:100%;min-width:0;min-height:44px;border:1px solid var(--border-contrast);border-radius:0;background:#fff;color:var(--ink);padding:.55rem .7rem;margin-top:.4rem}
 label{font-size:.875rem;font-weight:600;color:var(--text-secondary)}
 code,pre{font-family:"Cascadia Code",Consolas,monospace}
 code{font-size:.875rem;overflow-wrap:anywhere}
@@ -38,7 +38,9 @@ nav{display:flex;gap:.4rem;flex:1}
 nav a{color:var(--text-secondary);text-decoration:none;padding:.65rem .9rem;font-size:.9rem;border-radius:0}
 nav a.active,nav a:hover{background:var(--paper);color:var(--primary);text-decoration:none}
 nav a.active{box-shadow:inset 0 -2px var(--primary)}
-main{width:min(1260px,calc(100% - 4rem));margin:0 auto;padding:2.6rem 0 4rem;flex:1}
+main{width:min(1260px,calc(100% - 4rem));margin:0 auto;padding:2.6rem 0 4rem;flex:1;overflow-wrap:anywhere}
+.mobile-menu-toggle,.mobile-filter-toggle{display:none}
+.detail-grid>article,.implementation-grid>article,.detail-header>div,.results{min-width:0}
 .page-header{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-bottom:1.6rem}
 .page-header p{margin:0;color:var(--muted)}
 .eyebrow,.layer-label{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:0 0 .6rem!important}
@@ -219,19 +221,27 @@ main{width:calc(100% - 2rem)}
 .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
-@media(max-width:650px){main{padding-top:1.8rem}
-.topbar{padding:1rem}
-.brand{font-size:1rem}
-nav{width:100%;justify-content:flex-start;gap:0}
-nav a{padding:.6rem;font-size:.875rem}
+@media(max-width:650px){main{padding-top:1.5rem}
+.topbar{padding:.75rem 1rem;gap:.75rem;justify-content:space-between}
+.brand{font-size:.9rem;white-space:normal;min-width:0;flex:1}
+.brand>img{width:2.3rem;height:2.3rem}
+.brand small{font-size:.75rem}
+.mobile-menu-toggle,.mobile-filter-toggle{display:block;min-height:44px}
+.mobile-menu-toggle{font-size:.875rem;padding:.6rem}
+.mobile-filter-toggle{width:100%;text-align:left;margin-bottom:1rem}
+.topbar nav{display:none;flex:0 0 100%;width:100%;gap:0;flex-direction:column}
+.topbar nav.navigation--open{display:flex}
+nav a{padding:.75rem;font-size:1rem;min-height:44px}
 .explorer-layout{grid-template-columns:1fr}
-.filter-panel{grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;padding:1rem}
+.filter-panel{display:none;grid-template-columns:minmax(0,1fr);gap:.8rem;padding:1rem}
+.filter-panel--open{display:grid}
+.filter-panel>label{min-width:0}
 .filter-heading{grid-column:1/-1}
 .page-header{flex-wrap:wrap}
 .count-label{text-align:left}
 .page-actions{justify-content:flex-start}
 .rule-card{padding:1rem}
-.card-grid,.detail-grid,.implementation-grid{grid-template-columns:1fr}
+.card-grid,.detail-grid,.implementation-grid{grid-template-columns:minmax(0,1fr)}
 .detail-header{flex-direction:column;gap:1rem}
 .version-box{width:100%;display:flex;align-items:center;flex-wrap:wrap}
 .version-box label{flex:1}
@@ -241,6 +251,20 @@ nav a{padding:.6rem;font-size:.875rem}
 .layer{padding:1rem}
 h1{line-height:1.2}
 .rule-card-footer code{width:100%}
+.badge{white-space:normal}
+input,select{font-size:1rem}
+button,.button,summary,.source-chip,.back{min-height:44px}
+.text-button{padding:.5rem}
+.map-toolbar label{min-width:0;flex-basis:100%}
+.graph-toolbar>label{min-width:0;width:100%}
+.graph-toolbar>button{width:100%}
+.graph-filter-grid{grid-template-columns:minmax(0,1fr)}
+.graph-choices label{min-height:44px;margin:.3rem 0}
+.graph-layer-choice button{min-width:44px;min-height:44px}
+.graph-scroll{height:clamp(360px,65svh,600px)}
+.graph-explorer:fullscreen{padding:.5rem}
+.graph-table{min-width:540px}
+.graph-table-scroll{max-width:100%}
 footer{font-size:.8rem}
 }
 

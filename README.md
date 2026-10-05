@@ -14,7 +14,7 @@ Projekt není oficiálním vydáním standardů ani náhradou validačních nás
 ## Veřejný web a API
 
 - [Dokumentace · standardy.digitalizaty.cz](https://standardy.digitalizaty.cz/)
-- [Registr pravidel](https://standardy.digitalizaty.cz/registry/rules)
+- [Registr pravidel – domovská mapa](https://standardy.digitalizaty.cz/registry/)
 - [Mapa registru podle oblastí metadat](https://standardy.digitalizaty.cz/registry/map)
 - [Zdrojové standardy](https://standardy.digitalizaty.cz/registry/standards) a [národní standardy](https://standardy.digitalizaty.cz/registry/national-standards)
 - [Swagger UI — interaktivní dokumentace API](https://standardy.digitalizaty.cz/api-docs/)

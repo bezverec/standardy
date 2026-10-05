@@ -23,7 +23,9 @@ Nabídka zobrazuje i oblasti bez vložených pravidel, s počtem nula. Počty u 
 
 ## Mapa registru
 
-Vstupní stránka `/registry/` a odkaz `/registry/map` nabízejí dlaždicovou mapu obsahu. Oblasti metadat obsahují standardy a ty tematické skupiny pravidel. Výběr národního standardu a verze omezuje počty i odkazy do seznamu pravidel. Kliknutí na skupinu přenese také metadatový standard a téma do filtrů seznamu.
+Domovská stránka registru `/registry/` nabízí dlaždicovou mapu obsahu; logo, hlavní navigace a vstup z dokumentace vedou sem. Odkaz `/registry/map` zůstává funkčním aliasem. Oblasti metadat obsahují standardy a ty tematické skupiny pravidel. Výběr národního standardu a verze omezuje počty i odkazy do seznamu pravidel. Kliknutí na skupinu přenese také metadatový standard a téma do filtrů seznamu.
+
+Na mobilních šířkách do 650 px se navigace otevírá tlačítkem Menu a filtry seznamu jsou ve výchozím stavu sbalené; tlačítko ukazuje počet aktivních filtrů. Na desktopu jsou navigace i filtry stále viditelné. Zvětšený graf, tabulka vazeb a XML ukázky mají vlastní posouvání, nikoli vodorovné přetečení celé stránky. Zobrazení celého grafu zůstává výchozí; pro čtení hustých vazeb na malém displeji lze přepnout na tabulku nebo graf zvětšit.
 
 Počet pravidel znamená unikátní ID, počet záznamů zahrnuje jednotlivé verze. Barevný pruh znázorňuje rozložení povinností **ve verzovaných záznamech**, nikoli úplnost standardu nebo závažnost chyb. Historické povinnosti se nepřevádějí na budoucí kódy. Číselné hodnoty a textové značky doplňují barvu. Standardy bez pravidel ve vybraném rozsahu se zobrazují zvlášť; cíle mimo katalog se neztrácejí, ale patří do „Ostatní / nezařazené cíle“.
 

@@ -8,7 +8,7 @@ import { metadataAreas, metadataStandards, targetStandardId } from "../../../pac
 import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts";
 import { changeProposalUrl } from "./contribute.ts";
 import { issueReferences, linkIssueMentions } from "./evidence.ts";
-import standardyMark from "../../../docs/assets/standardy.svg";
+import { RegistryNavigation } from "./RegistryNavigation.tsx";
 import { obligationLabel, obligationOptions } from "./obligation.ts";
 
 function routePath(): string {
@@ -66,6 +66,7 @@ function LoadingState({ state }: { state: { loading: boolean; error?: string } }
 }
 
 function Rules() {
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const state = useAsync(async () => {
     const [rules, sources, national, relations] = await Promise.all([api.rules(), api.standards(), api.nationalStandards(), api.relations()]);
     return { ...rules, sources: sources.data, national: national.data, relations: relations.data };
@@ -74,6 +75,7 @@ function Rules() {
   const [query, setQuery] = useState(initial.get("q") ?? "");
   const [filters, setFilters] = useState<Record<string, string>>(Object.fromEntries(["obligation", "source", "standard", "metadata_area", "national", "version", "category", "verification", "status", "object"].map((key) => [key, initial.get(key) ?? ""])));
   const rules = useMemo(() => filterRules(state.data?.data ?? [], query, filters, state.data?.relations ?? []), [state.data, query, filters]);
+  const activeFilterCount = Object.values(filters).filter(Boolean).length;
   const counts = state.data ? ruleCounts(state.data.data) : undefined;
   const standardCounts = useMemo(() => {
     const result = new Map<string, number>();
@@ -100,7 +102,8 @@ function Rules() {
     <LoadingState state={state} />
     {state.data && <>
       <label className="search-label">Hledat v celé databázi pravidel<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Název, element, požadavek, interpretace nebo zdroj…" /></label>
-      <div className="explorer-layout"><aside className="filter-panel"><div className="filter-heading"><h2>Filtry</h2><button className="text-button" onClick={clear}>Vymazat</button></div>
+      <button className="mobile-filter-toggle" aria-expanded={filtersOpen} aria-controls="rule-filters" onClick={() => setFiltersOpen((value) => !value)}>{filtersOpen ? "Skrýt filtry" : "Zobrazit filtry"}{activeFilterCount > 0 ? ` (${activeFilterCount} aktivní)` : ""}</button>
+      <div className="explorer-layout"><aside id="rule-filters" className={`filter-panel${filtersOpen ? " filter-panel--open" : ""}`}><div className="filter-heading"><h2>Filtry</h2><button className="text-button" onClick={clear}>Vymazat</button></div>
         {filter("national", "Standard NDK", state.data.national.map((item) => [item.id, localized(item.title)]))}
         {filter("version", "Verze NDK", values("version"))}
         {filter("metadata_area", "Oblast metadat", metadataAreas.map((area) => [area.id, `${area.label} (${metadataStandards.filter((standard) => standard.area === area.id).reduce((total, standard) => total + (standardCounts.get(standard.id) ?? 0), 0)})`]))}
@@ -227,5 +230,5 @@ export function App() {
   else if (standard?.[1]) page = <EntityDetail type="standards" id={decodeURIComponent(standard[1])} />;
   else if (path === "/national-standards" || path === "/national-standards/") page = <EntityList type="national-standards" />;
   else if (nationalStandard?.[1]) page = <EntityDetail type="national-standards" id={decodeURIComponent(nationalStandard[1])} />;
-  return <div className="app-shell"><header className="topbar"><Link to="/" className="brand"><img src={standardyMark} width="44" height="44" alt="" /><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/map" className={path === "/" || path.startsWith("/map") ? "active" : ""}>Mapa registru</Link><Link to="/rules" className={path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
+  return <div className="app-shell"><RegistryNavigation key={`navigation:${path}`} path={path} onNavigate={navigate} />{page}<footer><span>Verzovaná data v YAML</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
 }

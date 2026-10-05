@@ -2,7 +2,7 @@
 
 Registr propojuje požadavky národních standardů s původními specifikacemi, interpretacemi a doloženým chováním nástrojů. Tato sekce popisuje jeho současné pokrytí, datový model, API a postupy pro přispěvatele a vývojáře.
 
-[Otevřít registr pravidel](https://standardy.digitalizaty.cz/registry/rules){ .md-button }
+[Otevřít registr – domovskou mapu](https://standardy.digitalizaty.cz/registry/){ .md-button }
 [Swagger / API](https://standardy.digitalizaty.cz/api-docs/){ .md-button }
 
 ## Současný stav
