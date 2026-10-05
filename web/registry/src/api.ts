@@ -32,6 +32,7 @@ export interface Implementation {
   role: string;
   status: string;
   verification: string;
+  behaviour?: Record<string, string>;
   notes?: Record<string, string>;
 }
 
