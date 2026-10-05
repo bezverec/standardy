@@ -1,0 +1,128 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-AMD-FILES"
+title:
+  cs: "Reprezentace stránky ve vedlejším METS"
+description:
+  cs: "Požadavek pro vedlejší METS jedné stránky monografie v DMF 2.3; nikoli pro hlavní METS svazku."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-FILE"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-amd"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Pro MC, ALTO XML a OCR.TXT stránky existují samostatné záznamy file."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 3
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V jediné skupině ověřit evidenci MC, ALTO XML a OCR.TXT téže stránky a vazbu každého záznamu na jeho skutečný soubor; nestačí počet tří libovolných file."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 92
+      section: "7.6.2 fileSec vedlejšího záznamu amd_mets.xml"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "fileGrpType/file; fileType; FILECORE"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    examples:
+      -
+        id: "sip-amd-mets-files-inventory"
+        title:
+          cs: "Reprezentace stránky ve vedlejším METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:fileSec xmlns:mets="http://www.loc.gov/METS/">
+            <mets:fileGrp ID="MC_IMGGRP" USE="Images">
+              <mets:file ADMID="OBJ_002 MIX_002" CHECKSUM="2f6a5856f32ad60c5e68989beafbdef8" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:20" ID="mc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="3523405">
+                <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0001.jp2" xmlns:xlink="http://www.w3.org/1999/xlink">
+                </mets:FLocat>
+              </mets:file>
+            </mets:fileGrp>
+            <mets:fileGrp ID="UC_IMGGRP" USE="Images">
+              <mets:file CHECKSUM="ba19b107907aba0acbb50ff1f7816b9b" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:45:03" ID="uc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="1276972">
+                <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_75faba8d-c629-11f0-8950-12e8557df20e_0001.jp2" xmlns:xlink="http://www.w3.org/1999/xlink">
+                </mets:FLocat>
+              </mets:file>
+            </mets:fileGrp>
+            <mets:fileGrp ID="ALTOGRP" USE="Layout">
+              <mets:file ADMID="OBJ_003" CHECKSUM="a5cceecc68f28b235510803181545aab" CHECKSUMTYPE="MD5" CREATED="2026-06-25T09:09:42" ID="alto_0001" MIMETYPE="text/xml" SEQ="0" SIZE="5693">
+                <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml" xmlns:xlink="http://www.w3.org/1999/xlink">
+                </mets:FLocat>
+              </mets:file>
+            </mets:fileGrp>
+            <mets:fileGrp ID="TXTGRP" USE="Text">
+              <mets:file CHECKSUM="205489394d77b2821cf4ec999833e010" CHECKSUMTYPE="MD5" CREATED="2026-06-25T09:05:41" ID="txt_0001" MIMETYPE="text/plain" SEQ="0" SIZE="110">
+                <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_75faba8d-c629-11f0-8950-12e8557df20e_0001.txt" xmlns:xlink="http://www.w3.org/1999/xlink">
+                </mets:FLocat>
+              </mets:file>
+            </mets:fileGrp>
+          </mets:fileSec>
+        note:
+          cs: "Výřez obsahuje také UC a je rozdělen do čtyř skupin. Dokládá skutečný obsah vzoru, nikoli shodu se všemi pravidly této skupiny. Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:fileSec"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu a vykreslených stranách 92 a 98 DMF Monografie 2.3 a porovnán s XSD METS 1.9.1. Výřezy pocházejí z vedlejšího METS první stránky dodaného SIP; popsané nesoulady nejsou výsledkem spuštění externího validátoru."
+    interpretation:
+      cs: "Kardinalita vyjadřuje minimální trojici uvedených reprezentací v fileGrp. Z výčtu zde nevyvozujeme samostatný zákaz další reprezentace UC ani její povinnost. Toto pravidlo nehodnotí obsah OCR a neurčuje obecné výjimky z tvorby OCR. Povinnost je slovní požadavek DMF, proto není doplněn původní kód M/MA. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-FILE-GROUP"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-FILE-ATTRIBUTES"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-ADMID"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-FPTR-FILEID"

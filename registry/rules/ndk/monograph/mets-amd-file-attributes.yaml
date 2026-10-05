@@ -1,0 +1,131 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-AMD-FILE-ATTRIBUTES"
+title:
+  cs: "Atributy reprezentací ve vedlejším METS"
+description:
+  cs: "Požadavek pro vedlejší METS jedné stránky monografie v DMF 2.3; nikoli pro hlavní METS svazku."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-FILE"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-amd"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Atributy file pro MC, ALTO a OCR odpovídají požadavkům příslušných reprezentací v hlavním METS."
+    requirement:
+      presence: "required"
+      validations:
+        -
+          type: "custom"
+          expression: "U každého file pro MC, ALTO nebo OCR ověřit ID, MIMETYPE, SIZE, CHECKSUMTYPE, CHECKSUM a CREATED. MIMETYPE musí být pro MC image/jp2, pro ALTO text/xml a pro OCR text/plain; CHECKSUMTYPE = MD5. SIZE porovnat s počtem bajtů a CHECKSUM s MD5 souboru; CREATED má obsahovat datum a čas na sekundy. U MC navíc vyžadovat SEQ typu xs:int. ID musí být platné a jedinečné v celém XML."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "ALTO"
+            - "OCR"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 92
+      section: "7.6.2 fileSec vedlejšího záznamu amd_mets.xml"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "fileGrpType/file; fileType; FILECORE"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "90–91"
+        section: "7.6.1 Atributy reprezentací v hlavním METS"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    examples:
+      -
+        id: "sip-amd-mets-file-attributes-mc"
+        title:
+          cs: "Atributy reprezentací ve vedlejším METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:file ADMID="OBJ_002 MIX_002" CHECKSUM="2f6a5856f32ad60c5e68989beafbdef8" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:20" ID="mc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="3523405" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0001.jp2" xmlns:xlink="http://www.w3.org/1999/xlink">
+            </mets:FLocat>
+          </mets:file>
+        note:
+          cs: "Záznam MC obsahuje atributy souboru, ale jeho ADMID míří na metadata PS. Tato známá chyba není ve výřezu opravena. Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:fileSec/mets:fileGrp[@ID='MC_IMGGRP']/mets:file"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu a vykreslených stranách 92 a 98 DMF Monografie 2.3 a porovnán s XSD METS 1.9.1. Výřezy pocházejí z vedlejšího METS první stránky dodaného SIP; popsané nesoulady nejsou výsledkem spuštění externího validátoru."
+    interpretation:
+      cs: "Jde o převzetí atributů podle typu reprezentace, nikoli podle názvu fileGrp. Pravidla hlavního METS nadále platí jen v hlavním dokumentu; propojení related_to je srovnání požadavků, ne spuštění těchto pravidel v jiném kontextu. U ALTO/OCR § 7.6.1 SEQ nevyžaduje; případné SEQ=0 ve vzoru není povinnost. Odkaz na atributy sám o sobě nepředepisuje další fileGrp nebo ADMID. Povinnost je slovní požadavek DMF, proto není doplněn původní kód M/MA. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-FILES"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-ADMID"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILE-ID"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILE-MIMETYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILE-SIZE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-CHECKSUM"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-CHECKSUM-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILE-CREATED"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILE-SEQ"

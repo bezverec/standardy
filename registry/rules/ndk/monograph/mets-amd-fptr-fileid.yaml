@@ -1,0 +1,127 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-AMD-FPTR-FILEID"
+title:
+  cs: "Odkazy stránky ve vedlejším METS"
+description:
+  cs: "Požadavek pro vedlejší METS jedné stránky monografie v DMF 2.3; nikoli pro hlavní METS svazku."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-FPTR-FILEID"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-amd"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Div MONOGRAPH_PAGE odkazuje pomocí fptr/@FILEID na evidované soubory MC, ALTO XML a OCR.TXT téže stránky."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "V div MONOGRAPH_PAGE ověřit přímé fptr pro MC, ALTO a OCR; každé FILEID musí ukazovat na správný file v fileSec téhož vedlejšího METS, ne na ID z hlavního METS nebo jiný druh uzlu. Nestačí existence tří libovolných odkazů."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "structmap_type"
+          operator: "equals"
+          value: "PHYSICAL"
+        -
+          field: "structural_level"
+          operator: "equals"
+          value: "page"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 98
+      section: "7.7.2 structMap vedlejšího záznamu METS (amd_mets.xml)"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "divType/fptr/@FILEID"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 93
+        section: "7.7.1.1 Správný název atributu FILEID"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    examples:
+      -
+        id: "sip-amd-mets-fptr-fileid-map"
+        title:
+          cs: "Odkazy stránky ve vedlejším METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:structMap LABEL="Physical_Structure" TYPE="PHYSICAL" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:div TYPE="MONOGRAPH_PAGE">
+              <mets:fptr FILEID="mc_0001" />
+              <mets:fptr FILEID="uc_0001" />
+              <mets:fptr FILEID="alto_0001" />
+              <mets:fptr FILEID="txt_0001" />
+            </mets:div>
+          </mets:structMap>
+        note:
+          cs: "Zdroj má čtyři fptr, navíc také UC. Tři požadované reprezentace zůstávají rozlišeny; z ukázky neodvozujeme povinnost odkazu na UC. Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:structMap"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu a vykreslených stranách 92 a 98 DMF Monografie 2.3 a porovnán s XSD METS 1.9.1. Výřezy pocházejí z vedlejšího METS první stránky dodaného SIP; popsané nesoulady nejsou výsledkem spuštění externího validátoru."
+    interpretation:
+      cs: "Kardinalita 1–1 je pro atribut FILEID jednotlivého přímého fptr, ne počet fptr v div. Na s. 98 je vytištěno FILEI; jde o překlep názvu atributu, správně FILEID podle XSD a odpovídajícího popisu vazeb na s. 93. Nezakládáme entitu FILEI. Odkaz na amd_mets.xml samotný, požadovaný v hlavním METS, se sem nepřenáší. Nad rámec tří uvedených reprezentací zde bez další opory nevyvozujeme zákaz UC. Povinnost je slovní požadavek DMF, proto není doplněn původní kód M/MA. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+    discrepancies:
+      -
+        cs: "DMF 2.3, s. 98, § 7.7.2 tiskne FILEI. XSD METS 1.9.1 i DMF na s. 93 definují FILEID; ukázkový SIP také používá FILEID. Přepis pravidla používá doložený název FILEID a odlišnost zdroje zachovává v této poznámce."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-FILES"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-PAGE-DIV"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILE-ID"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FPTR-FILEID"

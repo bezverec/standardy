@@ -7,7 +7,7 @@ Registr propojuje požadavky národních standardů s původními specifikacemi,
 
 ## Současný stav
 
-K 5. 10. 2026 registr obsahuje **45 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml a 14 pro soubory a jejich vazby v hlavním METS. Nejde o úplné pokrytí monografií ani o hotový validační engine.
+K 5. 10. 2026 registr obsahuje **53 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 14 pro soubory a jejich vazby v hlavním METS a osm pro vedlejší METS. Nejde o úplné pokrytí monografií ani o hotový validační engine.
 
 | Skupina | Počet pravidel | Obsah a podklady |
 |---|---:|---|
@@ -17,6 +17,7 @@ K 5. 10. 2026 registr obsahuje **45 pravidel pro DMF Monografie 2.3**: 13 pro te
 | Barevné kódování | 4 | Barevný prostor, počet bitů na vzorek, jejich jednotka a počet složek pixelu |
 | info.xml | 18 | [Informace o SIP, identifikátory, seznam souborů a checksum](info-xml.md); včetně rozdílů DMF a XSD 1.1 |
 | METS – soubory a vazby | 14 | [fileSec, skupiny, atributy souborů, FLocat a fyzické odkazy FILEID](mets-files.md); oddělení DMF 2.3 od METS 1.9.1 |
+| Vedlejší METS | 8 | [Inventář stránky, ADMID a fyzická mapa](mets-amd.md); včetně doložených nesouladů ve vzoru |
 
 Deset pravidel rozměrů, vzorkování a barevného kódování je popsáno v [rozboru obrazových metadat MIX](mix-image-characteristics.md), včetně stránek DMF, XSD typů, podmínek a mezí ověření. Frekvence X/Y mají MA s konkrétní podmínkou fyzikální jednotky `in.` nebo `cm`. Nová skupina METS zachycuje slovní požadavky bez domýšlení původního kódu povinnosti.
 
@@ -33,6 +34,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Rozměry, vzorkování a barva v MIX](mix-image-characteristics.md) — metodika přepisu nové skupiny.
 - [Informace o balíčku info.xml](info-xml.md) — povinnosti M/MA/R/O, vazby na soubory a rozpory DMF/XSD.
 - [Soubory a jejich vazby v METS](mets-files.md) — hlavní METS, inventář souborů a fyzická mapa.
+- [Vedlejší METS a vazby na technická metadata](mets-amd.md) — jediná skupina, správné cíle ADMID a MONOGRAPH_PAGE.
 
 ## Rozhraní registru a API
 

@@ -7,7 +7,7 @@ Skupina 14 pravidel `NDK-MONO-METS-*` popisuje **hlavní METS monografie podle D
 - [DMF Monografie 2.3](https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf): s. 5 vybírá METS 1.9.1; s. 90–91, § 7.6.1, popisují hlavní fileSec; s. 92–93, § 7.7.1.1, fyzickou mapu. Relevantní požadavky byly ověřeny také ve vykresleném PDF.
 - [Oficiální XSD METS 1.9.1](https://www.loc.gov/standards/mets/version191/mets.xsd): oddělená evidence obecných elementů a atributů. Nejde o nejnovější verzi METS ani přechod na METS 2.
 
-Tato etapa **nezahrnuje** fileSec vedlejšího `amd_mets.xml` (§ 7.6.2), jeho vazby ADMID, úplnou fyzickou strukturu, logickou mapu, odkazy do bloků ALTO ani structLink. Pravidla mají podmínku `document_role = main_mets`; `FILEID` navíc fyzickou mapu a úroveň stránky. `SEQ` se týká jen skupin MC, UC a technických METS.
+Tato skupina **nezahrnuje** úplnou fyzickou strukturu, logickou mapu, odkazy do bloků ALTO ani structLink. FileSec vedlejšího `amd_mets.xml`, jeho ADMID a mapu popisuje [samostatná navazující skupina](mets-amd.md). Pravidla zde mají podmínku `document_role = main_mets`; `FILEID` navíc fyzickou mapu a úroveň stránky. `SEQ` se týká jen skupin MC, UC a technických METS.
 
 ## Přehled pravidel
 

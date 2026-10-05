@@ -7,7 +7,7 @@ import { openApiDocument } from "../packages/registry-core/src/openapi.ts";
 const root = path.resolve(import.meta.dirname, "..");
 const documents = await loadRegistry(root);
 const registry = compileRegistry(documents);
-const rules = registry.rule_versions.filter((rule) => rule.rule_id.startsWith("NDK-MONO-METS-"));
+const rules = registry.rule_versions.filter((rule) => rule.category === "structure/mets-files");
 const rule = (suffix: string) => rules.find((item) => item.rule_id === `NDK-MONO-METS-${suffix}`)!;
 
 describe("main METS file inventory, DMF Monografie 2.3", () => {

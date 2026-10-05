@@ -42,7 +42,9 @@ describe("metadata taxonomy", () => {
   it("matches client and API filters, combinations, pagination and empty results", async () => {
     for (const [filters, count] of [
       [{ metadata_area: "administrative-technical" }, 13], [{ metadata_area: "package" }, 18],
-      [{ metadata_area: "structural" }, 14], [{ standard: "METS" }, 14],
+      [{ metadata_area: "structural" }, 22], [{ standard: "METS" }, 22],
+      [{ standard: "METS", category: "structure/mets-files" }, 14],
+      [{ standard: "METS", category: "structure/mets-amd" }, 8],
       [{ metadata_area: "descriptive" }, 0], [{ metadata_area: "administrative-technical", standard: "MIX" }, 13],
       [{ metadata_area: "package", standard: "MIX" }, 0], [{ standard: "NDK-INFO" }, 18],
     ] as Array<[Record<string, string>, number]>) {

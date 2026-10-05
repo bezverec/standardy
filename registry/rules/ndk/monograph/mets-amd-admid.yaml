@@ -1,0 +1,241 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-AMD-ADMID"
+title:
+  cs: "Vazba reprezentace na správná technická metadata"
+description:
+  cs: "Požadavek pro vedlejší METS jedné stránky monografie v DMF 2.3; nikoli pro hlavní METS svazku."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-FILE-ADMID"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-amd"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "MC a ALTO s vlastním PREMIS Object nebo MIX mají v file/@ADMID odkazy na techMD popisující právě tuto reprezentaci."
+    requirement:
+      presence: "conditional"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Pro MC a ALTO s vlastním záznamem PREMIS Object nebo MIX vyžadovat neprázdné ADMID. Rozdělit hodnotu jako xs:IDREFS na jednotlivá ID, dohledat příslušné techMD v témže METS a ověřit, že jejich obsah popisuje tentýž soubor a reprezentaci. Nestačí existence ID nebo shodný počet tokenů; ověřit identifikaci objektu a podle dostupnosti formát, velikost či fixity."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "ALTO"
+        -
+          field: "has_own_premis_object_or_mix"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 92
+      section: "7.6.2 fileSec vedlejšího záznamu amd_mets.xml"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "fileType/@ADMID (xs:IDREFS)"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    examples:
+      -
+        id: "sip-amd-mets-admid-mc"
+        title:
+          cs: "Vazba reprezentace na správná technická metadata"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:file ADMID="OBJ_002 MIX_002" CHECKSUM="2f6a5856f32ad60c5e68989beafbdef8" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:20" ID="mc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="3523405" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0001.jp2" xmlns:xlink="http://www.w3.org/1999/xlink">
+            </mets:FLocat>
+          </mets:file>
+        note:
+          cs: "NESOULAD: ADMID=\"OBJ_002 MIX_002\" u MC odkazuje na PS. Další výřezy ukazují ALTO odkazující na OBJ_003 (MC) i identifikátory cílových bloků. Hodnoty ponecháváme přesně ze zdroje. Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:fileSec/mets:fileGrp[@ID='MC_IMGGRP']/mets:file"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-amd-mets-admid-alto"
+        title:
+          cs: "ALTO s odkazem na OBJ_003"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:file ADMID="OBJ_003" CHECKSUM="a5cceecc68f28b235510803181545aab" CHECKSUMTYPE="MD5" CREATED="2026-06-25T09:09:42" ID="alto_0001" MIMETYPE="text/xml" SEQ="0" SIZE="5693" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml" xmlns:xlink="http://www.w3.org/1999/xlink">
+            </mets:FLocat>
+          </mets:file>
+        note:
+          cs: "Výřez dokládá cílovou reprezentaci nebo nesprávný odkaz uvedený v rozporu výše.  Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:fileSec/mets:fileGrp[@ID='ALTOGRP']/mets:file"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-amd-mets-admid-premisPS"
+        title:
+          cs: "Identifikátor v OBJ_002 – pracovní kopie PS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:objectIdentifier xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:objectIdentifierType>file</premis:objectIdentifierType>
+            <premis:objectIdentifierValue>PS_1_00010003_2R</premis:objectIdentifierValue>
+          </premis:objectIdentifier>
+        note:
+          cs: "Výřez dokládá cílovou reprezentaci nebo nesprávný odkaz uvedený v rozporu výše.  Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_002']/mets:mdWrap/mets:xmlData/premis:object/premis:objectIdentifier"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-amd-mets-admid-premisMC"
+        title:
+          cs: "Identifikátor v OBJ_003 – archivní kopie MC"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:objectIdentifier xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:objectIdentifierType>file</premis:objectIdentifierType>
+            <premis:objectIdentifierValue>MC_1_00010003_2R</premis:objectIdentifierValue>
+          </premis:objectIdentifier>
+        note:
+          cs: "Výřez dokládá cílovou reprezentaci nebo nesprávný odkaz uvedený v rozporu výše.  Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_003']/mets:mdWrap/mets:xmlData/premis:object/premis:objectIdentifier"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-amd-mets-admid-mixPS"
+        title:
+          cs: "MIX_002 – identifikace a formát PS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mix:BasicDigitalObjectInformation xmlns:mix="http://www.loc.gov/mix/v20">
+            <mix:ObjectIdentifier>
+              <mix:objectIdentifierType>JHOVE</mix:objectIdentifierType>
+              <mix:objectIdentifierValue>PS_1_00010003_2R</mix:objectIdentifierValue>
+            </mix:ObjectIdentifier>
+            <mix:FormatDesignation>
+              <mix:formatName>image/tiff</mix:formatName>
+              <mix:formatVersion>6.0</mix:formatVersion>
+            </mix:FormatDesignation>
+            <mix:byteOrder>little endian</mix:byteOrder>
+            <mix:Compression>
+              <mix:compressionScheme>Uncompressed</mix:compressionScheme>
+            </mix:Compression>
+          </mix:BasicDigitalObjectInformation>
+        note:
+          cs: "Výřez dokládá cílovou reprezentaci nebo nesprávný odkaz uvedený v rozporu výše.  Výřez je zachován ze zdroje; nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Vedlejší METS první stránky, amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='MIX_002']/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+          premis: "info:lc/xmlns/premis-v2"
+          mix: "http://www.loc.gov/mix/v20"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu a vykreslených stranách 92 a 98 DMF Monografie 2.3 a porovnán s XSD METS 1.9.1. Výřezy pocházejí z vedlejšího METS první stránky dodaného SIP; popsané nesoulady nejsou výsledkem spuštění externího validátoru."
+    interpretation:
+      cs: "Kardinalita 1–1 platí pro atribut, nikoli pro počet ID v jeho hodnotě. Obecné METS má ADMID nepovinné a připouští i jiné sekce administrativních metadat; DMF zde požaduje techMD správné reprezentace. Podmínka se nesmí nahradit pouhou existencí @ADMID, jinak by chybějící atribut nemohl být zjištěn. Ze vzoru ani textu neodvozujeme univerzální názvy OBJ_003/MIX_003 nebo povinný počet dvou tokenů. Pravidlo se nepřenáší na ADMID hlavního stránkového div. Povinnost je slovní požadavek DMF, proto není doplněn původní kód M/MA. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+    discrepancies:
+      -
+        cs: "Ve zdrojovém vedlejším METS první stránky mc_0001 používá OBJ_002 MIX_002, jejichž identifikátory označují PS; MIX_002 uvádí image/tiff. alto_0001 odkazuje na OBJ_003 s identifikátorem MC. Jde o sémanticky nesprávné odkazy na existující ID, nikoli o důkaz poškození obrazových souborů nebo chování konkrétního validátoru."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-FILES"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-FILE-ATTRIBUTES"
+  -
+    type: "related_to"
+    target: "METS-TECHMD"
+  -
+    type: "related_to"
+    target: "MIX"

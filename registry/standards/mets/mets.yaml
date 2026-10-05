@@ -292,17 +292,100 @@ entities:
     version: "1.9.1"
     name: "fptr/@FILEID"
     title:
-      cs: "Vazby fyzické stránky na soubory"
+      cs: "Odkaz strukturálního uzlu na soubor"
     definition:
-      cs: "fptr/@FILEID; umístění /mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div/mets:fptr/@FILEID. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+      cs: "Volitelný atribut xs:IDREF v divType/fptr odkazující na file. Fptr může místo něj použít area/par/seq. Obecný METS jej neomezuje na fyzickou mapu ani na konkrétní hloubku div; omezení NDK jsou v samostatných pravidlech hlavního a vedlejšího METS."
     status: "normative"
     source:
       document: "METS XML Schema"
       version: "1.9.1"
       page: null
-      section: "/mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div/mets:fptr/@FILEID"
+      section: "divType/fptr/@FILEID"
       url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
     verification:
       status: "verified"
       date: "2026-10-05"
       reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE-ADMID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@ADMID"
+    title:
+      cs: "Odkazy souboru na administrativní metadata"
+    definition:
+      cs: "Volitelný xs:IDREFS v fileType odkazuje na sekce administrativních metadat k danému souboru; povinnost a zúžení na techMD v NDK nejsou vlastností obecného XSD."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "fileType/@ADMID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, typ a kontext ověřeny v oficiálním XSD METS 1.9.1; omezení DMF jsou vedena odděleně."
+  -
+    id: "METS-TECHMD"
+    type: "element"
+    version: "1.9.1"
+    name: "techMD"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Sekce technických metadat"
+    definition:
+      cs: "TechMD v amdSec může obsahovat nebo odkazovat na technická metadata součásti objektu. AmdSecType dovoluje 0–n techMD typu mdSecType."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "amdSecType/techMD; mdSecType"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, typ a kontext ověřeny v oficiálním XSD METS 1.9.1; omezení DMF jsou vedena odděleně."
+  -
+    id: "METS-STRUCTMAP"
+    type: "element"
+    version: "1.9.1"
+    name: "structMap"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Strukturální mapa"
+    definition:
+      cs: "MetsType vyžaduje jednu nebo více structMap. Typ structMapType obsahuje jeden kořenový div; TYPE je obecně nepovinný řetězec bez pevného číselníku."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/structMap; structMapType"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, typ a kontext ověřeny v oficiálním XSD METS 1.9.1; omezení DMF jsou vedena odděleně."
+  -
+    id: "METS-DIV"
+    type: "element"
+    version: "1.9.1"
+    name: "div"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Strukturální uzel"
+    definition:
+      cs: "DivType umožňuje vnořené div i odkazy fptr. TYPE je nepovinný řetězec bez pevného číselníku; MONOGRAPH_PAGE není obecné omezení XSD."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "structMapType/div; divType"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, typ a kontext ověřeny v oficiálním XSD METS 1.9.1; omezení DMF jsou vedena odděleně."

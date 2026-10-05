@@ -136,6 +136,7 @@ const labels: Record<string, string> = { normative: "Normativní", disputed: "Sp
 Object.assign(labels, {
   "metadata/info": "Informace o balíčku · info.xml",
   "structure/mets-files": "METS · soubory a jejich vazby",
+  "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/dimensions": "Technická metadata · Rozměry obrazu",
   "technical/sampling": "Technická metadata · Vzorkování",
   "technical/color": "Technická metadata · Barevné kódování",

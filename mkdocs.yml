@@ -78,4 +78,5 @@ nav:
       - Rozměry, vzorkování a barva v MIX: development/mix-image-characteristics.md
       - Informace o balíčku info.xml: development/info-xml.md
       - Soubory a jejich vazby v METS: development/mets-files.md
+      - Vedlejší METS a technická metadata: development/mets-amd.md
       - Lokální vývoj: development/local-development.md

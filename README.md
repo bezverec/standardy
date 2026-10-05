@@ -39,7 +39,7 @@ Swagger umožňuje prohlédnout datové typy a vyzkoušet GET operace. Jeho tla�
 - Mapu registru s tematickými dlaždicemi, počty pravidel a verzovaných záznamů, rozložením povinností a přechodem do filtrovaného seznamu.
 - Sloupcový graf, radiální síť s nastavitelným pořadím vrstev a tabulku vazeb. Sdílejí filtry vztahů i kategorií; graf nabízí zvýraznění sousedů, přiblížení, posun a celou obrazovku. Uspořádání se pamatuje v prohlížeči; viz [kategorie a graf vztahů](docs/development/graph-and-categories.md).
 - Návrhy změn přes GitHub a odkazy na související diskuse.
-- [XML ukázky ze vzorového SIP](docs/development/xml-examples.md) u 31 pravidel, s kopírováním, XPath a otiskem zdrojového souboru. Jde o doložené výřezy, nikoli univerzální šablony nebo potvrzení validity balíčku.
+- [43 XML ukázek ze vzorového SIP](docs/development/xml-examples.md) u 39 pravidel, s kopírováním, XPath a otiskem zdrojového souboru. Jde o doložené výřezy, nikoli univerzální šablony nebo potvrzení validity balíčku; některé výslovně dokládají nesoulad se standardem.
 
 ### Jak číst pravidlo
 
@@ -59,7 +59,7 @@ MA (`mandatory_if_available`) a RA (`recommended_if_available`) rozlišují dost
 
 ### Zpracované skupiny: MIX a info.xml
 
-Registr obsahuje 45 pravidel pro DMF Monografie 2.3: 13 pro MIX, 18 pro `info.xml` a 14 pro soubory a vazby v hlavním METS. [Obrazová metadata MIX](docs/development/mix-image-characteristics.md) zahrnují MC a PS, včetně podmíněné povinnosti MA u frekvencí X/Y. [Skupina info.xml](docs/development/info-xml.md) popisuje údaje o SIP, identifikátory, seznam souborů a MD5 odkaz; zachovává původní kódy povinností a rozdíly DMF/XSD 1.1. [Skupina METS](docs/development/mets-files.md) pokrývá fileSec, skupiny, atributy souborů, FLocat a fyzické odkazy FILEID. Odděluje požadavky DMF od obecného METS 1.9.1 a slovní povinnosti označuje bez domýšlení kódu M. Implementace nástrojů pro tyto nové skupiny zatím ověřeny nebyly.
+Registr obsahuje 53 pravidel pro DMF Monografie 2.3: 13 pro MIX, 18 pro `info.xml`, 14 pro hlavní METS a osm pro vedlejší METS. [Obrazová metadata MIX](docs/development/mix-image-characteristics.md) zahrnují MC a PS, včetně podmíněné povinnosti MA u frekvencí X/Y. [Skupina info.xml](docs/development/info-xml.md) popisuje údaje o SIP, identifikátory, seznam souborů a MD5 odkaz; zachovává původní kódy povinností a rozdíly DMF/XSD 1.1. [Hlavní METS](docs/development/mets-files.md) pokrývá fileSec, skupiny, atributy souborů, FLocat a fyzické odkazy FILEID. [Vedlejší METS](docs/development/mets-amd.md) doplňuje inventář stránky, sémantické vazby ADMID a fyzickou mapu, včetně doložených nesouladů vzorového SIP. Požadavky DMF jsou oddělené od obecného METS 1.9.1 a slovní povinnosti nemají domyšlený kód M. Implementace nástrojů pro tyto nové skupiny zatím ověřeny nebyly.
 
 První zpracovaná skupina zahrnuje `iccProfileName`, `iccProfileVersion` a `iccProfileURI` podle DMF Monografie 2.3. Registr rozlišuje číselnou verzi v hlavičce ICC od sporného významu stejně pojmenovaného prvku MIX a dokumentuje mapování v konkrétních verzích JHOVE, jpylyzeru, ProArcu a validátoru.
 
