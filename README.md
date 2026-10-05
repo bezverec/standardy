@@ -13,6 +13,8 @@ Autoritativním zdrojem strukturovaných dat je vždy Git/YAML v adresáři [`re
 
 Interaktivní registr je dostupný na [`/registry/`](https://standardy.digitalizaty.cz/registry/) a API na `/api/v1/`. První odborně ověřená skupina propojuje trojici `iccProfileName`, `iccProfileVersion` a `iccProfileURI` v MIX s požadavky DMF Monografie 2.3. U verze dokumentuje také známou chybu příkladu v DMF/MIX a odděluje ji od dosud neověřeného chování implementací.
 
+Pravidla lze hledat bez diakritiky a filtrovat podle národního i zdrojového standardu, verze, typu dokumentu, kategorie, závažnosti a stavu ověření. Dotaz a filtry jsou součástí URL. Klikací graf propojuje pravidla, prvky standardů a jejich zdroje; detail zdrojového standardu nabízí související pravidla. NISO Z39.87 je evidován jako samostatný zdroj, jeho nově doplněné položky zatím zůstávají neověřené.
+
 ## Vývoj
 
 ```bash

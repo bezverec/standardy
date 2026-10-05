@@ -89,3 +89,7 @@ relations:
     target: NDK-MONO-MIX-ICC-PROFILE-NAME
     note:
       cs: URI a jméno jsou doplňkové způsoby identifikace téhož ICC profilu.
+  - type: related_to
+    target: NISO-Z3987-ICC-PROFILE-URI
+    note:
+      cs: Odkaz na položku datového slovníku citovanou v references; nejde o potvrzení bezchybnosti příkladů.
