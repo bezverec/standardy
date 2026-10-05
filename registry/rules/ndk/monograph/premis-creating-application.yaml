@@ -1,0 +1,179 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-CREATING-APPLICATION"
+title:
+  cs: "Aplikace, v níž soubor vznikl"
+description:
+  cs: "Vznik a ochrana souborových objektů MC, PS a ALTO podle DMF Monografie 2.3; obecné schéma PREMIS 2.2 je evidováno samostatně."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-CREATING-APPLICATION"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-provenance"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Každý blok charakteristik obsahuje údaje o aplikaci nebo zařízení, které vytvořilo popisovaný soubor."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V každém objectCharacteristics požadovat alespoň jeden creatingApplication; v každém výskytu ověřit název, verzi a datum vytvoření popisovaného souboru. Nezaměňovat aplikaci vzniku s nástrojem, který soubor pouze validoval nebo spočítal checksum."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "PS"
+            - "ALTO"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 78
+      section: "7.5.1 PREMIS Object — objectCharacteristics/creatingApplication"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "objectCharacteristicsComplexType/creatingApplication (0–n); creatingApplicationComplexType"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    examples:
+      -
+        id: "sip-premis-creating-application-obj_003"
+        title:
+          cs: "Aplikace, v níž soubor vznikl — MC (OBJ_003)"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:creatingApplication xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:creatingApplicationName>Kakadu</premis:creatingApplicationName>
+            <premis:creatingApplicationVersion>8.6.1</premis:creatingApplicationVersion>
+            <premis:dateCreatedByApplication>2026-06-25T08:41:21</premis:dateCreatedByApplication>
+          </premis:creatingApplication>
+        note:
+          cs: "Přesný výřez z objektu OBJ_003 první stránky dodaného SIP, vybraného podle identity reprezentace, nikoli podle chybného ADMID. Údaje popisují tento vzor; neprokazují povinnou aplikaci, správnost časové osy ani obecné chování nástroje. Nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_003']/mets:mdWrap/mets:xmlData/premis:object/premis:objectCharacteristics/premis:creatingApplication"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-creating-application-obj_002"
+        title:
+          cs: "Aplikace, v níž soubor vznikl — PS (OBJ_002)"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:creatingApplication xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:creatingApplicationName>Book Pavilion 6.0.1.0</premis:creatingApplicationName>
+            <premis:creatingApplicationVersion>6.0.1.0</premis:creatingApplicationVersion>
+            <premis:dateCreatedByApplication>2026-04-24T08:06:14</premis:dateCreatedByApplication>
+          </premis:creatingApplication>
+        note:
+          cs: "Přesný výřez z objektu OBJ_002 první stránky dodaného SIP, vybraného podle identity reprezentace, nikoli podle chybného ADMID. Údaje popisují tento vzor; neprokazují povinnou aplikaci, správnost časové osy ani obecné chování nástroje. Nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_002']/mets:mdWrap/mets:xmlData/premis:object/premis:objectCharacteristics/premis:creatingApplication"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-creating-application-obj_004"
+        title:
+          cs: "Aplikace, v níž soubor vznikl — ALTO (OBJ_004)"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:creatingApplication xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:creatingApplicationName>ABBYY FineReader Server</premis:creatingApplicationName>
+            <premis:creatingApplicationVersion>14.0.4.682</premis:creatingApplicationVersion>
+            <premis:dateCreatedByApplication>2026-06-25T09:08:30</premis:dateCreatedByApplication>
+          </premis:creatingApplication>
+        note:
+          cs: "Přesný výřez z objektu OBJ_004 první stránky dodaného SIP, vybraného podle identity reprezentace, nikoli podle chybného ADMID. Údaje popisují tento vzor; neprokazují povinnou aplikaci, správnost časové osy ani obecné chování nástroje. Nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_004']/mets:mdWrap/mets:xmlData/premis:object/premis:objectCharacteristics/premis:creatingApplication"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených stranách 77–78 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Ukázky včetně originalName ověřeny v objektech první stránky dodaného SIP; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "DMF požaduje popsat skener, software vytvářející ALTO a software či kodek vytvářející MC podle role souboru. Zmínka XML/TXT v popisu nerozšiřuje použití PREMIS Object na OCR.TXT, které obecný rozsah § 7.5.1 vylučuje. XSD vyžaduje alespoň některý údaj v bloku; DMF požaduje jméno, verzi i datum. Blok lze opakovat, není předepsána jediná aplikace pro celý SIP. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód M je převzat z DMF. file_role ALTO odpovídá označení XML v tabulce; OCR.TXT a UC jsou mimo rozsah. premis_object_type označuje rozlišený typ file v namespace PREMIS, nezávisle na XML prefixu. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-CREATING-APPLICATION-NAME"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-CREATING-APPLICATION-VERSION"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-CREATION-DATETIME"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-OBJECT-CHARACTERISTICS"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-DIGEST-ORIGINATOR"

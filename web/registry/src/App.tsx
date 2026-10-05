@@ -138,6 +138,7 @@ Object.assign(labels, {
   "structure/mets-files": "METS · soubory a jejich vazby",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",
+  "technical/premis-provenance": "PREMIS · vznik a ochrana souboru",
   "technical/dimensions": "Technická metadata · Rozměry obrazu",
   "technical/sampling": "Technická metadata · Vzorkování",
   "technical/color": "Technická metadata · Barevné kódování",

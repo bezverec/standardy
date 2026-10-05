@@ -129,6 +129,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-CREATING-APPLICATION"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-COMPOSITION-LEVEL"
   -
     type: "related_to"

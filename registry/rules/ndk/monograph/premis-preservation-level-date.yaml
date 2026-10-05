@@ -1,0 +1,112 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-PRESERVATION-LEVEL-DATE"
+title:
+  cs: "Datum přiřazení úrovně ochrany"
+description:
+  cs: "Vznik a ochrana souborových objektů MC, PS a ALTO podle DMF Monografie 2.3; obecné schéma PREMIS 2.2 je evidováno samostatně."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-PRESERVATION-LEVEL-DATE"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-provenance"
+    obligation: "recommended"
+    obligation_code: "R"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Doporučuje se uvést datum přiřazení úrovně ochrany ve tvaru RRRR-MM-DD."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Doporučit nejvýše jedno datum v každém preservationLevel. Je-li přítomno, ověřit skutečné kalendářní datum ve tvaru RRRR-MM-DD a význam přiřazení úrovně ochrany; nepřijímat samotný rok nebo čas vytvoření jako náhradu."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "PS"
+            - "ALTO"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 77
+      section: "7.5.1 PREMIS Object — preservationLevel/preservationLevelDateAssigned"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "preservationLevelComplexType/preservationLevelDateAssigned (0–1); edtfSimpleType"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    examples:
+      -
+        id: "sip-premis-preservation-level-date-obj_003"
+        title:
+          cs: "Datum přiřazení úrovně ochrany — MC (OBJ_003)"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:preservationLevelDateAssigned xmlns:premis="info:lc/xmlns/premis-v2">2026-06-29</premis:preservationLevelDateAssigned>
+        note:
+          cs: "Přesný výřez z objektu OBJ_003 první stránky dodaného SIP, vybraného podle identity reprezentace, nikoli podle chybného ADMID. Údaje popisují tento vzor; neprokazují povinnou aplikaci, správnost časové osy ani obecné chování nástroje. Nejde o potvrzení validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_003']/mets:mdWrap/mets:xmlData/premis:object/premis:preservationLevel/premis:preservationLevelDateAssigned"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených stranách 77–78 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Ukázky včetně originalName ověřeny v objektech první stránky dodaného SIP; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "DMF zde uvádí R, nikoli M. Chybějící datum proto není porušením povinnosti M. Pokud je uvedeno, má být platným kalendářním datem na úroveň dne; nejde o datum vytvoření souboru. Obecné edtfSimpleType připouští více podob, které samy nezaručují soulad s přesnějším zápisem DMF. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód R je převzat z DMF. file_role ALTO odpovídá označení XML v tabulce; OCR.TXT a UC jsou mimo rozsah. premis_object_type označuje rozlišený typ file v namespace PREMIS, nezávisle na XML prefixu. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-PRESERVATION-LEVEL"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-CREATION-DATETIME"

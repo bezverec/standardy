@@ -6,7 +6,7 @@ Skupina obsahuje **17 pravidel DMF Monografie 2.3** pro souborové objekty **PRE
 
 Zdrojem je [DMF Monografie 2.3](https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf), § 7.5.1, s. 76–78; legenda povinností je na s. 75. Verze PREMIS 2.2 je uvedena v přehledu standardů na s. 5. Obecná struktura byla porovnána s [oficiálním XSD PREMIS 2.2](https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd), nikoli s novějším PREMIS 3.
 
-Pravidla se vztahují na monografii, vedlejší METS a reprezentace MC, PS a ALTO. Označení XML v tabulce DMF zde normalizujeme na roli ALTO; nejde o libovolný XML soubor. OCR.TXT a UC jsou z této skupiny vyloučeny. Další reprezentace zmíněné v DMF ani ostatní části PREMIS Object, Event a Agent zatím nejsou touto skupinou zpracovány.
+Pravidla se vztahují na monografii, vedlejší METS a reprezentace MC, PS a ALTO. Označení XML v tabulce DMF zde normalizujeme na roli ALTO; nejde o libovolný XML soubor. OCR.TXT a UC jsou z této skupiny vyloučeny. [Vznik, původní název a úroveň ochrany souboru](premis-provenance.md) popisuje navazující skupina osmi pravidel. Další reprezentace, vztahy mezi objekty, Event a Agent zatím nejsou těmito dvěma skupinami zpracovány.
 
 Podmínka `premis_object_type = file` označuje vyhodnocený typ v namespace `info:lc/xmlns/premis-v2`, nikoli požadavek na konkrétní prefix v `xsi:type`. Podmínky nevycházejí z přítomnosti kontrolovaného dítěte — chybějící povinný prvek musí být možné zjistit. Samotnou povinnost vytvořit celý objekt PREMIS tato skupina nenahrazuje.
 

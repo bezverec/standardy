@@ -1,0 +1,164 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-ORIGINAL-NAME"
+title:
+  cs: "Původní název souboru"
+description:
+  cs: "Vznik a ochrana souborových objektů MC, PS a ALTO podle DMF Monografie 2.3; obecné schéma PREMIS 2.2 je evidováno samostatně."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-ORIGINAL-NAME"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-provenance"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Souborový objekt obsahuje původní název popisovaného souboru."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "V každém souborovém objektu požadovat právě jeden originalName s doloženým původním názvem. Pokud chybí, zaznamenat nesoulad, nikoli automaticky dosadit současný název souboru."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "PS"
+            - "ALTO"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 78
+      section: "7.5.1 PREMIS Object — originalName"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "file/originalName (0–1); originalNameComplexType (simpleContent xs:string, atributy xlink)"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+      -
+        document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+        version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+        page: null
+        section: "OBJ_002 (PS), OBJ_003 (MC) a OBJ_004 (ALTO) v amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených stranách 77–78 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Ukázky včetně originalName ověřeny v objektech první stránky dodaného SIP; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Obecné XSD dovoluje prvek vynechat, DMF má M. Původní název nelze bez důkazu odvodit z aktuálního názvu v SIP, objectIdentifierValue nebo mets:FLocat. DMF zde nepředepisuje univerzální prefix, příponu nebo rovnost těchto údajů. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód M je převzat z DMF. file_role ALTO odpovídá označení XML v tabulce; OCR.TXT a UC jsou mimo rozsah. premis_object_type označuje rozlišený typ file v namespace PREMIS, nezávisle na XML prefixu. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+    examples:
+      -
+        id: "sip-premis-original-name-obj_003"
+        title:
+          cs: "Původní název souboru — MC (OBJ_003)"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:originalName xmlns:premis="info:lc/xmlns/premis-v2">1_00010003_2R.tif.jp2</premis:originalName>
+        note:
+          cs: "Původní název převzatý přesně z objektu OBJ_003. Liší se od současného názvu souboru v SIP; dvojitá přípona se neopravuje a není předepsaným vzorem pojmenování. Výřez sám nepotvrzuje validitu SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_003']/mets:mdWrap/mets:xmlData/premis:object/premis:originalName"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-original-name-obj_002"
+        title:
+          cs: "Původní název souboru — PS (OBJ_002)"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:originalName xmlns:premis="info:lc/xmlns/premis-v2">1_00010003_2R.tif</premis:originalName>
+        note:
+          cs: "Původní název převzatý přesně z objektu OBJ_002. Liší se od současného názvu souboru v SIP; dvojitá přípona se neopravuje a není předepsaným vzorem pojmenování. Výřez sám nepotvrzuje validitu SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_002']/mets:mdWrap/mets:xmlData/premis:object/premis:originalName"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-original-name-obj_004"
+        title:
+          cs: "Původní název souboru — ALTO (OBJ_004)"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:originalName xmlns:premis="info:lc/xmlns/premis-v2">1_00010003_2R.tif.xml</premis:originalName>
+        note:
+          cs: "Původní název převzatý přesně z objektu OBJ_004. Liší se od současného názvu souboru v SIP; dvojitá přípona se neopravuje a není předepsaným vzorem pojmenování. Výřez sám nepotvrzuje validitu SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_004']/mets:mdWrap/mets:xmlData/premis:object/premis:originalName"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-OBJECT-IDENTIFIER-VALUE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-CREATING-APPLICATION"

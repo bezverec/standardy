@@ -109,6 +109,12 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-PRESERVATION-LEVEL"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-ORIGINAL-NAME"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-OBJECT-IDENTIFIER-TYPE"
   -
     type: "related_to"

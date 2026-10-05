@@ -23,6 +23,174 @@ versions:
       url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
 entities:
   -
+    id: "PREMIS-PRESERVATION-LEVEL"
+    type: "element"
+    version: "2.2"
+    name: "preservationLevel"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Úroveň ochrany souboru"
+    definition:
+      cs: "file/preservationLevel (0–n); preservationLevelComplexType. Kontext v souborovém objektu: preservationLevel. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "file/preservationLevel (0–n); preservationLevelComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
+    id: "PREMIS-PRESERVATION-LEVEL-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "preservationLevelValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota úrovně ochrany"
+    definition:
+      cs: "preservationLevelComplexType/preservationLevelValue (1–1); xs:string. Kontext v souborovém objektu: preservationLevel/preservationLevelValue. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "preservationLevelComplexType/preservationLevelValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
+    id: "PREMIS-PRESERVATION-LEVEL-DATE"
+    type: "element"
+    version: "2.2"
+    name: "preservationLevelDateAssigned"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Datum přiřazení úrovně ochrany"
+    definition:
+      cs: "preservationLevelComplexType/preservationLevelDateAssigned (0–1); edtfSimpleType. Kontext v souborovém objektu: preservationLevel/preservationLevelDateAssigned. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "preservationLevelComplexType/preservationLevelDateAssigned (0–1); edtfSimpleType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
+    id: "PREMIS-CREATING-APPLICATION"
+    type: "element"
+    version: "2.2"
+    name: "creatingApplication"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Aplikace, v níž soubor vznikl"
+    definition:
+      cs: "objectCharacteristicsComplexType/creatingApplication (0–n); creatingApplicationComplexType. Kontext v souborovém objektu: objectCharacteristics/creatingApplication. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "objectCharacteristicsComplexType/creatingApplication (0–n); creatingApplicationComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
+    id: "PREMIS-CREATING-APPLICATION-NAME"
+    type: "element"
+    version: "2.2"
+    name: "creatingApplicationName"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Název aplikace vzniku"
+    definition:
+      cs: "creatingApplicationComplexType/creatingApplicationName (0–1 ve větvení choice); xs:string. Kontext v souborovém objektu: objectCharacteristics/creatingApplication/creatingApplicationName. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "creatingApplicationComplexType/creatingApplicationName (0–1 ve větvení choice); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
+    id: "PREMIS-CREATING-APPLICATION-VERSION"
+    type: "element"
+    version: "2.2"
+    name: "creatingApplicationVersion"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Verze aplikace vzniku"
+    definition:
+      cs: "creatingApplicationComplexType/creatingApplicationVersion (0–1 ve větvení choice); xs:string. Kontext v souborovém objektu: objectCharacteristics/creatingApplication/creatingApplicationVersion. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "creatingApplicationComplexType/creatingApplicationVersion (0–1 ve větvení choice); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
+    id: "PREMIS-CREATION-DATETIME"
+    type: "element"
+    version: "2.2"
+    name: "dateCreatedByApplication"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Datum a čas vytvoření aplikací"
+    definition:
+      cs: "creatingApplicationComplexType/dateCreatedByApplication (0–1 ve větvení choice); edtfSimpleType. Kontext v souborovém objektu: objectCharacteristics/creatingApplication/dateCreatedByApplication. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "creatingApplicationComplexType/dateCreatedByApplication (0–1 ve větvení choice); edtfSimpleType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
+    id: "PREMIS-ORIGINAL-NAME"
+    type: "element"
+    version: "2.2"
+    name: "originalName"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Původní název souboru"
+    definition:
+      cs: "file/originalName (0–1); originalNameComplexType (simpleContent xs:string, atributy xlink). Kontext v souborovém objektu: originalName. Obecná struktura PREMIS; povinnosti M/R a hodnoty určené DMF jsou samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "file/originalName (0–1); originalNameComplexType (simpleContent xs:string, atributy xlink)"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a typ ověřeny v XSD PREMIS 2.2. creatingApplicationComplexType dovoluje jednotlivé údaje vynechat, nikoli prázdný blok; edtfSimpleType zahrnuje datum, datum a čas i další zápisy."
+  -
     id: "PREMIS-OBJECT-IDENTIFIER"
     type: "element"
     version: "2.2"
