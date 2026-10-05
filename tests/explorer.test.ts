@@ -7,7 +7,7 @@ import { handleRequest, type Env } from "../worker/src/index.ts";
 
 const registry = compileRegistry(await loadRegistry(path.resolve(import.meta.dirname, "..")));
 const rules = registry.rule_versions as unknown as RuleVersion[];
-const rule = rules.find((item) => item.rule_id.endsWith("-VERSION"))!;
+const rule = rules.find((item) => item.rule_id === "NDK-MONO-MIX-ICC-PROFILE-VERSION")!;
 
 afterEach(() => vi.unstubAllGlobals());
 

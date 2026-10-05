@@ -70,4 +70,4 @@ Workflow `deploy-cloudflare.yml` po merge do `main` validuje data, spustí testy
 
 ## Pokrytí a hranice ověření
 
-Registr k 5. 10. 2026 obsahuje 13 pravidel DMF Monografie 2.3: tři ICC a deset pro rozměry, vzorkování a barevné kódování MIX. Není úplným katalogem ani validačním enginem. [Rozbor ICC](icc-profile-version.md) dokumentuje konkrétní verze a mapování JHOVE, jpylyzeru, ProArcu a konfiguraci Komplexního validátoru; nejde o tvrzení o všech jejich cestách zpracování. [Nová obrazová skupina](mix-image-characteristics.md) má ověřený přepis DMF/XSD, nikoli implementace nástrojů.
+Registr k 5. 10. 2026 obsahuje 31 pravidel DMF Monografie 2.3: tři ICC, deset pro rozměry, vzorkování a barevné kódování MIX a 18 pro [info.xml](info-xml.md). Není úplným katalogem ani validačním enginem. [Rozbor ICC](icc-profile-version.md) dokumentuje konkrétní verze a mapování JHOVE, jpylyzeru, ProArcu a konfiguraci Komplexního validátoru; nejde o tvrzení o všech jejich cestách zpracování. [Obrazová skupina](mix-image-characteristics.md) a info.xml mají ověřený přepis DMF/XSD, nikoli implementace nástrojů.

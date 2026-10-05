@@ -1,0 +1,75 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-INFO-TITLE-ID"
+title:
+  cs: "Identifikátory titulu"
+description:
+  cs: "Požadavek na /info/titleid v info.xml podle DMF Monografie 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "disputed"
+    target:
+      entity: "NDK-INFO-TITLE-ID"
+    relation_to_target:
+      type: "clarifies"
+    category: "metadata/info"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "titleid se opakuje pro přidělené identifikátory: u vícesvazkového dokumentu z MODS TITLE, u jednosvazkového z MODS VOLUME. Každý výskyt nese hodnotu a type; uuid je povinné, u jednosvazkového dokumentu také urnnbn."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "xpath"
+          expression: "/info/titleid"
+          assertion: "exists"
+        -
+          type: "custom"
+          expression: "Pro každý titleid ověřit neprázdnou hodnotu a atribut type; přítomnost uuid, u jednosvazkového dokumentu i urnnbn; úplnost a shodu s příslušnou úrovní MODS."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "info"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 17
+      section: "7.1 Soubor info.xml — titleid"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "XML schéma info.xml pro tištěné dokumenty"
+        version: "1.1"
+        page: null
+        section: "/info/titleid"
+        url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis povinnosti ověřen vizuálně v tabulce DMF Monografie 2.3, § 7.1, s. 17. Struktura porovnána s oficiálním XSD info 1.1. Implementace nástrojů ani konkrétní SIP zde testovány nebyly."
+    interpretation:
+      cs: "DMF připouští i ccnb, isbn, ismn a interní identifikátor. Nevytváříme proto uzavřený číselník z několika příkladů. Úplnost a shoda identifikátorů vyžaduje porovnání s MODS a rozlišení jednosvazkového/vícesvazkového dokumentu."
+    discrepancies:
+      -
+        cs: "DMF dovoluje ismn a další interní typy; XSD 1.1 připouští pouze isbn, issn, ccnb, urnnbn, uuid. Hodnota povolená DMF tak může být odmítnuta zveřejněným XSD. Komentář XSD navíc popisuje uuid jako náhradní identifikátor, zatímco DMF jej vyžaduje."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-INFO-PACKAGE-ID"

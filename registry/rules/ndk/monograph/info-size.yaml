@@ -1,0 +1,69 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-INFO-SIZE"
+title:
+  cs: "Velikost balíčku bez info.xml"
+description:
+  cs: "Požadavek na /info/size v info.xml podle DMF Monografie 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "NDK-INFO-SIZE"
+    relation_to_target:
+      type: "clarifies"
+    category: "metadata/info"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "size vyjadřuje velikost balíčku v kB bez započtení samotného info.xml."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "xpath"
+          expression: "/info/size"
+          assertion: "exists"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "info"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 17
+      section: "7.1 Soubor info.xml — size"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "XML schéma info.xml pro tištěné dokumenty"
+        version: "1.1"
+        page: null
+        section: "/info/size"
+        url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis povinnosti ověřen vizuálně v tabulce DMF Monografie 2.3, § 7.1, s. 17. Struktura porovnána s oficiálním XSD info 1.1. Implementace nástrojů ani konkrétní SIP zde testovány nebyly."
+    interpretation:
+      cs: "XSD používá xs:int. Jednotku nelze zaměnit za bajty; DMF v této tabulce neupřesňuje zaokrouhlování ani převod kB, proto registr nedoplňuje vlastní výpočetní konvenci."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-INFO-ITEM-LIST"

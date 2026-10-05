@@ -7,7 +7,7 @@ Registr propojuje požadavky národních standardů s původními specifikacemi,
 
 ## Současný stav
 
-K 5. 10. 2026 registr obsahuje **13 pravidel pro DMF Monografie 2.3**, všechna v oblasti technických metadat MIX pro MC a PS. Nejde o úplné pokrytí monografií ani o hotový validační engine.
+K 5. 10. 2026 registr obsahuje **31 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS a 18 pro obsah info.xml. Nejde o úplné pokrytí monografií ani o hotový validační engine.
 
 | Skupina | Počet pravidel | Obsah a podklady |
 |---|---:|---|
@@ -15,6 +15,7 @@ K 5. 10. 2026 registr obsahuje **13 pravidel pro DMF Monografie 2.3**, všechna 
 | Rozměry obrazu | 2 | Šířka a výška v pixelech |
 | Vzorkování | 4 | Referenční rovina, jednotka a frekvence X/Y |
 | Barevné kódování | 4 | Barevný prostor, počet bitů na vzorek, jejich jednotka a počet složek pixelu |
+| info.xml | 18 | [Informace o SIP, identifikátory, seznam souborů a checksum](info-xml.md); včetně rozdílů DMF a XSD 1.1 |
 
 Deset pravidel posledních tří skupin je popsáno v [rozboru obrazových metadat MIX](mix-image-characteristics.md), včetně stránek DMF, XSD typů, podmínek a mezí ověření. Frekvence X/Y mají MA s konkrétní podmínkou fyzikální jednotky `in.` nebo `cm`.
 
@@ -27,6 +28,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Lokální vývoj a nasazení](local-development.md) — instalace, sestavení, testy, import dat a publikování.
 - [Případ ICC profile version](icc-profile-version.md) — oddělení požadavku, sporné sémantiky a implementací.
 - [Rozměry, vzorkování a barva v MIX](mix-image-characteristics.md) — metodika přepisu nové skupiny.
+- [Informace o balíčku info.xml](info-xml.md) — povinnosti M/MA/R/O, vazby na soubory a rozpory DMF/XSD.
 
 ## Rozhraní registru a API
 

@@ -54,9 +54,9 @@ MA (`mandatory_if_available`) a RA (`recommended_if_available`) rozlišují dost
 
 „Počet pravidel“ počítá unikátní ID. Jedno pravidlo může mít více verzovaných záznamů, jejichž počet je uveden zvlášť; `pagination.total` v API počítá právě tyto záznamy. Verze kontraktu API, verze NDK a identita datasetu v [`/api/v1/meta`](https://standardy.digitalizaty.cz/api/v1/meta) jsou samostatné údaje, nikoli počty pravidel.
 
-### Aktuální pokrytí: technická metadata MIX
+### Zpracované skupiny: MIX a info.xml
 
-Registr obsahuje 13 pravidel pro DMF Monografie 2.3: tři pro ICC a deset pro rozměry, vzorkování a barevné kódování obrazu. Nová skupina zahrnuje `imageWidth`, `imageHeight`, `colorSpace`, `samplingFrequencyPlane`, `samplingFrequencyUnit`, `xSamplingFrequency`, `ySamplingFrequency`, `bitsPerSampleValue`, `bitsPerSampleUnit` a `samplesPerPixel`. Pravidla pokrývají MC a PS, včetně podmíněné povinnosti MA u frekvencí X/Y. Přehled zdrojů, podmínek a mezí ověření je v [rozboru obrazových metadat MIX](docs/development/mix-image-characteristics.md).
+Registr obsahuje 31 pravidel pro DMF Monografie 2.3: tři pro ICC, deset pro rozměry, vzorkování a barevné kódování obrazu a 18 pro obsah `info.xml`. Pravidla MIX se vztahují na MC a PS, včetně podmíněné povinnosti MA u frekvencí X/Y; podklady jsou v [rozboru obrazových metadat MIX](docs/development/mix-image-characteristics.md). [Skupina info.xml](docs/development/info-xml.md) popisuje údaje o SIP, identifikátory, seznam souborů a MD5 odkaz. Zachovává M/MA/R/O a výslovně uvádí rozdíly mezi DMF a zveřejněným XSD info 1.1. Implementace nástrojů pro tuto novou skupinu zatím ověřeny nebyly.
 
 První zpracovaná skupina zahrnuje `iccProfileName`, `iccProfileVersion` a `iccProfileURI` podle DMF Monografie 2.3. Registr rozlišuje číselnou verzi v hlavičce ICC od sporného významu stejně pojmenovaného prvku MIX a dokumentuje mapování v konkrétních verzích JHOVE, jpylyzeru, ProArcu a validátoru.
 

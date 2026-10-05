@@ -1,0 +1,70 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-INFO-VALIDATION"
+title:
+  cs: "Informace o validaci balíčku"
+description:
+  cs: "Požadavek na /info/validation v info.xml podle DMF Monografie 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "disputed"
+    target:
+      entity: "NDK-INFO-VALIDATION"
+    relation_to_target:
+      type: "clarifies"
+    category: "metadata/info"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Informace o provedené validaci se zaznamenává do validation s povinností MA."
+    requirement:
+      presence: "conditional"
+      cardinality:
+        min: 1
+        max: 1
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "info"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 17
+      section: "7.1 Soubor info.xml — validation"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "XML schéma info.xml pro tištěné dokumenty"
+        version: "1.1"
+        page: null
+        section: "/info/validation"
+        url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis povinnosti ověřen vizuálně v tabulce DMF Monografie 2.3, § 7.1, s. 17. Struktura porovnána s oficiálním XSD info 1.1. Implementace nástrojů ani konkrétní SIP zde testovány nebyly."
+    interpretation:
+      cs: "Dostupnost informace se nesmí odvozovat jen z existence elementu. DMF zde nestanovuje strojově vyhodnotitelnou podmínku; registr ji nevymýšlí. Prázdný výsledek není totéž co úspěšná validace."
+    discrepancies:
+      -
+        cs: "DMF 2.3 uvádí MA, ale XSD info 1.1 nemá u validation minOccurs=0, a proto požaduje jeden výskyt bezpodmínečně. Pravidlo zachovává MA z DMF; validita vůči XSD je samostatná kontrola."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-INFO-VALIDATION-VERSION"
+  -
+    type: "related_to"
+    target: "NDK-MONO-INFO-VALIDATION-RESULT"

@@ -1,0 +1,347 @@
+schema_version: "1.0"
+kind: "standard"
+id: "NDK-INFO"
+title:
+  cs: "XML schéma info.xml (NDK)"
+description:
+  cs: "Schéma informací o SIP balíčku pro tištěné dokumenty. Verze schématu 1.1 je nezávislá na verzi DMF Monografie 2.3; XSD nemá cílový jmenný prostor."
+status: "normative"
+verification:
+  status: "verified"
+  date: "2026-10-05"
+  reference: "Oficiální stránka NDK uvádí pro tištěné dokumenty XSD 1.1; soubor byl přečten a porovnán s DMF. Zjištěné rozdíly jsou popsány v pravidlech."
+versions:
+  -
+    version: "1.1"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "xs:schema bez targetNamespace"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+entities:
+  -
+    id: "NDK-INFO-ROOT"
+    type: "element"
+    version: "1.1"
+    name: "info"
+    title:
+      cs: "Kořen záznamu info.xml"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-CREATED"
+    type: "element"
+    version: "1.1"
+    name: "created"
+    title:
+      cs: "Čas vytvoření balíčku"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/created"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-METADATA-VERSION"
+    type: "element"
+    version: "1.1"
+    name: "metadataversion"
+    title:
+      cs: "Verze metadatové specifikace"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/metadataversion"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-PACKAGE-ID"
+    type: "element"
+    version: "1.1"
+    name: "packageid"
+    title:
+      cs: "Název kořenového adresáře balíčku"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/packageid"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-MAIN-METS"
+    type: "element"
+    version: "1.1"
+    name: "mainmets"
+    title:
+      cs: "Odkaz na hlavní METS"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/mainmets"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-VALIDATION"
+    type: "element"
+    version: "1.1"
+    name: "validation"
+    title:
+      cs: "Informace o validaci balíčku"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/validation"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-VALIDATION-VERSION"
+    type: "attribute"
+    version: "1.1"
+    name: "validation/@version"
+    title:
+      cs: "Verze a identifikace validátoru"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/validation/@version"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-VALIDATION-RESULT"
+    type: "property"
+    version: "1.1"
+    name: "validation/text()"
+    title:
+      cs: "Výsledek validace"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/validation/text()"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-TITLE-ID"
+    type: "element"
+    version: "1.1"
+    name: "titleid"
+    title:
+      cs: "Identifikátory titulu"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/titleid"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-COLLECTION"
+    type: "element"
+    version: "1.1"
+    name: "collection"
+    title:
+      cs: "Příslušnost k projektu"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/collection"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-INSTITUTION"
+    type: "element"
+    version: "1.1"
+    name: "institution"
+    title:
+      cs: "Zadavatel digitalizace"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/institution"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-CREATOR"
+    type: "element"
+    version: "1.1"
+    name: "creator"
+    title:
+      cs: "Tvůrce balíčku"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/creator"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-SIZE"
+    type: "element"
+    version: "1.1"
+    name: "size"
+    title:
+      cs: "Velikost balíčku bez info.xml"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/size"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-ITEM-LIST"
+    type: "element"
+    version: "1.1"
+    name: "itemlist"
+    title:
+      cs: "Úplný seznam souborů balíčku"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/itemlist"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-ITEM-TOTAL"
+    type: "attribute"
+    version: "1.1"
+    name: "itemlist/@itemtotal"
+    title:
+      cs: "Celkový počet souborů"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/itemlist/@itemtotal"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-ITEM"
+    type: "element"
+    version: "1.1"
+    name: "itemlist/item"
+    title:
+      cs: "Cesta k souboru v balíčku"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/itemlist/item"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-CHECKSUM"
+    type: "element"
+    version: "1.1"
+    name: "checksum"
+    title:
+      cs: "Odkaz a kontrolní součet souboru MD5"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/checksum"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."
+  -
+    id: "NDK-INFO-NOTE"
+    type: "element"
+    version: "1.1"
+    name: "note"
+    title:
+      cs: "Poznámka k balíčku"
+    status: "normative"
+    source:
+      document: "XML schéma info.xml pro tištěné dokumenty"
+      version: "1.1"
+      page: null
+      section: "/info/note"
+      url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a umístění ověřeny v oficiálním XSD info1_1.xsd; povinnost NDK je vedena odděleně v pravidle DMF 2.3."

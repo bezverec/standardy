@@ -100,7 +100,6 @@ function Rules() {
       </aside><section className="results"><div className="results-heading"><p role="status" aria-live="polite">Nalezeno <strong>{rules.length}</strong> z {state.data.pagination.total} verzovaných záznamů</p><span>Řazeno podle ID</span></div>
         {!rules.length && <div className="state"><h2>Žádné pravidlo neodpovídá</h2><p>Zkuste kratší dotaz nebo uvolněte některý filtr.</p><button onClick={clear}>Vymazat hledání a filtry</button></div>}
         {rules.map((rule) => <RuleCard key={`${rule.rule_id}@${rule.version}`} rule={rule} relations={state.data!.relations} />)}
-        <p className="coverage">Pokrytí: ICC profily, rozměry obrazu, vzorkování a barevné kódování v MIX podle DMF Monografie 2.3. Registr zatím neobsahuje všechna pravidla NDK.</p>
       </section></div>
     </>}
   </main>;
@@ -108,6 +107,7 @@ function Rules() {
 
 const labels: Record<string, string> = { normative: "Normativní", disputed: "Sporný požadavek", draft: "Částečné pokrytí", verified: "Ověřeno", unverified: "Neověřeno", deprecated: "Historické", ambiguous: "Nejednoznačné", error: "Chyba", warning: "Varování", info: "Informace", monograph: "Monografie", "technical/icc": "Technická metadata · ICC", related_to: "souvisí s", defined_by: "je definováno v", restricts: "omezuje", clarifies: "upřesňuje", generated_by: "je generováno v", validated_by: "je kontrolováno v", derived_from: "vychází z", extends: "rozšiřuje" };
 Object.assign(labels, {
+  "metadata/info": "Informace o balíčku · info.xml",
   "technical/dimensions": "Technická metadata · Rozměry obrazu",
   "technical/sampling": "Technická metadata · Vzorkování",
   "technical/color": "Technická metadata · Barevné kódování",
@@ -296,5 +296,5 @@ export function App() {
   else if (standard?.[1]) page = <EntityDetail type="standards" id={decodeURIComponent(standard[1])} />;
   else if (path === "/national-standards" || path === "/national-standards/") page = <EntityList type="national-standards" />;
   else if (nationalStandard?.[1]) page = <EntityDetail type="national-standards" id={decodeURIComponent(nationalStandard[1])} />;
-  return <div className="app-shell"><header className="topbar"><Link to="/rules" className="brand"><img src={standardyMark} width="44" height="44" alt="" /><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/rules" className={path === "/" || path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML · Částečné pokrytí NDK</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
+  return <div className="app-shell"><header className="topbar"><Link to="/rules" className="brand"><img src={standardyMark} width="44" height="44" alt="" /><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/rules" className={path === "/" || path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
 }

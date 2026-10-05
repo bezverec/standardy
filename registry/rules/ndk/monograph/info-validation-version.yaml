@@ -1,0 +1,72 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-INFO-VALIDATION-VERSION"
+title:
+  cs: "Verze a identifikace validátoru"
+description:
+  cs: "Požadavek na /info/validation/@version v info.xml podle DMF Monografie 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "NDK-INFO-VALIDATION-VERSION"
+    relation_to_target:
+      type: "clarifies"
+    category: "metadata/info"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Přítomný validation musí mít atribut version; u jiného nástroje než Komplexní validátor NDK obsahuje údaj také jeho název."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "xpath"
+          expression: "/info/validation/@version"
+          assertion: "exists"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "info"
+        -
+          field: "xpath:/info/validation"
+          operator: "exists"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 17
+      section: "7.1 Soubor info.xml — validation/@version"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "XML schéma info.xml pro tištěné dokumenty"
+        version: "1.1"
+        page: null
+        section: "/info/validation/@version"
+        url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis povinnosti ověřen vizuálně v tabulce DMF Monografie 2.3, § 7.1, s. 17. Struktura porovnána s oficiálním XSD info 1.1. Implementace nástrojů ani konkrétní SIP zde testovány nebyly."
+    interpretation:
+      cs: "Povinnost atributu se uplatní jen při přítomnosti rodiče validation. Nečiní tím rodičovský element bezpodmínečně povinným."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-INFO-VALIDATION"
