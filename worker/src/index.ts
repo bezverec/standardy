@@ -1,5 +1,6 @@
 import { semanticNationalStandardDiff } from "../../packages/registry-core/src/semantic-diff.ts";
 import type { RuleVersion } from "../../packages/registry-core/src/model.ts";
+import { openApiDocument } from "../../packages/registry-core/src/openapi.ts";
 
 export interface Env {
   DB: D1Database;
@@ -277,6 +278,13 @@ async function handleRegistryAsset(request: Request, env: Env): Promise<Response
 
 export async function handleRequest(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
+  if (url.pathname === "/openapi.json" || url.pathname === `${API_PREFIX}/openapi.json`) {
+    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: apiHeaders("openapi", "no-cache") });
+    if (!["GET", "HEAD"].includes(request.method)) return json({ error: "method_not_allowed" }, "openapi", 405, "no-store");
+    return new Response(request.method === "HEAD" ? null : JSON.stringify(openApiDocument), { headers: {
+      "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*", "X-Content-Type-Options": "nosniff",
+    } });
+  }
   if (url.pathname.startsWith(`${API_PREFIX}/`) || url.pathname === API_PREFIX) return handleApi(request, env);
   if (url.pathname === "/registry" || url.pathname.startsWith("/registry/")) return handleRegistryAsset(request, env);
   return env.ASSETS.fetch(request);
