@@ -69,6 +69,7 @@ nav:
   - Domů: index.md
   - OpenEXR working paper: openexr-preservation-master.md
   - Vývoj registru:
+      - Přehled a pokrytí: development/index.md
       - Architektura: development/architecture.md
       - Datový model: development/registry-data-model.md
       - Případ ICC profile version: development/icc-profile-version.md

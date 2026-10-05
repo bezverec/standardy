@@ -73,6 +73,12 @@ Podmínky jsou rekurzivní AST s uzly `all`, `any`, `not` a listy `field` + `ope
 
 Typ validace je otevřený pro budoucí engine, ale schéma dnes rozlišuje `xpath`, `regex`, `value_set`, `file_exists`, `checksum`, `custom`, `external_tool`, `jpylyzer`, `jhove` a `schematron`. Pole `validations` umožňuje složit více kontrol, například povinnou přítomnost elementu a číselný tvar jeho hodnoty. Registr žádný validační engine zatím nespouští.
 
+## Vyhodnocovací kontext obrazové skupiny MIX
+
+U [rozměrů, vzorkování a barevného kódování](mix-image-characteristics.md) se XPath vztahují k samostatnému záznamu s kořenem `mix:mix` a prefixem `mix` pro `http://www.loc.gov/mix/v20`. Při práci s `amd_mets.xml` je třeba vybrat odpovídající MIX záznam. Kardinalita se počítá v tomto kontextu a regex se vztahuje na každý vybraný výskyt.
+
+Pravidla frekvencí X/Y zachovávají MA a mají podmínku hodnoty `samplingFrequencyUnit` v množině `in.`, `cm`; povinná jednotka má vlastní pravidlo. Doporučené prvky R nemají bezpodmínečnou kontrolu přítomnosti. Opakovaný `bitsPerSampleValue` používá `max: null` pro neomezenou horní mez, nikoli čárkami oddělený seznam v jednom elementu.
+
 ## Relace
 
 Compiler normalizuje deklarované i odvozené vazby do hran `{from, to, type}`. Kontrola referenční integrity odmítne build s neexistujícím cílem. První verze podporuje všechny dohodnuté typy včetně `restricts`, `extends`, `defined_by`, `validated_by` a `generated_by`.
