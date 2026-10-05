@@ -68,4 +68,35 @@ describe("registry exploration", () => {
     expect(queries.find((query) => query.sql.includes("COUNT(*)"))?.bindings).toEqual(["defined_by"]);
     expect(queries.find((query) => query.sql.includes("LIMIT ? OFFSET ?"))?.bindings).toEqual(["defined_by", 500, 500]);
   });
+
+  it("prefers the root rule's version-scoped implementation in its graph", async () => {
+    const implementation = rule.implementations!.find((item) => item.id === "PROARC")!;
+    const queries: Array<{ sql: string; bindings: unknown[] }> = [];
+    const DB = { prepare(sql: string) {
+      const query = { sql, bindings: [] as unknown[] };
+      queries.push(query);
+      const statement = {
+        bind(...bindings: unknown[]) { query.bindings = bindings; return statement; },
+        async first() {
+          if (sql.includes("SELECT 1 AS found")) return { found: 1 };
+          if (sql.includes("FROM rules") && query.bindings[0] === rule.rule_id) return { data_json: JSON.stringify(rule) };
+          if (sql.includes("FROM implementations")) return { data_json: JSON.stringify(
+            query.bindings[1] === rule.rule_id ? implementation : { ...implementation, application: "ProArc", verification: "unverified" },
+          ) };
+          return null;
+        },
+        async all() { return { results: sql.includes("registry_meta")
+          ? [{ key: "dataset_version", value: "test" }]
+          : [{ data_json: JSON.stringify({ from: rule.rule_id, to: "PROARC", type: "generated_by" }) }] }; },
+      };
+      return statement;
+    } } as unknown as D1Database;
+    const response = await handleRequest(new Request(`https://registry.invalid/api/v1/rules/${rule.rule_id}/why`), { DB } as Env);
+    expect(await response.json()).toMatchObject({ nodes: expect.arrayContaining([
+      { id: "PROARC", kind: "implementation", data: expect.objectContaining({ application: "ProArc 5.1.0", verification: "verified" }) },
+    ]) });
+    expect(queries.find((query) => query.sql.includes("FROM implementations"))).toMatchObject({
+      sql: expect.stringContaining("ORDER BY CASE WHEN rule_id = ?"), bindings: ["PROARC", rule.rule_id],
+    });
+  });
 });

@@ -181,7 +181,9 @@ async function why(id: string, env: Env, version: string): Promise<Response> {
       const row = await env.DB.prepare(`SELECT data_json FROM ${table} WHERE id = ?`).bind(nodeId).first();
       if (row) return { id: nodeId, kind, data: parseJsonRow(row) };
     }
-    const implementation = await env.DB.prepare("SELECT data_json FROM implementations WHERE json_extract(data_json, '$.id') = ? LIMIT 1").bind(nodeId).first();
+    // The same tool can have different evidence and version labels for each rule.
+    // Prefer this graph's root rather than an arbitrary related rule's record.
+    const implementation = await env.DB.prepare("SELECT data_json FROM implementations WHERE json_extract(data_json, '$.id') = ? ORDER BY CASE WHEN rule_id = ? THEN 0 ELSE 1 END, rule_id, rule_version DESC LIMIT 1").bind(nodeId, id).first();
     return { id: nodeId, kind: "implementation", ...(implementation ? { data: parseJsonRow(implementation) } : {}) };
   }));
   return json({ root: id, nodes: nodeData, edges }, version);
