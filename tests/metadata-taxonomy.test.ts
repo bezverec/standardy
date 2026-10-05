@@ -41,7 +41,8 @@ describe("metadata taxonomy", () => {
   });
   it("matches client and API filters, combinations, pagination and empty results", async () => {
     for (const [filters, count] of [
-      [{ metadata_area: "administrative-technical" }, 13], [{ metadata_area: "package" }, 18],
+      [{ metadata_area: "administrative-technical" }, 30], [{ metadata_area: "package" }, 18],
+      [{ standard: "PREMIS" }, 17], [{ standard: "PREMIS", category: "technical/premis-object" }, 17],
       [{ metadata_area: "structural" }, 22], [{ standard: "METS" }, 22],
       [{ standard: "METS", category: "structure/mets-files" }, 14],
       [{ standard: "METS", category: "structure/mets-amd" }, 8],

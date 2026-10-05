@@ -229,6 +229,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-OBJECT-IDENTIFIER"
+  -
+    type: "related_to"
     target: "NDK-MONO-METS-AMD-FILES"
   -
     type: "related_to"

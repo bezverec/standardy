@@ -1,6 +1,6 @@
 # XML ukázky ze vzorového SIP
 
-U 39 pravidel DMF Monografie 2.3 je dostupných 43 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtrnáct pro hlavní METS a osm pro vedlejší METS. ADMID má pět výřezů pro porovnání odkazů s cílovými metadaty. Některá pravidla sdílejí stejný výřez; nejde o 43 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 56 pravidel DMF Monografie 2.3 je dostupných 61 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtrnáct pro hlavní METS, osm pro vedlejší METS a sedmnáct pro PREMIS Object. ADMID má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. Některá pravidla sdílejí stejný výřez; nejde o 61 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
 ## Původ a meze ověření
 
@@ -20,6 +20,7 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 ## Důležité příklady
 
 - [Vedlejší METS](mets-amd.md) obsahuje doložené nevyhovující ukázky: čtyři fileGrp namísto jedné skupiny a ADMID, která odkazují na existující, ale sémanticky nesprávné technické záznamy. Výřezy se záměrně neopravují. Identifikátory PREMIS a základní informace MIX jsou připojené jako další ukázky důkazu.
+- [PREMIS Object](premis-object.md) přidává 17 výřezů MC z OBJ_003 a jeden výřez formátu ALTO z OBJ_004. Velikost i MD5 první stránky byly ověřeny proti skutečným souborům, nikoli podle chybného ADMID. Slovník identifikátorů a přiřazení PUID ve vzoru nejsou tímto ověřeny.
 
 - [METS soubory a vazby](mets-files.md) používají celou skupinu MC, záznam prvního obrazu, jeho lokátor a první stránkový `div` s pěti odkazy. Výřez skupiny MC nezobrazuje ostatní čtyři skupiny ani celý `fileSec`. Hodnoty součtů a velikostí ve výřezu jsou zachovány ze zdroje; samotné porovnání výřezu není jejich nezávislým přepočtem.
 

@@ -1,0 +1,381 @@
+schema_version: "1.0"
+kind: "standard"
+id: "PREMIS"
+title:
+  cs: "PREMIS – Preservation Metadata: Implementation Strategies"
+description:
+  cs: "Vybrané prvky souborového objektu ve verzi 2.2, na kterou odkazuje DMF Monografie 2.3, s. 5. Obecné schéma je odděleno od povinností NDK; nejde o nejnovější verzi PREMIS."
+status: "normative"
+verification:
+  status: "verified"
+  date: "2026-10-05"
+  reference: "Oficiální XSD PREMIS 2.2 a přehled schémat Library of Congress; volba verze podle DMF Monografie 2.3, s. 5."
+versions:
+  -
+    version: "2.2"
+    status: "normative"
+    namespace: "info:lc/xmlns/premis-v2"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "file; objectIdentifierComplexType; objectCharacteristicsComplexType; fixityComplexType; formatComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+entities:
+  -
+    id: "PREMIS-OBJECT-IDENTIFIER"
+    type: "element"
+    version: "2.2"
+    name: "objectIdentifier"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Identifikace objektu PREMIS"
+    definition:
+      cs: "file/objectIdentifier (1–n); objectIdentifierComplexType. Kontext v souborovém objektu: objectIdentifier. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "file/objectIdentifier (1–n); objectIdentifierComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-OBJECT-IDENTIFIER-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "objectIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Kontext identifikátoru objektu"
+    definition:
+      cs: "objectIdentifierComplexType/objectIdentifierType (1–1); xs:string. Kontext v souborovém objektu: objectIdentifier/objectIdentifierType. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "objectIdentifierComplexType/objectIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-OBJECT-IDENTIFIER-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "objectIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota identifikátoru objektu"
+    definition:
+      cs: "objectIdentifierComplexType/objectIdentifierValue (1–1); xs:string. Kontext v souborovém objektu: objectIdentifier/objectIdentifierValue. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "objectIdentifierComplexType/objectIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-OBJECT-CHARACTERISTICS"
+    type: "element"
+    version: "2.2"
+    name: "objectCharacteristics"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Technické charakteristiky objektu"
+    definition:
+      cs: "file/objectCharacteristics (1–n); objectCharacteristicsComplexType. Kontext v souborovém objektu: objectCharacteristics. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "file/objectCharacteristics (1–n); objectCharacteristicsComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-COMPOSITION-LEVEL"
+    type: "element"
+    version: "2.2"
+    name: "compositionLevel"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Úroveň zabalení nebo kódování"
+    definition:
+      cs: "objectCharacteristicsComplexType/compositionLevel (1–1); xs:nonNegativeInteger. Kontext v souborovém objektu: objectCharacteristics/compositionLevel. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "objectCharacteristicsComplexType/compositionLevel (1–1); xs:nonNegativeInteger"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FIXITY"
+    type: "element"
+    version: "2.2"
+    name: "fixity"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Údaje o kontrolním součtu"
+    definition:
+      cs: "objectCharacteristicsComplexType/fixity (0–n); fixityComplexType. Kontext v souborovém objektu: objectCharacteristics/fixity. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "objectCharacteristicsComplexType/fixity (0–n); fixityComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-DIGEST-ALGORITHM"
+    type: "element"
+    version: "2.2"
+    name: "messageDigestAlgorithm"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Algoritmus kontrolního součtu PREMIS"
+    definition:
+      cs: "fixityComplexType/messageDigestAlgorithm (1–1); xs:string. Kontext v souborovém objektu: objectCharacteristics/fixity/messageDigestAlgorithm. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "fixityComplexType/messageDigestAlgorithm (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-MESSAGE-DIGEST"
+    type: "element"
+    version: "2.2"
+    name: "messageDigest"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota kontrolního součtu PREMIS"
+    definition:
+      cs: "fixityComplexType/messageDigest (1–1); xs:string. Kontext v souborovém objektu: objectCharacteristics/fixity/messageDigest. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "fixityComplexType/messageDigest (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-DIGEST-ORIGINATOR"
+    type: "element"
+    version: "2.2"
+    name: "messageDigestOriginator"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Původce kontrolního součtu"
+    definition:
+      cs: "fixityComplexType/messageDigestOriginator (0–1); xs:string. Kontext v souborovém objektu: objectCharacteristics/fixity/messageDigestOriginator. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "fixityComplexType/messageDigestOriginator (0–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-SIZE"
+    type: "element"
+    version: "2.2"
+    name: "size"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Velikost souboru v PREMIS"
+    definition:
+      cs: "objectCharacteristicsComplexType/size (0–1); xs:long. Kontext v souborovém objektu: objectCharacteristics/size. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "objectCharacteristicsComplexType/size (0–1); xs:long"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FORMAT"
+    type: "element"
+    version: "2.2"
+    name: "format"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Popis formátu souboru"
+    definition:
+      cs: "objectCharacteristicsComplexType/format (1–n); formatComplexType. Kontext v souborovém objektu: objectCharacteristics/format. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "objectCharacteristicsComplexType/format (1–n); formatComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FORMAT-DESIGNATION"
+    type: "element"
+    version: "2.2"
+    name: "formatDesignation"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Slovní identifikace formátu"
+    definition:
+      cs: "formatComplexType/formatDesignation (0–1 ve větvení choice); formatDesignationComplexType. Kontext v souborovém objektu: objectCharacteristics/format/formatDesignation. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "formatComplexType/formatDesignation (0–1 ve větvení choice); formatDesignationComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FORMAT-NAME"
+    type: "element"
+    version: "2.2"
+    name: "formatName"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Název formátu"
+    definition:
+      cs: "formatDesignationComplexType/formatName (1–1); xs:string. Kontext v souborovém objektu: objectCharacteristics/format/formatDesignation/formatName. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "formatDesignationComplexType/formatName (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FORMAT-VERSION"
+    type: "element"
+    version: "2.2"
+    name: "formatVersion"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Verze formátu"
+    definition:
+      cs: "formatDesignationComplexType/formatVersion (0–1); xs:string. Kontext v souborovém objektu: objectCharacteristics/format/formatDesignation/formatVersion. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "formatDesignationComplexType/formatVersion (0–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FORMAT-REGISTRY"
+    type: "element"
+    version: "2.2"
+    name: "formatRegistry"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Identifikace formátu v registru"
+    definition:
+      cs: "formatComplexType/formatRegistry (0–1 ve větvení choice); formatRegistryComplexType. Kontext v souborovém objektu: objectCharacteristics/format/formatRegistry. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "formatComplexType/formatRegistry (0–1 ve větvení choice); formatRegistryComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FORMAT-REGISTRY-NAME"
+    type: "element"
+    version: "2.2"
+    name: "formatRegistryName"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Název registru PRONOM"
+    definition:
+      cs: "formatRegistryComplexType/formatRegistryName (1–1); xs:string. Kontext v souborovém objektu: objectCharacteristics/format/formatRegistry/formatRegistryName. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "formatRegistryComplexType/formatRegistryName (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."
+  -
+    id: "PREMIS-FORMAT-REGISTRY-KEY"
+    type: "element"
+    version: "2.2"
+    name: "formatRegistryKey"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Identifikátor formátu PUID"
+    definition:
+      cs: "formatRegistryComplexType/formatRegistryKey (1–1); xs:string. Kontext v souborovém objektu: objectCharacteristics/format/formatRegistry/formatRegistryKey. Obecná struktura a datový typ PREMIS; povinnosti M a další omezení DMF jsou popsány samostatnými pravidly NDK."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "formatRegistryComplexType/formatRegistryKey (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, kontext a obecná kardinalita ověřeny v XSD PREMIS 2.2; formatComplexType používá volbu označení nebo registru, případně obojí."

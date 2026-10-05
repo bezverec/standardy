@@ -1,0 +1,153 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-FORMAT"
+title:
+  cs: "Popis formátu souboru"
+description:
+  cs: "Požadavek DMF Monografie 2.3 na souborové objekty PREMIS 2.2 v technických metadatech stránky (MC, PS a ALTO)."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-FORMAT"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-object"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Každý blok charakteristik obsahuje alespoň jeden popis formátu."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V každém objectCharacteristics ověřit alespoň jeden format a zkontrolovat všechny jeho výskyty podle pravidel DMF. Pro ALTO nevynucovat právě dva výskyty."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "PS"
+            - "ALTO"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 77
+      section: "7.5.1 PREMIS Object — objectCharacteristics/format"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "objectCharacteristicsComplexType/format (1–n); formatComplexType"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    examples:
+      -
+        id: "sip-premis-format-mc"
+        title:
+          cs: "Popis formátu souboru – MC v OBJ_003"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:format xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:formatDesignation>
+              <premis:formatName>image/jp2</premis:formatName>
+              <premis:formatVersion>1.0</premis:formatVersion>
+            </premis:formatDesignation>
+            <premis:formatRegistry>
+              <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+              <premis:formatRegistryKey>x-fmt/392</premis:formatRegistryKey>
+            </premis:formatRegistry>
+          </premis:format>
+        note:
+          cs: "Záznam MC je vybrán podle identity objektu OBJ_003, nikoli podle chybného ADMID ukázkového METS. Velikost 3523405 B a MD5 byly porovnány se skutečným MC.  Výřez není potvrzením validity SIP ani ověřením přiřazení PUID nebo slovníku identifikátorů."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_003']/mets:mdWrap/mets:xmlData/premis:object/premis:objectCharacteristics/premis:format"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-premis-format-alto"
+        title:
+          cs: "Popis formátu ALTO v OBJ_004"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:format xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:formatDesignation>
+              <premis:formatName>text/xml</premis:formatName>
+              <premis:formatVersion>1.0</premis:formatVersion>
+            </premis:formatDesignation>
+            <premis:formatRegistry>
+              <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+              <premis:formatRegistryKey>fmt/101</premis:formatRegistryKey>
+            </premis:formatRegistry>
+          </premis:format>
+        note:
+          cs: "ALTO má ve vzoru jediný format pro text/xml. Druhý popis pro ALTO je v DMF možnost, nikoli povinnost. Výřez není potvrzením validity SIP ani ověřením přiřazení PUID nebo slovníku identifikátorů."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_004']/mets:mdWrap/mets:xmlData/premis:object/premis:objectCharacteristics/premis:format"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených stranách 75–78 DMF Monografie 2.3 a porovnán s oficiálním XSD PREMIS 2.2. Výřezy pocházejí z dodaného SIP; nejde o výsledek externího validátoru."
+    interpretation:
+      cs: "Pro ALTO může jeden format popsat XML a další standard ALTO; jde o možnost, nikoli povinnost přesně dvou výskytů nebo maximální počet dva. Obecné XSD vyžaduje formatDesignation nebo formatRegistry, případně obojí; DMF označuje oba podbloky M. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód M je převzat z DMF; číselná volitelnost obecného XSD jej neruší. file_role ALTO odpovídá označení XML v tabulce; OCR.TXT a UC do této skupiny nespadají. premis_object_type znamená rozlišený typ file v namespace PREMIS, ne doslovný prefix xsi:type. Podmínka nesmí záviset na existenci kontrolovaného prvku. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-FORMAT-DESIGNATION"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-FORMAT-REGISTRY"

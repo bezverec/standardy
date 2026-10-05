@@ -39,7 +39,7 @@ Swagger umožňuje prohlédnout datové typy a vyzkoušet GET operace. Jeho tla�
 - Mapu registru s tematickými dlaždicemi, počty pravidel a verzovaných záznamů, rozložením povinností a přechodem do filtrovaného seznamu.
 - Sloupcový graf, radiální síť s nastavitelným pořadím vrstev a tabulku vazeb. Sdílejí filtry vztahů i kategorií; graf nabízí zvýraznění sousedů, přiblížení, posun a celou obrazovku. Uspořádání se pamatuje v prohlížeči; viz [kategorie a graf vztahů](docs/development/graph-and-categories.md).
 - Návrhy změn přes GitHub a odkazy na související diskuse.
-- [43 XML ukázek ze vzorového SIP](docs/development/xml-examples.md) u 39 pravidel, s kopírováním, XPath a otiskem zdrojového souboru. Jde o doložené výřezy, nikoli univerzální šablony nebo potvrzení validity balíčku; některé výslovně dokládají nesoulad se standardem.
+- [61 XML ukázek ze vzorového SIP](docs/development/xml-examples.md) u 56 pravidel, s kopírováním, XPath a otiskem zdrojového souboru. Jde o doložené výřezy, nikoli univerzální šablony nebo potvrzení validity balíčku; některé výslovně dokládají nesoulad se standardem.
 
 ### Jak číst pravidlo
 
@@ -57,9 +57,9 @@ MA (`mandatory_if_available`) a RA (`recommended_if_available`) rozlišují dost
 
 „Počet pravidel“ počítá unikátní ID. Jedno pravidlo může mít více verzovaných záznamů, jejichž počet je uveden zvlášť; `pagination.total` v API počítá právě tyto záznamy. Verze kontraktu API, verze NDK a identita datasetu v [`/api/v1/meta`](https://standardy.digitalizaty.cz/api/v1/meta) jsou samostatné údaje, nikoli počty pravidel.
 
-### Zpracované skupiny: MIX a info.xml
+### Zpracované skupiny: MIX, info.xml, METS a PREMIS
 
-Registr obsahuje 53 pravidel pro DMF Monografie 2.3: 13 pro MIX, 18 pro `info.xml`, 14 pro hlavní METS a osm pro vedlejší METS. [Obrazová metadata MIX](docs/development/mix-image-characteristics.md) zahrnují MC a PS, včetně podmíněné povinnosti MA u frekvencí X/Y. [Skupina info.xml](docs/development/info-xml.md) popisuje údaje o SIP, identifikátory, seznam souborů a MD5 odkaz; zachovává původní kódy povinností a rozdíly DMF/XSD 1.1. [Hlavní METS](docs/development/mets-files.md) pokrývá fileSec, skupiny, atributy souborů, FLocat a fyzické odkazy FILEID. [Vedlejší METS](docs/development/mets-amd.md) doplňuje inventář stránky, sémantické vazby ADMID a fyzickou mapu, včetně doložených nesouladů vzorového SIP. Požadavky DMF jsou oddělené od obecného METS 1.9.1 a slovní povinnosti nemají domyšlený kód M. Implementace nástrojů pro tyto nové skupiny zatím ověřeny nebyly.
+Registr obsahuje 70 pravidel pro DMF Monografie 2.3: 13 pro MIX, 18 pro `info.xml`, 14 pro hlavní METS, osm pro vedlejší METS a 17 pro PREMIS Object. [Obrazová metadata MIX](docs/development/mix-image-characteristics.md) zahrnují MC a PS, včetně podmíněné povinnosti MA u frekvencí X/Y. [Skupina info.xml](docs/development/info-xml.md) popisuje údaje o SIP, identifikátory, seznam souborů a MD5 odkaz; zachovává původní kódy povinností a rozdíly DMF/XSD 1.1. [Hlavní METS](docs/development/mets-files.md) pokrývá fileSec, skupiny, atributy souborů, FLocat a fyzické odkazy FILEID. [Vedlejší METS](docs/development/mets-amd.md) doplňuje inventář stránky, sémantické vazby ADMID a fyzickou mapu, včetně doložených nesouladů vzorového SIP. Požadavky DMF jsou oddělené od obecného METS 1.9.1 a slovní povinnosti nemají domyšlený kód M. [PREMIS Object](docs/development/premis-object.md) přidává identifikaci, charakteristiky, fixity, velikost a formát souboru; odděluje PREMIS 2.2 od výslovné povinnosti M v DMF. Implementace nástrojů pro tyto nové skupiny zatím ověřeny nebyly.
 
 První zpracovaná skupina zahrnuje `iccProfileName`, `iccProfileVersion` a `iccProfileURI` podle DMF Monografie 2.3. Registr rozlišuje číselnou verzi v hlavičce ICC od sporného významu stejně pojmenovaného prvku MIX a dokumentuje mapování v konkrétních verzích JHOVE, jpylyzeru, ProArcu a validátoru.
 

@@ -16,12 +16,13 @@ const relations = compiled.relations;
 describe("registry map", () => {
   it("accounts for every version exactly once, following target owners rather than citations", () => {
     const map = buildRegistryMap(rules, relations);
-    expect(map.rules).toBe(53);
-    expect(map.records).toBe(53);
+    expect(map.rules).toBe(70);
+    expect(map.records).toBe(70);
     const standards = map.areas.flatMap((area) => area.standards);
     expect(standards.find(({ id }) => id === "MIX")?.records).toBe(13);
     expect(standards.find(({ id }) => id === "NDK-INFO")?.records).toBe(18);
     expect(standards.find(({ id }) => id === "METS")?.records).toBe(22);
+    expect(standards.find(({ id }) => id === "PREMIS")?.records).toBe(17);
     expect(standards.find(({ id }) => id === "METS")?.topics).toEqual(expect.arrayContaining([
       expect.objectContaining({ category: "structure/mets-files", records: 14 }),
       expect.objectContaining({ category: "structure/mets-amd", records: 8 }),

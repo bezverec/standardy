@@ -137,6 +137,7 @@ Object.assign(labels, {
   "metadata/info": "Informace o balíčku · info.xml",
   "structure/mets-files": "METS · soubory a jejich vazby",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
+  "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",
   "technical/dimensions": "Technická metadata · Rozměry obrazu",
   "technical/sampling": "Technická metadata · Vzorkování",
   "technical/color": "Technická metadata · Barevné kódování",

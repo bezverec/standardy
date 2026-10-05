@@ -1,0 +1,112 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-OBJECT-IDENTIFIER-VALUE"
+title:
+  cs: "Hodnota identifikátoru objektu"
+description:
+  cs: "Požadavek DMF Monografie 2.3 na souborové objekty PREMIS 2.2 v technických metadatech stránky (MC, PS a ALTO)."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-OBJECT-IDENTIFIER-VALUE"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-object"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Identifikátor obsahuje vlastní hodnotu odlišující soubor v deklarovaném kontextu."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "V každém objectIdentifier ověřit jednu hodnotu a její význam v deklarovaném kontextu; nesrovnávat ji automaticky s ID obalové sekce techMD."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "PS"
+            - "ALTO"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 77
+      section: "7.5.1 PREMIS Object — objectIdentifier/objectIdentifierValue"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "objectIdentifierComplexType/objectIdentifierValue (1–1); xs:string"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    examples:
+      -
+        id: "sip-premis-object-identifier-value-mc"
+        title:
+          cs: "Hodnota identifikátoru objektu – MC v OBJ_003"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:objectIdentifierValue xmlns:premis="info:lc/xmlns/premis-v2">MC_1_00010003_2R</premis:objectIdentifierValue>
+        note:
+          cs: "Záznam MC je vybrán podle identity objektu OBJ_003, nikoli podle chybného ADMID ukázkového METS. Velikost 3523405 B a MD5 byly porovnány se skutečným MC.  Výřez není potvrzením validity SIP ani ověřením přiřazení PUID nebo slovníku identifikátorů."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_003']/mets:mdWrap/mets:xmlData/premis:object/premis:objectIdentifier/premis:objectIdentifierValue"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených stranách 75–78 DMF Monografie 2.3 a porovnán s oficiálním XSD PREMIS 2.2. Výřezy pocházejí z dodaného SIP; nejde o výsledek externího validátoru."
+    interpretation:
+      cs: "Hodnota se čte společně s objectIdentifierType. Není předepsáno univerzální UUID, URI ani formát prefixu MC_. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód M je převzat z DMF; číselná volitelnost obecného XSD jej neruší. file_role ALTO odpovídá označení XML v tabulce; OCR.TXT a UC do této skupiny nespadají. premis_object_type znamená rozlišený typ file v namespace PREMIS, ne doslovný prefix xsi:type. Podmínka nesmí záviset na existenci kontrolovaného prvku. Custom kontroly jsou popisem pro budoucí implementaci, registr je nevykonává."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-OBJECT-IDENTIFIER-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-ADMID"

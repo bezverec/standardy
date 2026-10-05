@@ -79,4 +79,5 @@ nav:
       - Informace o balíčku info.xml: development/info-xml.md
       - Soubory a jejich vazby v METS: development/mets-files.md
       - Vedlejší METS a technická metadata: development/mets-amd.md
+      - Identifikace, fixity a formát PREMIS Object: development/premis-object.md
       - Lokální vývoj: development/local-development.md
