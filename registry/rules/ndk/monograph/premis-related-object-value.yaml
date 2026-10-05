@@ -1,0 +1,111 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-RELATED-OBJECT-VALUE"
+title:
+  cs: "Hodnota identifikátoru souvisejícího objektu"
+description:
+  cs: "Vazby souborových objektů a událostí podle DMF Monografie 2.3; obecný model PREMIS 2.2 a obsah vzorového SIP jsou rozlišeny."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-RELATED-OBJECT-VALUE"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-relationships"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Identifikace souvisejícího objektu obsahuje jeho vlastní identifikační hodnotu."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "V každém relatedObjectIdentification požadovat jednu hodnotu. Pár typ/hodnota musí jednoznačně označovat zamýšlený objekt v uvedeném kontextu; nerozhodovat jen podle řetězce nebo prefixu PS_."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "ALTO"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 79
+      section: "7.5.1 PREMIS Object — relationship/relatedObjectIdentification/relatedObjectIdentifierValue"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "relatedObjectIdentificationComplexType/relatedObjectIdentifierValue (1–1); xs:string"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 78–79 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. XPath kontrola první stránky dodaného SIP rozlišila přímé a vnořené odkazy; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Hodnota bez typu není úplným odkazem. PREMIS ji definuje jako řetězec; povinné XML IDREF ani rovnost s mets:techMD/@ID z toho neplynou. Volitelný RelObjectXmlID je jiný mechanismus a není touto skupinou nařízen. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód M je převzat z DMF. Podmínka premis_object_type=file znamená rozlišený typ v namespace PREMIS, ne konkrétní XML prefix. ALTO odpovídá XML v tabulce. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-related-object-value-MC"
+        title:
+          cs: "Hodnota identifikátoru souvisejícího objektu — MC"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:relatedObjectIdentifierValue xmlns:premis="info:lc/xmlns/premis-v2">PS_1_00010003_2R</premis:relatedObjectIdentifierValue>
+        note:
+          cs: "Záznam MC v OBJ_003 byl vybrán podle identity objektu, nikoli podle chybného ADMID. Výřez je zachován ze zdroje; není potvrzením validity SIP ani důkazem chování konkrétní implementace."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_003']/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedObjectIdentification/premis:relatedObjectIdentifierValue"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-RELATED-OBJECT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-RELATED-OBJECT-TYPE"

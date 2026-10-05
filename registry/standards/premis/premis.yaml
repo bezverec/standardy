@@ -23,6 +23,279 @@ versions:
       url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
 entities:
   -
+    id: "PREMIS-RELATIONSHIP"
+    type: "element"
+    version: "2.2"
+    name: "relationship"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Vztahy souboru k objektům a událostem"
+    definition:
+      cs: "file/relationship (0–n); relationshipComplexType. Kontext souborového objektu: relationship. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "file/relationship (0–n); relationshipComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATIONSHIP-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "relationshipType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Typ vztahu PREMIS"
+    definition:
+      cs: "relationshipComplexType/relationshipType (1–1); xs:string. Kontext souborového objektu: relationship/relationshipType. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relationshipComplexType/relationshipType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATIONSHIP-SUBTYPE"
+    type: "element"
+    version: "2.2"
+    name: "relationshipSubType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Upřesnění a směr vztahu"
+    definition:
+      cs: "relationshipComplexType/relationshipSubType (1–1); xs:string. Kontext souborového objektu: relationship/relationshipSubType. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relationshipComplexType/relationshipSubType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATED-OBJECT"
+    type: "element"
+    version: "2.2"
+    name: "relatedObjectIdentification"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Identifikace souvisejícího objektu"
+    definition:
+      cs: "relationshipComplexType/relatedObjectIdentification (1–n); relatedObjectIdentificationComplexType. Kontext souborového objektu: relationship/relatedObjectIdentification. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relationshipComplexType/relatedObjectIdentification (1–n); relatedObjectIdentificationComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATED-OBJECT-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "relatedObjectIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Kontext identifikátoru souvisejícího objektu"
+    definition:
+      cs: "relatedObjectIdentificationComplexType/relatedObjectIdentifierType (1–1); xs:string. Kontext souborového objektu: relationship/relatedObjectIdentification/relatedObjectIdentifierType. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relatedObjectIdentificationComplexType/relatedObjectIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATED-OBJECT-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "relatedObjectIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota identifikátoru souvisejícího objektu"
+    definition:
+      cs: "relatedObjectIdentificationComplexType/relatedObjectIdentifierValue (1–1); xs:string. Kontext souborového objektu: relationship/relatedObjectIdentification/relatedObjectIdentifierValue. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relatedObjectIdentificationComplexType/relatedObjectIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATED-EVENT"
+    type: "element"
+    version: "2.2"
+    name: "relatedEventIdentification"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Událost související se vztahem"
+    definition:
+      cs: "relationshipComplexType/relatedEventIdentification (0–n); relatedEventIdentificationComplexType. Kontext souborového objektu: relationship/relatedEventIdentification. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relationshipComplexType/relatedEventIdentification (0–n); relatedEventIdentificationComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATED-EVENT-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "relatedEventIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Kontext identifikátoru související události"
+    definition:
+      cs: "relatedEventIdentificationComplexType/relatedEventIdentifierType (1–1); xs:string. Kontext souborového objektu: relationship/relatedEventIdentification/relatedEventIdentifierType. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relatedEventIdentificationComplexType/relatedEventIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATED-EVENT-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "relatedEventIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota identifikátoru související události"
+    definition:
+      cs: "relatedEventIdentificationComplexType/relatedEventIdentifierValue (1–1); xs:string. Kontext souborového objektu: relationship/relatedEventIdentification/relatedEventIdentifierValue. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relatedEventIdentificationComplexType/relatedEventIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-RELATED-EVENT-SEQUENCE"
+    type: "element"
+    version: "2.2"
+    name: "relatedEventSequence"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Pořadí související události"
+    definition:
+      cs: "relatedEventIdentificationComplexType/relatedEventSequence (0–1); xs:nonNegativeInteger. Kontext souborového objektu: relationship/relatedEventIdentification/relatedEventSequence. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "relatedEventIdentificationComplexType/relatedEventSequence (0–1); xs:nonNegativeInteger"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-LINKING-EVENT"
+    type: "element"
+    version: "2.2"
+    name: "linkingEventIdentifier"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Přímé odkazy PS na vytvoření a smazání"
+    definition:
+      cs: "file/linkingEventIdentifier (0–n); linkingEventIdentifierComplexType. Kontext souborového objektu: linkingEventIdentifier. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "file/linkingEventIdentifier (0–n); linkingEventIdentifierComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-LINKING-EVENT-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "linkingEventIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Kontext přímého identifikátoru události PS"
+    definition:
+      cs: "linkingEventIdentifierComplexType/linkingEventIdentifierType (1–1); xs:string. Kontext souborového objektu: linkingEventIdentifier/linkingEventIdentifierType. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "linkingEventIdentifierComplexType/linkingEventIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
+    id: "PREMIS-LINKING-EVENT-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "linkingEventIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota přímého identifikátoru události PS"
+    definition:
+      cs: "linkingEventIdentifierComplexType/linkingEventIdentifierValue (1–1); xs:string. Kontext souborového objektu: linkingEventIdentifier/linkingEventIdentifierValue. Povinnosti a rozsah DMF jsou samostatnými pravidly; obecné schéma neurčuje role MC/PS/ALTO."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "linkingEventIdentifierComplexType/linkingEventIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v XSD PREMIS 2.2. relatedEventIdentification je dítě relationship, linkingEventIdentifier může být přímým dítětem file objektu; nejde o zaměnitelné prvky."
+  -
     id: "PREMIS-PRESERVATION-LEVEL"
     type: "element"
     version: "2.2"

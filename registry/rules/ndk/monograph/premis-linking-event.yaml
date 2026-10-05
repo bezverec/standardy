@@ -1,0 +1,134 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-LINKING-EVENT"
+title:
+  cs: "Přímé odkazy PS na vytvoření a smazání"
+description:
+  cs: "Vazby souborových objektů a událostí podle DMF Monografie 2.3; obecný model PREMIS 2.2 a obsah vzorového SIP jsou rozlišeny."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-LINKING-EVENT"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-relationships"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Objekt původního skenu PS obsahuje přímé odkazy na události jeho vytvoření (digitalizace) a vymazání."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "U PS vyžadovat linkingEventIdentifier přímo pod premis:object. Každý pár typu a hodnoty rozlišit a dohledat odpovídající eventIdentifier; podle obsahu událostí ověřit, že odkazy pokrývají vytvoření i vymazání právě tohoto PS. Dva duplicitní či nesouvisející odkazy nestačí a vnořený relatedEventIdentification přímé odkazy nenahrazuje."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "PS"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 79
+      section: "7.5.1 PREMIS Object — linkingEventIdentifier"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "file/linkingEventIdentifier (0–n); linkingEventIdentifierComplexType"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 78–79 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. XPath kontrola první stránky dodaného SIP rozlišila přímé a vnořené odkazy; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Číselná kardinalita zde zachycuje povinnou přítomnost opakovatelného bloku; obsahová kontrola navíc vyžaduje pokrytí obou událostí, ne pouhý počet odkazů. relatedEventIdentification uvnitř relationship není totéž umístění. Povinnost se zde nepřenáší na MC nebo ALTO. Záznam smazání ani preservationLevelValue=deleted nejsou pokynem soubor smazat. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód M je převzat z DMF. Podmínka premis_object_type=file znamená rozlišený typ v namespace PREMIS, ne konkrétní XML prefix. ALTO odpovídá XML v tabulce. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-linking-event-PS-vnorene-odkazy"
+        title:
+          cs: "Přímé odkazy PS na vytvoření a smazání — PS-vnorene-odkazy"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:relationship xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:relationshipType>derivation</premis:relationshipType>
+            <premis:relationshipSubType>created from</premis:relationshipSubType>
+            <premis:relatedObjectIdentification>
+              <premis:relatedObjectIdentifierType>file</premis:relatedObjectIdentifierType>
+              <premis:relatedObjectIdentifierValue>FLAT_1_00010003</premis:relatedObjectIdentifierValue>
+            </premis:relatedObjectIdentification>
+            <premis:relatedEventIdentification>
+              <premis:relatedEventIdentifierType>NK_eventID</premis:relatedEventIdentifierType>
+              <premis:relatedEventIdentifierValue>postprocessingdata_001</premis:relatedEventIdentifierValue>
+            </premis:relatedEventIdentification>
+            <premis:relatedEventIdentification>
+              <premis:relatedEventIdentifierType>NK_eventID</premis:relatedEventIdentifierType>
+              <premis:relatedEventIdentifierValue>postprocessingdata_002</premis:relatedEventIdentifierValue>
+            </premis:relatedEventIdentification>
+          </premis:relationship>
+        note:
+          cs: "NESOULAD UMÍSTĚNÍ: ukázka obsahuje relatedEventIdentification uvnitř relationship, nikoli požadovaný přímý linkingEventIdentifier. XPath nad celým OBJ_002 ověřil nulový počet přímých odkazů. Z výřezu samotného nelze absenci mimo tento blok dokázat. Výřez je zachován ze zdroje; není potvrzením validity SIP ani důkazem chování konkrétní implementace."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='OBJ_002']/mets:mdWrap/mets:xmlData/premis:object/premis:relationship"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+    discrepancies:
+      -
+        cs: "V amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml má PS v OBJ_002 nulový počet přímých potomků premis:linkingEventIdentifier. Místo nich obsahuje relationship se dvěma relatedEventIdentification na NK_eventID / postprocessingdata_001 a postprocessingdata_002. Obě události v dokumentu existují (derivation a deletion), ale jejich vnořené odkazy nenaplňují předepsané umístění linkingEventIdentifier pod objektem PS. Ověřeno XPath 2026-10-05, SHA-256 4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f. Zjištění platí pro tento objekt první stránky, ne automaticky pro celý SIP."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-LINKING-EVENT-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-LINKING-EVENT-VALUE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-RELATED-EVENT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-PRESERVATION-LEVEL-VALUE"

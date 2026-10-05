@@ -56,4 +56,4 @@ Původní název nelze bez další evidence doplnit současným názvem v SIP, h
 
 Zápis timestampu není důkaz správnosti časové osy. V této skupině se nepředepisuje automatická rovnost s METS CREATED ani s časem změny souboru v souborovém systému. Datum přiřazení ochrany a datum vytvoření mají odlišný význam.
 
-Ověřeny byly požadavky DMF, obecné XSD a obsah ukázek. Nebyl spuštěn externí validátor a nebylo nově doloženo chování JHOVE, jpylyzeru, ProArcu ani Komplexního validátoru. Popisy kontrol `custom` jsou určeny budoucím implementacím; registr je nevykonává. Vztahy mezi objekty a událostmi zůstávají další samostatnou skupinou.
+Ověřeny byly požadavky DMF, obecné XSD a obsah ukázek. Nebyl spuštěn externí validátor a nebylo nově doloženo chování JHOVE, jpylyzeru, ProArcu ani Komplexního validátoru. Popisy kontrol `custom` jsou určeny budoucím implementacím; registr je nevykonává. [Vazby mezi objekty a událostmi](premis-relationships.md) popisuje navazující samostatná skupina.

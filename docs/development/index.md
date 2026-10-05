@@ -7,7 +7,7 @@ Registr propojuje požadavky národních standardů s původními specifikacemi,
 
 ## Současný stav
 
-K 5. 10. 2026 registr obsahuje **78 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 14 pro soubory a jejich vazby v hlavním METS, osm pro vedlejší METS a 25 pro PREMIS Object. Nejde o úplné pokrytí monografií ani o hotový validační engine.
+K 5. 10. 2026 registr obsahuje **91 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 14 pro soubory a jejich vazby v hlavním METS, osm pro vedlejší METS a 38 pro PREMIS Object. Nejde o úplné pokrytí monografií ani o hotový validační engine.
 
 | Skupina | Počet pravidel | Obsah a podklady |
 |---|---:|---|
@@ -20,6 +20,7 @@ K 5. 10. 2026 registr obsahuje **78 pravidel pro DMF Monografie 2.3**: 13 pro te
 | Vedlejší METS | 8 | [Inventář stránky, ADMID a fyzická mapa](mets-amd.md); včetně doložených nesouladů ve vzoru |
 | PREMIS Object | 17 | [Identifikace, charakteristiky, fixity, velikost a formát](premis-object.md); rozdíly PREMIS 2.2 a povinností DMF |
 | PREMIS – vznik a ochrana | 8 | [Úroveň ochrany, aplikace, data a původní název](premis-provenance.md); povinnosti M/R a ukázky MC, PS a ALTO |
+| PREMIS – vazby | 13 | [Vztahy objektů a událostí](premis-relationships.md); odkazy MC/ALTO, přímé odkazy PS a výkladové meze vzoru |
 
 Deset pravidel rozměrů, vzorkování a barevného kódování je popsáno v [rozboru obrazových metadat MIX](mix-image-characteristics.md), včetně stránek DMF, XSD typů, podmínek a mezí ověření. Frekvence X/Y mají MA s konkrétní podmínkou fyzikální jednotky `in.` nebo `cm`. Nová skupina METS zachycuje slovní požadavky bez domýšlení původního kódu povinnosti.
 
@@ -39,6 +40,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Vedlejší METS a vazby na technická metadata](mets-amd.md) — jediná skupina, správné cíle ADMID a MONOGRAPH_PAGE.
 - [PREMIS Object](premis-object.md) — identifikace souboru, kontrolní součty, velikost a popis formátu.
 - [Vznik a ochrana souboru v PREMIS](premis-provenance.md) — úroveň ochrany, aplikace, data a původní název.
+- [Vazby objektů a událostí PREMIS](premis-relationships.md) — relationship pro MC/ALTO a linkingEventIdentifier pro PS.
 
 ## Rozhraní registru a API
 

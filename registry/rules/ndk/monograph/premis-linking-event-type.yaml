@@ -1,0 +1,86 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-LINKING-EVENT-TYPE"
+title:
+  cs: "Kontext přímého identifikátoru události PS"
+description:
+  cs: "Vazby souborových objektů a událostí podle DMF Monografie 2.3; obecný model PREMIS 2.2 a obsah vzorového SIP jsou rozlišeny."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-LINKING-EVENT-TYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-relationships"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Každý přímý odkaz PS na událost obsahuje typ identifikátoru."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "V každém linkingEventIdentifier objektu PS požadovat jeden typ identifikátoru a použít jej společně s hodnotou k dohledání eventIdentifier cílové události."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "PS"
+        -
+          field: "premis_object_type"
+          operator: "equals"
+          value: "file"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 79
+      section: "7.5.1 PREMIS Object — linkingEventIdentifier/linkingEventIdentifierType"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "linkingEventIdentifierComplexType/linkingEventIdentifierType (1–1); xs:string"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "75–76"
+        section: "Legenda povinností a rozsah PREMIS Object"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 78–79 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. XPath kontrola první stránky dodaného SIP rozlišila přímé a vnořené odkazy; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "UUID, NK_eventID či vlastní číslovací systém jsou příklady. Nejde o eventType, MIME typ ani povinnost konkrétního prefixu. Prvek se posuzuje v každém linkingEventIdentifier přímo pod objektem PS. Kardinalita platí v každém bezprostředním rodiči uvedené cesty. Kód M je převzat z DMF. Podmínka premis_object_type=file znamená rozlišený typ v namespace PREMIS, ne konkrétní XML prefix. ALTO odpovídá XML v tabulce. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci. V objektu PS první stránky chybí celý přímý linkingEventIdentifier, proto zde není vymyšlený výřez jeho dítěte; doklad a rozpor jsou u pravidla LINKING-EVENT."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-LINKING-EVENT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-LINKING-EVENT-VALUE"

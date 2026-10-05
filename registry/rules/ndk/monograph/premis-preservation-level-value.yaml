@@ -132,6 +132,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-LINKING-EVENT"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-PRESERVATION-LEVEL"
   -
     type: "related_to"

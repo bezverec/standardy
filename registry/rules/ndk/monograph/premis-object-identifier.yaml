@@ -109,6 +109,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-RELATIONSHIP"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-PRESERVATION-LEVEL"
   -
     type: "related_to"

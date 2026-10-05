@@ -81,4 +81,5 @@ nav:
       - Vedlejší METS a technická metadata: development/mets-amd.md
       - Identifikace, fixity a formát PREMIS Object: development/premis-object.md
       - Vznik a ochrana souboru v PREMIS: development/premis-provenance.md
+      - Vazby objektů a událostí PREMIS: development/premis-relationships.md
       - Lokální vývoj: development/local-development.md
