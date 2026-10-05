@@ -73,6 +73,7 @@ nav:
       - Architektura: development/architecture.md
       - Datový model: development/registry-data-model.md
       - Kategorie a graf vztahů: development/graph-and-categories.md
+      - XML ukázky ze vzorového SIP: development/xml-examples.md
       - Případ ICC profile version: development/icc-profile-version.md
       - Rozměry, vzorkování a barva v MIX: development/mix-image-characteristics.md
       - Informace o balíčku info.xml: development/info-xml.md

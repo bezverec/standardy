@@ -103,7 +103,17 @@ nav{flex-wrap:wrap}
 .lead{color:var(--muted);font-size:1.05rem;max-width:900px}
 .graph-section{margin:2.5rem 0}
 .graph-intro{max-width:800px;color:var(--muted)}
-.graph-scroll{overflow:auto;max-width:100%;max-height:650px;padding:.5rem 0 1rem}
+.graph-scroll{overflow:auto;max-width:100%;height:clamp(520px,var(--graph-height,720px),1100px);border:1px solid var(--line);background:#fff}
+.graph-canvas{min-width:0;min-height:0}
+.code-example{border-top:1px solid var(--line);padding-top:1rem;margin-top:1.5rem}
+.code-example-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.code-example-heading h3{margin:0}
+.code-example [role=status]:empty{display:none}
+.code-example pre{max-width:100%;max-height:36rem;overflow:auto;padding:1rem;background:#f6f8fb;border:1px solid var(--line);white-space:pre}
+.code-example pre code{font-size:.9rem;line-height:1.6;overflow-wrap:normal}
+.example-provenance{margin-top:1rem}
+.example-provenance dt{font-weight:600;margin-top:.75rem}
+.example-provenance dd{margin:.25rem 0;overflow-wrap:anywhere}
 .graph-toolbar{display:flex;gap:1rem;flex-wrap:wrap;align-items:end;background:var(--paper);padding:1rem;border:1px solid var(--line)}
 .graph-toolbar>label{display:grid;gap:.3rem;min-width:160px;font-size:.875rem}
 .graph-toolbar .graph-label-toggle{display:flex;align-items:center;min-width:0;padding:.6rem 0}
@@ -120,7 +130,7 @@ nav{flex-wrap:wrap}
 .graph-table th,.graph-table td{padding:.8rem;text-align:left;border-bottom:1px solid var(--line);overflow-wrap:anywhere;vertical-align:top}
 .graph-table th{background:var(--paper);position:sticky;top:0}
 .graph-table small{display:block;color:var(--muted);font-size:.75rem;margin-top:.3rem}
-.knowledge-graph{min-width:900px;width:100%;height:auto;border:1px solid var(--line);border-radius:0;background:#fff}
+.knowledge-graph{display:block;width:100%;height:100%;border-radius:0;background:#fff}
 .graph-edge path{fill:none;stroke:var(--primary);stroke-width:1.5}
 .graph-edge text{fill:var(--primary);stroke:#fff;stroke-width:5px;paint-order:stroke;font:700 12px monospace}
 .graph-edge--implementation path{stroke:var(--muted);stroke-dasharray:6 5}

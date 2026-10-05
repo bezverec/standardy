@@ -26,6 +26,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Architektura](architecture.md) — Git/YAML, compiler, Cloudflare D1, Worker a společný web MkDocs/React/Swagger.
 - [Datový model](registry-data-model.md) — identity, verze, povinnosti M/MA/R/RA/O, podmínky, zdroje a vztahy.
 - [Kategorie a graf vztahů](graph-and-categories.md) — oblasti metadat, standardy, skrývání vazeb a tabulkový pohled.
+- [XML ukázky ze vzorového SIP](xml-examples.md) — kopírovatelný kód, původ výřezů a opakovatelné ověření.
 - [Lokální vývoj a nasazení](local-development.md) — instalace, sestavení, testy, import dat a publikování.
 - [Případ ICC profile version](icc-profile-version.md) — oddělení požadavku, sporné sémantiky a implementací.
 - [Rozměry, vzorkování a barva v MIX](mix-image-characteristics.md) — metodika přepisu nové skupiny.

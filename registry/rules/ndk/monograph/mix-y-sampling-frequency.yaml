@@ -60,6 +60,37 @@ versions:
         page: null
         section: "/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics/mix:ySamplingFrequency; rationalType"
         url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    examples:
+      - id: "sip-75faba8d-mix-y-sampling-frequency"
+        title:
+          cs: "Vzorkování MC v ose Y v kontextu jednotky"
+        language: xml
+        kind: source_excerpt
+        code: |-
+          <mix:SpatialMetrics xmlns:mix="http://www.loc.gov/mix/v20">
+            <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+            <mix:xSamplingFrequency>
+              <mix:numerator>15748</mix:numerator>
+              <mix:denominator>39</mix:denominator>
+            </mix:xSamplingFrequency>
+            <mix:ySamplingFrequency>
+              <mix:numerator>15748</mix:numerator>
+              <mix:denominator>39</mix:denominator>
+            </mix:ySamplingFrequency>
+          </mix:SpatialMetrics>
+        note:
+          cs: "MC, blok MIX_003 s identifikátorem MC_1_00010003_2R. Převzata je celá skupina včetně jednotky in. a obou os. Zlomek 15748/39 z MC je ponechán beze změny; výřez sám neověřuje soulad metadat s obrazovým souborem."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='MIX_003']/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics"
+        namespaces: {"mets":"http://www.loc.gov/METS/","mix":"http://www.loc.gov/mix/v20"}
+        checked_on: "2026-10-05"
     verification:
       status: verified
       date: "2026-10-05"

@@ -119,6 +119,11 @@ export async function validateRegistry(
     const nationalStandard = nationalStandardById.get(rule.national_standard.id);
     if (!nationalStandard) issues.push({ file: rule.source_file, message: `${rule.id} references unknown national standard ${rule.national_standard.id}` });
     for (const version of rule.versions) {
+      const exampleIds = new Set<string>();
+      for (const example of version.examples ?? []) {
+        if (exampleIds.has(example.id)) issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} has duplicate example ID ${example.id}` });
+        exampleIds.add(example.id);
+      }
       if (!options.relationsOnly && rule.national_standard.id.startsWith("ndk-")
         && Object.values(ndkObligations).includes(version.obligation) && !version.obligation_code) {
         issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} must preserve the source NDK obligation_code` });

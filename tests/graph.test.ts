@@ -54,7 +54,7 @@ describe("graph exploration", () => {
   it("lays out deterministic non-overlapping rectangles regardless of input order", () => {
     const visible = filterGraph(graph, { ...defaults, depth: 99 });
     const layout = layoutGraph(visible);
-    expect(layout.positions.get(graph.root)!.y).toBeLessThanOrEqual(200);
+    expect(layout.positions.get(graph.root)!.y + 48).toBe(layout.height / 2);
     expect(layoutGraph({ ...visible, nodes: [...visible.nodes].reverse() })).toEqual(layout);
     const positions = [...layout.positions.values()];
     for (const [index, a] of positions.entries()) {
@@ -62,5 +62,13 @@ describe("graph exploration", () => {
       expect(a.y + a.height).toBeLessThanOrEqual(layout.height);
       for (const b of positions.slice(index + 1)) expect(a.x + a.width <= b.x || b.x + b.width <= a.x || a.y + a.height <= b.y || b.y + b.height <= a.y).toBe(true);
     }
+  });
+  it("balances large neighbourhoods around the root instead of one long column", () => {
+    const large: KnowledgeGraphResponse = { root: "root", edges: [], nodes: [graph.nodes[0]!, ...Array.from({ length: 30 }, (_, index) => ({ id: `node-${index}`, kind: "standard_entity" as const }))] };
+    const layout = layoutGraph(large);
+    expect(layout.height).toBe(15 * 112 + 48);
+    const sides = [...layout.positions.entries()].filter(([id]) => id !== "root").map(([, position]) => position.x);
+    expect(sides.filter((x) => x === 24)).toHaveLength(15);
+    expect(sides.filter((x) => x === 832)).toHaveLength(15);
   });
 });

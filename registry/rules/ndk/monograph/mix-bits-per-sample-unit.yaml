@@ -48,6 +48,35 @@ versions:
         page: null
         section: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample/mix:bitsPerSampleUnit; typeOfBitsPerSampleUnitType"
         url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    examples:
+      - id: "sip-75faba8d-mix-bits-per-sample-unit"
+        title:
+          cs: "Typ vzorků v kontextu barevného kódování"
+        language: xml
+        kind: source_excerpt
+        code: |-
+          <mix:ImageColorEncoding xmlns:mix="http://www.loc.gov/mix/v20">
+            <mix:BitsPerSample>
+              <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+              <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+              <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+              <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+            </mix:BitsPerSample>
+            <mix:samplesPerPixel>3</mix:samplesPerPixel>
+          </mix:ImageColorEncoding>
+        note:
+          cs: "MC, blok MIX_003 s identifikátorem MC_1_00010003_2R. integer je jednotka uvedená u skupiny BitsPerSample ve vzoru. Celá skupina je zachována, aby byl vidět vztah k hodnotám 8 a počtu složek."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='MIX_003']/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding"
+        namespaces: {"mets":"http://www.loc.gov/METS/","mix":"http://www.loc.gov/mix/v20"}
+        checked_on: "2026-10-05"
     verification:
       status: verified
       date: "2026-10-05"

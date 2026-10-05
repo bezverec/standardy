@@ -51,6 +51,29 @@ versions:
         page: null
         section: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation/mix:colorSpace; stringType"
         url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    examples:
+      - id: "sip-75faba8d-mix-color-space"
+        title:
+          cs: "Barevný prostor MC"
+        language: xml
+        kind: source_excerpt
+        code: |-
+          <mix:PhotometricInterpretation xmlns:mix="http://www.loc.gov/mix/v20">
+            <mix:colorSpace>RGB</mix:colorSpace>
+          </mix:PhotometricInterpretation>
+        note:
+          cs: "MC, blok MIX_003 s identifikátorem MC_1_00010003_2R. RGB je barevný prostor uvedený v MIX záznamu MC. Výřez nedokládá přítomnost ani verzi ICC profilu."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:techMD[@ID='MIX_003']/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation"
+        namespaces: {"mets":"http://www.loc.gov/METS/","mix":"http://www.loc.gov/mix/v20"}
+        checked_on: "2026-10-05"
     verification:
       status: verified
       date: "2026-10-05"

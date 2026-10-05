@@ -58,15 +58,14 @@ export function filterGraph(graph: KnowledgeGraphResponse, filters: GraphFilters
 }
 
 export function layoutGraph(graph: KnowledgeGraphResponse) {
-  const adjacent = new Set(graph.edges.filter((edge) => edge.from === graph.root || edge.to === graph.root).flatMap((edge) => [edge.from, edge.to]));
-  const sorted = [...graph.nodes].sort((a, b) => a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
-  const columns = [sorted.filter((node) => node.id === graph.root),
-    sorted.filter((node) => node.id !== graph.root && adjacent.has(node.id)),
-    sorted.filter((node) => node.id !== graph.root && !adjacent.has(node.id))];
-  const height = Math.max(260, Math.max(...columns.map((column) => column.length)) * 112 + 32);
+  const sorted = graph.nodes.filter((node) => node.id !== graph.root).sort((a, b) => a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
+  // Balance both sides of the root instead of growing one tall column of neighbours.
+  const split = Math.ceil(sorted.length / 2);
+  const columns = [sorted.slice(0, split), graph.nodes.filter((node) => node.id === graph.root), sorted.slice(split)];
+  const height = Math.max(320, split * 112 + 48);
   const positions = new Map<string, { x: number; y: number; width: number; height: number }>();
   columns.forEach((column, columnIndex) => column.forEach((node, row) => positions.set(node.id, {
-    x: 24 + columnIndex * 404, y: columnIndex === 0 ? Math.min(200, height / 2 - 48) : 16 + row * 112, width: 300, height: 96,
+    x: 24 + columnIndex * 404, y: columnIndex === 1 ? height / 2 - 48 : 24 + row * 112, width: 300, height: 96,
   })));
-  return { positions, width: columns[2]!.length ? 1240 : 830, height };
+  return { positions, width: 1240, height };
 }

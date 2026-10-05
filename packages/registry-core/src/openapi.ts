@@ -73,8 +73,8 @@ const relationFilters = [query("from", "ID výchozího uzlu."), query("to", "ID 
 
 export const openApiDocument = {
   openapi: "3.1.1",
-  info: { title: "Standardy digitalizace – Registry API", version: "1.2.0",
-    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.2.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření.",
+  info: { title: "Standardy digitalizace – Registry API", version: "1.3.0",
+    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.3.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření. Volitelné examples obsahují nenormativní XML výřezy s původem; nejsou potvrzením validity zdrojového balíčku.",
     contact: { name: "Návrhy a chyby", url: "https://github.com/bezverec/standardy/issues" },
   },
   servers: [{ url: "/api/v1", description: "API na stejném serveru jako dokumentace (produkce i lokální vývoj)." }],

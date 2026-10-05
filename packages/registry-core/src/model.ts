@@ -115,6 +115,21 @@ export type Condition =
 export type Obligation = "mandatory" | "mandatory_if_available" | "recommended" | "recommended_if_available" | "optional" | "forbidden" | "unspecified";
 export type NdkObligationCode = "M" | "MA" | "R" | "RA" | "O";
 
+export interface RuleExample {
+  id: string;
+  title: LocalizedText;
+  language: "xml";
+  kind: "source_excerpt";
+  code: string;
+  note: LocalizedText;
+  source: Source;
+  file_path: string;
+  file_sha256: string;
+  source_xpath: string;
+  namespaces: Record<string, string>;
+  checked_on: string;
+}
+
 export interface RuleVersion {
   version: string;
   status: RegistryStatus;
@@ -129,6 +144,7 @@ export interface RuleVersion {
   condition?: Condition;
   source: Source;
   references?: Source[];
+  examples?: RuleExample[];
   verification: Verification;
   interpretation?: LocalizedText;
   implementations?: Array<{

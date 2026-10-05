@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import { api, type KnowledgeGraphResponse, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
 import { RelationshipGraph } from "./RelationshipGraph.tsx";
+import { CodeExamples } from "./CodeExamples.tsx";
 import { graphNodeLabel } from "./graph.ts";
 import { metadataAreas, metadataStandards, targetStandardId } from "../../../packages/registry-core/src/metadata-taxonomy.ts";
 import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts";
@@ -166,6 +167,7 @@ function RuleDetail({ id }: { id: string }) {
       <header className="detail-header"><div><p className="eyebrow">Detail pravidla</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze standardu NDK<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{labels[rule.verification.status]}</Status></div></header>
       <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Úroveň povinnosti</span><Status>{obligationLabel(rule)}</Status><ObligationHelp /></div></div>
       <section className="layer layer--normative"><p className="layer-label">Požadavek NDK · {labels[rule.status] ?? rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><details><summary>Strojový zápis a podmínky platnosti</summary><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Podmínka</h3><JsonBlock value={rule.condition} /></>}</details></section>
+      {rule.examples && <CodeExamples key={`${id}@${rule.version}`} examples={rule.examples} />}
       {issues.length > 0 && <aside className="layer"><p className="layer-label">Diskuse · nenormativní</p><h2>Související issues</h2>{issues.map((issue) => <p key={issue.url}><a href={issue.url} target="_blank" rel="noopener noreferrer">{issue.title} — otevřít diskusi</a></p>)}</aside>}
       <section className="detail-grid"><article><p className="layer-label">Výklad registru</p><h2>Interpretace</h2><p>{evidence(localized(rule.interpretation))}</p></article><article><p className="layer-label">Ověření přepisu</p><h2>Stav ověření</h2><p>{labels[rule.verification.status]} · {rule.verification.date ?? "Datum neuvedeno"}</p><p>{evidence(rule.verification.reference ?? "")}</p></article></section>
       <section className="graph-section"><p className="layer-label">Prameny</p><h2>NDK a původní zdroje</h2><div className="card-grid"><SourceCard source={rule.source} />{rule.references?.map((source, index) => <SourceCard key={index} source={source} />)}</div></section>

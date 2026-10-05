@@ -96,6 +96,24 @@
         "behaviour": { "$ref": "#/$defs/localized" }
       }
     },
+    "example": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "title", "language", "kind", "code", "note", "source", "file_path", "file_sha256", "source_xpath", "namespaces", "checked_on"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/localized" },
+        "language": { "const": "xml" },
+        "kind": { "const": "source_excerpt", "description": "Pozorovaný výřez ze zdrojového XML; neprokazuje soulad celého dokumentu s NDK." },
+        "code": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "note": { "$ref": "#/$defs/localized" },
+        "source": { "$ref": "#/$defs/source" },
+        "file_path": { "type": "string", "minLength": 1, "description": "Cesta uvnitř zdrojového balíčku, nikoli lokální cesta na počítači." },
+        "file_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "source_xpath": { "type": "string", "minLength": 1 },
+        "namespaces": { "type": "object", "additionalProperties": { "type": "string", "format": "uri" } },
+        "checked_on": { "type": "string", "format": "date" }
+      }
+    },
     "ruleVersion": {
       "type": "object", "additionalProperties": false,
       "required": ["version", "status", "target", "relation_to_target", "category", "obligation", "normative_requirement", "requirement", "source", "verification"],
@@ -168,6 +186,7 @@
         },
         "verification": { "$ref": "#/$defs/verification" },
         "interpretation": { "$ref": "#/$defs/localized" },
+        "examples": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/example" } },
         "implementations": { "type": "array", "items": { "$ref": "#/$defs/implementation" } },
         "discrepancies": { "type": "array", "items": { "$ref": "#/$defs/localized" } },
         "validator_behaviour": { "$ref": "#/$defs/localized" },

@@ -37,6 +37,7 @@ Swagger umožňuje prohlédnout datové typy a vyzkoušet GET operace. Jeho tla�
 - Oddělený požadavek standardu, interpretaci, původní prameny, známé rozpory a chování konkrétních verzí nástrojů.
 - Interaktivní graf s volbou rozsahu, skrýváním typů vztahů i kategorií uzlů a alternativní tabulkou vazeb; viz [kategorie a graf vztahů](docs/development/graph-and-categories.md).
 - Návrhy změn přes GitHub a odkazy na související diskuse.
+- [XML ukázky ze vzorového SIP](docs/development/xml-examples.md) u 17 pravidel, s kopírováním, XPath a otiskem zdrojového souboru. Jde o doložené výřezy, nikoli univerzální šablony nebo potvrzení validity balíčku.
 
 ### Jak číst pravidlo
 

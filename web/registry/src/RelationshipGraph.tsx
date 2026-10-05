@@ -1,4 +1,4 @@
-import { useId, useMemo, useState, type MouseEvent } from "react";
+import { useId, useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import type { KnowledgeGraphNode, KnowledgeGraphResponse } from "./api.ts";
 import { metadataAreas } from "../../../packages/registry-core/src/metadata-taxonomy.ts";
 import { filterGraph, graphKindLabels, graphNodeAreas, graphNodeLabel, graphNodeTopics, layoutGraph, relationLabels } from "./graph.ts";
@@ -30,6 +30,7 @@ export function RelationshipGraph({ graph, onNavigate, topicLabels }: {
   const instanceId = useId().replaceAll(":", "");
   const [depth, setDepth] = useState(1);
   const [view, setView] = useState("graph");
+  const [zoom, setZoom] = useState(1);
   const [showLabels, setShowLabels] = useState(false);
   const [hiddenTypes, setHiddenTypes] = useState<Set<string>>(() => new Set());
   const [hiddenKinds, setHiddenKinds] = useState<Set<string>>(() => new Set());
@@ -55,12 +56,13 @@ export function RelationshipGraph({ graph, onNavigate, topicLabels }: {
     const href = node && destination(node);
     return href ? <a href={href} onClick={onNavigate}>{label(id)}</a> : label(id);
   };
-  const reset = () => { setDepth(1); setHiddenTypes(new Set()); setHiddenKinds(new Set()); setHiddenAreas(new Set()); setHiddenTopics(new Set()); setShowLabels(false); setView("graph"); };
+  const reset = () => { setDepth(1); setHiddenTypes(new Set()); setHiddenKinds(new Set()); setHiddenAreas(new Set()); setHiddenTopics(new Set()); setShowLabels(false); setView("graph"); setZoom(1); };
 
   return <div className="graph-explorer">
     <div className="graph-toolbar">
       <label>Zobrazení<select value={view} onChange={(event) => setView(event.target.value)}><option value="graph">Graf</option><option value="table">Tabulka vazeb</option></select></label>
       <label>Rozsah vazeb<select value={depth} onChange={(event) => setDepth(Number(event.target.value))}><option value={1}>Přímé vazby</option><option value={2}>Do dvou kroků</option><option value={99}>Celé dostupné okolí</option></select></label>
+      {view === "graph" && <label>Měřítko<select value={zoom} onChange={(event) => setZoom(Number(event.target.value))}><option value={1}>Celý graf</option><option value={1.5}>Zvětšit 1,5×</option><option value={2}>Zvětšit 2×</option><option value={3}>Zvětšit 3×</option></select></label>}
       <label className="graph-label-toggle"><input type="checkbox" checked={showLabels} onChange={(event) => setShowLabels(event.target.checked)} disabled={view !== "graph"} />Popisky vazeb</label>
       <button onClick={reset}>Obnovit výchozí</button>
     </div>
@@ -73,9 +75,10 @@ export function RelationshipGraph({ graph, onNavigate, topicLabels }: {
     <p role="status" aria-live="polite" className="graph-count">Zobrazeno {visible.nodes.length} z {graph.nodes.length} uzlů a {visible.edges.length} z {graph.edges.length} vazeb. Výchozí pravidlo zůstává viditelné; odpojené uzly se skryjí.</p>
     {!visible.edges.length && <p className="state">Vybraným filtrům neodpovídá žádná vazba. Zkuste obnovit výchozí zobrazení.</p>}
     {view === "table" ? <div className="graph-table-scroll"><table className="graph-table"><caption>Vazby po použití filtrů; směr je od zdroje k cíli.</caption><thead><tr><th scope="col">Zdroj</th><th scope="col">Vztah →</th><th scope="col">Cíl</th></tr></thead><tbody>{visible.edges.map((edge, index) => <tr key={edge.id ?? `${edge.from}-${edge.type}-${edge.to}-${index}`}><td>{nodeLink(edge.from)}<small>{edge.from}</small></td><td>{relationLabels[edge.type] ?? edge.type}</td><td>{nodeLink(edge.to)}<small>{edge.to}</small></td></tr>)}</tbody></table></div>
-      : <div className="graph-scroll" tabIndex={0} aria-label="Graf vztahů pravidla, posuvná oblast">
-        <svg className="knowledge-graph" viewBox={`0 0 ${layout.width} ${layout.height}`} aria-labelledby={`${instanceId}-title`}>
-          <title id={`${instanceId}-title`}>Filtrované vztahy pravidla {graph.root}</title>
+      : <div className="graph-scroll" style={{ "--graph-height": `${layout.height}px` } as CSSProperties} tabIndex={0} aria-label={zoom === 1 ? "Graf vztahů pravidla, celý graf" : "Zvětšený graf vztahů pravidla, posuvná oblast"}>
+        <div className="graph-canvas" style={{ width: `${zoom * 100}%`, height: `${zoom * 100}%` }}>
+        <svg className="knowledge-graph" viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="xMidYMid meet" aria-labelledby={`${instanceId}-title`}>
+          <title id={`${instanceId}-title`}>{`Filtrované vztahy pravidla ${graph.root}`}</title>
           <defs><marker id={`${instanceId}-arrow`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" /></marker></defs>
           <g>{visible.edges.map((edge, index) => {
             const from = layout.positions.get(edge.from)!, to = layout.positions.get(edge.to)!;
@@ -84,7 +87,7 @@ export function RelationshipGraph({ graph, onNavigate, topicLabels }: {
             const x2 = to.x + (forward ? 0 : to.width), y2 = to.y + to.height / 2;
             const control = same ? x1 + 70 : (x1 + x2) / 2;
             return <g key={edge.id ?? `${edge.from}-${edge.type}-${edge.to}-${index}`} className={`graph-edge${["generated_by", "validated_by", "implements"].includes(edge.type) ? " graph-edge--implementation" : ""}`}>
-              <title>{label(edge.from)} — {relationLabels[edge.type] ?? edge.type} → {label(edge.to)}</title>
+              <title>{`${label(edge.from)} — ${relationLabels[edge.type] ?? edge.type} → ${label(edge.to)}`}</title>
               <path d={`M ${x1} ${y1} C ${control} ${y1}, ${control} ${y2}, ${x2} ${y2}`} markerEnd={`url(#${instanceId}-arrow)`} />
               {showLabels && <text x={control} y={(y1 + y2) / 2 - 6} textAnchor="middle">{relationLabels[edge.type] ?? edge.type}</text>}
             </g>;
@@ -94,12 +97,13 @@ export function RelationshipGraph({ graph, onNavigate, topicLabels }: {
             const content = <g className={`graph-node graph-node--${node.kind}`} transform={`translate(${position.x} ${position.y})`}>
               <rect width={position.width} height={position.height} /><text className="graph-node-kind" x="16" y="20">{node.id === graph.root ? "Aktuální pravidlo" : graphKindLabels[node.kind]}</text>
               <text className="graph-node-title" x="16" y="43">{lines(graphNodeLabel(node)).map((line, index) => <tspan key={index} x="16" dy={index ? 18 : 0}>{line}</tspan>)}</text>
-              <title>{graphNodeLabel(node)} ({node.id})</title>
+              <title>{`${graphNodeLabel(node)} (${node.id})`}</title>
             </g>;
             const href = destination(node);
             return href ? <a key={node.id} href={href} onClick={onNavigate} aria-label={graphNodeLabel(node)}>{content}</a> : <g key={node.id}>{content}</g>;
           })}</g>
         </svg>
+        </div>
       </div>}
   </div>;
 }

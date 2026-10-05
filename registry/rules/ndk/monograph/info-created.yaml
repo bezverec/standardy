@@ -57,6 +57,27 @@ versions:
         page: null
         section: "/info/created"
         url: "https://standardy.ndk.cz/ndk/spec2014/info1_1.xsd"
+    examples:
+      - id: "sip-75faba8d-info-created"
+        title:
+          cs: "Čas vytvoření balíčku"
+        language: xml
+        kind: source_excerpt
+        code: |-
+          <created>2026-06-29T13:48:13</created>
+        note:
+          cs: "Datum je převzaté ze vzoru; nejde o datum, které má používat jiný balíček."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "info_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "info_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "0ede408570bb97daf563f92667c17a021daeaeba5ed3aa9f24b400f8fa84059c"
+        source_xpath: "/info/created"
+        namespaces: {}
+        checked_on: "2026-10-05"
     verification:
       status: "verified"
       date: "2026-10-05"

@@ -1,5 +1,6 @@
 import type { Relation } from "./explore.ts";
 import type { NdkObligationCode, Obligation } from "../../../packages/registry-core/src/model.ts";
+import type { RuleExample } from "../../../packages/registry-core/src/model.ts";
 
 export interface RuleVersion {
   rule_id: string;
@@ -18,6 +19,7 @@ export interface RuleVersion {
   condition?: unknown;
   source: Record<string, unknown>;
   references?: Array<Record<string, unknown>>;
+  examples?: RuleExample[];
   verification: { status: string; date: string | null; reference: string | null };
   interpretation?: Record<string, string>;
   implementations?: Implementation[];
