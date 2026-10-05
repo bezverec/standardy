@@ -19,9 +19,93 @@ versions:
       document: "METS XML Schema"
       version: "1.9.1"
       page: null
-      section: "metsType včetně kořene a metsHdr; fileGrpType, fileType, divType, LOCATION, FILECORE"
+      section: "metsType včetně kořene a metsHdr; fileGrpType, fileType, divType, structMapType, structLinkType, LOCATION, FILECORE"
       url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
 entities:
+  -
+    id: "METS-STRUCTLINK"
+    type: "element"
+    version: "1.9.1"
+    name: "structLink"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Propojení strukturálních map"
+    definition:
+      cs: "MetsType dovoluje 0–1 structLink. StructLinkType obsahuje opakovanou volbu smLink nebo smLinkGrp; předepsané propojení logické a fyzické mapy NDK patří do pravidel."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/structLink; structLinkType"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a povinnost atributů ověřeny v deklaracích oficiálního XSD METS 1.9.1; národní omezení vedena odděleně."
+  -
+    id: "METS-SMLINK"
+    type: "element"
+    version: "1.9.1"
+    name: "smLink"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Vazba strukturálních uzlů"
+    definition:
+      cs: "SmLink je prázdný element v opakované volbě structLinkType. Jeho deklarace vyžaduje xlink:from a xlink:to; alternativou obecného XSD je smLinkGrp. Směr mezi konkrétními typy map stanoví NDK."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "structLinkType/smLink"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a povinnost atributů ověřeny v deklaracích oficiálního XSD METS 1.9.1; národní omezení vedena odděleně."
+  -
+    id: "METS-SMLINK-FROM"
+    type: "attribute"
+    version: "1.9.1"
+    name: "smLink/@xlink:from"
+    namespace: "http://www.w3.org/1999/xlink"
+    title:
+      cs: "Zdroj strukturální vazby"
+    definition:
+      cs: "Povinný atribut xlink:from v deklaraci smLink. Výběr ID logického div a jeho sémantické ověření pro NDK jsou samostatné národní pravidlo."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "structLinkType/smLink/@xlink:from"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a povinnost atributů ověřeny v deklaracích oficiálního XSD METS 1.9.1; národní omezení vedena odděleně."
+  -
+    id: "METS-SMLINK-TO"
+    type: "attribute"
+    version: "1.9.1"
+    name: "smLink/@xlink:to"
+    namespace: "http://www.w3.org/1999/xlink"
+    title:
+      cs: "Cíl strukturální vazby"
+    definition:
+      cs: "Povinný atribut xlink:to v deklaraci smLink. Omezení na ID fyzického stránkového div pro NDK je samostatné národní pravidlo."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "structLinkType/smLink/@xlink:to"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a povinnost atributů ověřeny v deklaracích oficiálního XSD METS 1.9.1; národní omezení vedena odděleně."
   -
     id: "METS-STRUCTMAP-LABEL"
     type: "attribute"

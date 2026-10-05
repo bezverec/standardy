@@ -1,6 +1,6 @@
 # XML ukázky ze vzorového SIP
 
-U 117 pravidel DMF Monografie 2.3 je dostupných 147 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, třicet čtyři pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 147 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 126 pravidel DMF Monografie 2.3 je dostupných 160 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtyřicet tři pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 160 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
 ## Původ a meze ověření
 
@@ -19,6 +19,7 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 
 ## Důležité příklady
 
+- [Logická mapa a výčet stran](mets-logical.md) přidávají 13 výřezů u devíti pravidel; pravidlo titulu vícesvazkové monografie nemá ukázku, protože dodaný SIP je jednodílný. Úplný structLink zachovává všech 16 vazeb, nikoli předepsaný počet pro jiné knihy.
 - [Fyzická mapa](mets-physical.md) přidává 17 výřezů u 12 pravidel, včetně porovnání s MODS a doloženého rozdílu mezi cílem ADMID v DMF a dokumentaci METS. Plné mapy obsahují všech 16 stran vzoru; číslo 16 není normativní požadavek.
 
 - [Vedlejší METS](mets-amd.md) obsahuje doložené nevyhovující ukázky: čtyři fileGrp namísto jedné skupiny a ADMID, která odkazují na existující, ale sémanticky nesprávné technické záznamy. Výřezy se záměrně neopravují. Identifikátory PREMIS a základní informace MIX jsou připojené jako další ukázky důkazu.

@@ -138,6 +138,7 @@ Object.assign(labels, {
   "structure/mets-files": "METS · soubory a jejich vazby",
   "structure/mets-header": "METS · kořen a hlavička",
   "structure/mets-physical": "METS · fyzická mapa",
+  "structure/mets-logical": "METS · logická mapa a vazby",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",
   "technical/premis-provenance": "PREMIS · vznik a ochrana souboru",

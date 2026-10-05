@@ -214,6 +214,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-METS-LOGICAL-SIMPLE-PAGE-COVERAGE"
+  -
+    type: "related_to"
     target: "NDK-MONO-METS-PHYSICAL-MAP"
   -
     type: "related_to"

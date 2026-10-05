@@ -1,0 +1,127 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-LOGICAL-SMLINK-FROM"
+title:
+  cs: "Zdroj vazby: logický uzel"
+description:
+  cs: "Logická struktura a propojení stran hlavního METS podle DMF Monografie 2.3; obecná vazební pravidla jsou oddělena od varianty bez popisu vnitřních částí."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-SMLINK-FROM"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-logical"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Atribut xlink:from v smLink obsahuje ID uzlu div z logické strukturální mapy."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat atribut from v namespace http://www.w3.org/1999/xlink a ověřit hodnotu proti ID právě jednoho div v logické mapě téhož METS. Nestačí neexistující ID, dmdSec, file, fyzický div ani pouhá shoda prefixu. Nepřidávat znak #."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "structlink_smlink"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 99
+      section: "7.8 METS část structLink – Výčet stran"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "structMapType; divType; metsType/structLink; structLinkType/smLink"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    examples:
+      -
+        id: "sip-main-mets-logical-smlink-from-1"
+        title:
+          cs: "Vazba logického svazku na první stránku"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0000" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mets="http://www.loc.gov/METS/" />
+        note:
+          cs: "Přesný výřez jednodílného vzorového SIP, nikoli univerzální šablona ani potvrzení validity balíčku. Související cíle mohou ležet mimo výřez; celý vybraný element je zachován."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — logická mapa a výčet stran"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:structLink/mets:smLink[1]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+          xlink: "http://www.w3.org/1999/xlink"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-main-mets-logical-smlink-from-2"
+        title:
+          cs: "Logický uzel svazku"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:div DMDID="MODSMD_VOLUME_0001" ID="VOLUME_0001" LABEL="Tomáš Alva Edison a jeho fonograf, [1890]" TYPE="VOLUME" xmlns:mets="http://www.loc.gov/METS/" />
+        note:
+          cs: "Přesný výřez jednodílného vzorového SIP, nikoli univerzální šablona ani potvrzení validity balíčku. Související cíle mohou ležet mimo výřez; celý vybraný element je zachován."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — logická mapa a výčet stran"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:structMap[@TYPE=\"LOGICAL\"]/mets:div/mets:div[@ID=\"VOLUME_0001\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+          xlink: "http://www.w3.org/1999/xlink"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Požadavek porovnán s DMF 2.3, zejména vykreslenými s. 98–99, a s deklaracemi METS XSD 1.9.1. XML výřezy doloženy XPath a SHA-256. Externí validátor ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "Jde o ID strukturálního uzlu, nikoli jeho LABEL, DMDID nebo cestu k souboru. Deklarace smLink v XSD vyžaduje xlink:from i xlink:to; sémantický směr LOGICAL → PHYSICAL stanoví DMF. Nezavádíme povinnost xlink:href ani xlink:type. Povinnosti jsou slovní, bez domyšleného kódu M/MA/R/RA/O. Kontext no_internal_parts vychází ze zvoleného rozsahu popisu, nikoli pouze z chybějících kapitol. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci, nikoli doložené chování externího validátoru."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-LOGICAL-MAP"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-LOGICAL-SMLINK"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-LOGICAL-STRUCTLINK"

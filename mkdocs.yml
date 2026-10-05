@@ -86,4 +86,5 @@ nav:
       - Původci událostí PREMIS Agent: development/premis-agents.md
       - Kořen a hlavička hlavního METS: development/mets-header.md
       - Fyzická mapa hlavního METS: development/mets-physical.md
+      - Logická mapa a výčet stran: development/mets-logical.md
       - Lokální vývoj: development/local-development.md

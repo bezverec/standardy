@@ -1,6 +1,6 @@
 # Fyzická mapa hlavního METS
 
-Dvanáct pravidel `structure/mets-physical` navazuje na [soubory a FILEID](mets-files.md) a [kořen a hlavičku](mets-header.md). Platí pro hlavní METS svazku podle DMF Monografie 2.3. Logická mapa, structLink a odkazy do bloků ALTO jsou jiná skupina; pravidla se nepřenášejí do [vedlejšího METS](mets-amd.md).
+Dvanáct pravidel `structure/mets-physical` navazuje na [soubory a FILEID](mets-files.md) a [kořen a hlavičku](mets-header.md). Platí pro hlavní METS svazku podle DMF Monografie 2.3. [Logická mapa a structLink](mets-logical.md) mají vlastní navazující skupinu; odkazy do bloků ALTO zatím nepokrýváme; pravidla se nepřenášejí do [vedlejšího METS](mets-amd.md).
 
 ## Zdroje a verze
 

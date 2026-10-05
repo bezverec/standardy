@@ -1,0 +1,83 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-LOGICAL-SIMPLE-TITLE-DMDID"
+title:
+  cs: "Popis titulu vícesvazkové monografie"
+description:
+  cs: "Logická struktura a propojení stran hlavního METS podle DMF Monografie 2.3; obecná vazební pravidla jsou oddělena od varianty bez popisu vnitřních částí."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-DIV-DMDID"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-logical"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "U vícesvazkové monografie bez popisu kapitol obsahuje logický uzel titulu DMDID odkazující na příslušná popisná metadata titulu."
+    requirement:
+      presence: "conditional"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Je-li dokument vícesvazková monografie, vyhledat logický uzel titulu a požadovat jeho DMDID na odpovídající dmdSec. Chybějící uzel titulu nesmí kontrolu vypnout. Ověřit skutečný význam metadat, nikoli jen prefix jejich ID."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "structmap_type"
+          operator: "equals"
+          value: "LOGICAL"
+        -
+          field: "logical_description_mode"
+          operator: "equals"
+          value: "no_internal_parts"
+        -
+          field: "monograph_is_multipart"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 98
+      section: "7.7.1.2.3 Vyjádření logické struktury bez popisu kapitol"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "structMapType; divType; metsType/structLink; structLinkType/smLink"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Požadavek porovnán s DMF 2.3, zejména vykreslenými s. 98–99, a s deklaracemi METS XSD 1.9.1. XML výřezy doloženy XPath a SHA-256. Externí validátor ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "Podmínka monograph_is_multipart vychází z dokumentu a rozsahu popisu, nikoli z existence uzlu nebo kontrolovaného atributu. Povinnost neplatí automaticky pro jednodílnou monografii. Dodaný jednodílný vzor nemá titulová metadata; umělou ukázku mu nepřipisujeme. Povinnosti jsou slovní, bez domyšleného kódu M/MA/R/RA/O. Kontext no_internal_parts vychází ze zvoleného rozsahu popisu, nikoli pouze z chybějících kapitol. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci, nikoli doložené chování externího validátoru."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-LOGICAL-MAP"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PHYSICAL-VOLUME-DMDID"

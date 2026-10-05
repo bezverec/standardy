@@ -1,0 +1,110 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-LOGICAL-STRUCTLINK"
+title:
+  cs: "Propojení logické a fyzické mapy"
+description:
+  cs: "Logická struktura a propojení stran hlavního METS podle DMF Monografie 2.3; obecná vazební pravidla jsou oddělena od varianty bez popisu vnitřních částí."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-STRUCTLINK"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-logical"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Hlavní METS obsahuje structLink s výčtem stran prostřednictvím vazeb mezi logickou a fyzickou mapou."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat jeden structLink v hlavním METS; jeho vazby ověřovat navazujícími pravidly pro smLink a odkazy."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 99
+      section: "7.8 METS část structLink – Výčet stran"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "structMapType; divType; metsType/structLink; structLinkType/smLink"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    examples:
+      -
+        id: "sip-main-mets-logical-structlink-1"
+        title:
+          cs: "Úplný výčet 16 stran vzoru"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:structLink xmlns:mets="http://www.loc.gov/METS/">
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0000" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0001" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0002" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0003" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0004" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0005" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0006" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0007" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0008" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0009" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0010" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0011" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0012" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0013" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0014" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0015" xmlns:xlink="http://www.w3.org/1999/xlink" />
+          </mets:structLink>
+        note:
+          cs: "Přesný výřez jednodílného vzorového SIP, nikoli univerzální šablona ani potvrzení validity balíčku. Související cíle mohou ležet mimo výřez; celý vybraný element je zachován."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — logická mapa a výčet stran"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:structLink"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+          xlink: "http://www.w3.org/1999/xlink"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Požadavek porovnán s DMF 2.3, zejména vykreslenými s. 98–99, a s deklaracemi METS XSD 1.9.1. XML výřezy doloženy XPath a SHA-256. Externí validátor ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "METS 1.9.1 obecně dovoluje 0–1 structLink. Povinnou přítomnost zde požaduje DMF; horní mez jedna vychází z XSD. Pravidlo není omezené na variantu bez kapitol. Povinnosti jsou slovní, bez domyšleného kódu M/MA/R/RA/O. Kontext no_internal_parts vychází ze zvoleného rozsahu popisu, nikoli pouze z chybějících kapitol. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci, nikoli doložené chování externího validátoru."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-LOGICAL-MAP"
