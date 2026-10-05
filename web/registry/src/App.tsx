@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import { api, type KnowledgeGraphNode, type KnowledgeGraphResponse, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
-import { filterRules, sourceIds, type Relation } from "./explore.ts";
+import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts";
+import { changeProposalUrl } from "./contribute.ts";
 
 function routePath(): string {
   const path = window.location.pathname.replace(/^\/registry\/?/, "/");
@@ -42,6 +43,10 @@ function Status({ children, tone = "neutral" }: { children: ReactNode; tone?: "n
   return <span className={`badge badge--${tone}`}>{children}</span>;
 }
 
+function ChangeProposal({ rule }: { rule?: { rule_id: string; version: string } }) {
+  return <a className="button" href={changeProposalUrl(rule)} target="_blank" rel="noopener noreferrer">Navrhnout změnu</a>;
+}
+
 function LoadingState({ state }: { state: { loading: boolean; error?: string } }) {
   if (state.loading) return <div className="state">Načítám data registru…</div>;
   if (state.error) return <div role="alert" className="state state--error"><strong>Záznam se nepodařilo načíst.</strong><p>{state.error}</p><button onClick={() => window.location.reload()}>Zkusit znovu</button></div>;
@@ -57,6 +62,7 @@ function Rules() {
   const [query, setQuery] = useState(initial.get("q") ?? "");
   const [filters, setFilters] = useState<Record<string, string>>(Object.fromEntries(["severity", "source", "national", "version", "category", "verification", "status", "object"].map((key) => [key, initial.get(key) ?? ""])));
   const rules = useMemo(() => filterRules(state.data?.data ?? [], query, filters, state.data?.relations ?? []), [state.data, query, filters]);
+  const counts = state.data ? ruleCounts(state.data.data) : undefined;
   useEffect(() => {
     const params = new URLSearchParams();
     if (query) params.set("q", query);
@@ -70,7 +76,7 @@ function Rules() {
   const values = (field: "version" | "category" | "status") => [...new Set(state.data?.data.map((rule) => rule[field]))].sort().map((value): [string, string] => [value, labels[value] ?? value]);
   const clear = () => { setQuery(""); setFilters(Object.fromEntries(Object.keys(filters).map((key) => [key, ""]))); };
   return <main>
-    <header className="page-header"><div><p className="eyebrow">Databáze standardů</p><h1>Pravidla NDK</h1><p>Požadavek, jeho význam a původní zdroj na jednom místě.</p></div><div className="count-label"><strong>{state.data?.data.length ?? "—"}</strong><span>verze pravidel</span></div></header>
+    <header className="page-header"><div><p className="eyebrow">Databáze standardů</p><h1>Pravidla NDK</h1><p>Požadavek, jeho význam a původní zdroj na jednom místě.</p></div><div className="page-actions"><div className="count-label" title="Jedno pravidlo může mít více záznamů pro různé verze standardu NDK."><strong>{counts?.rules ?? "—"}</strong><span>Počet pravidel</span><small>{counts?.records ?? "—"} verzovaných záznamů</small></div><ChangeProposal /></div></header>
     <LoadingState state={state} />
     {state.data && <>
       <label className="search-label">Hledat v celé databázi pravidel<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Název, element, požadavek, interpretace nebo zdroj…" /></label>
@@ -83,7 +89,7 @@ function Rules() {
         {filter("severity", "Závažnost", [["error", "Chyba"], ["warning", "Varování"], ["info", "Informace"]])}
         {filter("verification", "Ověření přepisu", [["verified", "Ověřeno"], ["unverified", "Neověřeno"], ["disputed", "Sporné"]])}
         {filter("status", "Stav požadavku", values("status"))}
-      </aside><section className="results"><div className="results-heading"><p role="status" aria-live="polite">Nalezeno <strong>{rules.length}</strong> z {state.data.pagination.total} verzí pravidel</p><span>Řazeno podle ID</span></div>
+      </aside><section className="results"><div className="results-heading"><p role="status" aria-live="polite">Nalezeno <strong>{rules.length}</strong> z {state.data.pagination.total} verzovaných záznamů</p><span>Řazeno podle ID</span></div>
         {!rules.length && <div className="state"><h2>Žádné pravidlo neodpovídá</h2><p>Zkuste kratší dotaz nebo uvolněte některý filtr.</p><button onClick={clear}>Vymazat hledání a filtry</button></div>}
         {rules.map((rule) => <RuleCard key={`${rule.rule_id}@${rule.version}`} rule={rule} relations={state.data!.relations} />)}
         <p className="coverage">Pokrytí MVP: ICC profily v DMF Monografie 2.3. Registr zatím neobsahuje všechna pravidla NDK.</p>
@@ -207,14 +213,22 @@ function RelationshipGraph({ graph }: { graph: KnowledgeGraphResponse }) {
 function RuleDetail({ id }: { id: string }) {
   const state = useAsync<RuleDetailResponse>(() => api.rule(id), [id]);
   const graphState = useAsync<KnowledgeGraphResponse>(() => api.why(id), [id]);
-  const [selectedVersion, setSelectedVersion] = useState("");
+  const initialVersion = new URLSearchParams(window.location.search).get("version") ?? "";
+  const [selectedVersion, setSelectedVersion] = useState(initialVersion);
   const versions = state.data?.versions ?? [];
   const rule = versions.find((item) => item.version === selectedVersion) ?? versions[0];
-  useEffect(() => { if (versions[0]) setSelectedVersion(versions[0].version); }, [state.data]);
+  useEffect(() => { if (versions[0]) setSelectedVersion(versions.find((item) => item.version === initialVersion)?.version ?? versions[0].version); }, [state.data]);
+  useEffect(() => {
+    if (!rule) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("version", rule.version);
+    history.replaceState({}, "", url);
+  }, [rule?.version]);
   return <main>
     <Link to="/rules" className="back">← Všechna pravidla</Link>
     <LoadingState state={state} />
     {rule && <>
+      <div className="contribute-action"><ChangeProposal rule={rule} /></div>
       <header className="detail-header"><div><p className="eyebrow">Detail pravidla</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze standardu NDK<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{labels[rule.verification.status]}</Status></div></header>
       <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Závažnost</span><Status tone={rule.severity === "error" ? "error" : "warn"}>{labels[rule.severity]}</Status></div></div>
       <section className="layer layer--normative"><p className="layer-label">Požadavek NDK · {labels[rule.status] ?? rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><details><summary>Strojový zápis a podmínky platnosti</summary><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Podmínka</h3><JsonBlock value={rule.condition} /></>}</details></section>
@@ -266,5 +280,5 @@ export function App() {
   else if (standard?.[1]) page = <EntityDetail type="standards" id={decodeURIComponent(standard[1])} />;
   else if (path === "/national-standards" || path === "/national-standards/") page = <EntityList type="national-standards" />;
   else if (nationalStandard?.[1]) page = <EntityDetail type="national-standards" id={decodeURIComponent(nationalStandard[1])} />;
-  return <div className="app-shell"><header className="topbar"><Link to="/rules" className="brand"><span>NDK</span><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/rules" className={path === "/" || path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link></nav></header>{page}<footer><span>Verzovaná data v YAML · Částečné pokrytí NDK</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api/v1/meta">API v1</a></footer></div>;
+  return <div className="app-shell"><header className="topbar"><Link to="/rules" className="brand"><span>NDK</span><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/rules" className={path === "/" || path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML · Částečné pokrytí NDK</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
 }

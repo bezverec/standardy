@@ -1,6 +1,9 @@
 import type { RuleVersion } from "./api.ts";
 
 export interface Relation { id: string; from: string; to: string; type: string; rule_version?: string }
+export function ruleCounts(rules: ReadonlyArray<Pick<RuleVersion, "rule_id">>) {
+  return { rules: new Set(rules.map((rule) => rule.rule_id)).size, records: rules.length };
+}
 export function normalize(text: string): string {
   return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("cs");
 }
