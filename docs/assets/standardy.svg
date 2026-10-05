@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#0a0d10"/>
+  <!-- A custom serif S outlined as a path: no font or network dependency. -->
+  <path fill="#fff" d="M48 11h-3l-2 3c-3-2-7-3-12-3-10 0-17 5-17 13 0 7 5 10 14 13l6 2c5 2 7 4 7 7 0 4-4 6-9 6-8 0-13-5-15-13h-3v15h3l2-3c4 2 8 3 13 3 11 0 18-5 18-14 0-7-5-11-14-14l-6-2c-5-2-8-3-8-6 0-4 4-6 9-6 7 0 12 4 14 11h3Z"/>
+</svg>

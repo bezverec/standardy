@@ -3,6 +3,7 @@ import { api, type KnowledgeGraphNode, type KnowledgeGraphResponse, type Registr
 import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts";
 import { changeProposalUrl } from "./contribute.ts";
 import { issueReferences, linkIssueMentions } from "./evidence.ts";
+import standardyMark from "../../../docs/assets/standardy.svg";
 
 function routePath(): string {
   const path = window.location.pathname.replace(/^\/registry\/?/, "/");
@@ -291,5 +292,5 @@ export function App() {
   else if (standard?.[1]) page = <EntityDetail type="standards" id={decodeURIComponent(standard[1])} />;
   else if (path === "/national-standards" || path === "/national-standards/") page = <EntityList type="national-standards" />;
   else if (nationalStandard?.[1]) page = <EntityDetail type="national-standards" id={decodeURIComponent(nationalStandard[1])} />;
-  return <div className="app-shell"><header className="topbar"><Link to="/rules" className="brand"><span>NDK</span><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/rules" className={path === "/" || path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML · Částečné pokrytí NDK</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
+  return <div className="app-shell"><header className="topbar"><Link to="/rules" className="brand"><img src={standardyMark} width="44" height="44" alt="" /><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/rules" className={path === "/" || path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML · Částečné pokrytí NDK</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
 }

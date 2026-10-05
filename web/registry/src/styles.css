@@ -32,7 +32,7 @@ h3{font-size:1rem;margin:0 0 .6rem}
 .app-shell{min-height:100vh;display:flex;flex-direction:column}
 .topbar{display:flex;gap:2rem;align-items:center;background:var(--background);color:var(--ink);border-bottom:1px solid var(--line);padding:1.05rem clamp(1rem,3vw,3rem)}
 .brand{display:flex;align-items:center;gap:.8rem;text-decoration:none!important;color:var(--ink);line-height:1.15;font-weight:700;white-space:nowrap}
-.brand>span{display:grid;place-items:center;background:var(--ink);color:#fff;width:2.8rem;height:2.8rem;border-radius:0;font:800 .85rem monospace}
+.brand>img{display:block;width:2.8rem;height:2.8rem;flex-shrink:0}
 .brand small{display:block;color:var(--muted);font-size:.8rem;font-weight:400;margin-top:.3rem}
 nav{display:flex;gap:.4rem;flex:1}
 nav a{color:var(--text-secondary);text-decoration:none;padding:.65rem .9rem;font-size:.9rem;border-radius:0}

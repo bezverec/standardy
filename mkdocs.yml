@@ -9,6 +9,8 @@ copyright: CC BY-SA 4.0
 theme:
   name: material
   language: cs
+  logo: assets/standardy.svg
+  favicon: assets/standardy.svg
   features:
     - navigation.tabs
     - navigation.sections
