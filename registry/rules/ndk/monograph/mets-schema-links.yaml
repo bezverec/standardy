@@ -1,0 +1,74 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-SCHEMA-LINKS"
+title:
+  cs: "Odkazy na použitá metadatová schémata"
+description:
+  cs: "Kořen a hlavička hlavního METS podle DMF Monografie 2.3; oddělení požadavků NDK, obecného METS 1.9.1 a pozorování vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-ROOT"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-header"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Kořen hlavního METS obsahuje odkazy na specifikace použitých metadatových schémat: METS, MODS, Dublin Core a CopyrightMD."
+    requirement:
+      presence: "required"
+      validations:
+        -
+          type: "custom"
+          expression: "Na kořeni ověřit odkazy odpovídající skutečně použitým schématům a verzím. Je-li použito xsi:schemaLocation, rozdělit hodnotu podle XML whitespace na dvojice namespace URI a umístění schématu, zkontrolovat úplnost a správnost dvojic. Deklarace xmlns sama není odkazem na konkrétní XSD."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 18
+      section: "7.2 Kořenový element hlavního METS — mets"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "Globální mets; metsType"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+      -
+        document: "XML Schema Part 1: Structures"
+        version: "1.0, Second Edition"
+        page: null
+        section: "4.3.2 How schema definitions are located on the Web; xsi:schemaLocation"
+        url: "https://www.w3.org/TR/xmlschema-1/#schema-loc"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 18–19 DMF Monografie 2.3 a v oficiálním XSD METS 1.9.1. Kořenové atributy a hlavička dodaného hlavního METS zkontrolovány XPath a SHA-256; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Jde o slovní povinnost z úvodu § 7.2, bez původního kódu M. DMF v této větě neurčuje konkrétní serializaci odkazů ani neměnné doslovné URL. Zápis xsi:schemaLocation je zde doložený způsob, jeho párování určuje W3C. Namespace není verze XSD a obecné URL mets.xsd neprokazuje verzi 1.9.1. Pouhé načtení XML ani existence odkazu neprokazují validitu; automatické stahování neznámých URL není součástí kontroly. Kardinality atributů platí v příslušném rodiči; role CREATOR a ARCHIVIST mají vlastní kontrolu přítomnosti. Pole mets_header_agent_role označuje ROLE právě vybraného metsHdr/agent, nikoli PREMIS agenta nebo kořenové TYPE. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci. Kořen hlavního METS má přes 20 000 znaků; nezveřejňujeme celý dokument ani uměle zkrácený element jako přesný XML výřez. Pozorování jeho atributů je doloženo cestou, otiskem a rozborem v dokumentaci skupiny."
+    discrepancies:
+      -
+        cs: "V souboru mets_75faba8d-c629-11f0-8950-12e8557df20e.xml má /mets:mets/@xsi:schemaLocation 11 whitespace-oddělených URI: pět úplných dvojic a poslední nepárové http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd. Odpovídající namespace http://www.cdlib.org/inside/diglib/copyrightMD je deklarován přes xmlns:copyrightMD, ale ve dvojici schemaLocation chybí. Ověřeno 2026-10-05, SHA-256 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473. XML lze parsovat; jde o chybný seznam lokalizačních nápověd, nikoli důkaz výsledku externího validátoru nebo poškození digitalizátu. Zdroj nebyl opraven."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ROOT"

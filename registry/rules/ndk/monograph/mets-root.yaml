@@ -1,0 +1,83 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-ROOT"
+title:
+  cs: "Kořen hlavního METS"
+description:
+  cs: "Kořen a hlavička hlavního METS podle DMF Monografie 2.3; oddělení požadavků NDK, obecného METS 1.9.1 a pozorování vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-ROOT"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-header"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Hlavní METS jednoho svazku monografického dokumentu má kořenový element mets v namespace METS."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Ověřit kořen dokumentu jako {http://www.loc.gov/METS/}mets. Nestačí přítomnost stejnojmenného vnořeného elementu ani shoda prefixu."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 18
+      section: "7.2 Kořenový element hlavního METS — mets"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "Globální mets; metsType"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 18–19 DMF Monografie 2.3 a v oficiálním XSD METS 1.9.1. Kořenové atributy a hlavička dodaného hlavního METS zkontrolovány XPath a SHA-256; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Požadavek platí pro hlavní METS svazku. Neodvozujeme z něj nové povinnosti OBJID, ID nebo PROFILE, které tato tabulka neuvádí. Prefix mets není povinným doslovným řetězcem; rozhoduje namespace a lokální název. Kardinality atributů platí v příslušném rodiči; role CREATOR a ARCHIVIST mají vlastní kontrolu přítomnosti. Pole mets_header_agent_role označuje ROLE právě vybraného metsHdr/agent, nikoli PREMIS agenta nebo kořenové TYPE. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci. Kořen hlavního METS má přes 20 000 znaků; nezveřejňujeme celý dokument ani uměle zkrácený element jako přesný XML výřez. Pozorování jeho atributů je doloženo cestou, otiskem a rozborem v dokumentaci skupiny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ROOT-LABEL"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ROOT-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-SCHEMA-LINKS"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-HEADER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-INFO-MAIN-METS"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILESEC"

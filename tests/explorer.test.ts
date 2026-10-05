@@ -22,7 +22,7 @@ describe("registry exploration", () => {
 
   it("uses direct source relations without inheriting evidence from a related rule", () => {
     expect(sourceIds(rule, registry.relations)).toEqual(["ICC", "MIX", "NISO-Z3987"]);
-    const name = rules.find((item) => item.rule_id.endsWith("-NAME"))!;
+    const name = rules.find((item) => item.rule_id === "NDK-MONO-MIX-ICC-PROFILE-NAME")!;
     expect(sourceIds(name, registry.relations)).toEqual(["MIX", "NISO-Z3987"]);
     const renamedRelations = registry.relations.map((edge) => ({ ...edge,
       from: edge.from === rule.rule_id ? "OTHER-RULE" : edge.from,

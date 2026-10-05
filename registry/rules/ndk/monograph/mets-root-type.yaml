@@ -1,0 +1,70 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-ROOT-TYPE"
+title:
+  cs: "Typ Monograph na kořeni METS"
+description:
+  cs: "Kořen a hlavička hlavního METS podle DMF Monografie 2.3; oddělení požadavků NDK, obecného METS 1.9.1 a pozorování vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-ROOT-TYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-header"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Kořen hlavního METS má TYPE s přesnou hodnotou Monograph."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat kořenový atribut TYPE a porovnat jej s hodnotou Monograph včetně velikosti písmen."
+      allowed_values:
+        - "Monograph"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 18
+      section: "7.2 Kořenový element hlavního METS — mets/@TYPE"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/@TYPE; xs:string; optional"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 18–19 DMF Monografie 2.3 a v oficiálním XSD METS 1.9.1. Kořenové atributy a hlavička dodaného hlavního METS zkontrolovány XPath a SHA-256; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Obecné XSD připouští libovolný xs:string a atribut dovoluje vynechat. Hodnota Monograph pochází z DMF; není to TYPE agenta ORGANIZATION ani TYPE strukturální mapy PHYSICAL. Kardinality atributů platí v příslušném rodiči; role CREATOR a ARCHIVIST mají vlastní kontrolu přítomnosti. Pole mets_header_agent_role označuje ROLE právě vybraného metsHdr/agent, nikoli PREMIS agenta nebo kořenové TYPE. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci. Kořen hlavního METS má přes 20 000 znaků; nezveřejňujeme celý dokument ani uměle zkrácený element jako přesný XML výřez. Pozorování jeho atributů je doloženo cestou, otiskem a rozborem v dokumentaci skupiny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ROOT"

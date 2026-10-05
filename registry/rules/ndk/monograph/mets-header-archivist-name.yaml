@@ -1,0 +1,98 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-HEADER-ARCHIVIST-NAME"
+title:
+  cs: "Jméno vlastníka METS"
+description:
+  cs: "Kořen a hlavička hlavního METS podle DMF Monografie 2.3; oddělení požadavků NDK, obecného METS 1.9.1 a pozorování vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-HEADER-AGENT-NAME"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-header"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Vlastník METS má name označující organizaci; při tvorbě záznamu v knihovně se používá sigla, například ABA001 pro NK ČR."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "U každého agenta s ROLE=ARCHIVIST požadovat jedno name a ověřit označení vlastníka záznamu; v knihovním kontextu použít odpovídající siglu."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "mets_header_agent_role"
+          operator: "equals"
+          value: "ARCHIVIST"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 19
+      section: "7.3 METS hlavička — metsHdr/agent/name"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/metsHdr/agent/name (1–1); xs:string"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 18–19 DMF Monografie 2.3 a v oficiálním XSD METS 1.9.1. Kořenové atributy a hlavička dodaného hlavního METS zkontrolovány XPath a SHA-256; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Hodnota nemusí být odlišná od jména tvůrce: ve vzoru oba používají ABA001, ale mají různé role. Nevyvozujeme povinnou rovnost těchto jmen ani jejich rovnost s info/institution. Požadavek nelze zaměnit za PREMIS agentName. Kardinality atributů platí v příslušném rodiči; role CREATOR a ARCHIVIST mají vlastní kontrolu přítomnosti. Pole mets_header_agent_role označuje ROLE právě vybraného metsHdr/agent, nikoli PREMIS agenta nebo kořenové TYPE. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-mets-header-archivist-name"
+        title:
+          cs: "Jméno vlastníka METS — hlavní METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:name xmlns:mets="http://www.loc.gov/METS/">ABA001</mets:name>
+        note:
+          cs: "Úplný vybraný element hlavičky hlavního METS, beze změny hodnot. ABA001 označuje organizaci v tomto vzoru, není univerzální povinnou hodnotou. Ukázka není potvrzením validity celého SIP ani chování konkrétní implementace."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:metsHdr/mets:agent[@ROLE='ARCHIVIST']/mets:name"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-HEADER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-INFO-INSTITUTION"

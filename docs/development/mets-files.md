@@ -1,5 +1,7 @@
 # Soubory a jejich vazby v hlavním METS
 
+Kořenový záznam, hlavičku a role organizací popisuje samostatná skupina [Kořen a hlavička hlavního METS](mets-header.md).
+
 Skupina 14 pravidel `NDK-MONO-METS-*` popisuje **hlavní METS monografie podle DMF 2.3**. V mapě registru patří do strukturálních metadat, standardu METS a tématu „METS · soubory a jejich vazby“. Vazby propojují inventář s lokátory, kontrolními součty, fyzickou mapou a údaji v info.xml.
 
 ## Prameny a rozsah

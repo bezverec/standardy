@@ -19,9 +19,193 @@ versions:
       document: "METS XML Schema"
       version: "1.9.1"
       page: null
-      section: "metsType, fileGrpType, fileType, divType, LOCATION, FILECORE"
+      section: "metsType včetně kořene a metsHdr; fileGrpType, fileType, divType, LOCATION, FILECORE"
       url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
 entities:
+  -
+    id: "METS-ROOT"
+    type: "element"
+    version: "1.9.1"
+    name: "mets"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Kořen hlavního METS"
+    definition:
+      cs: "Kořenový element METS v namespace http://www.loc.gov/METS/, typ odvozený od metsType. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "Globální mets; metsType"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-ROOT-LABEL"
+    type: "attribute"
+    version: "1.9.1"
+    name: "mets/@LABEL"
+    title:
+      cs: "Název a rok vydání v LABEL"
+    definition:
+      cs: "Volitelný textový atribut kořene pro uživatelské označení objektu. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/@LABEL; xs:string; optional"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-ROOT-TYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "mets/@TYPE"
+    title:
+      cs: "Typ Monograph na kořeni METS"
+    definition:
+      cs: "Volitelný atribut kořene vyjadřující typ objektu; obecné XSD neurčuje Monograph. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/@TYPE; xs:string; optional"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-HEADER"
+    type: "element"
+    version: "1.9.1"
+    name: "metsHdr"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Hlavička hlavního METS"
+    definition:
+      cs: "Volitelná hlavička metadat o samotném METS dokumentu, nejvýše jednou. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/metsHdr (0–1)"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-HEADER-CREATEDATE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "metsHdr/@CREATEDATE"
+    title:
+      cs: "Datum vytvoření METS záznamu"
+    definition:
+      cs: "Volitelné datum a čas vytvoření METS dokumentu. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/metsHdr/@CREATEDATE; xs:dateTime; optional"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-HEADER-LASTMODDATE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "metsHdr/@LASTMODDATE"
+    title:
+      cs: "Datum poslední změny METS záznamu"
+    definition:
+      cs: "Volitelné datum a čas poslední změny METS dokumentu. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/metsHdr/@LASTMODDATE; xs:dateTime; optional"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-HEADER-AGENT"
+    type: "element"
+    version: "1.9.1"
+    name: "metsHdr/agent"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Agent hlavičky METS"
+    definition:
+      cs: "Volitelný opakovaný agent hlavičky. ROLE je povinné; XSD dovoluje CREATOR, EDITOR, ARCHIVIST, PRESERVATION, DISSEMINATOR, CUSTODIAN, IPOWNER a OTHER. Typ a jméno jsou popsány samostatně. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/metsHdr/agent (0–n); @ROLE required"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-HEADER-AGENT-TYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "metsHdr/agent/@TYPE"
+    title:
+      cs: "Organizační typ tvůrce a vlastníka METS"
+    definition:
+      cs: "Volitelný typ agenta hlavičky s hodnotami INDIVIDUAL, ORGANIZATION nebo OTHER; národní omezení pro dvě povinné role je samostatné pravidlo. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/metsHdr/agent/@TYPE; optional; enumerace INDIVIDUAL, ORGANIZATION, OTHER"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
+  -
+    id: "METS-HEADER-AGENT-NAME"
+    type: "element"
+    version: "1.9.1"
+    name: "metsHdr/agent/name"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Jméno agenta hlavičky METS"
+    definition:
+      cs: "Povinný jednotlivý textový název nebo jméno uvnitř uvedeného agenta hlavičky. Povinnosti DMF jsou vedeny odděleně v pravidlech."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/metsHdr/agent/name (1–1); xs:string"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Kontext, datový typ a četnost ověřeny v oficiálním XSD METS 1.9.1."
   -
     id: "METS-FILESEC"
     type: "element"

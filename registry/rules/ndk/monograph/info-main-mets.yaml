@@ -87,4 +87,7 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-METS-ROOT"
+  -
+    type: "related_to"
     target: "NDK-MONO-INFO-ITEM-LIST"

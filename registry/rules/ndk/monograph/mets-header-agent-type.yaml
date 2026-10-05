@@ -1,0 +1,128 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-HEADER-AGENT-TYPE"
+title:
+  cs: "Organizační typ tvůrce a vlastníka METS"
+description:
+  cs: "Kořen a hlavička hlavního METS podle DMF Monografie 2.3; oddělení požadavků NDK, obecného METS 1.9.1 a pozorování vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-HEADER-AGENT-TYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-header"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Agenti v povinných rolích CREATOR a ARCHIVIST mají TYPE=ORGANIZATION."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "U každého agenta v roli CREATOR nebo ARCHIVIST požadovat atribut TYPE s přesnou hodnotou ORGANIZATION. Nesplněnou přítomnost role hlásí samostatná pravidla těchto rolí."
+      allowed_values:
+        - "ORGANIZATION"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "mets_header_agent_role"
+          operator: "in"
+          value:
+            - "CREATOR"
+            - "ARCHIVIST"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "18–19"
+      section: "7.3 METS hlavička — metsHdr/agent/@TYPE"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/metsHdr/agent/@TYPE; optional; enumerace INDIVIDUAL, ORGANIZATION, OTHER"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 18–19 DMF Monografie 2.3 a v oficiálním XSD METS 1.9.1. Kořenové atributy a hlavička dodaného hlavního METS zkontrolovány XPath a SHA-256; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Jedno pravidlo zachycuje shodný požadavek TYPE z obou řádků tabulky. Obecné XSD má TYPE volitelné a dovoluje INDIVIDUAL, ORGANIZATION a OTHER. Povinnost ORGANIZATION se nepřenáší na všechny myslitelné dodatečné role. Jde o mets:agent v hlavičce, nikoli o premis:agent v digiprovMD; číselník PREMIS software/hardware zde neplatí. Kardinality atributů platí v příslušném rodiči; role CREATOR a ARCHIVIST mají vlastní kontrolu přítomnosti. Pole mets_header_agent_role označuje ROLE právě vybraného metsHdr/agent, nikoli PREMIS agenta nebo kořenové TYPE. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-mets-header-agent-type-creator"
+        title:
+          cs: "Organizační typ tvůrce a vlastníka METS — hlavní METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:name>ABA001</mets:name>
+          </mets:agent>
+        note:
+          cs: "Úplný vybraný element hlavičky hlavního METS, beze změny hodnot. ABA001 označuje organizaci v tomto vzoru, není univerzální povinnou hodnotou. Ukázka není potvrzením validity celého SIP ani chování konkrétní implementace."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:metsHdr/mets:agent[@ROLE='CREATOR']"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-05"
+      -
+        id: "sip-mets-header-agent-type-archivist"
+        title:
+          cs: "Organizační typ tvůrce a vlastníka METS — hlavní METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:name>ABA001</mets:name>
+          </mets:agent>
+        note:
+          cs: "Úplný vybraný element hlavičky hlavního METS, beze změny hodnot. ABA001 označuje organizaci v tomto vzoru, není univerzální povinnou hodnotou. Ukázka není potvrzením validity celého SIP ani chování konkrétní implementace."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:metsHdr/mets:agent[@ROLE='ARCHIVIST']"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-HEADER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-TYPE"

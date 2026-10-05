@@ -1,0 +1,98 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-HEADER-CREATEDATE"
+title:
+  cs: "Datum vytvoření METS záznamu"
+description:
+  cs: "Kořen a hlavička hlavního METS podle DMF Monografie 2.3; oddělení požadavků NDK, obecného METS 1.9.1 a pozorování vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-HEADER-CREATEDATE"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-header"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Hlavička obsahuje CREATEDATE v ISO 8601 s přesností na sekundy."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat CREATEDATE na metsHdr, ověřit platný xsd:dateTime a zápis ISO 8601 obsahující sekundy."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 18
+      section: "7.3 METS hlavička — metsHdr/@CREATEDATE"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/metsHdr/@CREATEDATE; xs:dateTime; optional"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených tabulkách s. 18–19 DMF Monografie 2.3 a v oficiálním XSD METS 1.9.1. Kořenové atributy a hlavička dodaného hlavního METS zkontrolovány XPath a SHA-256; externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Atribut je v obecném XSD volitelný, DMF jej vyžaduje. Nevynucujeme konkrétní časové pásmo ani povinné Z. Datum vytvoření záznamu není automaticky rovno info/created, datu vydání nebo eventDateTime a z jejich rozdílu samotného nevyvozujeme chybu. Kardinality atributů platí v příslušném rodiči; role CREATOR a ARCHIVIST mají vlastní kontrolu přítomnosti. Pole mets_header_agent_role označuje ROLE právě vybraného metsHdr/agent, nikoli PREMIS agenta nebo kořenové TYPE. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-mets-header-createdate"
+        title:
+          cs: "Datum vytvoření METS záznamu — hlavní METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:metsHdr CREATEDATE="2025-11-20T15:56:25" LASTMODDATE="2026-06-29T13:27:53" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+              <mets:name>ABA001</mets:name>
+            </mets:agent>
+            <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">
+              <mets:name>ABA001</mets:name>
+            </mets:agent>
+          </mets:metsHdr>
+        note:
+          cs: "Úplný vybraný element hlavičky hlavního METS, beze změny hodnot. Časy jsou zachovány bez doplněného pásma; datum vytvoření záznamu je odlišné od data jeho poslední změny. ABA001 označuje organizaci v tomto vzoru, není univerzální povinnou hodnotou. Ukázka není potvrzením validity celého SIP ani chování konkrétní implementace."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:metsHdr"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-HEADER"

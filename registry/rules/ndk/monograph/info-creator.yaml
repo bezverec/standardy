@@ -87,4 +87,7 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-METS-HEADER-CREATOR-NAME"
+  -
+    type: "related_to"
     target: "NDK-MONO-INFO-INSTITUTION"
