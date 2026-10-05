@@ -2,9 +2,9 @@ schema_version: "1.0"
 kind: rule
 id: NDK-MONO-MIX-ICC-PROFILE-VERSION
 title:
-  cs: Verze formátu ICC profilu v MIX
+  cs: Verze ICC profilu v MIX
 description:
-  cs: Ověřené pravidlo rozlišující číselnou verzi formátu ICC profilu od názvu či označení profilu.
+  cs: Povinný údaj o verzi ICC profilu v NDK; význam prvku MIX je sporný a je třeba odlišit vydání známého profilu od číselné verze v ICC hlavičce.
 national_standard:
   id: ndk-monograph
 versions:
@@ -20,7 +20,7 @@ versions:
       vocabulary: NDK-OBJECT-TYPES
       values: [monograph]
     normative_requirement:
-      cs: DMF Monografie 2.3 označuje iccProfileVersion jako povinný (M) pro MC i PS s kardinalitou MIX 0–1. Je-li v MIX přítomen blok IccProfile, musí obsahovat právě jednu číselnou verzi formátu ICC profilu.
+      cs: DMF Monografie 2.3 označuje iccProfileVersion jako povinný (M) pro MC i PS s kardinalitou MIX 0–1. Je-li v MIX přítomen blok IccProfile, vyžaduje se právě jeden element iccProfileVersion. Z tohoto požadavku samotného neplyne číselný tvar hodnoty.
     requirement:
       presence: conditional
       cardinality:
@@ -30,9 +30,6 @@ versions:
         - type: xpath
           expression: "//mix:IccProfile/mix:iccProfileVersion"
           assertion: exists
-        - type: regex
-          expression: "^[0-9]+(?:\\.[0-9]+){0,3}$"
-          assertion: matches
     condition:
       all:
         - field: object_type
@@ -65,48 +62,114 @@ versions:
         page: 20
         section: "7.2.4 Profile version field"
         url: "https://www.color.org/specification/ICC.1-2022-05.pdf"
+      - document: Metodika pro tvorbu balíčků SIP
+        version: "2.0"
+        page: 106
+        section: "Mapování jpylyzer – iccProfileVersion; lokátor doložen v issue NLCR/Standard_NDK #255"
+        url: "https://invenio.nusl.cz/record/538239/files/000095839_1.pdf"
+      - document: "NLCR/Standard_NDK issue #255 – ICC profile version"
+        version: "revize 2026-09-14; experiment 2026-08-25"
+        page: null
+        section: "5–9 a 11; převzaté výsledky konkrétního TIFF/JP2"
+        url: "https://github.com/NLCR/Standard_NDK/issues/255"
+      - document: Komplexní validátor NDK – konfigurace MIX MC a PS pro monografie 2.3
+        version: "cde62bc936956809aaa26b1bb5c6afec71e07b0f"
+        page: null
+        section: "techProfiles/mix_mc.xml a mix_ps.xml; IccProfile"
+        url: "https://github.com/NLCR/komplexni-validator/tree/cde62bc936956809aaa26b1bb5c6afec71e07b0f/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_2.3/techProfiles"
+      - document: JHOVE – NisoImageMetadata
+        version: "1.34.0"
+        page: null
+        section: extractIccProfileDescription a datový model
+        url: "https://github.com/openpreserve/jhove/blob/38115c6071a158b750c6bf2ce552240455e68fcc/jhove-core/src/main/java/edu/harvard/hul/ois/jhove/NisoImageMetadata.java"
+      - document: JHOVE – ColorSpecBox
+        version: "1.34.0"
+        page: null
+        section: Restricted ICC Profile – přeskočení hlavičky
+        url: "https://github.com/openpreserve/jhove/blob/38115c6071a158b750c6bf2ce552240455e68fcc/jhove-modules/jpeg2000-hul/src/main/java/edu/harvard/hul/ois/jhove/module/jpeg2000/ColorSpecBox.java"
+      - document: JHOVE – XmlHandler
+        version: "1.34.0"
+        page: null
+        section: Výstup MIX 2.0 – IccProfile
+        url: "https://github.com/openpreserve/jhove/blob/38115c6071a158b750c6bf2ce552240455e68fcc/jhove-core/src/main/java/edu/harvard/hul/ois/jhove/handler/XmlHandler.java"
+      - document: jpylyzer – boxvalidator.py
+        version: "2.2.1"
+        page: null
+        section: Čtení ICC hlavičky – profileVersion
+        url: "https://github.com/openpreserve/jpylyzer/blob/c2b6f6f215961576effdf1af316ae3c8ac47a693/jpylyzer/boxvalidator.py"
+      - document: jpylyzer – mix.py
+        version: "2.2.1"
+        page: null
+        section: Mapování ICC do MIX
+        url: "https://github.com/openpreserve/jpylyzer/blob/c2b6f6f215961576effdf1af316ae3c8ac47a693/jpylyzer/mix.py"
+      - document: ProArc – JhoveUtility
+        version: "5.1.0"
+        page: null
+        section: getMix a mergeMix
+        url: "https://github.com/proarc/proarc/blob/89b8bdb3c2894c4d0dd06d5bbf199916e11c0380/proarc-common/src/main/java/cz/cas/lib/proarc/common/process/export/mets/JhoveUtility.java"
+      - document: ProArc – MixEditor
+        version: "5.1.0"
+        page: null
+        section: write – převzetí MIX z JHOVE
+        url: "https://github.com/proarc/proarc/blob/89b8bdb3c2894c4d0dd06d5bbf199916e11c0380/proarc-common/src/main/java/cz/cas/lib/proarc/common/storage/MixEditor.java"
     verification:
       status: verified
-      date: "2026-09-14"
-      reference: Požadavek DMF a význam binárního pole byly ověřeny proti DMF Monografie 2.3, MIX 2.0 a ICC.1:2022; evidovaný rozpor se týká textového příkladu v DMF/MIX, nikoli existence elementu.
+      date: "2026-10-05"
+      reference: "Ověřena povinnost elementu a samostatná definice ICC hlavičkové verze. Jejich sémantická ekvivalence není potvrzena. Kód JHOVE 1.34.0, jpylyzer 2.2.1, ProArc 5.1.0 a konfigurace validátoru byly porovnány s issue #255; experiment z 2026-08-25 zde nebyl znovu spuštěn. Lokátor mapování SIP 2.0 je převzat z issue, nikoli nově ověřen v PDF."
     interpretation:
-      cs: Hodnota musí být číslo verze formátu přečtené z hlavičky vloženého ICC profilu, například 2, 2.4, 2.4.0, 4, 4.3 nebo 4.4.0.0. Hodnoty sRGB, Adobe RGB a sRGB IEC61966-2.1 jsou názvy či označení profilů/barevných prostorů, nikoli verze formátu. Zachovává se přesnost, kterou poskytne zdrojový nástroj.
+      cs: "ICC hlavičková verze je číselná hodnota, například 2.1.0, přečtená z hlavičky profilu. NISO však u iccProfileVersion uvádí také 1998, sRGB IEC61966-2.1 a 1976; ty lze interpretovat jako vydání známého profilu nebo označení barevného standardu. Není potvrzeno, že prvek MIX musí odpovídat ICC hlavičce. Podle mapování metodiky SIP NDK 2.0 popsaného v issue #255 se do něj přebírá properties/jp2HeaderBox/colourSpecificationBox/icc/profileVersion. To je NDK-specifický výklad; číslo neodvozovat z názvu profilu a existující hodnoty bez rozhodnutí nepřepisovat."
     implementations:
       - id: PROARC
-        application: ProArc
+        application: ProArc 5.1.0
         role: generator
-        status: unknown
-        verification: unverified
+        status: partial
+        verification: verified
+        behaviour:
+          cs: MixEditor.write volá JhoveUtility.getMix; ta načte první uzel mix z JHOVE XML a provede unmarshal. V této importní cestě není doplnění ICC hlavičkové verze; mergeMix doplňuje pouze ImageCaptureMetadata. Chybějící iccProfileVersion tak zůstane chybějící.
         notes:
-          cs: Není ověřeno, zda ProArc hodnotu načítá z hlavičky ICC profilu, přebírá z JHOVE, nebo ji očekává ručně.
+          cs: "Kód tagu v5.1.0 ověřen 2026-10-05; nejde o tvrzení o všech importech/exportech nebo ruční editaci. Issue #255 uvádí v lokálním obrazu JHOVE 1.20.1; tento experiment zde nebyl opakován."
       - id: KOMPLEXNI-VALIDATOR
-        application: Komplexní validátor
+        application: Komplexní validátor – monografie 2.3
         role: validator
-        status: unknown
-        verification: unverified
+        status: implemented
+        verification: verified
+        behaviour:
+          cs: Hodnotu nemapuje ani negeneruje. Konfigurace mix_mc.xml a mix_ps.xml požaduje uvnitř IccProfile iccProfileVersion s mandatory=true a repeatable=false. expectedContent je prázdný; tato konfigurace nepředepisuje číselný tvar ani porovnání s ICC hlavičkou.
         notes:
-          cs: Není ověřeno, zda Komplexní validátor kontroluje jen přítomnost elementu, nebo také jeho číselný význam.
-      - id: JHOVE-JPYLYZER
-        application: JHOVE / jpylyzer
-        role: external_tool
-        status: related
-        verification: unverified
+          cs: Konfigurace na commitu cde62bc936956809aaa26b1bb5c6afec71e07b0f ověřena 2026-10-05. Jde o kontrolu přítomnosti a neopakovatelnosti, nikoli doloženou sémantickou kontrolu všech částí validátoru.
+      - id: JHOVE
+        application: JHOVE 1.34.0; experiment také 1.20.1
+        role: generator
+        status: partial
+        verification: verified
+        behaviour:
+          cs: U TIFF extractIccProfileDescription načte major/minor verzi, ale pouze ji zaloguje; NisoImageMetadata ji neuchová a XmlHandler nevytvoří iccProfileVersion. U restricted ICC v JP2 ColorSpecBox přeskočí 128B hlavičku. Výstup MIX 2.0 zapisuje jméno a případně URI, nikoli verzi.
         notes:
-          cs: Nástroje umějí charakterizovat obrazové soubory, ale konkrétní mapování výstupu na MIX 2.0 v tomto workflow nebylo ověřeno.
+          cs: "Kód tagu v1.34.0 ověřen 2026-10-05. Issue #255 hlásí stejný výsledek pro 1.20.1 a 1.34.0 na svém TIFF/JP2; jde o převzatý experiment. Absence údaje je mezera vůči mapování SIP NDK, ne prokázaná obecná chyba MIX."
+      - id: JPYLYZER
+        application: jpylyzer 2.2.1
+        role: generator
+        status: partial
+        verification: verified
+        behaviour:
+          cs: boxvalidator.py čte ICC hlavičku a sestaví profileVersion v tvaru major.minor.bugfix do properties/jp2HeaderBox/colourSpecificationBox/icc/profileVersion. mix.py při tvorbě MIX převezme icc/description do iccProfileName, ale profileVersion do iccProfileVersion nepřenese ani při --mix 2.
+        notes:
+          cs: "Kód tagu 2.2.1 ověřen 2026-10-05; výsledek pro konkrétní JP2 dokumentuje issue #255. Parser a mapování metodiky SIP NDK nejsou totéž co skutečná transformace do MIX; nejde o nové lokální spuštění nástroje."
     discrepancies:
-      - cs: MIX/Z39.87 používá obecný řetězec a historické příklady pod iccProfileVersion směšují rok, název či označení barevného prostoru s verzí formátu ICC profilu.
-      - cs: DMF Monografie 2.3 pole správně označuje jako „verze profilu“, ale příklad „sRGB IEC61966-2.1“ není číslem verze formátu ICC profilu.
+      - cs: NISO/MIX připouští obecný řetězec a příklady označení vydání či barevného standardu. Je sporné, zda jde o chybu příkladů, nebo o jiný zamýšlený význam než ICC hlavičková verze; chyba NISO/MIX není prokázána.
+      - cs: "DMF Monografie 2.3 uvádí sRGB IEC61966-2.1, zatímco mapování SIP NDK 2.0 doložené v issue #255 míří na číselné ICC profileVersion. Je třeba sjednotit výklad uvnitř dokumentace NDK."
+      - cs: JHOVE a MIX transformace jpylyzeru verzi nevytvářejí a ProArc ji v popsané cestě nedoplní. Jde o nesoulad s požadovanou přítomností v NDK; tím se nerozhoduje obecná sémantika MIX.
     validator_behaviour:
-      cs: Za uvedených podmínek vyžadovat právě jeden element a přijmout pouze jednu až čtyři číselné složky oddělené tečkou. Názvy profilů, mezery a jiné nečíselné hodnoty odmítnout.
+      cs: Za uvedených podmínek vyžadovat právě jeden element. Do potvrzení sémantiky neodmítat nečíselnou hodnotu jen proto, že se liší od ICC hlavičky. Porovnání s hlavičkou lze zavést pouze jako výslovnou politiku mapování SIP NDK, nikoli jako obecnou kontrolu MIX.
     fix_recommendation:
-      cs: V DMF nahradit příklad hodnotou 2.4 nebo 4.3 a uvést, že hodnota pochází z bajtů 8–11 hlavičky ICC profilu. V dokumentaci MIX/Z39.87 zpřesnit význam a strojově omezit hodnotu na číselnou verzi.
+      cs: Vyžádat výslovný výklad od správců NISO/MIX a NDK a sjednotit DMF s metodikou SIP. Dočasné doplnění z ICC hlavičky označit jako politiku SIP NDK 2.0, uchovat původní výstup extraktoru a nepřepisovat existující hodnoty. U JHOVE nejprve zpřístupnit jednoznačně pojmenovanou hlavičkovou verzi; obecné mapování do MIX rozhodnout až po vyjasnění významu.
 relations:
   - type: related_to
     target: MIX
-  - type: clarifies
+  - type: related_to
     target: ICC-PROFILE-HEADER-VERSION
     note:
-      cs: Pravidlo zpřesňuje obecný řetězec MIX podle normativního pole hlavičky ICC profilu.
+      cs: ICC hlavičková verze je související údaj, nikoli potvrzený sémantický ekvivalent prvku MIX.
   - type: related_to
     target: NDK-MONO-MIX-ICC-PROFILE-URI
     note:

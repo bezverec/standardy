@@ -33,7 +33,7 @@ describe("registry vertical slice", () => {
       target: { entity: "MIX-ICC-PROFILE-VERSION" },
       verification: { status: "verified" },
     });
-    expect(registry.relations.map((edge) => edge.type)).toEqual(expect.arrayContaining(["defined_by", "restricts", "clarifies", "generated_by", "validated_by"]));
+    expect(registry.relations.map((edge) => edge.type)).toEqual(expect.arrayContaining(["defined_by", "restricts", "related_to", "generated_by", "validated_by"]));
   });
 
   it("keeps name, version and URI as distinct ICC profile requirements", async () => {
@@ -81,17 +81,42 @@ describe("registry vertical slice", () => {
     expect(sql).not.toContain("COMMIT;");
   });
 
-  it("accepts numeric ICC format versions and rejects profile names", async () => {
+  it("requires the ICC version element without asserting disputed numeric MIX semantics", async () => {
     const registry = compileRegistry(await loadRegistry(root));
     const rule = registry.rule_versions.find((item) => item.rule_id === "NDK-MONO-MIX-ICC-PROFILE-VERSION");
-    const validations = rule?.requirement.validations as Array<{ type: string; expression: string }>;
-    const expression = validations.find((item) => item.type === "regex")?.expression;
-    expect(expression).toBeDefined();
-    const pattern = new RegExp(expression!);
-    for (const value of ["2", "2.4", "2.4.0", "4", "4.3", "4.4.0.0"]) expect(pattern.test(value)).toBe(true);
-    for (const value of ["sRGB", "Adobe RGB", "sRGB IEC61966-2.1"]) expect(pattern.test(value)).toBe(false);
-    expect(rule?.discrepancies).toHaveLength(2);
-    expect(rule?.references).toHaveLength(3);
+    expect(rule).toMatchObject({
+      status: "disputed",
+      requirement: {
+        cardinality: { min: 1, max: 1 },
+        validations: [{ type: "xpath", expression: "//mix:IccProfile/mix:iccProfileVersion", assertion: "exists" }],
+      },
+    });
+    expect(rule?.requirement.validations).toHaveLength(1);
+    expect(rule?.requirement.validation).toBeUndefined();
+    expect(rule?.interpretation?.cs).toContain("properties/jp2HeaderBox/colourSpecificationBox/icc/profileVersion");
+    expect(rule?.verification.reference).toContain("zde nebyl znovu spuštěn");
+    expect(rule?.references).toEqual(expect.arrayContaining([
+      expect.objectContaining({ url: "https://github.com/NLCR/Standard_NDK/issues/255" }),
+    ]));
+    expect(registry.relations).toContainEqual(expect.objectContaining({
+      from: "NDK-MONO-MIX-ICC-PROFILE-VERSION", to: "ICC-PROFILE-HEADER-VERSION", type: "related_to",
+    }));
+    expect(registry.relations).not.toContainEqual(expect.objectContaining({
+      from: "NDK-MONO-MIX-ICC-PROFILE-VERSION", to: "ICC-PROFILE-HEADER-VERSION", type: "equivalent_to",
+    }));
+  });
+
+  it("keeps version-scoped ICC implementations separate in the rule and graph", async () => {
+    const registry = compileRegistry(await loadRegistry(root));
+    const rule = registry.rule_versions.find((item) => item.rule_id === "NDK-MONO-MIX-ICC-PROFILE-VERSION")!;
+    expect(rule.implementations?.map((item) => item.id).sort()).toEqual(["JHOVE", "JPYLYZER", "KOMPLEXNI-VALIDATOR", "PROARC"]);
+    for (const id of ["JHOVE", "JPYLYZER", "PROARC"]) {
+      expect(rule.implementations).toContainEqual(expect.objectContaining({ id, role: "generator", status: "partial", verification: "verified", behaviour: { cs: expect.any(String) } }));
+      expect(registry.relations).toContainEqual(expect.objectContaining({ from: rule.rule_id, to: id, type: "generated_by", rule_version: "2.3" }));
+    }
+    expect(rule.implementations).toContainEqual(expect.objectContaining({ id: "KOMPLEXNI-VALIDATOR", role: "validator", status: "implemented", verification: "verified" }));
+    expect(registry.relations).toContainEqual(expect.objectContaining({ from: rule.rule_id, to: "KOMPLEXNI-VALIDATOR", type: "validated_by", rule_version: "2.3" }));
+    expect(rule.implementations?.every((item) => Boolean(item.notes?.cs))).toBe(true);
   });
 });
 

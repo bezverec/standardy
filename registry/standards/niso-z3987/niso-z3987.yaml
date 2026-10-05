@@ -47,6 +47,8 @@ entities:
     name: ICC Profile Version
     title:
       cs: Verze ICC profilu
+    definition:
+      cs: Verze použitého ICC profilu jako řetězec. Příklady 1998, sRGB IEC61966-2.1 a 1976 mohou označovat vydání známého profilu či barevného standardu; jejich ztotožnění s ICC hlavičkovou verzí není potvrzeno.
     status: disputed
     source:
       document: ANSI/NISO Z39.87-2006 (R2017), Data Dictionary – Technical Metadata
@@ -56,10 +58,9 @@ entities:
       section: 7.1.3.2.1.2 ICC Profile Version
       url: https://www.niso.org/publications/ansiniso-z3987-2006-r2017-data-dictionary-technical-metadata-digital-still-images
     verification:
-      status: unverified
-      date: null
-      reference: Vazba a lokátor převzaty z dosavadních YAML pravidel repozitáře.
-        Samostatný přepis definice zde nebyl znovu ověřen.
+      status: verified
+      date: "2026-10-05"
+      reference: Definice, řetězcový typ a příklady ověřeny v oficiálním Z39.87-2006 (R2017), § 7.1.3.2.1.2, s. 21. Výklad jako vydání známého profilu je interpretace registru; nejde o potvrzení správci NISO.
   - id: NISO-Z3987-ICC-PROFILE-URI
     type: property
     version: R2017

@@ -65,7 +65,7 @@ versions:
       date: "2026-09-24"
       reference: Povinnost, kardinalita, název elementu a jeho význam byly ověřeny proti DMF Monografie 2.3, MIX 2.0 a datovému slovníku Z39.87.
     interpretation:
-      cs: Hodnota má identifikovat konkrétní použitý profil, například „sRGB IEC61966-2.1“ nebo „Adobe RGB (1998)“. Nesmí být prázdná a nelze ji nahrazovat číslem verze formátu ICC, které patří do iccProfileVersion.
+      cs: Hodnota má identifikovat konkrétní použitý profil, například „sRGB IEC61966-2.1“ nebo „Adobe RGB (1998)“. Nesmí být prázdná a nelze ji nahrazovat samotnou ICC hlavičkovou verzí. Zda tato verze patří do iccProfileVersion, je popsáno odděleně jako sporné mapování.
     implementations:
       - id: PROARC
         application: ProArc
@@ -84,7 +84,7 @@ versions:
     validator_behaviour:
       cs: Za uvedených podmínek vyžadovat právě jeden element, odmítnout prázdnou hodnotu a mezery na jejím začátku či konci. Samotný název není uzavřený slovník a nemá se omezovat na několik příkladů z DMF.
     fix_recommendation:
-      cs: V DMF uvést jako příklad celý jednoznačný název profilu a výslovně jej odlišit od čísla verze formátu v iccProfileVersion.
+      cs: V DMF uvést jako příklad celý jednoznačný název profilu a výslovně odlišit název, vydání profilu a číselnou ICC hlavičkovou verzi; význam iccProfileVersion sjednotit s metodikou SIP.
 relations:
   - type: related_to
     target: NDK-MONO-MIX-ICC-PROFILE-VERSION

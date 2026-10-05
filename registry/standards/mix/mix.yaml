@@ -52,7 +52,7 @@ entities:
       cs: Verze ICC profilu
       en: ICC profile version
     definition:
-      cs: Řetězcový element označený v MIX jako verze ICC profilu. Jeho dokumentace a historické příklady zaměňují verzi formátu profilu s názvem, označením barevného prostoru nebo rokem.
+      cs: Řetězcový element pro verzi použitého ICC profilu. NISO uvádí příklady vydání či označení barevného standardu; ekvivalence s číselnou verzí v ICC hlavičce není potvrzena.
     status: disputed
     source:
       document: NISO Metadata for Images in XML (MIX)
@@ -62,8 +62,8 @@ entities:
       url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
     verification:
       status: disputed
-      date: "2026-09-14"
-      reference: Existence a typ elementu jsou ověřené; jeho textové vymezení je v rozporu s binárním polem verze definovaným ICC.
+      date: "2026-10-05"
+      reference: "Existence a řetězcový typ elementu jsou doložené. Příklady NISO Z39.87-2006 (R2017), § 7.1.3.2.1.2, neodpovídají ICC hlavičkové verzi; není potvrzeno, že jde o chybu, nebo o odlišný zamýšlený význam. Viz NLCR/Standard_NDK #255."
   - id: MIX-ICC-PROFILE-URI
     type: element
     version: "2.0"
@@ -89,4 +89,4 @@ relations:
   - type: related_to
     target: ICC
     note:
-      cs: Hodnota iccProfileVersion má vycházet z čísla verze v hlavičce ICC profilu.
+      cs: ICC specifikuje číselnou hlavičkovou verzi. Její přímé mapování do iccProfileVersion je NDK-specifický výklad, nikoli potvrzený obecný požadavek MIX.
