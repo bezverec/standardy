@@ -4,7 +4,7 @@ id: "PREMIS"
 title:
   cs: "PREMIS – Preservation Metadata: Implementation Strategies"
 description:
-  cs: "Vybrané prvky souborového objektu a událostí ve verzi 2.2, na kterou odkazuje DMF Monografie 2.3, s. 5. Obecné schéma je odděleno od povinností NDK; nejde o nejnovější verzi PREMIS."
+  cs: "Vybrané prvky souborového objektu, událostí a jejich původců ve verzi 2.2, na kterou odkazuje DMF Monografie 2.3, s. 5. Obecné schéma je odděleno od povinností NDK; nejde o nejnovější verzi PREMIS."
 status: "normative"
 verification:
   status: "verified"
@@ -19,9 +19,156 @@ versions:
       document: "PREMIS XML Schema"
       version: "2.2"
       page: null
-      section: "file; objectIdentifierComplexType; objectCharacteristicsComplexType; fixityComplexType; formatComplexType; eventComplexType"
+      section: "file; objectIdentifierComplexType; objectCharacteristicsComplexType; fixityComplexType; formatComplexType; eventComplexType; agentComplexType"
       url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
 entities:
+  -
+    id: "PREMIS-AGENT-RECORD"
+    type: "element"
+    version: "2.2"
+    name: "agent"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Záznam původce události PREMIS"
+    definition:
+      cs: "Globální agent; agentComplexType; premisComplexType/agent (0–n). Obecný kontext PREMIS Agent; povinnosti, rozsah SIP/AIP a hodnoty DMF jsou samostatnými pravidly."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "Globální agent; agentComplexType; premisComplexType/agent (0–n)"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-AGENT-IDENTIFIER"
+    type: "element"
+    version: "2.2"
+    name: "agentIdentifier"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Identifikátor původce události"
+    definition:
+      cs: "agentComplexType/agentIdentifier (1–n); agentIdentifierComplexType. Obecný kontext PREMIS Agent; povinnosti, rozsah SIP/AIP a hodnoty DMF jsou samostatnými pravidly."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "agentComplexType/agentIdentifier (1–n); agentIdentifierComplexType"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-AGENT-IDENTIFIER-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "agentIdentifierType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Typ identifikátoru původce"
+    definition:
+      cs: "agentIdentifierComplexType/agentIdentifierType (1–1); xs:string. Obecný kontext PREMIS Agent; povinnosti, rozsah SIP/AIP a hodnoty DMF jsou samostatnými pravidly."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "agentIdentifierComplexType/agentIdentifierType (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-AGENT-IDENTIFIER-VALUE"
+    type: "element"
+    version: "2.2"
+    name: "agentIdentifierValue"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Hodnota identifikátoru původce"
+    definition:
+      cs: "agentIdentifierComplexType/agentIdentifierValue (1–1); xs:string. Obecný kontext PREMIS Agent; povinnosti, rozsah SIP/AIP a hodnoty DMF jsou samostatnými pravidly."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "agentIdentifierComplexType/agentIdentifierValue (1–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-AGENT-NAME"
+    type: "element"
+    version: "2.2"
+    name: "agentName"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Jméno nebo název původce"
+    definition:
+      cs: "agentComplexType/agentName (0–n); xs:string. Obecný kontext PREMIS Agent; povinnosti, rozsah SIP/AIP a hodnoty DMF jsou samostatnými pravidly."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "agentComplexType/agentName (0–n); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-AGENT-TYPE"
+    type: "element"
+    version: "2.2"
+    name: "agentType"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Typ původce události"
+    definition:
+      cs: "agentComplexType/agentType (0–1); xs:string. Obecný kontext PREMIS Agent; povinnosti, rozsah SIP/AIP a hodnoty DMF jsou samostatnými pravidly."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "agentComplexType/agentType (0–1); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
+  -
+    id: "PREMIS-AGENT-NOTE"
+    type: "element"
+    version: "2.2"
+    name: "agentNote"
+    namespace: "info:lc/xmlns/premis-v2"
+    title:
+      cs: "Příkaz vytvoření JPEG 2000 u softwarového původce"
+    definition:
+      cs: "agentComplexType/agentNote (0–n); xs:string. Obecný kontext PREMIS Agent; povinnosti, rozsah SIP/AIP a hodnoty DMF jsou samostatnými pravidly."
+    status: "normative"
+    source:
+      document: "PREMIS XML Schema"
+      version: "2.2"
+      page: null
+      section: "agentComplexType/agentNote (0–n); xs:string"
+      url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence, hierarchie, kardinalita a datový typ ověřeny v oficiálním XSD PREMIS 2.2."
   -
     id: "PREMIS-EVENT-RECORD"
     type: "element"

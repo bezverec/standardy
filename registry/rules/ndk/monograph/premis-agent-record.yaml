@@ -1,0 +1,130 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-AGENT-RECORD"
+title:
+  cs: "Záznam původce události PREMIS"
+description:
+  cs: "Původci událostí podle DMF Monografie 2.3; rozlišení kontextu SIP/AIP, obecných možností PREMIS 2.2 a obsahu vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-AGENT-RECORD"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-agents"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Pro ochranné aktivity nad AIP je nutný přesnější popis původců událostí. Je-li PREMIS Agent použit, každý agent má vlastní záznam v samostatném digiprovMD vedlejšího METS."
+    requirement:
+      presence: "conditional"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V kontextu ochranných aktivit nad AIP ověřit popis všech jejich původců, nikoli jen přítomnost libovolného agenta. U každého uvedeného agenta v SIP i AIP ověřit vlastní digiprovMD v amdSec, obsahující jeden premis:agent, a vazbu z příslušné události přes dvojici typu a hodnoty identifikátoru. agentNote připustit podle DMF jen u software souvisejícího s vytvořením/migrací původního souboru do JPEG2000; mimo tento kontext jej DMF nepoužívá."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          any:
+            -
+              field: "preservation_activity_on_aip"
+              operator: "equals"
+              value: true
+            -
+              field: "xpath:/mets:mets/mets:amdSec/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent"
+              operator: "exists"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 81
+      section: "7.5.3 PREMIS Agent — agent"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "Globální agent; agentComplexType; premisComplexType/agent (0–n)"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 81
+        section: "7.5.3 PREMIS Agent — úvod, rozsah SIP/AIP a umístění záznamů"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 75
+        section: "Legenda: povinnosti a obecné četnosti"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených stranách 81–82 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Výřezy první stránky dodaného SIP ověřeny XPath a SHA-256; příkaz z agentNote ani externí validátor nebyly spuštěny."
+    interpretation:
+      cs: "Tabulka uvádí M a obecnou četnost 0–n. Úvod § 7.5.3 ale říká, že pro digitalizační SIP další upřesnění v PREMIS Agent není nutné. M proto neinterpretujeme jako bezvýjimečnou povinnost vytvářet agent v každém SIP. Pravidlo se uplatní při ochranné aktivitě nad AIP nebo při již uvedeném Agent; druhá větev pouze kontroluje dobrovolně dodaný popis, nesmí nahradit první a skrýt chybějícího původce archivní události. Minimum 1 platí v tomto kontextu pro soubor agentů, ne pro všechny digiprovMD (ty obsahují i Event). Jeden agent může být odkazován více událostmi; nevynucujeme jeden duplicitní popis na každý odkaz. preservation_activity_on_aip je kontextový údaj o ochranné aktivitě nad archivními daty popisovanými právě tímto metadatovým dokumentem, nikoli odhad z názvu souboru nebo pouhé existence AIP. Druhá větev používá XPath celého vedlejšího METS. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-agent-record"
+        title:
+          cs: "Záznam původce události PREMIS — AGENT_004"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:agent xmlns:premis="info:lc/xmlns/premis-v2">
+            <premis:agentIdentifier>
+              <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+              <premis:agentIdentifierValue>Kakadu-mastercopy</premis:agentIdentifierValue>
+            </premis:agentIdentifier>
+            <premis:agentName>Kakadu-8.6.1</premis:agentName>
+            <premis:agentType>software</premis:agentType>
+            <premis:agentNote>kdu_compress -i /smb/ndk-fs-01.internal.ndk.cz/storage-03/prod/dl/cdms/CDM_75faba8d-c629-11f0-8950-12e8557df20e/data/postprocessingdata/1_00010003_2R.tif -o /smb/ndk-fs-01.internal.ndk.cz/storage-03/prod/dl/cdms/CDM_75faba8d-c629-11f0-8950-12e8557df20e/data/mastercopy/1_00010003_2R.tif.jp2 Cblk={64,64} Corder=RPCL Stiles={4096,4096} Cprecincts={256,256},{256,256},{128,128} ORGtparts=R Creversible=yes Clayers=1 Clevels=5 Cmodes=BYPASS Cuse_sop=yes Cuse_eph=yes</premis:agentNote>
+          </premis:agent>
+        note:
+          cs: "Zaznamenaný příkaz Kakadu je historický text v metadatech, nikoli návod ke spuštění. Obsahuje původní interní cesty a parametry, které nepřebíráme jako požadavky standardu. Příkaz nebyl vykonán. Výřez vedlejšího METS první stránky je zachován beze změny hodnot. Nejde o potvrzení validity celého SIP ani o nezávislé ověření chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='AGENT_004']/mets:mdWrap/mets:xmlData/premis:agent"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-IDENTIFIER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-NAME"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-NOTE"

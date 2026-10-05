@@ -1,6 +1,6 @@
 # XML ukázky ze vzorového SIP
 
-U 90 pravidel DMF Monografie 2.3 je dostupných 111 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtrnáct pro hlavní METS, osm pro vedlejší METS a třicet pět pro PREMIS Object a šestnáct pro PREMIS Event. ADMID má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 111 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 97 pravidel DMF Monografie 2.3 je dostupných 121 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtrnáct pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. ADMID má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 121 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
 ## Původ a meze ověření
 
@@ -24,6 +24,7 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 - [Vznik a ochrana souboru](premis-provenance.md) přidávají dalších třináct výřezů u osmi pravidel. CreatingApplication a originalName mají ukázky MC, PS i ALTO. Původní názvy se zachovávají včetně dvojitých přípon, nikoli nahrazují současným pojmenováním v SIP.
 - [Vazby objektů a událostí](premis-relationships.md) přidávají čtrnáct výřezů u deseti pravidel. ALTO odkazuje na MC, nikoli přímo na PS. Ukázka relationship u PS dokládá vnořené události, ale absenci přímého linkingEventIdentifier prokazuje až XPath kontrola celého objektu. Pro chybějící děti přímého odkazu a neuvedené doporučené pořadí se ukázky nevymýšlejí.
 - [PREMIS Event](premis-events.md) přidává 23 výřezů u 16 pravidel: identifikaci, typy, čas, upřesnění, výsledek a vazby na agenty a objekty. Zachovává i OK, machine a celé řetězce typ/upřesnění; jejich výskyt není důkazem příslušnosti ke konkrétnímu číselníku ani předepsané syntaxe.
+- [PREMIS Agent](premis-agents.md) přidává deset výřezů u sedmi pravidel včetně páru odkaz–identita a původního příkazu Kakadu v agentNote. Příkaz je textový doklad, nebyl vykonán; cesty ani kompresní parametry se nepřebírají jako požadavky standardu.
 
 - [METS soubory a vazby](mets-files.md) používají celou skupinu MC, záznam prvního obrazu, jeho lokátor a první stránkový `div` s pěti odkazy. Výřez skupiny MC nezobrazuje ostatní čtyři skupiny ani celý `fileSec`. Hodnoty součtů a velikostí ve výřezu jsou zachovány ze zdroje; samotné porovnání výřezu není jejich nezávislým přepočtem.
 

@@ -41,11 +41,12 @@ describe("metadata taxonomy", () => {
   });
   it("matches client and API filters, combinations, pagination and empty results", async () => {
     for (const [filters, count] of [
-      [{ metadata_area: "administrative-technical" }, 67], [{ metadata_area: "package" }, 18],
-      [{ standard: "PREMIS" }, 54], [{ standard: "PREMIS", category: "technical/premis-object" }, 17],
+      [{ metadata_area: "administrative-technical" }, 74], [{ metadata_area: "package" }, 18],
+      [{ standard: "PREMIS" }, 61], [{ standard: "PREMIS", category: "technical/premis-object" }, 17],
       [{ standard: "PREMIS", category: "technical/premis-provenance" }, 8],
       [{ standard: "PREMIS", category: "technical/premis-relationships" }, 13],
       [{ standard: "PREMIS", category: "technical/premis-events" }, 16],
+      [{ standard: "PREMIS", category: "technical/premis-agents" }, 7],
       [{ metadata_area: "structural" }, 22], [{ standard: "METS" }, 22],
       [{ standard: "METS", category: "structure/mets-files" }, 14],
       [{ standard: "METS", category: "structure/mets-amd" }, 8],

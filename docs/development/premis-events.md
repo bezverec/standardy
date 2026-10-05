@@ -56,7 +56,7 @@ Událost se identifikuje dvojicí typu a hodnoty: například `NK_eventID / mast
 
 Vazby na objekty a původce se také řeší přes dvojice identifikátorů, nikoli jen přes jméno, podobnost řetězce nebo METS `file/@ID`. Odkaz na smazaný PS může směřovat na jeho uchovaný metadatový záznam; neznamená povinnost uchovávat smazaný soubor.
 
-§ 7.5.2 požaduje identifikaci původce a mluví o vazbě na PREMIS Agent. § 7.5.3 současně uvádí, že další upřesnění agenta není pro digitalizační SIP nutné. Proto pravidlo zachovává povinný `linkingAgentIdentifier`, ale nezavádí bezvýjimečný požadavek na úplný lokální záznam Agent. Ten bude vyžadovat vlastní skupinu a přesné vymezení kontextu.
+§ 7.5.2 požaduje identifikaci původce a mluví o vazbě na PREMIS Agent. § 7.5.3 současně uvádí, že další upřesnění agenta není pro digitalizační SIP nutné. Proto pravidlo zachovává povinný `linkingAgentIdentifier`, ale nezavádí bezvýjimečný požadavek na úplný lokální záznam Agent. Tento rozsah a obsah záznamu nyní popisuje navazující skupina [PREMIS Agent](premis-agents.md).
 
 ## Zdrojové XML ukázky
 

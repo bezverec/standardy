@@ -105,6 +105,12 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-IDENTIFIER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-RECORD"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-EVENT-LINKING-AGENT-TYPE"
   -
     type: "related_to"

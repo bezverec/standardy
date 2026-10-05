@@ -141,6 +141,7 @@ Object.assign(labels, {
   "technical/premis-provenance": "PREMIS · vznik a ochrana souboru",
   "technical/premis-relationships": "PREMIS · vazby objektů a událostí",
   "technical/premis-events": "PREMIS · události a jejich vazby",
+  "technical/premis-agents": "PREMIS · původci událostí",
   "technical/dimensions": "Technická metadata · Rozměry obrazu",
   "technical/sampling": "Technická metadata · Vzorkování",
   "technical/color": "Technická metadata · Barevné kódování",

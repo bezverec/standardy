@@ -5,7 +5,7 @@ title:
   cs: NDK DMF Monografie
   en: NDK DMF Monograph
 description:
-  cs: Strojově čitelný přepis vybraných požadavků DMF Monografie 2.3 na info.xml, metadata MIX, PREMIS Object a Event a evidenci souborů a vazeb v hlavním i vedlejším METS.
+  cs: Strojově čitelný přepis vybraných požadavků DMF Monografie 2.3 na info.xml, metadata MIX, PREMIS Object, Event a Agent a evidenci souborů a vazeb v hlavním i vedlejším METS.
 status: draft
 verification:
   status: verified
@@ -18,5 +18,5 @@ versions:
       document: DMF Monografie
       version: "2.3"
       page: "17–18, 75–93, 98"
-      section: "7.1 Soubor info.xml; 7.5.1 PREMIS Object; 7.5.2 PREMIS Event; 7.5.4 Technická metadata MIX; 7.6 fileSec; 7.7.1.1 Fyzická strukturální mapa; 7.7.2 structMap vedlejšího METS"
+      section: "7.1 Soubor info.xml; 7.5.1 PREMIS Object; 7.5.2 PREMIS Event; 7.5.3 PREMIS Agent; 7.5.4 Technická metadata MIX; 7.6 fileSec; 7.7.1.1 Fyzická strukturální mapa; 7.7.2 structMap vedlejšího METS"
       url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"

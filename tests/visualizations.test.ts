@@ -16,18 +16,19 @@ const relations = compiled.relations;
 describe("registry map", () => {
   it("accounts for every version exactly once, following target owners rather than citations", () => {
     const map = buildRegistryMap(rules, relations);
-    expect(map.rules).toBe(107);
-    expect(map.records).toBe(107);
+    expect(map.rules).toBe(114);
+    expect(map.records).toBe(114);
     const standards = map.areas.flatMap((area) => area.standards);
     expect(standards.find(({ id }) => id === "MIX")?.records).toBe(13);
     expect(standards.find(({ id }) => id === "NDK-INFO")?.records).toBe(18);
     expect(standards.find(({ id }) => id === "METS")?.records).toBe(22);
-    expect(standards.find(({ id }) => id === "PREMIS")?.records).toBe(54);
+    expect(standards.find(({ id }) => id === "PREMIS")?.records).toBe(61);
     expect(standards.find(({ id }) => id === "PREMIS")?.topics).toEqual(expect.arrayContaining([
       expect.objectContaining({ category: "technical/premis-object", records: 17 }),
       expect.objectContaining({ category: "technical/premis-provenance", records: 8 }),
       expect.objectContaining({ category: "technical/premis-relationships", records: 13 }),
       expect.objectContaining({ category: "technical/premis-events", records: 16 }),
+      expect.objectContaining({ category: "technical/premis-agents", records: 7 }),
     ]));
     expect(standards.find(({ id }) => id === "METS")?.topics).toEqual(expect.arrayContaining([
       expect.objectContaining({ category: "structure/mets-files", records: 14 }),

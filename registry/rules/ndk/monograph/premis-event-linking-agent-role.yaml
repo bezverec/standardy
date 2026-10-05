@@ -124,4 +124,7 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-TYPE"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-EVENT-LINKING-AGENT"

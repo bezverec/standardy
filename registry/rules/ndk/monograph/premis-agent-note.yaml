@@ -1,0 +1,128 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-PREMIS-AGENT-NOTE"
+title:
+  cs: "Příkaz vytvoření JPEG 2000 u softwarového původce"
+description:
+  cs: "Původci událostí podle DMF Monografie 2.3; rozlišení kontextu SIP/AIP, obecných možností PREMIS 2.2 a obsahu vzorového SIP."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "PREMIS-AGENT-NOTE"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/premis-agents"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "U agenta typu software souvisejícího s vytvořením nebo migrací původního souboru do JPEG2000 má agentNote povinnost MA a obsahuje příkaz k výrobě JPEG2000 v Kakadu nebo OpenJpeg. DMF omezuje použití poznámky na tento kontext."
+    requirement:
+      presence: "conditional"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Pro software prokazatelně spojený přes identifikátor s událostí vytvoření/migrace původního souboru do JPEG2000 požadovat dostupný použitý příkaz v agentNote; povinnost MA neodvozovat z již existující poznámky. Ověřit souvislost agenta, události a objektu, nikoli pouze název programu. Příkaz uložit jako text a nevykonávat jej. Pokud jeho dostupnost není doložena, výsledek kontroly nelze automaticky uzavřít jako splněný."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "amd_mets"
+        -
+          field: "metadata_record_type"
+          operator: "equals"
+          value: "premis_agent"
+        -
+          field: "xpath:premis:agentType"
+          operator: "equals"
+          value: "software"
+        -
+          field: "agent_linked_to_jpeg2000_creation_or_migration"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 82
+      section: "7.5.3 PREMIS Agent — agentNote"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "PREMIS XML Schema"
+        version: "2.2"
+        page: null
+        section: "agentComplexType/agentNote (0–n); xs:string"
+        url: "https://www.loc.gov/standards/premis/v2/premis-v2-2.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 81
+        section: "7.5.3 PREMIS Agent — úvod, rozsah SIP/AIP a umístění záznamů"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 75
+        section: "Legenda: povinnosti a obecné četnosti"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Přepis ověřen v textu i vykreslených stranách 81–82 DMF Monografie 2.3 a v oficiálním XSD PREMIS 2.2. Výřezy první stránky dodaného SIP ověřeny XPath a SHA-256; příkaz z agentNote ani externí validátor nebyly spuštěny."
+    interpretation:
+      cs: "Obecný PREMIS dovoluje libovolnou opakovanou textovou poznámku. DMF zde význam i použití zužuje. MA zachovává dostupnost údaje, podmínka pravidla zvlášť popisuje typ původce a účel činnosti; minimum 1 se uplatní, lze-li údaj plnit. Název Kakadu ani hodnota software samy nestačí. Zápis creation/migration Event v popisu není jeden předepsaný řetězec eventType a nerozšiřuje uzavřeně jeho slovník. Ze vzoru nepředepisujeme parametry komprese ani interní cesty. Příkaz je historický údaj; registr jej nespouští a neověřuje jeho úspěšné provedení. metadata_record_type=premis_agent znamená právě vybraný existující element agent v namespace info:lc/xmlns/premis-v2. Pravidla dětí se uplatní i v dobrovolně přidaném Agent v SIP; nepodmiňují se existencí kontrolovaného dítěte. Kardinalita je vztažena ke každému bezprostřednímu rodiči cesty agent/agentNote. XPath agentType je relativní k aktuálnímu agent. Kontextový údaj agent_linked_to_jpeg2000_creation_or_migration musí být doložen vazbou Event → Agent přes libovolný odpovídající agentIdentifier a souvislostí s výrobou JPEG2000; nelze jej určit jen z názvu programu, existence agentNote nebo z jakékoli události migration. Custom kontroly registr nevykonává; jde o popis pro budoucí implementaci."
+    examples:
+      -
+        id: "sip-premis-agent-note"
+        title:
+          cs: "Příkaz vytvoření JPEG 2000 u softwarového původce — AGENT_004"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <premis:agentNote xmlns:premis="info:lc/xmlns/premis-v2">kdu_compress -i /smb/ndk-fs-01.internal.ndk.cz/storage-03/prod/dl/cdms/CDM_75faba8d-c629-11f0-8950-12e8557df20e/data/postprocessingdata/1_00010003_2R.tif -o /smb/ndk-fs-01.internal.ndk.cz/storage-03/prod/dl/cdms/CDM_75faba8d-c629-11f0-8950-12e8557df20e/data/mastercopy/1_00010003_2R.tif.jp2 Cblk={64,64} Corder=RPCL Stiles={4096,4096} Cprecincts={256,256},{256,256},{128,128} ORGtparts=R Creversible=yes Clayers=1 Clevels=5 Cmodes=BYPASS Cuse_sop=yes Cuse_eph=yes</premis:agentNote>
+        note:
+          cs: "Zaznamenaný příkaz Kakadu je historický text v metadatech, nikoli návod ke spuštění. Obsahuje původní interní cesty a parametry, které nepřebíráme jako požadavky standardu. Příkaz nebyl vykonán. Výřez vedlejšího METS první stránky je zachován beze změny hodnot. Nejde o potvrzení validity celého SIP ani o nezávislé ověření chování nástroje."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml"
+        file_sha256: "4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f"
+        source_xpath: "/mets:mets/mets:amdSec/mets:digiprovMD[@ID='AGENT_004']/mets:mdWrap/mets:xmlData/premis:agent/premis:agentNote"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          premis: "info:lc/xmlns/premis-v2"
+        checked_on: "2026-10-05"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-RECORD"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-EVENT-DETAIL"
+  -
+    type: "related_to"
+    target: "NDK-MONO-PREMIS-CREATING-APPLICATION"

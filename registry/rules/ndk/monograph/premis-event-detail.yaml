@@ -164,4 +164,7 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-PREMIS-AGENT-NOTE"
+  -
+    type: "related_to"
     target: "NDK-MONO-PREMIS-EVENT-RECORD"
