@@ -1,3 +1,5 @@
+import type { Relation } from "./explore.ts";
+
 export interface RuleVersion {
   rule_id: string;
   version: string;
@@ -21,6 +23,7 @@ export interface RuleVersion {
   validator_behaviour?: Record<string, string>;
   fix_recommendation?: Record<string, string>;
   source_file?: string;
+  object_types?: { vocabulary: string; values: string[] };
 }
 
 export interface Implementation {
@@ -63,6 +66,9 @@ export interface RegistryEntity {
   status: string;
   versions: Array<Record<string, unknown>>;
   source_file?: string;
+  entities?: Array<{ id: string; name: string; version: string; title: Record<string, string>; definition?: Record<string, string>; source: Record<string, unknown>; verification?: { status: string; date: string | null; reference: string | null } }>;
+  effective_rules?: RuleVersion[];
+  verification?: { status: string; date: string | null; reference: string | null };
 }
 
 async function request<T>(path: string): Promise<T> {
@@ -74,9 +80,20 @@ async function request<T>(path: string): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+async function allPages<T>(path: string, pageSize: number): Promise<{ data: T[]; pagination: { total: number } }> {
+  const result = await request<{ data: T[]; pagination: { total: number } }>(`${path}?page_size=${pageSize}`);
+  for (let page = 2; result.data.length < result.pagination.total; page++) {
+    const next = await request<typeof result>(`${path}?page_size=${pageSize}&page=${page}`);
+    if (!next.data.length) throw new Error("API vrátilo neúplná data registru.");
+    result.data.push(...next.data);
+  }
+  return result;
+}
+
 export const api = {
   meta: () => request<Record<string, string>>("/meta"),
-  rules: () => request<{ data: RuleVersion[]; pagination: { total: number } }>("/rules?page_size=100"),
+  rules: () => allPages<RuleVersion>("/rules", 100),
+  relations: () => allPages<Relation>("/relations", 500),
   rule: (id: string) => request<RuleDetailResponse>(`/rules/${encodeURIComponent(id)}`),
   why: (id: string) => request<KnowledgeGraphResponse>(`/rules/${encodeURIComponent(id)}/why`),
   standards: () => request<{ data: RegistryEntity[] }>("/standards"),

@@ -149,8 +149,15 @@ async function relations(url: URL, env: Env, version: string): Promise<Response>
     if (value) { clauses.push(`${column} = ?`); bindings.push(value); }
   }
   const where = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
-  const result = await env.DB.prepare(`SELECT data_json FROM relations ${where} ORDER BY id LIMIT 500`).bind(...bindings).all();
-  return json({ data: result.results.map((row) => parseJsonRow(row)) }, version, 200, QUERY_CACHE);
+  const page = positiveInteger(url.searchParams.get("page"), 1, 1_000_000);
+  const pageSize = positiveInteger(url.searchParams.get("page_size"), 500, 500);
+  const count = await env.DB.prepare(`SELECT COUNT(*) AS total FROM relations ${where}`).bind(...bindings).first<{ total: number }>();
+  const result = await env.DB.prepare(`SELECT data_json FROM relations ${where} ORDER BY id LIMIT ? OFFSET ?`)
+    .bind(...bindings, pageSize, (page - 1) * pageSize).all();
+  return json({
+    data: result.results.map((row) => parseJsonRow(row)),
+    pagination: { page, page_size: pageSize, total: Number(count?.total ?? 0) },
+  }, version, 200, QUERY_CACHE);
 }
 
 async function why(id: string, env: Env, version: string): Promise<Response> {

@@ -111,3 +111,7 @@ relations:
     target: NDK-MONO-MIX-ICC-PROFILE-URI
     note:
       cs: Společně s pravidly pro jméno a URI tvoří skupinu popisu ICC profilu v MIX.
+  - type: related_to
+    target: NISO-Z3987-ICC-PROFILE-VERSION
+    note:
+      cs: Odkaz na položku datového slovníku citovanou v references; nejde o potvrzení bezchybnosti příkladů.
