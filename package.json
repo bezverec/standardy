@@ -7,21 +7,24 @@
     "node": ">=22"
   },
   "scripts": {
-    "registry:validate": "tsx scripts/validate-registry.ts",
-    "registry:check-relations": "tsx scripts/validate-registry.ts --relations-only",
-    "registry:build": "tsx scripts/build-registry.ts",
+    "registry:validate": "node --import tsx scripts/validate-registry.ts",
+    "registry:check-relations": "node --import tsx scripts/validate-registry.ts --relations-only",
+    "registry:build": "node --import tsx scripts/build-registry.ts",
     "registry:export": "npm run registry:build",
-    "registry:import": "tsx scripts/import-d1.ts",
-    "registry:reset": "tsx scripts/import-d1.ts --reset",
+    "registry:import": "node --import tsx scripts/import-d1.ts",
+    "registry:reset": "node --import tsx scripts/import-d1.ts --reset",
     "build:web": "vite build --config web/registry/vite.config.ts",
     "build:docs": "node scripts/build-docs.mjs",
     "build": "npm run registry:validate && npm run build:docs && npm run registry:build && npm run build:web",
     "dev:web": "vite --config web/registry/vite.config.ts",
     "dev:worker": "wrangler dev",
-    "dev": "concurrently -n web,worker -c cyan,magenta \"npm:dev:web\" \"npm:dev:worker\"",
+    "dev": "vite --config web/registry/vite.private.config.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "dev:full": "concurrently -n web,worker -c cyan,magenta \"npm:dev:web\" \"npm:dev:worker\"",
+    "predev": "node --import tsx scripts/build-private.ts --prepare-only",
+    "build:private": "node --import tsx scripts/build-private.ts"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

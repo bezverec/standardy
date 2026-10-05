@@ -7,3 +7,6 @@ dist/
 wrangler.deploy.jsonc
 web/registry/dist/
 coverage/
+.private-preview/
+.sites-runtime/
+.sites-checkout/

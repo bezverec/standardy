@@ -25,6 +25,10 @@ npm run dev
 
 Podrobnosti jsou v [architektuře](docs/development/architecture.md), [datovém modelu](docs/development/registry-data-model.md) a [návodu pro lokální vývoj](docs/development/local-development.md).
 
+## Soukromé interaktivní MVP
+
+Pro oddělený soukromý web použijte `npm run dev` a `npm run build:private`. Obsahuje kombinovatelné filtry, hledání bez diakritiky a procházení pravidel a původních zdrojů oběma směry. Zdrojová data zůstávají v `registry/`; původní Worker/D1 build je zachován. Architektura, omezení pokrytí a bezpečné doplňování jsou popsány v [soukromém MVP](docs/development/private-mvp.md).
+
 ## Kde hlásit chyby a návrhy
 
 Zde v repozitáři do [Issues](https://github.com/bezverec/standardy/issues).
