@@ -1,6 +1,6 @@
 # XML ukázky ze vzorového SIP
 
-U 17 pravidel DMF Monografie 2.3 jsou dostupné krátké XML ukázky: osm pro `info.xml` a devět pro rozměry, barvu a vzorkování v MIX. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 31 pravidel DMF Monografie 2.3 jsou dostupné XML ukázky: osm pro `info.xml`, devět pro rozměry, barvu a vzorkování v MIX a čtrnáct pro soubory a vazby v hlavním METS. Některá pravidla sdílejí stejný výřez; nejde o 31 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
 ## Původ a meze ověření
 
@@ -18,6 +18,8 @@ Každá ukázka obsahuje:
 Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správnost jeho obsahu. Původní normativní `source` a `verification` pravidla jsou nezávislé na původu ukázky.
 
 ## Důležité příklady
+
+- [METS soubory a vazby](mets-files.md) používají celou skupinu MC, záznam prvního obrazu, jeho lokátor a první stránkový `div` s pěti odkazy. Výřez skupiny MC nezobrazuje ostatní čtyři skupiny ani celý `fileSec`. Hodnoty součtů a velikostí ve výřezu jsou zachovány ze zdroje; samotné porovnání výřezu není jejich nezávislým přepočtem.
 
 - [Záznam validace](https://standardy.digitalizaty.cz/registry/rules/NDK-MONO-INFO-VALIDATION?version=2.3) zachovává `<validation version="all_pages:1.0">Valid</validation>`. Jde o tvrzení zdroje, nikoli o nově spuštěný validátor.
 - [Checksum](https://standardy.digitalizaty.cz/registry/rules/NDK-MONO-INFO-CHECKSUM?version=2.3) ukazuje MD5 souboru se seznamem kontrolních součtů. Atribut byl porovnán se skutečným MD5 tohoto souboru v lokálním balíčku a shoduje se. Kontrolu všech obrazů a všech ostatních vazeb tím netvrdíme.

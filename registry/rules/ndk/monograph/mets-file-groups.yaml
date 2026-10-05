@@ -1,0 +1,141 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-FILE-GROUPS"
+title:
+  cs: "Skupiny souborů a jejich účel"
+description:
+  cs: "fileGrp v hlavním METS podle DMF Monografie 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-FILE-GROUPS"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-files"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Soubory se člení do skupin MC_IMGGRP/Images, UC_IMGGRP/Images, ALTOGRP/Layout, TECHMDGRP/Technical Metadata a TXTGRP/Text."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 5
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Ověřit přítomnost všech pěti skupin, jedinečnost jejich ID a párování ID/USE; nerozhodovat jen podle seznamu povolených hodnot USE."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "90–91"
+      section: "7.6.1 fileSec hlavního záznamu METS"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "/mets:mets/mets:fileSec/mets:fileGrp"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    examples:
+      -
+        id: "sip-main-mets-file-groups"
+        title:
+          cs: "Skupina archivních obrazů MC"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:fileGrp ID="MC_IMGGRP" USE="Images" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:file CHECKSUM="2f6a5856f32ad60c5e68989beafbdef8" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:20" ID="mc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="3523405">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0001.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="e2d473bc9b2853979eb8cb393683a64b" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:21" ID="mc_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="3545006">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0002.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="52aa777a1d013c09212de2cf6de056b2" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:22" ID="mc_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="3752257">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0003.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="11af5dfd163e71c51df400806e7ed8b3" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:24" ID="mc_0004" MIMETYPE="image/jp2" SEQ="3" SIZE="3850466">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0004.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="ddf165344adfbaa12ce203f21067524f" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:25" ID="mc_0005" MIMETYPE="image/jp2" SEQ="4" SIZE="3728932">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0005.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="eacadcf7bd8336b69bf5f3b722ec9298" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:26" ID="mc_0006" MIMETYPE="image/jp2" SEQ="5" SIZE="3842306">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0006.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="580c193f754c343720ddca38b833e40a" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:28" ID="mc_0007" MIMETYPE="image/jp2" SEQ="6" SIZE="3768907">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0007.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="50629e9d537c64c30201c089186a3a4d" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:29" ID="mc_0008" MIMETYPE="image/jp2" SEQ="7" SIZE="3843681">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0008.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="64b18e51ba04d211feb44a3d04e77add" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:30" ID="mc_0009" MIMETYPE="image/jp2" SEQ="8" SIZE="3790146">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0009.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="54a745440f7d715e7e733d7377217861" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:31" ID="mc_0010" MIMETYPE="image/jp2" SEQ="9" SIZE="3963728">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0010.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="76625b1fed395f5efcb1f3878416a79b" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:33" ID="mc_0011" MIMETYPE="image/jp2" SEQ="10" SIZE="3833255">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0011.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="1e59b12ebdae393e9ff9d268cdccef5c" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:34" ID="mc_0012" MIMETYPE="image/jp2" SEQ="11" SIZE="3948724">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0012.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="130e89a4d9b883ce2ebb4ec3b59a866d" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:35" ID="mc_0013" MIMETYPE="image/jp2" SEQ="12" SIZE="3911733">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0013.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="d07e0ec33210535b6e7c9d09cfc3c359" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:37" ID="mc_0014" MIMETYPE="image/jp2" SEQ="13" SIZE="3808062">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0014.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="840d3c6f7779f9f3b9baf3315cf2ce3c" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:38" ID="mc_0015" MIMETYPE="image/jp2" SEQ="14" SIZE="3359240">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0015.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+            <mets:file CHECKSUM="bc0491d480167e04e7401a20f15aa3ad" CHECKSUMTYPE="MD5" CREATED="2026-06-25T08:41:39" ID="mc_0016" MIMETYPE="image/jp2" SEQ="15" SIZE="3420599">
+              <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_75faba8d-c629-11f0-8950-12e8557df20e_0016.jp2" xmlns:xlink="http://www.w3.org/1999/xlink" />
+            </mets:file>
+          </mets:fileGrp>
+        note:
+          cs: "Ukázka obsahuje pouze celou skupinu MC, nikoli celý fileSec ani ostatní skupiny. Výřez ze zdrojového SIP, nikoli univerzální šablona ani výsledek úplné validace."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:fileSec/mets:fileGrp[@ID='MC_IMGGRP']"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          xlink: "http://www.w3.org/1999/xlink"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Požadavek porovnán s textem a vykreslenými stranami DMF 2.3 a s XSD METS 1.9.1. Povinnost je vyjádřena slovně, zdroj v této části neuvádí kód M/MA/R/RA/O. Implementace nástrojů ani úplná validita SIP zde ověřeny nebyly."
+    interpretation:
+      cs: "XSD nestanovuje tyto názvy ani pět konkrétních účelů; atributy ID a USE jsou v něm nepovinné. Pravidlo popisuje členění hlavního METS, nikoli jediné fileGrp ve vedlejším amd_mets.xml. Horní mez ani zákaz dalších skupin zde nedovozujeme. Úroveň Povinné je přepis slovního požadavku DMF; historický kód povinnosti záměrně nedoplňujeme. Kardinalita atributu/elementu se vztahuje k jeho rodiči (fileSec k hlavnímu METS, fileGrp k fileSec). Popis custom kontroly není spustitelný validační engine."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FILE"

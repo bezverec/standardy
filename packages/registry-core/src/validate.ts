@@ -125,8 +125,11 @@ export async function validateRegistry(
         exampleIds.add(example.id);
       }
       if (!options.relationsOnly && rule.national_standard.id.startsWith("ndk-")
-        && Object.values(ndkObligations).includes(version.obligation) && !version.obligation_code) {
+        && Object.values(ndkObligations).includes(version.obligation) && !version.obligation_code && version.obligation_source !== "prose") {
         issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} must preserve the source NDK obligation_code` });
+      }
+      if (!options.relationsOnly && version.obligation_source === "prose" && version.obligation_code) {
+        issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} prose obligation must not invent an obligation_code` });
       }
       if (!options.relationsOnly && version.obligation_code && version.obligation !== ndkObligations[version.obligation_code]) {
         issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} obligation ${version.obligation} does not match source code ${version.obligation_code}` });

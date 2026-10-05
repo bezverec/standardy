@@ -1,0 +1,308 @@
+schema_version: "1.0"
+kind: "standard"
+id: "METS"
+title:
+  cs: "METS – Metadata Encoding and Transmission Standard"
+description:
+  cs: "Obecný standard pro propojení metadat a souborů digitálního objektu. Registr zachycuje vybrané prvky verze 1.9.1, na kterou odkazuje DMF Monografie 2.3 v části 1.4; nejde o tvrzení, že je nejnovější verzí METS."
+status: "normative"
+verification:
+  status: "verified"
+  date: "2026-10-05"
+  reference: "Oficiální XSD 1.9.1 přečteno; volba verze podle DMF Monografie 2.3, s. 5."
+versions:
+  -
+    version: "1.9.1"
+    status: "normative"
+    namespace: "http://www.loc.gov/METS/"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType, fileGrpType, fileType, divType, LOCATION, FILECORE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+entities:
+  -
+    id: "METS-FILESEC"
+    type: "element"
+    version: "1.9.1"
+    name: "fileSec"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Sekce souborů hlavního METS"
+    definition:
+      cs: "fileSec; umístění /mets:mets/mets:fileSec. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE-GROUPS"
+    type: "element"
+    version: "1.9.1"
+    name: "fileGrp"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Skupiny souborů a jejich účel"
+    definition:
+      cs: "fileGrp; umístění /mets:mets/mets:fileSec/mets:fileGrp. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE"
+    type: "element"
+    version: "1.9.1"
+    name: "file"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Evidence jednotlivého souboru"
+    definition:
+      cs: "file; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE-ID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@ID"
+    title:
+      cs: "Identifikátor souboru v METS"
+    definition:
+      cs: "file/@ID; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/@ID. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/@ID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE-MIMETYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@MIMETYPE"
+    title:
+      cs: "MIME typ evidovaného souboru"
+    definition:
+      cs: "file/@MIMETYPE; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/@MIMETYPE. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/@MIMETYPE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE-SIZE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@SIZE"
+    title:
+      cs: "Velikost evidovaného souboru"
+    definition:
+      cs: "file/@SIZE; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/@SIZE. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/@SIZE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE-CREATED"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@CREATED"
+    title:
+      cs: "Datum vytvoření evidovaného souboru"
+    definition:
+      cs: "file/@CREATED; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/@CREATED. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/@CREATED"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FILE-SEQ"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@SEQ"
+    title:
+      cs: "Pořadí obrazu a technického METS"
+    definition:
+      cs: "file/@SEQ; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/@SEQ. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/@SEQ"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-CHECKSUM-TYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@CHECKSUMTYPE"
+    title:
+      cs: "Algoritmus kontrolního součtu souboru"
+    definition:
+      cs: "file/@CHECKSUMTYPE; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/@CHECKSUMTYPE. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/@CHECKSUMTYPE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-CHECKSUM"
+    type: "attribute"
+    version: "1.9.1"
+    name: "file/@CHECKSUM"
+    title:
+      cs: "Kontrolní součet evidovaného souboru"
+    definition:
+      cs: "file/@CHECKSUM; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/@CHECKSUM. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/@CHECKSUM"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FLOCAT"
+    type: "element"
+    version: "1.9.1"
+    name: "FLocat"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Umístění evidovaného souboru"
+    definition:
+      cs: "FLocat; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/mets:FLocat. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/mets:FLocat"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-LOCTYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "FLocat/@LOCTYPE"
+    title:
+      cs: "Typ odkazu na soubor"
+    definition:
+      cs: "FLocat/@LOCTYPE; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/mets:FLocat/@LOCTYPE. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/mets:FLocat/@LOCTYPE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-HREF"
+    type: "attribute"
+    version: "1.9.1"
+    name: "FLocat/@xlink:href"
+    title:
+      cs: "Cesta k souboru v balíčku"
+    definition:
+      cs: "FLocat/@xlink:href; umístění /mets:mets/mets:fileSec/mets:fileGrp/mets:file/mets:FLocat/@xlink:href. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file/mets:FLocat/@xlink:href"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."
+  -
+    id: "METS-FPTR-FILEID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "fptr/@FILEID"
+    title:
+      cs: "Vazby fyzické stránky na soubory"
+    definition:
+      cs: "fptr/@FILEID; umístění /mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div/mets:fptr/@FILEID. Obecný prvek METS, jehož omezení pro NDK jsou vedena odděleně v pravidle."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "/mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div/mets:fptr/@FILEID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Existence a kontext ověřeny v oficiálním XSD METS 1.9.1. Povinnosti NDK nejsou vlastností obecného schématu."

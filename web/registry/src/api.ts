@@ -14,6 +14,7 @@ export interface RuleVersion {
   category: string;
   obligation: Obligation;
   obligation_code?: NdkObligationCode;
+  obligation_source?: "prose";
   normative_requirement: Record<string, string>;
   requirement: Record<string, unknown>;
   condition?: unknown;

@@ -138,6 +138,7 @@ export interface RuleVersion {
   category: string;
   obligation: Obligation;
   obligation_code?: NdkObligationCode;
+  obligation_source?: "prose";
   object_types?: { vocabulary: string; values: string[] };
   normative_requirement: LocalizedText;
   requirement: Record<string, unknown>;

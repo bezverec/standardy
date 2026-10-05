@@ -7,3 +7,4 @@ dist/
 wrangler.deploy.jsonc
 web/registry/dist/
 coverage/
+tmp/pdfs/

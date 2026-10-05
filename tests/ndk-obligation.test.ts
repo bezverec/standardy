@@ -85,15 +85,17 @@ describe("versioned NDK obligation codes", () => {
       } } } as unknown as Env;
       for (const code of codes) {
         const level = ndkObligations[code];
-        const expected = wire.filter((rule) => rule.obligation_code === code);
+        const levelExpected = wire.filter((rule) => rule.obligation === level);
         for (const query of [`obligation_code=${code}`, `obligation=${level}`, `obligation=${level}&obligation_code=${code}`]) {
+          const hasCode = query.includes("obligation_code=");
+          const expected = hasCode ? wire.filter((rule) => rule.obligation_code === code) : levelExpected;
           const response = await handleRequest(new Request(`https://registry.test/api/v1/rules?${query}`), env);
           const result = await response.json() as { data: RuleVersion[]; pagination: { total: number } };
           expect(response.status).toBe(200);
           expect(result.pagination.total).toBe(expected.length);
-          expect(result.data.every((rule) => rule.obligation === level && rule.obligation_code === code)).toBe(true);
+          expect(result.data.every((rule) => rule.obligation === level && (!hasCode || rule.obligation_code === code))).toBe(true);
         }
-        expect(filterRules(wire, "", { obligation: level }, registry.relations)).toEqual(expected);
+        expect(filterRules(wire, "", { obligation: level }, registry.relations)).toEqual(levelExpected);
         const versionResult = await handleRequest(new Request(`https://registry.test/api/v1/rules?obligation_code=${code}&version=test-${code}`), env);
         expect(await versionResult.json()).toMatchObject({ pagination: { total: 1 } });
       }

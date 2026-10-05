@@ -61,7 +61,7 @@ Neověřené údaje nejsou prezentovány jako potvrzené normativní závěry.
 | RA | `recommended_if_available` | Doporučené, pokud je údaj dostupný / lze jej plnit |
 | O | `optional` | Volitelné |
 
-Obecný model navíc podporuje `forbidden` (zakázané) a `unspecified` (neurčeno); těm se žádný z kódů NDK nepřiřazuje. Mimo NDK lze `obligation_code` vynechat. Sémantická validace vyžaduje původní kód pro známé úrovně M/MA/R/RA/O u pravidel národních standardů s prefixem `ndk-` a kontroluje jeho soulad s obecnou úrovní. U neurčené povinnosti se kód nevymýšlí. Obě pole jsou součástí konkrétní `RuleVersion` a její provenance `source`.
+Obecný model navíc podporuje `forbidden` (zakázané) a `unspecified` (neurčeno); těm se žádný z kódů NDK nepřiřazuje. Mimo NDK lze `obligation_code` vynechat. Sémantická validace vyžaduje původní kód pro známé úrovně M/MA/R/RA/O u pravidel národních standardů s prefixem `ndk-` a kontroluje jeho soulad s obecnou úrovní. Pokud je požadavek v prameni pouze slovní, pravidlo výslovně uvádí `obligation_source: prose` a kód vynechá; tato pole nelze kombinovat. Například skupina METS má `obligation: mandatory` podle slovního požadavku, nikoli domyšlené `obligation_code: M`. U neurčené povinnosti se kód nevymýšlí. Pole jsou součástí konkrétní `RuleVersion` a její provenance `source`, exportu a OpenAPI kontraktu.
 
 Povinnost se nesmí odvozovat ze závažnosti hlášení validátoru; nahrazuje původní ručně přidělené pole `severity`. API filtr a řazení používají `obligation`, přesný zdrojový kód lze filtrovat přes `obligation_code`. Migrace 0003 přejmenovala indexovaný sloupec; nové MA/RA nevyžadují další migraci. Původní kód se uchovává v JSON záznamu a aktualizuje importem YAML.
 

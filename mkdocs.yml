@@ -77,4 +77,5 @@ nav:
       - Případ ICC profile version: development/icc-profile-version.md
       - Rozměry, vzorkování a barva v MIX: development/mix-image-characteristics.md
       - Informace o balíčku info.xml: development/info-xml.md
+      - Soubory a jejich vazby v METS: development/mets-files.md
       - Lokální vývoj: development/local-development.md
