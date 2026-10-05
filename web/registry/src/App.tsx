@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "react";
-import { api, type KnowledgeGraphNode, type KnowledgeGraphResponse, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
+import { api, type KnowledgeGraphResponse, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
+import { RelationshipGraph } from "./RelationshipGraph.tsx";
+import { graphNodeLabel } from "./graph.ts";
+import { metadataAreas, metadataStandards, targetStandardId } from "../../../packages/registry-core/src/metadata-taxonomy.ts";
 import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts";
 import { changeProposalUrl } from "./contribute.ts";
 import { issueReferences, linkIssueMentions } from "./evidence.ts";
@@ -67,9 +70,17 @@ function Rules() {
   }, []);
   const initial = new URLSearchParams(window.location.search);
   const [query, setQuery] = useState(initial.get("q") ?? "");
-  const [filters, setFilters] = useState<Record<string, string>>(Object.fromEntries(["obligation", "source", "national", "version", "category", "verification", "status", "object"].map((key) => [key, initial.get(key) ?? ""])));
+  const [filters, setFilters] = useState<Record<string, string>>(Object.fromEntries(["obligation", "source", "standard", "metadata_area", "national", "version", "category", "verification", "status", "object"].map((key) => [key, initial.get(key) ?? ""])));
   const rules = useMemo(() => filterRules(state.data?.data ?? [], query, filters, state.data?.relations ?? []), [state.data, query, filters]);
   const counts = state.data ? ruleCounts(state.data.data) : undefined;
+  const standardCounts = useMemo(() => {
+    const result = new Map<string, number>();
+    for (const rule of state.data?.data ?? []) {
+      const standard = targetStandardId(rule.target.entity, state.data?.relations ?? []);
+      if (standard) result.set(standard, (result.get(standard) ?? 0) + 1);
+    }
+    return result;
+  }, [state.data]);
   useEffect(() => {
     const params = new URLSearchParams();
     if (query) params.set("q", query);
@@ -90,8 +101,11 @@ function Rules() {
       <div className="explorer-layout"><aside className="filter-panel"><div className="filter-heading"><h2>Filtry</h2><button className="text-button" onClick={clear}>Vymazat</button></div>
         {filter("national", "Standard NDK", state.data.national.map((item) => [item.id, localized(item.title)]))}
         {filter("version", "Verze NDK", values("version"))}
-        {filter("source", "Zdrojový standard", state.data.sources.map((item) => [item.id, item.id]))}
-        {filter("category", "Kategorie", values("category"))}
+        {filter("metadata_area", "Oblast metadat", metadataAreas.map((area) => [area.id, `${area.label} (${metadataStandards.filter((standard) => standard.area === area.id).reduce((total, standard) => total + (standardCounts.get(standard.id) ?? 0), 0)})`]))}
+        {filter("standard", "Metadatový standard", metadataStandards.map((standard) => [standard.id, `${standard.label} (${standardCounts.get(standard.id) ?? 0})`]))}
+        {filter("category", "Téma pravidla", values("category"))}
+        <details><summary>Jak funguje třídění?</summary><p>Oblast a metadatový standard vycházejí z cílového prvku. Počty označují všechny verzované záznamy před ostatními filtry. Nula znamená, že pravidla pro tuto oblast zatím nejsou vložená.</p><p>Jde o navigační členění rolí v NDK, nikoli výčet všeho, co daný standard umožňuje.</p><ul>{metadataStandards.map((standard) => <li key={standard.id}><a href={standard.url} target="_blank" rel="noopener noreferrer">{standard.label}</a> — {metadataAreas.find((area) => area.id === standard.area)?.label}</li>)}</ul></details>
+        {filter("source", "Citovaný zdrojový standard", state.data.sources.map((item) => [item.id, item.id]))}
         {filter("object", "Typ dokumentu", [...new Set(state.data.data.flatMap((rule) => rule.object_types?.values ?? []))].map((item) => [item, labels[item] ?? item]))}
         {filter("obligation", "Úroveň povinnosti", obligationOptions)}
         <ObligationHelp />
@@ -127,101 +141,6 @@ function JsonBlock({ value }: { value: unknown }) {
   return <pre>{JSON.stringify(value, null, 2)}</pre>;
 }
 
-const graphKindLabels: Record<KnowledgeGraphNode["kind"], string> = {
-  rule: "pravidlo",
-  national_standard: "standard NDK",
-  standard_entity: "prvek standardu",
-  standard: "standard",
-  implementation: "implementace",
-};
-
-function graphNodeLabel(node: KnowledgeGraphNode): string {
-  return localized(node.data?.title) !== "—"
-    ? localized(node.data?.title)
-    : node.data?.application ?? node.data?.name ?? node.id;
-}
-
-function wrapGraphLabel(value: string, limit = 25): string[] {
-  const words = value.split(/\s+/);
-  const lines: string[] = [];
-  for (const word of words) {
-    const candidate = lines.length ? `${lines.at(-1)} ${word}` : word;
-    if (candidate.length <= limit) lines[lines.length ? lines.length - 1 : 0] = candidate;
-    else lines.push(word);
-  }
-  return lines.slice(0, 2);
-}
-
-function RelationshipGraph({ graph }: { graph: KnowledgeGraphResponse }) {
-  function destination(node: KnowledgeGraphNode): string | undefined {
-    if (node.kind === "rule") return `/rules/${node.id}`;
-    if (node.kind === "standard") return `/standards/${node.id}`;
-    if (node.kind === "national_standard") return `/national-standards/${node.id}`;
-    if (node.kind === "standard_entity") {
-      const owner = graph.edges.find((edge) => edge.from === node.id && edge.type === "defined_by");
-      if (owner) return `/standards/${owner.to}`;
-    }
-    return undefined;
-  }
-  const nodes = [...graph.nodes].sort((a, b) => {
-    const priority = { rule: 0, standard_entity: 1, national_standard: 2, implementation: 3, standard: 4 };
-    return priority[a.kind] - priority[b.kind] || a.id.localeCompare(b.id);
-  });
-  const root = nodes.find((node) => node.id === graph.root);
-  const middle = nodes.filter((node) => node.id !== graph.root && node.kind !== "standard");
-  const standards = nodes.filter((node) => node.kind === "standard");
-  const rowHeight = 94;
-  const height = Math.max(360, middle.length * rowHeight + 36);
-  const positions = new Map<string, { x: number; y: number; width: number; height: number }>();
-  if (root) positions.set(root.id, { x: 24, y: height / 2 - 42, width: 258, height: 84 });
-  middle.forEach((node, index) => positions.set(node.id, { x: 410, y: 18 + index * rowHeight, width: 270, height: 70 }));
-  standards.forEach((node, index) => {
-    const definingEdge = graph.edges.find((edge) => edge.to === node.id && positions.has(edge.from));
-    const source = definingEdge ? positions.get(definingEdge.from) : undefined;
-    positions.set(node.id, { x: 824, y: source?.y ?? height * ((index + 1) / (standards.length + 1)) - 35, width: 270, height: 70 });
-  });
-
-  return <div className="graph-scroll" aria-label="Graf vztahů pravidla">
-    <svg className="knowledge-graph" viewBox={`0 0 1120 ${height}`} aria-labelledby="graph-title graph-description">
-      <title id="graph-title">Vztahy pravidla {graph.root}</title>
-      <desc id="graph-description">Orientovaný graf propojující pravidlo s národním standardem NDK, prvky zdrojových standardů, zdrojovými standardy a implementacemi.</desc>
-      <defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker></defs>
-      <g className="graph-edges">{graph.edges.map((edge, index) => {
-        const from = positions.get(edge.from);
-        const to = positions.get(edge.to);
-        if (!from || !to) return null;
-        const x1 = from.x + from.width;
-        const y1 = from.y + from.height / 2;
-        const x2 = to.x;
-        const y2 = to.y + to.height / 2;
-        const sameColumn = Math.abs(x2 - x1) < 100;
-        const path = sameColumn
-          ? `M ${x1 - 8} ${y1} C ${x1 + 76} ${y1}, ${x2 + 76} ${y2}, ${x2 + 8} ${y2}`
-          : `M ${x1} ${y1} C ${(x1 + x2) / 2} ${y1}, ${(x1 + x2) / 2} ${y2}, ${x2} ${y2}`;
-        const labelX = sameColumn ? x1 + 68 : (x1 + x2) / 2;
-        const labelY = (y1 + y2) / 2 - 6;
-        const implementationEdge = edge.type === "generated_by" || edge.type === "validated_by";
-        return <g key={edge.id ?? `${edge.from}-${edge.type}-${edge.to}-${index}`} className={implementationEdge ? "graph-edge graph-edge--implementation" : "graph-edge"}>
-          <path d={path} markerEnd="url(#graph-arrow)" />
-          <text x={labelX} y={labelY} textAnchor="middle">{labels[edge.type] ?? edge.type}</text>
-        </g>;
-      })}</g>
-      <g className="graph-nodes">{nodes.map((node) => {
-        const position = positions.get(node.id);
-        if (!position) return null;
-        const lines = wrapGraphLabel(graphNodeLabel(node));
-        const content = <g className={`graph-node graph-node--${node.kind}`} transform={`translate(${position.x} ${position.y})`}>
-          <rect width={position.width} height={position.height} />
-          <text className="graph-node-kind" x="16" y="20">{graphKindLabels[node.kind]}</text>
-          <text className="graph-node-title" x="16" y="42">{lines.map((line, index) => <tspan x="16" dy={index === 0 ? 0 : 17} key={line}>{line}</tspan>)}</text>
-          <title>{graphKindLabels[node.kind]}: {graphNodeLabel(node)} ({node.id})</title>
-        </g>;
-        const to = destination(node);
-        return to ? <Link key={node.id} to={to}>{content}</Link> : <g key={node.id}>{content}</g>;
-      })}</g>
-    </svg>
-  </div>;
-}
 
 function RuleDetail({ id }: { id: string }) {
   const state = useAsync<RuleDetailResponse>(() => api.rule(id), [id]);
@@ -253,7 +172,7 @@ function RuleDetail({ id }: { id: string }) {
       {Boolean(rule.discrepancies?.length) && <section className="layer layer--discrepancy"><p className="layer-label">Rozpory ve zdrojích</p><h2>Známé rozpory ve zdrojích</h2><ul>{rule.discrepancies?.map((item, index) => <li key={index}>{evidence(localized(item))}</li>)}</ul></section>}
       {(rule.validator_behaviour || rule.fix_recommendation) && <section className="detail-grid"><article><p className="layer-label">Návrh kontroly</p><h2>Očekávaná kontrola</h2><p>{localized(rule.validator_behaviour)}</p></article><article><p className="layer-label">Doporučení registru</p><h2>Doporučená oprava</h2><p>{localized(rule.fix_recommendation)}</p></article></section>}
       <section className="layer layer--implementation"><p className="layer-label">Implementace · nenormativní</p><h2>Implementace</h2><div className="implementation-grid">{(rule.implementations ?? []).map((item) => <article key={item.id}><Status tone={item.verification === "verified" ? "neutral" : "warn"}>{labels[item.verification] ?? item.verification}</Status><h3>{item.application}</h3><p>{item.role === "generator" ? "Generátor" : item.role === "validator" ? "Validátor" : "Externí nástroj"} · {({ implemented: "Implementováno", partial: "Částečně implementováno", not_implemented: "Neimplementováno", unknown: "Chování neověřeno", related: "Souvisí s pravidlem" } as Record<string, string>)[item.status] ?? item.status}</p>{item.behaviour && <p>{localized(item.behaviour)}</p>}<small>{localized(item.notes)}</small></article>)}</div></section>
-      <section className="graph-section"><p className="layer-label">Vazby mezi záznamy</p><h2>Graf vztahů</h2><p className="graph-intro">Plné čáry zachycují normativní a významové vazby; přerušované čáry nenormativní vazby na implementace. Stav ověření a rozsah platnosti jsou uvedeny v jejich popisu.</p><LoadingState state={graphState} />{graphState.data && <RelationshipGraph graph={graphState.data} />}<details className="relation-data"><summary>Textový výpis vztahů</summary><div className="relations">{state.data?.relations.map((relation) => <code key={relation.id}>{relation.from} —{relation.type}→ {relation.to}</code>)}</div></details></section>
+      <section className="graph-section"><p className="layer-label">Vazby mezi záznamy</p><h2>Graf vztahů</h2><p className="graph-intro">Plné čáry zachycují normativní a významové vazby; přerušované čáry nenormativní vazby na implementace. Stav ověření a rozsah platnosti jsou uvedeny v jejich popisu.</p><LoadingState state={graphState} />{graphState.data && <RelationshipGraph key={id} graph={graphState.data} onNavigate={navigate} topicLabels={labels} />}<details className="relation-data"><summary>Úplný nezfiltrovaný výpis přímých vztahů</summary><div className="relations">{state.data?.relations.map((relation) => <code key={relation.id}>{relation.from} —{relation.type}→ {relation.to}</code>)}</div></details></section>
       <section className="layer"><h2>Související pravidla a standardy</h2><div className="relationship-links">{graphState.data?.nodes.filter((node) => node.kind === "rule" && node.id !== id).map((node) => <Link key={node.id} to={`/rules/${node.id}`}>{graphNodeLabel(node)}</Link>)}{graphState.data?.nodes.filter((node) => node.kind === "standard").map((node) => <Link key={node.id} to={`/standards/${node.id}`}>{graphNodeLabel(node)}</Link>)}</div></section>
       {rule.source_file && <a className="button button--ghost" href={`https://github.com/bezverec/standardy/blob/main/${rule.source_file}`} target="_blank" rel="noopener noreferrer">Otevřít YAML záznam v repozitáři</a>}
     </>}

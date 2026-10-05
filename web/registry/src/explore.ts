@@ -1,4 +1,5 @@
 import type { RuleVersion } from "./api.ts";
+import { metadataAreaForStandard, targetStandardId } from "../../../packages/registry-core/src/metadata-taxonomy.ts";
 
 export interface Relation { id: string; from: string; to: string; type: string; rule_version?: string }
 export function ruleCounts(rules: ReadonlyArray<Pick<RuleVersion, "rule_id">>) {
@@ -28,6 +29,8 @@ export function filterRules(rules: RuleVersion[], query: string, filters: Record
   return rules.filter((rule) => matchesQuery(rule, query)
     && (!filters.obligation || rule.obligation === filters.obligation)
     && (!filters.source || sourceIds(rule, relations).includes(filters.source))
+    && (!filters.standard || targetStandardId(rule.target.entity, relations) === filters.standard)
+    && (!filters.metadata_area || metadataAreaForStandard(targetStandardId(rule.target.entity, relations) ?? "") === filters.metadata_area)
     && (!filters.national || rule.national_standard_id === filters.national)
     && (!filters.version || rule.version === filters.version)
     && (!filters.category || rule.category === filters.category)

@@ -1,6 +1,7 @@
 import { semanticNationalStandardDiff } from "../../packages/registry-core/src/semantic-diff.ts";
 import type { RuleVersion } from "../../packages/registry-core/src/model.ts";
 import { openApiDocument } from "../../packages/registry-core/src/openapi.ts";
+import { metadataAreas, metadataStandards, metadataTaxonomy } from "../../packages/registry-core/src/metadata-taxonomy.ts";
 
 export interface Env {
   DB: D1Database;
@@ -61,6 +62,13 @@ async function listRules(requestUrl: URL, env: Env, version: string): Promise<Re
     }
   }
   const category = requestUrl.searchParams.get("category");
+  const metadataArea = requestUrl.searchParams.get("metadata_area");
+  if (metadataArea) {
+    if (!metadataAreas.some((area) => area.id === metadataArea)) return json({ error: "unknown_metadata_area" }, version, 400, QUERY_CACHE);
+    const standards = metadataStandards.filter((standard) => standard.area === metadataArea).map((standard) => standard.id);
+    clauses.push(`standard_id IN (${standards.map(() => "?").join(", ")})`);
+    bindings.push(...standards);
+  }
   const obligationCode = requestUrl.searchParams.get("obligation_code");
   if (obligationCode) {
     clauses.push("json_extract(data_json, '$.obligation_code') = ?");
@@ -176,14 +184,18 @@ async function why(id: string, env: Env, version: string): Promise<Response> {
   const all = relationRows.results.map((row) => parseJsonRow<{ from: string; to: string; type: string }>(row));
   const nodes = new Set([id]);
   const edges: typeof all = [];
+  let frontier = new Set([id]);
   for (let depth = 0; depth < 4; depth += 1) {
-    let changed = false;
+    const next = new Set<string>();
     for (const edge of all) {
-      if (nodes.has(edge.from) && !edges.includes(edge)) {
-        edges.push(edge); nodes.add(edge.to); changed = true;
+      if (frontier.has(edge.from)) {
+        edges.push(edge);
+        if (!nodes.has(edge.to)) next.add(edge.to);
       }
     }
-    if (!changed) break;
+    for (const node of next) nodes.add(node);
+    frontier = next;
+    if (!frontier.size) break;
   }
   const nodeData = await Promise.all([...nodes].sort().map(async (nodeId) => {
     for (const [kind, table] of [["rule", "rules"], ["standard", "standards"], ["national_standard", "national_standards"], ["standard_entity", "standard_entities"]] as const) {
@@ -246,6 +258,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: apiHeaders(version) });
   if (request.method !== "GET" && request.method !== "HEAD") return json({ error: "method_not_allowed" }, version, 405, "no-store");
   if (path === "/meta") return json(meta, version);
+  if (path === "/metadata-taxonomy") return json(metadataTaxonomy, version);
   if (path === "/rules") return listRules(url, env, version);
   if (path === "/standards") return listEntities("standards", env, version);
   if (path === "/national-standards") return listEntities("national_standards", env, version);

@@ -32,10 +32,10 @@ Swagger umožňuje prohlédnout datové typy a vyzkoušet GET operace. Jeho tla�
 
 ## Co registr nabízí
 
-- Vyhledávání bez diakritiky a filtry podle národního i zdrojového standardu, verze, typu dokumentu, kategorie, úrovně povinnosti, stavu požadavku a ověření.
+- Vyhledávání bez diakritiky a filtry podle oblasti metadat, metadatového i národního standardu, citovaných zdrojů, verze, typu dokumentu, tématu pravidla, úrovně povinnosti, stavu požadavku a ověření.
 - Sdílené odkazy s dotazem a filtry v URL; detail lze otevřít pro konkrétní verzi NDK.
 - Oddělený požadavek standardu, interpretaci, původní prameny, známé rozpory a chování konkrétních verzí nástrojů.
-- Interaktivní graf vztahů mezi pravidlem, národním standardem, prvky zdrojových standardů a implementacemi.
+- Interaktivní graf s volbou rozsahu, skrýváním typů vztahů i kategorií uzlů a alternativní tabulkou vazeb; viz [kategorie a graf vztahů](docs/development/graph-and-categories.md).
 - Návrhy změn přes GitHub a odkazy na související diskuse.
 
 ### Jak číst pravidlo

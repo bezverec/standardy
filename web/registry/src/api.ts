@@ -52,6 +52,10 @@ export interface KnowledgeGraphNode {
     title?: Record<string, string>;
     application?: string;
     name?: string;
+    standard_id?: string;
+    category?: string;
+    target?: { entity: string };
+    versions?: Array<{ category?: string; target?: { entity: string } }>;
     verification?: { status?: string } | string;
   };
 }

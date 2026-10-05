@@ -103,7 +103,23 @@ nav{flex-wrap:wrap}
 .lead{color:var(--muted);font-size:1.05rem;max-width:900px}
 .graph-section{margin:2.5rem 0}
 .graph-intro{max-width:800px;color:var(--muted)}
-.graph-scroll{overflow-x:auto;max-width:100%;padding:.5rem 0 1rem}
+.graph-scroll{overflow:auto;max-width:100%;max-height:650px;padding:.5rem 0 1rem}
+.graph-toolbar{display:flex;gap:1rem;flex-wrap:wrap;align-items:end;background:var(--paper);padding:1rem;border:1px solid var(--line)}
+.graph-toolbar>label{display:grid;gap:.3rem;min-width:160px;font-size:.875rem}
+.graph-toolbar .graph-label-toggle{display:flex;align-items:center;min-width:0;padding:.6rem 0}
+.graph-explorer input[type=checkbox]{width:1rem;height:1rem;flex:0 0 auto;margin:0;accent-color:var(--primary)}
+.graph-filter-panel{border:1px solid var(--line);border-top:0;padding:.4rem 1rem;background:white}
+.graph-filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;padding:.8rem 0}
+.graph-choices{border:0;padding:0;margin:0;min-width:0}
+.graph-choices legend{font-weight:600;margin-bottom:.7rem;font-size:.875rem}
+.graph-choices label{display:flex;align-items:center;gap:.5rem;font-size:.85rem;margin:.6rem 0;overflow-wrap:anywhere}
+.graph-count{font-size:.875rem;color:var(--muted)}
+.graph-table-scroll{max-height:650px;overflow:auto;border:1px solid var(--line)}
+.graph-table{width:100%;border-collapse:collapse;background:white;table-layout:fixed}
+.graph-table caption{padding:.8rem;text-align:left;color:var(--muted)}
+.graph-table th,.graph-table td{padding:.8rem;text-align:left;border-bottom:1px solid var(--line);overflow-wrap:anywhere;vertical-align:top}
+.graph-table th{background:var(--paper);position:sticky;top:0}
+.graph-table small{display:block;color:var(--muted);font-size:.75rem;margin-top:.3rem}
 .knowledge-graph{min-width:900px;width:100%;height:auto;border:1px solid var(--line);border-radius:0;background:#fff}
 .graph-edge path{fill:none;stroke:var(--primary);stroke-width:1.5}
 .graph-edge text{fill:var(--primary);stroke:#fff;stroke-width:5px;paint-order:stroke;font:700 12px monospace}

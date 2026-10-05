@@ -5,13 +5,14 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { compileRegistry, loadRegistry } from "../packages/registry-core/src/index.ts";
 import { openApiDocument } from "../packages/registry-core/src/openapi.ts";
+import { metadataTaxonomy } from "../packages/registry-core/src/metadata-taxonomy.ts";
 import { handleRequest, type Env } from "../worker/src/index.ts";
 
 describe("OpenAPI contract", () => {
   it("validates all operations and schema references as OpenAPI 3.1", async () => {
     await SwaggerParser.validate(JSON.parse(JSON.stringify(openApiDocument)));
-    expect(Object.keys(openApiDocument.paths)).toHaveLength(14);
-    expect(new Set(Object.values(openApiDocument.paths).map((path) => path.get.operationId)).size).toBe(14);
+    expect(Object.keys(openApiDocument.paths)).toHaveLength(15);
+    expect(new Set(Object.values(openApiDocument.paths).map((path) => path.get.operationId)).size).toBe(15);
   });
   it("describes normalized records and response envelopes using actual registry data", async () => {
     const registry = compileRegistry(await loadRegistry(path.resolve(import.meta.dirname, "..")));
@@ -28,6 +29,7 @@ describe("OpenAPI contract", () => {
       Implementation: registry.implementations,
       Relation: registry.relations,
       Meta: [registry.meta],
+      MetadataTaxonomy: [metadataTaxonomy],
       RulePage: [{ data: registry.rule_versions, pagination: { page: 1, page_size: 25, total: registry.rule_versions.length } }],
       RuleDetail: [{ id: rule.rule_id, versions: registry.rule_versions.filter((item) => item.rule_id === rule.rule_id), relations: registry.relations, implementations: registry.implementations }],
       StandardList: [{ data: registry.standards }],

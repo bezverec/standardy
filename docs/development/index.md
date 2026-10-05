@@ -25,6 +25,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 
 - [Architektura](architecture.md) — Git/YAML, compiler, Cloudflare D1, Worker a společný web MkDocs/React/Swagger.
 - [Datový model](registry-data-model.md) — identity, verze, povinnosti M/MA/R/RA/O, podmínky, zdroje a vztahy.
+- [Kategorie a graf vztahů](graph-and-categories.md) — oblasti metadat, standardy, skrývání vazeb a tabulkový pohled.
 - [Lokální vývoj a nasazení](local-development.md) — instalace, sestavení, testy, import dat a publikování.
 - [Případ ICC profile version](icc-profile-version.md) — oddělení požadavku, sporné sémantiky a implementací.
 - [Rozměry, vzorkování a barva v MIX](mix-image-characteristics.md) — metodika přepisu nové skupiny.
@@ -33,6 +34,8 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 ## Rozhraní registru a API
 
 Web nabízí hledání bez diakritiky, kombinovatelné filtry, sdílené odkazy, detail konkrétní verze pravidla a interaktivní graf vztahů. Tlačítko **Navrhnout změnu** otevře předvyplněný návrh GitHub issue; samo nic neodesílá.
+
+Pravidla lze filtrovat podle oblasti metadat i metadatového standardu (METS, MODS, Dublin Core, PREMIS, MIX, AES57, ALTO, copyrightMD, documentMD a info.xml). Nabídka rozlišuje dosud prázdné oblasti. Graf začíná přímými vazbami, umožňuje skrývat typy vztahů a kategorie uzlů a přepnout do tabulky.
 
 [Veřejné API](https://standardy.digitalizaty.cz/api-docs/) je pouze pro čtení, bez přihlášení. [OpenAPI kontrakt](https://standardy.digitalizaty.cz/openapi.json) popisuje dostupné operace, filtry a datové typy. Swagger je součástí stejného nasazení jako dokumentace a registr.
 

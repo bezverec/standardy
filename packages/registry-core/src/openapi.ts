@@ -1,6 +1,7 @@
 import ruleSchema from "../../../schemas/rule.schema.json";
 import standardSchema from "../../../schemas/standard.schema.json";
 import nationalSchema from "../../../schemas/national_standard.schema.json";
+import { metadataAreas } from "./metadata-taxonomy.ts";
 
 type Schema = Record<string, unknown>;
 const ref = (name: string) => ({ $ref: `#/components/schemas/${name}` });
@@ -40,6 +41,10 @@ schemas.Implementation = { ...relocate(ruleSchema.$defs.implementation, "Rule"),
 schemas.Relation = object({ id: string(), from: string(), to: string(), type: ref("Rule_relationType"), rule_version: string(), note: ref("Rule_localized") }, ["id", "from", "to", "type"]);
 schemas.Pagination = object({ page: { type: "integer", minimum: 1 }, page_size: { type: "integer", minimum: 1 }, total: { type: "integer", minimum: 0 } });
 schemas.Meta = object({ dataset_version: string("Identita datasetu git-<SHA>; nejde o počet pravidel."), git_commit: string(), generated_at: { type: "string", format: "date-time" }, schema_version: string() });
+schemas.MetadataTaxonomy = object({
+  areas: array(object({ id: { type: "string", enum: metadataAreas.map((area) => area.id) }, label: string() })),
+  standards: array(object({ id: string(), label: string(), area: { type: "string", enum: metadataAreas.map((area) => area.id) }, url: { type: "string", format: "uri" } })),
+});
 schemas.Error = object({ error: string(), detail: string(), id: string(), path: string() }, ["error"]);
 schemas.RulePage = object({ data: array(ref("RuleVersion")), pagination: ref("Pagination") });
 schemas.RelationPage = object({ data: array(ref("Relation")), pagination: ref("Pagination") });
@@ -68,8 +73,8 @@ const relationFilters = [query("from", "ID výchozího uzlu."), query("to", "ID 
 
 export const openApiDocument = {
   openapi: "3.1.1",
-  info: { title: "Standardy digitalizace – Registry API", version: "1.1.0",
-    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.1.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření.",
+  info: { title: "Standardy digitalizace – Registry API", version: "1.2.0",
+    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.2.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření.",
     contact: { name: "Návrhy a chyby", url: "https://github.com/bezverec/standardy/issues" },
   },
   servers: [{ url: "/api/v1", description: "API na stejném serveru jako dokumentace (produkce i lokální vývoj)." }],
@@ -77,17 +82,19 @@ export const openApiDocument = {
   tags: [{ name: "Registr", description: "Metadata a vyhledávání." }, { name: "Pravidla" }, { name: "Standardy" }, { name: "Vztahy" }],
   paths: {
     "/meta": operation("getMeta", "Registr", "Identita a datum sestavení datasetu", "Meta"),
+    "/metadata-taxonomy": operation("getMetadataTaxonomy", "Registr", "Navigační oblasti a metadatové standardy", "MetadataTaxonomy", [], "Katalog zahrnuje i oblasti bez vložených pravidel. Není seznamem evidovaných verzí standardů ani úplnou ontologií jejich funkcí. Pravidlo se zařazuje podle standardu cílové entity, nikoli podle citací."),
     "/rules": operation("listRules", "Pravidla", "Stránkovaný seznam verzovaných pravidel", "RulePage", [
       query("national_standard", "ID národního standardu, např. ndk-monograph."), query("version", "Verze národního standardu, např. 2.3."), query("standard", "ID zdrojového standardu cílové entity, např. MIX. Nejde o všechny citované prameny."),
+      query("metadata_area", "Oblast metadat podle standardu cílové entity; lze kombinovat s ostatními filtry.", { type: "string", enum: metadataAreas.map((area) => area.id) }),
       query("category", "Kategorie nebo její nadřazený prefix, např. technical nebo technical/icc."), query("object_type", "Typ dokumentu, např. monograph; současná implementace používá textové vyhledání ve strukturovaných datech."),
       query("obligation", "Úroveň povinnosti podle citované verze standardu. MA/RA mají samostatné hodnoty if_available, odlišné od condition. Historické RA/O se nepřevádějí na R.", { type: "string", enum: ruleSchema.$defs.ruleVersion.properties.obligation.enum }),
       query("obligation_code", "Původní kód NDK v citované verzi pravidla; lze kombinovat s obligation.", { type: "string", enum: ruleSchema.$defs.ruleVersion.properties.obligation_code.enum }), query("status", "Stav požadavku.", ref("Rule_status")),
       query("sort", "Pole řazení; neznámé hodnoty použijí id. Verze se řadí textově.", { type: "string", enum: ["id", "version", "national_standard", "standard", "obligation", "status", "category"], default: "id" }),
       query("direction", "Směr řazení, jiná hodnota než desc použije ASC.", { type: "string", enum: ["asc", "desc"], default: "asc" }), page, pageSize(25, 100),
-    ], "Každá položka je jedno pravidlo v jedné verzi národního standardu. pagination.total počítá tyto záznamy. Vyhledávání a filtry v Exploreru jsou klientské a mají širší možnosti než tento endpoint. Původní pole a parametr severity byly nahrazeny obligation; nejde o převod jejich hodnot. Požadavky se severity nebo sort=severity vracejí 400.", { "400": error("Odstraněný filtr či řazení severity; použijte obligation.") }),
+    ], "Každá položka je jedno pravidlo v jedné verzi národního standardu. pagination.total počítá tyto záznamy. Vyhledávání a filtry v Exploreru jsou klientské a mají širší možnosti než tento endpoint. Původní pole a parametr severity byly nahrazeny obligation; nejde o převod jejich hodnot. Požadavky se severity nebo sort=severity vracejí 400.", { "400": error("Neznámá metadata_area nebo odstraněný filtr či řazení severity; použijte obligation.") }),
     "/rules/{id}": operation("getRule", "Pravidla", "Detail pravidla a jeho verzí", "RuleDetail", [id("NDK-MONO-MIX-ICC-PROFILE-VERSION"), query("version", "Volitelně omezí pole versions. Relace a implementace v obálce zůstávají napříč verzemi; u vybrané verze použijte její implementations.")], "Bez version vrací všechny verze v sestupném textovém pořadí.", { "404": error("Pravidlo nebo požadovaná verze nebyly nalezeny.") }),
     "/rules/{id}/relations": operation("getRuleRelations", "Vztahy", "Odchozí relace pravidla", "RelationPage", [id("NDK-MONO-MIX-ICC-PROFILE-VERSION"), query("to", "Volitelný cílový uzel."), relationFilters[2], page, pageSize(500, 500)], "Filtr from je pevně určen ID v cestě. Neexistující ID vrátí prázdný seznam, nikoli 404."),
-    "/rules/{id}/why": operation("getRuleGraph", "Vztahy", "Graf původu a souvisejících záznamů", "Graph", [id("NDK-MONO-MIX-ICC-PROFILE-VERSION")], "Prochází odchozí vazby z pravidla i ze souvisejících uzlů. Zahrnuje všechny verze; nejde o graf omezený na jednu verzi. Implementační uzly preferují záznam kořenového pravidla.", { "404": error("Pravidlo nebylo nalezeno.") }),
+    "/rules/{id}/why": operation("getRuleGraph", "Vztahy", "Graf původu a souvisejících záznamů", "Graph", [id("NDK-MONO-MIX-ICC-PROFILE-VERSION")], "Prochází nejvýše čtyři odchozí kroky z pravidla. Zahrnuje všechny verze; nejde o graf omezený na jednu verzi. Implementační uzly preferují záznam kořenového pravidla. Web nad tímto grafem nabízí vlastní filtry a omezení vzdálenosti.", { "404": error("Pravidlo nebylo nalezeno.") }),
     "/standards": operation("listStandards", "Standardy", "Seznam zdrojových standardů", "StandardList"),
     "/standards/{id}": operation("getStandard", "Standardy", "Zdrojový standard a jeho entity", "StandardDetail", [id("MIX")], "Entity mají navíc standard_id odvozené indexem.", { "404": error("Standard nebyl nalezen.") }),
     "/national-standards": operation("listNationalStandards", "Standardy", "Seznam národních standardů", "NationalStandardList"),
