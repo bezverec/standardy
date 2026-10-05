@@ -1,0 +1,63 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-SAMPLING-FREQUENCY-PLANE
+title:
+  cs: "Referenční rovina vzorkování"
+description:
+  cs: "samplingFrequencyPlane v technických metadatech MIX pro DMF Monografie 2.3."
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-SAMPLING-FREQUENCY-PLANE
+    relation_to_target:
+      type: restricts
+    category: technical/sampling
+    obligation: recommended
+    obligation_code: R
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "Pro MC a PS DMF 2.3 doporučuje samplingFrequencyPlane určující referenční rovinu vzorkování."
+    requirement:
+      presence: optional
+      cardinality:
+        min: 0
+        max: 1
+      allowed_values: ["camera/scanner focal plane","object plane","source object plane"]
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value: [MC, PS]
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 87
+      section: "7.5.4 Technická metadata MIX — samplingFrequencyPlane"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: "/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics/mix:samplingFrequencyPlane; typeOfSamplingFrequencyPlaneType"
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Povinnost R, rozsah MC/PS a význam ověřeny v tabulce DMF 2.3 na s. 87; umístění, typ a opakovatelnost porovnány s oficiálním MIX 2.0 XSD. Jde o ověření přepisu, chování konkrétních nástrojů zde ověřeno nebylo."
+    interpretation:
+      cs: "MIX 2.0 omezuje hodnotu na tři uvedené řetězce. Referenční rovina upřesňuje, k čemu se vztahují hodnoty frekvence; její vynechání při povinnosti R není porušením povinné přítomnosti."
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-SAMPLING-FREQUENCY-UNIT
+  - type: related_to
+    target: NDK-MONO-MIX-X-SAMPLING-FREQUENCY
+  - type: related_to
+    target: NDK-MONO-MIX-Y-SAMPLING-FREQUENCY

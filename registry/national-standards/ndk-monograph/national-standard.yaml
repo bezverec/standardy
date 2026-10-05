@@ -5,7 +5,7 @@ title:
   cs: NDK DMF Monografie
   en: NDK DMF Monograph
 description:
-  cs: Částečný strojově čitelný přepis národního standardu DMF Monografie; nyní pokrývá ověřenou skupinu pravidel pro popis ICC profilu.
+  cs: Částečný strojově čitelný přepis DMF Monografie 2.3; pokrývá ICC profily, rozměry obrazu, vzorkování a barevné kódování v MIX.
 status: draft
 verification:
   status: verified
@@ -17,6 +17,6 @@ versions:
     source:
       document: DMF Monografie
       version: "2.3"
-      page: 83
+      page: "82–89"
       section: "7.5.4 Technická metadata MIX"
       url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"

@@ -72,4 +72,5 @@ nav:
       - Architektura: development/architecture.md
       - Datový model: development/registry-data-model.md
       - Případ ICC profile version: development/icc-profile-version.md
+      - Rozměry, vzorkování a barva v MIX: development/mix-image-characteristics.md
       - Lokální vývoj: development/local-development.md

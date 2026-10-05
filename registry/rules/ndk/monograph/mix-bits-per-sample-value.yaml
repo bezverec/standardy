@@ -1,0 +1,67 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-BITS-PER-SAMPLE-VALUE
+title:
+  cs: "Počet bitů na vzorek"
+description:
+  cs: "bitsPerSampleValue v technických metadatech MIX pro DMF Monografie 2.3."
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-BITS-PER-SAMPLE-VALUE
+    relation_to_target:
+      type: restricts
+    category: technical/color
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "Pro MC a PS DMF 2.3 vyžaduje bitsPerSampleValue; více hodnot se zapisuje opakováním elementu."
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: xpath
+          expression: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample/mix:bitsPerSampleValue"
+          assertion: exists
+        - type: regex
+          expression: "^[ \\t\\r\\n]*\\+?0*[1-9][0-9]*[ \\t\\r\\n]*$"
+          assertion: matches
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value: [MC, PS]
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 88
+      section: "7.5.4 Technická metadata MIX — bitsPerSampleValue"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample/mix:bitsPerSampleValue; positiveIntegerType"
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Povinnost M, rozsah MC/PS a význam ověřeny v tabulce DMF 2.3 na s. 88; umístění, typ a opakovatelnost porovnány s oficiálním MIX 2.0 XSD. Jde o ověření přepisu, chování konkrétních nástrojů zde ověřeno nebylo."
+    interpretation:
+      cs: "Každý výskyt má typ xsd:positiveInteger. Seznam oddělený čárkami není jedna platná hodnota tohoto typu. Počet bitů na vzorek a počet složek pixelu jsou samostatné veličiny; pole nevyjadřuje samo o sobě celkovou bitovou hloubku pixelu."
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-BITS-PER-SAMPLE-UNIT
+  - type: related_to
+    target: NDK-MONO-MIX-SAMPLES-PER-PIXEL

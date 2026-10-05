@@ -1,0 +1,67 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-SAMPLES-PER-PIXEL
+title:
+  cs: "Počet složek na pixel"
+description:
+  cs: "samplesPerPixel v technických metadatech MIX pro DMF Monografie 2.3."
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-SAMPLES-PER-PIXEL
+    relation_to_target:
+      type: restricts
+    category: technical/color
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "Pro MC a PS DMF 2.3 vyžaduje samplesPerPixel s počtem složek na pixel."
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        - type: xpath
+          expression: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:samplesPerPixel"
+          assertion: exists
+        - type: regex
+          expression: "^[ \\t\\r\\n]*\\+?0*[1-9][0-9]*[ \\t\\r\\n]*$"
+          assertion: matches
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value: [MC, PS]
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 88
+      section: "7.5.4 Technická metadata MIX — samplesPerPixel"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:samplesPerPixel; positiveIntegerType"
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Povinnost M, rozsah MC/PS a význam ověřeny v tabulce DMF 2.3 na s. 88; umístění, typ a opakovatelnost porovnány s oficiálním MIX 2.0 XSD. Jde o ověření přepisu, chování konkrétních nástrojů zde ověřeno nebylo."
+    interpretation:
+      cs: "MIX 2.0 používá xsd:positiveInteger. Hodnoty 1, 3 a 4 uvedené v DMF jsou příklady; XSD neomezuje prvek pouze na ně. Hodnota musí popisovat daný soubor, nelze ji určit jen ze jména ICC profilu."
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-BITS-PER-SAMPLE-VALUE
+  - type: related_to
+    target: NDK-MONO-MIX-COLOR-SPACE

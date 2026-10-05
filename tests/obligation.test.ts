@@ -19,7 +19,7 @@ describe("source-backed obligation", () => {
       const columns = database.prepare("PRAGMA table_info(rule_versions)").all().map((row) => row.name);
       expect(columns).toContain("obligation");
       expect(columns).not.toContain("severity");
-      expect(registry.rule_versions.map((rule) => rule.obligation).sort()).toEqual(["mandatory", "mandatory", "recommended"]);
+      expect(registry.rule_versions.filter((rule) => rule.rule_id.startsWith("NDK-MONO-MIX-ICC-")).map((rule) => rule.obligation).sort()).toEqual(["mandatory", "mandatory", "recommended"]);
       expect(JSON.stringify(registry.rules)).not.toContain('"severity"');
       const env = { DB: { prepare(sql: string) {
         let parameters: any[] = [];
@@ -30,7 +30,8 @@ describe("source-backed obligation", () => {
         };
         return statement;
       } } } as unknown as Env;
-      for (const [level, count] of [["mandatory", 2], ["recommended", 1], ["optional", 0]] as const) {
+      for (const level of ["mandatory", "mandatory_if_available", "recommended", "recommended_if_available", "optional"] as const) {
+        const count = registry.rule_versions.filter((rule) => rule.obligation === level).length;
         const response = await handleRequest(new Request(`https://registry.test/api/v1/rules?obligation=${level}&sort=obligation`), env);
         const result = await response.json() as { data: RuleVersion[]; pagination: { total: number } };
         expect(response.status).toBe(200);

@@ -1,0 +1,67 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-IMAGE-HEIGHT
+title:
+  cs: "Výška obrazu v pixelech"
+description:
+  cs: "imageHeight v technických metadatech MIX pro DMF Monografie 2.3."
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-IMAGE-HEIGHT
+    relation_to_target:
+      type: restricts
+    category: technical/dimensions
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "Pro MC a PS DMF 2.3 vyžaduje imageHeight s výškou obrazu v pixelech."
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        - type: xpath
+          expression: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:imageHeight"
+          assertion: exists
+        - type: regex
+          expression: "^[ \\t\\r\\n]*\\+?0*[1-9][0-9]*[ \\t\\r\\n]*$"
+          assertion: matches
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value: [MC, PS]
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 83
+      section: "7.5.4 Technická metadata MIX — imageHeight"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:imageHeight; positiveIntegerType"
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Povinnost M, rozsah MC/PS a význam ověřeny v tabulce DMF 2.3 na s. 83; umístění, typ a opakovatelnost porovnány s oficiálním MIX 2.0 XSD. Jde o ověření přepisu, chování konkrétních nástrojů zde ověřeno nebylo."
+    interpretation:
+      cs: "Hodnota popisuje vertikální rozměr konkrétního obrazového souboru. Typ MIX 2.0 je xsd:positiveInteger. Otočení nebo ořez obrazu může vyžadovat nové získání této hodnoty."
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-IMAGE-WIDTH
+  - type: related_to
+    target: NDK-MONO-MIX-Y-SAMPLING-FREQUENCY

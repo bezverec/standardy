@@ -85,6 +85,206 @@ entities:
       status: verified
       date: "2026-09-24"
       reference: Název, jmenný prostor a umístění elementu v IccProfile byly ověřeny proti MIX 2.0 a DMF Monografie 2.3.
+  - id: MIX-IMAGE-WIDTH
+    type: element
+    version: "2.0"
+    name: imageWidth
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Šířka obrazu v pixelech"
+    definition:
+      cs: "imageWidth používá positiveIntegerType odvozený z xsd:positiveInteger. MIX 2.0 dovoluje nejvýše jeden volitelný výskyt."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:imageWidth; positiveIntegerType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-IMAGE-HEIGHT
+    type: element
+    version: "2.0"
+    name: imageHeight
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Výška obrazu v pixelech"
+    definition:
+      cs: "imageHeight používá positiveIntegerType odvozený z xsd:positiveInteger. MIX 2.0 dovoluje nejvýše jeden volitelný výskyt."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:imageHeight; positiveIntegerType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-COLOR-SPACE
+    type: element
+    version: "2.0"
+    name: colorSpace
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Barevný prostor obrazu"
+    definition:
+      cs: "colorSpace je volitelný řetězcový element typu stringType, nejvýše jeden v PhotometricInterpretation. XSD nezavádí číselník barevných prostorů."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation/mix:colorSpace; stringType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-SAMPLING-FREQUENCY-PLANE
+    type: element
+    version: "2.0"
+    name: samplingFrequencyPlane
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Referenční rovina vzorkování"
+    definition:
+      cs: "samplingFrequencyPlane používá typ typeOfSamplingFrequencyPlaneType s hodnotami camera/scanner focal plane, object plane, source object plane. MIX 2.0 dovoluje nejvýše jeden volitelný výskyt."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics/mix:samplingFrequencyPlane; typeOfSamplingFrequencyPlaneType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-SAMPLING-FREQUENCY-UNIT
+    type: element
+    version: "2.0"
+    name: samplingFrequencyUnit
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Jednotka vzorkovací frekvence"
+    definition:
+      cs: "samplingFrequencyUnit používá typ typeOfSamplingFrequencyUnitType s hodnotami no absolute unit of measurement, in., cm. MIX 2.0 dovoluje nejvýše jeden volitelný výskyt."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics/mix:samplingFrequencyUnit; typeOfSamplingFrequencyUnitType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-X-SAMPLING-FREQUENCY
+    type: element
+    version: "2.0"
+    name: xSamplingFrequency
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Vzorkovací frekvence v ose X"
+    definition:
+      cs: "xSamplingFrequency je kontejner typu rationalType s prvky numerator a denominator typu xsd:integer. V MIX 2.0 je volitelný a nejvýše jeden; povinnost NDK je samostatná."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics/mix:xSamplingFrequency; rationalType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-Y-SAMPLING-FREQUENCY
+    type: element
+    version: "2.0"
+    name: ySamplingFrequency
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Vzorkovací frekvence v ose Y"
+    definition:
+      cs: "ySamplingFrequency je kontejner typu rationalType s prvky numerator a denominator typu xsd:integer. V MIX 2.0 je volitelný a nejvýše jeden; povinnost NDK je samostatná."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics/mix:ySamplingFrequency; rationalType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-BITS-PER-SAMPLE-VALUE
+    type: element
+    version: "2.0"
+    name: bitsPerSampleValue
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Počet bitů na vzorek"
+    definition:
+      cs: "bitsPerSampleValue používá positiveIntegerType odvozený z xsd:positiveInteger. MIX 2.0 dovoluje opakované volitelné výskyty."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample/mix:bitsPerSampleValue; positiveIntegerType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-BITS-PER-SAMPLE-UNIT
+    type: element
+    version: "2.0"
+    name: bitsPerSampleUnit
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Typ číselné reprezentace vzorku"
+    definition:
+      cs: "bitsPerSampleUnit používá typ typeOfBitsPerSampleUnitType s hodnotami integer, floating point. MIX 2.0 dovoluje nejvýše jeden volitelný výskyt."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample/mix:bitsPerSampleUnit; typeOfBitsPerSampleUnitType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-SAMPLES-PER-PIXEL
+    type: element
+    version: "2.0"
+    name: samplesPerPixel
+    namespace: "http://www.loc.gov/mix/v20"
+    title:
+      cs: "Počet složek na pixel"
+    definition:
+      cs: "samplesPerPixel používá positiveIntegerType odvozený z xsd:positiveInteger. MIX 2.0 dovoluje nejvýše jeden volitelný výskyt."
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: "/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:samplesPerPixel; positiveIntegerType"
+      url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: verified
+      date: "2026-10-05"
+      reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
 relations:
   - type: related_to
     target: ICC

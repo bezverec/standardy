@@ -100,13 +100,18 @@ function Rules() {
       </aside><section className="results"><div className="results-heading"><p role="status" aria-live="polite">Nalezeno <strong>{rules.length}</strong> z {state.data.pagination.total} verzovaných záznamů</p><span>Řazeno podle ID</span></div>
         {!rules.length && <div className="state"><h2>Žádné pravidlo neodpovídá</h2><p>Zkuste kratší dotaz nebo uvolněte některý filtr.</p><button onClick={clear}>Vymazat hledání a filtry</button></div>}
         {rules.map((rule) => <RuleCard key={`${rule.rule_id}@${rule.version}`} rule={rule} relations={state.data!.relations} />)}
-        <p className="coverage">Pokrytí MVP: ICC profily v DMF Monografie 2.3. Registr zatím neobsahuje všechna pravidla NDK.</p>
+        <p className="coverage">Pokrytí: ICC profily, rozměry obrazu, vzorkování a barevné kódování v MIX podle DMF Monografie 2.3. Registr zatím neobsahuje všechna pravidla NDK.</p>
       </section></div>
     </>}
   </main>;
 }
 
 const labels: Record<string, string> = { normative: "Normativní", disputed: "Sporný požadavek", draft: "Částečné pokrytí", verified: "Ověřeno", unverified: "Neověřeno", deprecated: "Historické", ambiguous: "Nejednoznačné", error: "Chyba", warning: "Varování", info: "Informace", monograph: "Monografie", "technical/icc": "Technická metadata · ICC", related_to: "souvisí s", defined_by: "je definováno v", restricts: "omezuje", clarifies: "upřesňuje", generated_by: "je generováno v", validated_by: "je kontrolováno v", derived_from: "vychází z", extends: "rozšiřuje" };
+Object.assign(labels, {
+  "technical/dimensions": "Technická metadata · Rozměry obrazu",
+  "technical/sampling": "Technická metadata · Vzorkování",
+  "technical/color": "Technická metadata · Barevné kódování",
+});
 
 function RuleCard({ rule, relations }: { rule: RuleVersion; relations: Relation[] }) {
   return <article className="rule-card"><div className="rule-card-heading"><div><p className="rule-meta">{rule.national_standard_id} · {rule.version} · {labels[rule.category] ?? rule.category}</p><h2><Link to={`/rules/${rule.rule_id}`}>{localized(rule.title)}</Link></h2></div><Status tone={rule.status === "disputed" ? "warn" : "neutral"}>{labels[rule.status] ?? rule.status}</Status></div><p>{localized(rule.description)}</p><div className="rule-card-footer"><code>{rule.target.entity}</code><div className="source-chips">{sourceIds(rule, relations).map((id) => <Link key={id} to={`/standards/${id}`} className="source-chip">{id}</Link>)}</div><span>{labels[rule.verification.status]} · {obligationLabel(rule)}</span></div></article>;
