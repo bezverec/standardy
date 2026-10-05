@@ -1,10 +1,10 @@
 schema_version: "1.0"
 kind: "rule"
-id: "NDK-MONO-METS-FPTR-FILEID"
+id: "NDK-MONO-METS-PHYSICAL-DIV-ID"
 title:
-  cs: "Vazby fyzické stránky na soubory"
+  cs: "Jednoznačná ID svazku a stran fyzické mapy"
 description:
-  cs: "fptr/@FILEID v hlavním METS podle DMF Monografie 2.3."
+  cs: "Fyzická strukturální mapa hlavního METS podle DMF Monografie 2.3, s rozlišením obecných možností METS 1.9.1 a navazujících Pravidel pro popis monografií 2.4."
 national_standard:
   id: "ndk-monograph"
 versions:
@@ -12,10 +12,10 @@ versions:
     version: "2.3"
     status: "normative"
     target:
-      entity: "METS-FPTR-FILEID"
+      entity: "METS-DIV-ID"
     relation_to_target:
       type: "restricts"
-    category: "structure/mets-files"
+    category: "structure/mets-physical"
     obligation: "mandatory"
     obligation_source: "prose"
     object_types:
@@ -23,7 +23,7 @@ versions:
       values:
         - "monograph"
     normative_requirement:
-      cs: "Fyzická stránka odkazuje přes fptr/@FILEID na své soubory MC, UC, ALTO, OCR a technického METS."
+      cs: "Rodičovský div svazku i každý stránkový div ve fyzické mapě má vlastní ID."
     requirement:
       presence: "required"
       cardinality:
@@ -32,7 +32,7 @@ versions:
       validations:
         -
           type: "custom"
-          expression: "Pro každý stránkový div fyzické mapy ověřit odkazy fptr s FILEID na odpovídající soubory všech pěti reprezentací. Každé FILEID musí odkazovat právě na file v fileSec téhož METS, ve správné skupině a pro tutéž stránku; pouhá existence libovolného XML ID nestačí."
+          expression: "Požadovat ID na rodičovském div i na každém stránkovém div fyzické mapy; ověřit lexikální podobu xs:ID a jedinečnost v celém XML dokumentu, nejen mezi stránkami."
     condition:
       all:
         -
@@ -49,12 +49,14 @@ versions:
           value: "PHYSICAL"
         -
           field: "structural_level"
-          operator: "equals"
-          value: "page"
+          operator: "in"
+          value:
+            - "volume"
+            - "page"
     source:
       document: "DMF Monografie"
       version: "2.3"
-      page: 93
+      page: 92
       section: "7.7.1.1 Vyjádření fyzické strukturální mapy"
       url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     references:
@@ -62,13 +64,13 @@ versions:
         document: "METS XML Schema"
         version: "1.9.1"
         page: null
-        section: "/mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div/mets:fptr/@FILEID"
+        section: "divType/@ID; xs:ID; optional"
         url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
     examples:
       -
-        id: "sip-main-mets-fptr-fileid"
+        id: "sip-main-mets-physical-div-id-1"
         title:
-          cs: "Odkazy první fyzické stránky"
+          cs: "První fyzická stránka"
         language: "xml"
         kind: "source_excerpt"
         code: |
@@ -80,33 +82,33 @@ versions:
             <mets:fptr FILEID="amd_0001" />
           </mets:div>
         note:
-          cs: "Ukázka jedné stránky obsahuje pět odkazů; cílové záznamy file leží mimo tento výřez. Výřez ze zdrojového SIP, nikoli univerzální šablona ani výsledek úplné validace."
+          cs: "Přesný výřez dodaného SIP, nikoli univerzální šablona nebo potvrzení validity balíčku. Související cíle a další části dokumentu mohou ležet mimo tento výřez."
         source:
           document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
           version: "DMF Monografie 2.3 (deklarováno v info.xml)"
           page: null
-          section: "Hlavní METS"
+          section: "Hlavní METS — fyzická mapa a související metadata"
           url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
         file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
         file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
-        source_xpath: "/mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div[@ID='DIV_P_PAGE_0000']"
+        source_xpath: "/mets:mets/mets:structMap[@TYPE=\"PHYSICAL\"]/mets:div/mets:div[@ID=\"DIV_P_PAGE_0000\"]"
         namespaces:
           mets: "http://www.loc.gov/METS/"
-          xlink: "http://www.w3.org/1999/xlink"
+          mods: "http://www.loc.gov/mods/v3"
         checked_on: "2026-10-05"
     verification:
       status: "verified"
       date: "2026-10-05"
-      reference: "Požadavek porovnán s textem a vykreslenými stranami DMF 2.3 a s XSD METS 1.9.1. Povinnost je vyjádřena slovně, zdroj v této části neuvádí kód M/MA/R/RA/O. Implementace nástrojů ani úplná validita SIP zde ověřeny nebyly."
+      reference: "Požadavek porovnán s textem a vykreslenými stranami 92–93 DMF 2.3 a s XSD METS 1.9.1. Typy stran doplněny podle tabulky PPM 2.4, s. 14; paginace podle s. 4–7 a tabulky PAGE v DMF, s. 73. Vzor ověřen XPath a SHA-256; externí validátor ani nástrojové implementace nebyly testovány."
     interpretation:
-      cs: "Kardinalita 1–1 platí pro atribut každého přímého odkazu, nikoli pro počet fptr stránky. FILEID je XML IDREF na file/@ID v témže METS, ne cesta. Obecné METS dovoluje fptr bez FILEID při odkazu přes area/par/seq; toto pravidlo se nevztahuje na logickou mapu a její odkazy do bloků ALTO. V jedné odrážce DMF je překlep ftpr; správný název v XSD i dalších odrážkách je fptr. Úroveň Povinné je přepis slovního požadavku DMF; historický kód povinnosti záměrně nedoplňujeme. Kardinalita atributu/elementu se vztahuje k jeho rodiči (fileSec k hlavnímu METS, fileGrp k fileSec). Popis custom kontroly není spustitelný validační engine."
+      cs: "Prefixy DIV_P_0000 a DIV_P_PAGE_0000 jsou příklady ze vzoru, nikoli povinná hodnota ani počet číslic stanovený § 7.7.1.1. ID není ORDER, ORDERLABEL, identifikátor souboru ani UUID dokumentu. Povinnosti jsou slovní, bez domyšleného kódu M/MA/R/RA/O. Úrovně volume/page označují pozici div ve fyzické mapě, nikoli testovanou hodnotu TYPE; hlavní a vedlejší METS zůstávají oddělené. Custom kontroly registr nevykonává, jsou popisem pro budoucí implementaci."
 relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PHYSICAL-VOLUME-DIV"
   -
     type: "related_to"
     target: "NDK-MONO-METS-PHYSICAL-PAGES"
   -
     type: "related_to"
     target: "NDK-MONO-METS-FILE-ID"
-  -
-    type: "related_to"
-    target: "NDK-MONO-METS-FILE-GROUPS"

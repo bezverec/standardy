@@ -23,6 +23,166 @@ versions:
       url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
 entities:
   -
+    id: "METS-STRUCTMAP-LABEL"
+    type: "attribute"
+    version: "1.9.1"
+    name: "structMap/@LABEL"
+    title:
+      cs: "Popisek strukturální mapy"
+    definition:
+      cs: "Volitelný xs:string pro označení strukturální mapy; obecné XSD neurčuje pevnou hodnotu Physical_Structure."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "structMapType/@LABEL"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
+    id: "METS-DIV-TYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "div/@TYPE"
+    title:
+      cs: "Typ strukturálního uzlu"
+    definition:
+      cs: "Volitelný xs:string pro typ uzlu; obecné METS nepředepisuje číselník typů stran ani hodnotu Monograph."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType/@TYPE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
+    id: "METS-DIV-LABEL"
+    type: "attribute"
+    version: "1.9.1"
+    name: "div/@LABEL"
+    title:
+      cs: "Popisek strukturálního uzlu"
+    definition:
+      cs: "Volitelný textový název uzlu z atributové skupiny ORDERLABELS; není to pořadí ani paginace."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType; ORDERLABELS/@LABEL"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
+    id: "METS-DIV-ID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "div/@ID"
+    title:
+      cs: "Identifikátor strukturálního uzlu"
+    definition:
+      cs: "Volitelný xs:ID, jedinečný v rámci XML dokumentu; konkrétní prefixy nejsou předepsány obecným METS."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType/@ID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
+    id: "METS-DIV-DMDID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "div/@DMDID"
+    title:
+      cs: "Vazba uzlu na popisná metadata"
+    definition:
+      cs: "Volitelný xs:IDREFS odkazující na dmdSec s popisnými metadaty příslušného uzlu."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType/@DMDID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
+    id: "METS-DIV-ADMID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "div/@ADMID"
+    title:
+      cs: "Vazba uzlu na administrativní metadata"
+    definition:
+      cs: "Volitelný xs:IDREFS. Dokumentace METS 1.9.1 uvádí cíle rightsMD, sourceMD, techMD a digiprovMD uvnitř amdSec; samotný datový typ typ cílového elementu nerozliší."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType/@ADMID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
+    id: "METS-DIV-ORDER"
+    type: "attribute"
+    version: "1.9.1"
+    name: "div/@ORDER"
+    title:
+      cs: "Pořadí strukturálního uzlu"
+    definition:
+      cs: "Volitelný xs:integer pro numerické pořadí mezi sourozenci. XSD samo nevyžaduje začátek od 1 ani rovnost s ORDERLABEL."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType; ORDERLABELS/@ORDER"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
+    id: "METS-DIV-ORDERLABEL"
+    type: "attribute"
+    version: "1.9.1"
+    name: "div/@ORDERLABEL"
+    title:
+      cs: "Označení pořadí a paginace uzlu"
+    definition:
+      cs: "Volitelný xs:string pro označení v původním číslovacím systému, například římské číslo; odlišný od numerického ORDER a názvu LABEL."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType; ORDERLABELS/@ORDERLABEL"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Atribut, datový typ a obecná volitelnost ověřeny v oficiálním XSD METS 1.9.1; povinnosti NDK vedeny odděleně."
+  -
     id: "METS-ROOT"
     type: "element"
     version: "1.9.1"

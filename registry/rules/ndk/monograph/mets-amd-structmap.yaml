@@ -98,6 +98,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-METS-PHYSICAL-MAP"
+  -
+    type: "related_to"
     target: "NDK-MONO-METS-AMD-PAGE-DIV"
   -
     type: "related_to"

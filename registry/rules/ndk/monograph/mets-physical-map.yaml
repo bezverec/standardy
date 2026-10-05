@@ -1,0 +1,219 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-PHYSICAL-MAP"
+title:
+  cs: "Fyzická mapa v hlavním METS"
+description:
+  cs: "Fyzická strukturální mapa hlavního METS podle DMF Monografie 2.3, s rozlišením obecných možností METS 1.9.1 a navazujících Pravidel pro popis monografií 2.4."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-STRUCTMAP"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-physical"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Hlavní METS obsahuje fyzickou strukturální mapu označenou TYPE=\"PHYSICAL\"."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V hlavním METS vyhledat structMap s přesným TYPE=PHYSICAL a požadovat alespoň jeden výskyt; pouhá přítomnost LOGICAL tuto povinnost nesplňuje."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 92
+      section: "7.7.1.1 Vyjádření fyzické strukturální mapy"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/structMap; structMapType/@TYPE"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    examples:
+      -
+        id: "sip-main-mets-physical-map-1"
+        title:
+          cs: "Úplná fyzická mapa vzorového svazku"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:structMap LABEL="Physical_Structure" TYPE="PHYSICAL" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:div ADMID="AMD_MONOGRAPH_0001" DMDID="MODSMD_VOLUME_0001" ID="DIV_P_0000" LABEL="Tomáš Alva Edison a jeho fonograf, [1890]" TYPE="Monograph">
+              <mets:div ID="DIV_P_PAGE_0000" ORDER="1" ORDERLABEL="[1]" TYPE="titlePage">
+                <mets:fptr FILEID="mc_0001" />
+                <mets:fptr FILEID="uc_0001" />
+                <mets:fptr FILEID="alto_0001" />
+                <mets:fptr FILEID="txt_0001" />
+                <mets:fptr FILEID="amd_0001" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0001" ORDER="2" ORDERLABEL="[2]" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0002" />
+                <mets:fptr FILEID="uc_0002" />
+                <mets:fptr FILEID="alto_0002" />
+                <mets:fptr FILEID="txt_0002" />
+                <mets:fptr FILEID="amd_0002" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0002" ORDER="3" ORDERLABEL="[3]" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0003" />
+                <mets:fptr FILEID="uc_0003" />
+                <mets:fptr FILEID="alto_0003" />
+                <mets:fptr FILEID="txt_0003" />
+                <mets:fptr FILEID="amd_0003" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0003" ORDER="4" ORDERLABEL="4" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0004" />
+                <mets:fptr FILEID="uc_0004" />
+                <mets:fptr FILEID="alto_0004" />
+                <mets:fptr FILEID="txt_0004" />
+                <mets:fptr FILEID="amd_0004" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0004" ORDER="5" ORDERLABEL="5" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0005" />
+                <mets:fptr FILEID="uc_0005" />
+                <mets:fptr FILEID="alto_0005" />
+                <mets:fptr FILEID="txt_0005" />
+                <mets:fptr FILEID="amd_0005" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0005" ORDER="6" ORDERLABEL="6" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0006" />
+                <mets:fptr FILEID="uc_0006" />
+                <mets:fptr FILEID="alto_0006" />
+                <mets:fptr FILEID="txt_0006" />
+                <mets:fptr FILEID="amd_0006" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0006" ORDER="7" ORDERLABEL="7" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0007" />
+                <mets:fptr FILEID="uc_0007" />
+                <mets:fptr FILEID="alto_0007" />
+                <mets:fptr FILEID="txt_0007" />
+                <mets:fptr FILEID="amd_0007" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0007" ORDER="8" ORDERLABEL="8" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0008" />
+                <mets:fptr FILEID="uc_0008" />
+                <mets:fptr FILEID="alto_0008" />
+                <mets:fptr FILEID="txt_0008" />
+                <mets:fptr FILEID="amd_0008" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0008" ORDER="9" ORDERLABEL="9" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0009" />
+                <mets:fptr FILEID="uc_0009" />
+                <mets:fptr FILEID="alto_0009" />
+                <mets:fptr FILEID="txt_0009" />
+                <mets:fptr FILEID="amd_0009" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0009" ORDER="10" ORDERLABEL="10" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0010" />
+                <mets:fptr FILEID="uc_0010" />
+                <mets:fptr FILEID="alto_0010" />
+                <mets:fptr FILEID="txt_0010" />
+                <mets:fptr FILEID="amd_0010" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0010" ORDER="11" ORDERLABEL="11" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0011" />
+                <mets:fptr FILEID="uc_0011" />
+                <mets:fptr FILEID="alto_0011" />
+                <mets:fptr FILEID="txt_0011" />
+                <mets:fptr FILEID="amd_0011" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0011" ORDER="12" ORDERLABEL="12" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0012" />
+                <mets:fptr FILEID="uc_0012" />
+                <mets:fptr FILEID="alto_0012" />
+                <mets:fptr FILEID="txt_0012" />
+                <mets:fptr FILEID="amd_0012" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0012" ORDER="13" ORDERLABEL="13" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0013" />
+                <mets:fptr FILEID="uc_0013" />
+                <mets:fptr FILEID="alto_0013" />
+                <mets:fptr FILEID="txt_0013" />
+                <mets:fptr FILEID="amd_0013" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0013" ORDER="14" ORDERLABEL="14" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0014" />
+                <mets:fptr FILEID="uc_0014" />
+                <mets:fptr FILEID="alto_0014" />
+                <mets:fptr FILEID="txt_0014" />
+                <mets:fptr FILEID="amd_0014" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0014" ORDER="15" ORDERLABEL="[15]" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0015" />
+                <mets:fptr FILEID="uc_0015" />
+                <mets:fptr FILEID="alto_0015" />
+                <mets:fptr FILEID="txt_0015" />
+                <mets:fptr FILEID="amd_0015" />
+              </mets:div>
+              <mets:div ID="DIV_P_PAGE_0015" ORDER="16" ORDERLABEL="[16]" TYPE="normalPage">
+                <mets:fptr FILEID="mc_0016" />
+                <mets:fptr FILEID="uc_0016" />
+                <mets:fptr FILEID="alto_0016" />
+                <mets:fptr FILEID="txt_0016" />
+                <mets:fptr FILEID="amd_0016" />
+              </mets:div>
+            </mets:div>
+          </mets:structMap>
+        note:
+          cs: "Přesný výřez dodaného SIP, nikoli univerzální šablona nebo potvrzení validity balíčku. Obsah rodiče není zkrácen, proto jsou zachovány všechny jeho stránkové div."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — fyzická mapa a související metadata"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:structMap[@TYPE=\"PHYSICAL\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-05"
+    verification:
+      status: "verified"
+      date: "2026-10-05"
+      reference: "Požadavek porovnán s textem a vykreslenými stranami 92–93 DMF 2.3 a s XSD METS 1.9.1. Typy stran doplněny podle tabulky PPM 2.4, s. 14; paginace podle s. 4–7 a tabulky PAGE v DMF, s. 73. Vzor ověřen XPath a SHA-256; externí validátor ani nástrojové implementace nebyly testovány."
+    interpretation:
+      cs: "Obecné METS vyžaduje alespoň jednu structMap, ale ne fyzický typ; TYPE je volitelný řetězec. DMF vyžaduje fyzickou i logickou mapu. Zde neodvozujeme další číselný limit počtu map ani nepokrýváme obsah logické mapy. Povinnosti jsou slovní, bez domyšleného kódu M/MA/R/RA/O. Úrovně volume/page označují pozici div ve fyzické mapě, nikoli testovanou hodnotu TYPE; hlavní a vedlejší METS zůstávají oddělené. Custom kontroly registr nevykonává, jsou popisem pro budoucí implementaci."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PHYSICAL-MAP-LABEL"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PHYSICAL-VOLUME-DIV"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PHYSICAL-PAGES"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ROOT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-AMD-STRUCTMAP"

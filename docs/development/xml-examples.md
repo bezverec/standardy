@@ -1,6 +1,6 @@
 # XML ukázky ze vzorového SIP
 
-U 105 pravidel DMF Monografie 2.3 je dostupných 130 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, dvacet dva pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. ADMID má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 130 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 117 pravidel DMF Monografie 2.3 je dostupných 147 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, třicet čtyři pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 147 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
 ## Původ a meze ověření
 
@@ -18,6 +18,8 @@ Každá ukázka obsahuje:
 Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správnost jeho obsahu. Původní normativní `source` a `verification` pravidla jsou nezávislé na původu ukázky.
 
 ## Důležité příklady
+
+- [Fyzická mapa](mets-physical.md) přidává 17 výřezů u 12 pravidel, včetně porovnání s MODS a doloženého rozdílu mezi cílem ADMID v DMF a dokumentaci METS. Plné mapy obsahují všech 16 stran vzoru; číslo 16 není normativní požadavek.
 
 - [Vedlejší METS](mets-amd.md) obsahuje doložené nevyhovující ukázky: čtyři fileGrp namísto jedné skupiny a ADMID, která odkazují na existující, ale sémanticky nesprávné technické záznamy. Výřezy se záměrně neopravují. Identifikátory PREMIS a základní informace MIX jsou připojené jako další ukázky důkazu.
 - [PREMIS Object](premis-object.md) přidává 17 výřezů MC z OBJ_003 a jeden výřez formátu ALTO z OBJ_004. Velikost i MD5 první stránky byly ověřeny proti skutečným souborům, nikoli podle chybného ADMID. Slovník identifikátorů a přiřazení PUID ve vzoru nejsou tímto ověřeny.

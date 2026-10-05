@@ -65,6 +65,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-METS-PHYSICAL-MAP"
+  -
+    type: "related_to"
     target: "NDK-MONO-METS-ROOT-LABEL"
   -
     type: "related_to"

@@ -2,6 +2,8 @@
 
 Dvanáct pravidel pro DMF Monografie 2.3 doplňuje [evidenci souborů](mets-files.md) o § 7.2 a 7.3. Kategorie `structure/mets-header` patří pod METS a strukturální metadata. Platí pro **hlavní METS jednoho svazku**, nikoli automaticky pro vedlejší stránkové METS nebo záznamy PREMIS.
 
+Na kořen navazuje také [fyzická mapa hlavního METS](mets-physical.md) s popisem stran, paginace a metadatových vazeb.
+
 ## Zdroje
 
 - [DMF Monografie 2.3](https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf), s. 18–19, § 7.2–7.3. Povinnosti byly zkontrolovány i vizuálně ve vykreslených tabulkách; s. 5 určuje verzi METS 1.9.1.

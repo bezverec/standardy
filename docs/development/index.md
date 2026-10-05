@@ -7,7 +7,7 @@ Registr propojuje požadavky národních standardů s původními specifikacemi,
 
 ## Současný stav
 
-K 5. 10. 2026 registr obsahuje **126 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 26 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku), osm pro vedlejší METS a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
+K 5. 10. 2026 registr obsahuje **138 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 38 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku, 12 pro fyzickou mapu), osm pro vedlejší METS a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
 
 | Skupina | Počet pravidel | Obsah a podklady |
 |---|---:|---|
@@ -18,6 +18,7 @@ K 5. 10. 2026 registr obsahuje **126 pravidel pro DMF Monografie 2.3**: 13 pro t
 | info.xml | 18 | [Informace o SIP, identifikátory, seznam souborů a checksum](info-xml.md); včetně rozdílů DMF a XSD 1.1 |
 | METS – soubory a vazby | 14 | [fileSec, skupiny, atributy souborů, FLocat a fyzické odkazy FILEID](mets-files.md); oddělení DMF 2.3 od METS 1.9.1 |
 | METS – kořen a hlavička | 12 | [Kořen, data záznamu a organizace](mets-header.md); role CREATOR/ARCHIVIST a odkazy na schémata |
+| METS – fyzická mapa | 12 | [Stránky, typy, pořadí, paginace a vazby](mets-physical.md); včetně číselníku PPM 2.4 |
 | Vedlejší METS | 8 | [Inventář stránky, ADMID a fyzická mapa](mets-amd.md); včetně doložených nesouladů ve vzoru |
 | PREMIS Object | 17 | [Identifikace, charakteristiky, fixity, velikost a formát](premis-object.md); rozdíly PREMIS 2.2 a povinností DMF |
 | PREMIS – vznik a ochrana | 8 | [Úroveň ochrany, aplikace, data a původní název](premis-provenance.md); povinnosti M/R a ukázky MC, PS a ALTO |
@@ -41,6 +42,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Informace o balíčku info.xml](info-xml.md) — povinnosti M/MA/R/O, vazby na soubory a rozpory DMF/XSD.
 - [Soubory a jejich vazby v METS](mets-files.md) — hlavní METS, inventář souborů a fyzická mapa.
 - [Kořen a hlavička hlavního METS](mets-header.md) — LABEL, TYPE, schémata, časy a tvůrce/vlastník záznamu.
+- [Fyzická mapa hlavního METS](mets-physical.md) — úplnost stran, číselník typů, ORDER versus ORDERLABEL a vazby DMDID/ADMID.
 - [Vedlejší METS a vazby na technická metadata](mets-amd.md) — jediná skupina, správné cíle ADMID a MONOGRAPH_PAGE.
 - [PREMIS Object](premis-object.md) — identifikace souboru, kontrolní součty, velikost a popis formátu.
 - [Vznik a ochrana souboru v PREMIS](premis-provenance.md) — úroveň ochrany, aplikace, data a původní název.
