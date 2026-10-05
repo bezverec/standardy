@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "r
 import { api, type KnowledgeGraphResponse, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
 import { RelationshipGraph } from "./RelationshipGraph.tsx";
 import { CodeExamples } from "./CodeExamples.tsx";
+import { RegistryMap } from "./RegistryMap.tsx";
 import { graphNodeLabel } from "./graph.ts";
 import { metadataAreas, metadataStandards, targetStandardId } from "../../../packages/registry-core/src/metadata-taxonomy.ts";
 import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts";
@@ -120,6 +121,14 @@ function Rules() {
   </main>;
 }
 
+function MapPage() {
+  const state = useAsync(async () => {
+    const [rules, relations, national] = await Promise.all([api.rules(), api.relations(), api.nationalStandards()]);
+    return { rules: rules.data, relations: relations.data, nationalStandards: national.data };
+  }, []);
+  return <main><header className="page-header"><div><p className="eyebrow">Databáze standardů</p><h1>Mapa registru</h1><p>Od oblastí metadat přes tematické skupiny ke konkrétním pravidlům.</p></div><ChangeProposal /></header><LoadingState state={state} />{state.data && <RegistryMap {...state.data} topicLabels={labels} onNavigate={navigate} />}</main>;
+}
+
 const labels: Record<string, string> = { normative: "Normativní", disputed: "Sporný požadavek", draft: "Částečné pokrytí", verified: "Ověřeno", unverified: "Neověřeno", deprecated: "Historické", ambiguous: "Nejednoznačné", error: "Chyba", warning: "Varování", info: "Informace", monograph: "Monografie", "technical/icc": "Technická metadata · ICC", related_to: "souvisí s", defined_by: "je definováno v", restricts: "omezuje", clarifies: "upřesňuje", generated_by: "je generováno v", validated_by: "je kontrolováno v", derived_from: "vychází z", extends: "rozšiřuje" };
 Object.assign(labels, {
   "metadata/info": "Informace o balíčku · info.xml",
@@ -211,11 +220,12 @@ export function App() {
   const rule = path.match(/^\/rules\/([^/]+)\/?$/);
   const standard = path.match(/^\/standards\/([^/]+)\/?$/);
   const nationalStandard = path.match(/^\/national-standards\/([^/]+)\/?$/);
-  if (path === "/" || path === "/rules" || path === "/rules/") page = <Rules key={path} />;
+  if (path === "/" || path === "/map" || path === "/map/") page = <MapPage />;
+  else if (path === "/rules" || path === "/rules/") page = <Rules key={path} />;
   else if (rule?.[1]) page = <RuleDetail key={rule[1]} id={decodeURIComponent(rule[1])} />;
   else if (path === "/standards" || path === "/standards/") page = <EntityList type="standards" />;
   else if (standard?.[1]) page = <EntityDetail type="standards" id={decodeURIComponent(standard[1])} />;
   else if (path === "/national-standards" || path === "/national-standards/") page = <EntityList type="national-standards" />;
   else if (nationalStandard?.[1]) page = <EntityDetail type="national-standards" id={decodeURIComponent(nationalStandard[1])} />;
-  return <div className="app-shell"><header className="topbar"><Link to="/rules" className="brand"><img src={standardyMark} width="44" height="44" alt="" /><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/rules" className={path === "/" || path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
+  return <div className="app-shell"><header className="topbar"><Link to="/" className="brand"><img src={standardyMark} width="44" height="44" alt="" /><div>Pravidla &amp; standardy<small>Standardy digitalizace</small></div></Link><nav aria-label="Hlavní navigace"><Link to="/map" className={path === "/" || path.startsWith("/map") ? "active" : ""}>Mapa registru</Link><Link to="/rules" className={path.startsWith("/rules") ? "active" : ""}>Pravidla</Link><Link to="/standards" className={path.startsWith("/standards") ? "active" : ""}>Zdrojové standardy</Link><Link to="/national-standards" className={path.startsWith("/national-standards") ? "active" : ""}>Standardy NDK</Link><a href="/api-docs/">API / dokumentace</a></nav></header>{page}<footer><span>Verzovaná data v YAML</span><a href="https://github.com/bezverec/standardy" target="_blank" rel="noopener noreferrer">Repozitář</a><a href="/api-docs/">Swagger / API v1</a></footer></div>;
 }

@@ -69,3 +69,61 @@ export function layoutGraph(graph: KnowledgeGraphResponse) {
   })));
   return { positions, width: 1240, height };
 }
+
+export type GraphKind = KnowledgeGraphNode["kind"];
+export const defaultLayerOrder: GraphKind[] = ["standard_entity", "standard", "national_standard", "rule", "implementation"];
+export interface GraphPreferences { order: GraphKind[]; hiddenKinds: GraphKind[]; view: "graph" | "radial" | "table" }
+export const graphPreferenceKey = "standardy-graph-layout-v1";
+export function normalizeGraphPreferences(value: unknown): GraphPreferences {
+  const data = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const kinds = (value: unknown): GraphKind[] => Array.isArray(value) ? value.filter((kind): kind is GraphKind => defaultLayerOrder.includes(kind)) : [];
+  return { order: [...new Set([...kinds(data.order), ...defaultLayerOrder])], hiddenKinds: [...new Set(kinds(data.hiddenKinds))], view: data.view === "radial" || data.view === "table" ? data.view : "graph" };
+}
+export function moveGraphLayer(order: GraphKind[], kind: GraphKind, direction: -1 | 1): GraphKind[] {
+  const result = [...order], index = result.indexOf(kind), other = index + direction;
+  if (index >= 0 && other >= 0 && other < result.length) [result[index], result[other]] = [result[other]!, result[index]!];
+  return result;
+}
+
+/** Deterministic rings, expanded only when actual rectangular labels would collide. */
+export function layoutRadialGraph(graph: KnowledgeGraphResponse, order: GraphKind[]) {
+  const width = 240, height = 96, diagonal = Math.hypot(width, height);
+  const groups = normalizeGraphPreferences({ order }).order.map((kind) => ({ kind, nodes: graph.nodes.filter((node) => node.id !== graph.root && node.kind === kind).sort((a, b) => a.id.localeCompare(b.id)) })).filter(({ nodes }) => nodes.length);
+  const positions = new Map<string, { x: number; y: number; width: number; height: number }>();
+  if (graph.nodes.some((node) => node.id === graph.root)) positions.set(graph.root, { x: -width / 2, y: -height / 2, width, height });
+  const overlaps = (a: Position, b: Position) => a.x < b.x + b.width + 24 && b.x < a.x + a.width + 24 && a.y < b.y + b.height + 24 && b.y < a.y + a.height + 24;
+  let radius = 0;
+  const rings = groups.map((group, layer) => {
+    const count = group.nodes.length;
+    radius = Math.max(radius + height + 40, count > 1 ? (height + 24) / (2 * Math.sin(Math.PI / count)) : 180);
+    const place = () => group.nodes.map((node, index) => {
+      const angle = -Math.PI / 2 + 2 * Math.PI * index / count + layer * 0.7;
+      return { id: node.id, x: Math.cos(angle) * radius - width / 2, y: Math.sin(angle) * radius - height / 2, width, height };
+    });
+    let candidates = place();
+    const occupied = [...positions.values()];
+    while (candidates.some((node, index) => [...occupied, ...candidates.slice(0, index)].some((other) => overlaps(node, other)))) {
+      radius += 16;
+      candidates = place();
+    }
+    for (const { id, ...position } of candidates) positions.set(id, position);
+    return { ...group, radius };
+  });
+  const size = Math.max(600, (radius + diagonal / 2 + 48) * 2), center = size / 2;
+  for (const [id, position] of positions) positions.set(id, { ...position, x: position.x + center, y: position.y + center });
+  return { positions, width: size, height: size, center, rings };
+}
+
+export function connectedGraphNodes(graph: KnowledgeGraphResponse, selected: string | null): Set<string> {
+  return new Set(selected && graph.nodes.some(({ id }) => id === selected) ? [selected, ...graph.edges.filter((edge) => edge.from === selected || edge.to === selected).flatMap((edge) => [edge.from, edge.to])] : []);
+}
+
+type Position = { x: number; y: number; width: number; height: number };
+export function radialEdge(from: Position, to: Position) {
+  const x = from.x + from.width / 2, y = from.y + from.height / 2;
+  const dx = to.x + to.width / 2 - x, dy = to.y + to.height / 2 - y;
+  if (dx === 0 && dy === 0) return { path: `M ${x} ${from.y} C ${x - 60} ${from.y - 48}, ${x + 60} ${from.y - 48}, ${x + 20} ${from.y}`, x, y: from.y - 35 };
+  const start = 1 / Math.max(Math.abs(dx) / (from.width / 2), Math.abs(dy) / (from.height / 2));
+  const end = 1 / Math.max(Math.abs(dx) / (to.width / 2), Math.abs(dy) / (to.height / 2));
+  return { path: `M ${x + dx * start} ${y + dy * start} L ${x + dx * (1 - end)} ${y + dy * (1 - end)}`, x: x + dx / 2, y: y + dy / 2 - 6 };
+}

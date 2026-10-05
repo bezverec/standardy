@@ -105,6 +105,56 @@ nav{flex-wrap:wrap}
 .graph-intro{max-width:800px;color:var(--muted)}
 .graph-scroll{overflow:auto;max-width:100%;height:clamp(520px,var(--graph-height,720px),1100px);border:1px solid var(--line);background:#fff}
 .graph-canvas{min-width:0;min-height:0}
+.graph-explorer:fullscreen{background:var(--background);padding:1rem;overflow:auto}
+.graph-explorer:fullscreen .graph-scroll{height:80vh}
+.graph-scroll--zoomed{cursor:grab;touch-action:none;user-select:none}
+.graph-scroll--zoomed:active{cursor:grabbing}
+.graph-layer-choice{display:flex;align-items:center;gap:.3rem}
+.graph-layer-choice label{flex:1}
+.graph-layer-choice button{padding:.25rem .5rem}
+.graph-choices p{font-size:.8rem;line-height:1.5}
+button:disabled{opacity:.45;cursor:default}
+.graph-selection{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;background:var(--paper);padding:.8rem 1rem;border:1px solid var(--line);font-size:.875rem}
+.graph-selection>span{flex:1;min-width:180px;overflow-wrap:anywhere}
+.graph-selection button,.graph-selection a{flex-shrink:0}
+.graph-rings circle{fill:none;stroke:var(--border-contrast);stroke-dasharray:6 8}
+.graph-rings text{fill:var(--muted);stroke:#fff;stroke-width:5px;paint-order:stroke;font:600 14px sans-serif}
+.graph-node[role=button]{cursor:pointer;outline:none}
+.graph-node[role=button]:hover rect,.graph-node[role=button]:focus-visible rect,.graph-node[aria-pressed=true] rect{stroke:var(--primary-pressed);stroke-width:4}
+.graph-node--rule[aria-pressed=true] rect,.graph-node--rule:focus-visible rect{stroke:#000;stroke-width:5}
+.map-toolbar{display:flex;gap:1rem;align-items:end;flex-wrap:wrap;padding:1rem;border:1px solid var(--line);background:var(--paper)}
+.map-toolbar label{flex:1;min-width:200px}
+.map-summary{font-size:1.05rem}
+.map-summary strong{color:var(--primary);font-size:1.5rem}
+.map-legend{margin:1rem 0;border:1px solid var(--line);padding:.4rem 1rem;background:var(--paper)}
+.map-area{margin:2.5rem 0}
+.map-area>h2{font-size:1.4rem}
+.map-standard{margin-top:1rem}
+.map-standard-heading{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem;border-bottom:1px solid var(--border-contrast);padding:.5rem 0;margin-bottom:1rem}
+.map-standard-heading h3{margin:0}
+.map-standard-heading>span{color:var(--muted);font-size:.875rem}
+.map-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1rem}
+.map-tile{display:flex;flex-direction:column;gap:.75rem;background:var(--paper);border:1px solid var(--border-contrast);padding:1.1rem;text-decoration:none;color:var(--ink)}
+.map-tile:hover{border-color:var(--primary);background:var(--surface-quiet);text-decoration:none;color:var(--ink)}
+.map-tile h4{font-size:1rem;margin:0;line-height:1.5}
+.map-tile p{margin:0;font-size:.875rem}
+.map-tile p>strong{font-size:1.5rem;color:var(--primary)}
+.map-tile p>span{color:var(--muted)}
+.map-obligation-bar{display:flex;min-height:10px;background:var(--background);gap:2px}
+.map-obligation--mandatory{background:#0063cc}
+.map-obligation--mandatory_if_available{background:#648bd3}
+.map-obligation--recommended{background:#008080}
+.map-obligation--recommended_if_available{background:#71b5aa}
+.map-obligation--optional{background:#8b79b2}
+.map-obligation--forbidden{background:#555}
+.map-obligation--unspecified{background:#bfccd9}
+.map-obligations{display:flex;gap:.75rem 1.2rem;flex-wrap:wrap;list-style:none;padding:0;margin:0;font-size:.85rem}
+.map-obligations li{display:flex;gap:.35rem;align-items:center}
+.map-swatch{display:inline-block;width:.65rem;height:.65rem}
+.map-tile-action{display:block;margin-top:auto;padding-top:.65rem;border-top:1px solid var(--line);color:var(--primary);font-size:.85rem}
+.map-empty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:.75rem}
+.map-empty{display:grid;gap:.4rem;padding:1rem;border:1px solid var(--line);text-decoration:none;background:var(--surface-quiet)}
+.map-empty span,.map-empty small{color:var(--muted);font-size:.8rem}
 .code-example{border-top:1px solid var(--line);padding-top:1rem;margin-top:1.5rem}
 .code-example-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .code-example-heading h3{margin:0}

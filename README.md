@@ -15,6 +15,7 @@ Projekt není oficiálním vydáním standardů ani náhradou validačních nás
 
 - [Dokumentace · standardy.digitalizaty.cz](https://standardy.digitalizaty.cz/)
 - [Registr pravidel](https://standardy.digitalizaty.cz/registry/rules)
+- [Mapa registru podle oblastí metadat](https://standardy.digitalizaty.cz/registry/map)
 - [Zdrojové standardy](https://standardy.digitalizaty.cz/registry/standards) a [národní standardy](https://standardy.digitalizaty.cz/registry/national-standards)
 - [Swagger UI — interaktivní dokumentace API](https://standardy.digitalizaty.cz/api-docs/)
 - [OpenAPI 3.1 v JSON](https://standardy.digitalizaty.cz/openapi.json)
@@ -35,7 +36,8 @@ Swagger umožňuje prohlédnout datové typy a vyzkoušet GET operace. Jeho tla�
 - Vyhledávání bez diakritiky a filtry podle oblasti metadat, metadatového i národního standardu, citovaných zdrojů, verze, typu dokumentu, tématu pravidla, úrovně povinnosti, stavu požadavku a ověření.
 - Sdílené odkazy s dotazem a filtry v URL; detail lze otevřít pro konkrétní verzi NDK.
 - Oddělený požadavek standardu, interpretaci, původní prameny, známé rozpory a chování konkrétních verzí nástrojů.
-- Interaktivní graf s volbou rozsahu, skrýváním typů vztahů i kategorií uzlů a alternativní tabulkou vazeb; viz [kategorie a graf vztahů](docs/development/graph-and-categories.md).
+- Mapu registru s tematickými dlaždicemi, počty pravidel a verzovaných záznamů, rozložením povinností a přechodem do filtrovaného seznamu.
+- Sloupcový graf, radiální síť s nastavitelným pořadím vrstev a tabulku vazeb. Sdílejí filtry vztahů i kategorií; graf nabízí zvýraznění sousedů, přiblížení, posun a celou obrazovku. Uspořádání se pamatuje v prohlížeči; viz [kategorie a graf vztahů](docs/development/graph-and-categories.md).
 - Návrhy změn přes GitHub a odkazy na související diskuse.
 - [XML ukázky ze vzorového SIP](docs/development/xml-examples.md) u 17 pravidel, s kopírováním, XPath a otiskem zdrojového souboru. Jde o doložené výřezy, nikoli univerzální šablony nebo potvrzení validity balíčku.
 
