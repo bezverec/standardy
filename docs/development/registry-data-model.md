@@ -51,6 +51,10 @@ Neověřené údaje nejsou prezentovány jako potvrzené normativní závěry.
 
 ## Podmínky a validace
 
+`obligation` vyjadřuje úroveň povinnosti v citovaném standardu: `mandatory` (povinné), `recommended` (doporučené), `optional` (volitelné), `forbidden` (zakázané) nebo `unspecified` (neurčeno). Nesmí se odvozovat ze závažnosti hlášení validátoru; nahrazuje původní ručně přidělené pole `severity`. API filtr a řazení používají rovněž `obligation`. Migrace 0003 přejmenuje indexovaný sloupec a nastaví neurčenou hodnotu; následný import YAML dodá doložené úrovně.
+
+Povinnost se uplatňuje jen za podmínek `condition`. U ICC jména a verze jde o M, u URI o R podle DMF Monografie 2.3 pro MC/PS, je-li přítomen blok `IccProfile`. `presence: optional` u doporučeného URI vyjadřuje, že absence není zakázaná; nezaměňuje se s úrovní doporučení R. Sporná sémantika verze ani ověření přepisu nemění povinnost přítomnosti. Označení M/R se zde používá pro terminologii DMF, nikoli jako univerzální kód všech zdrojových standardů.
+
 Podmínky jsou rekurzivní AST s uzly `all`, `any`, `not` a listy `field` + `operator` + `value`. Operátory jsou `exists`, `equals`, `matches`, `in`, `greater_than`, `less_than`.
 
 Typ validace je otevřený pro budoucí engine, ale schéma dnes rozlišuje `xpath`, `regex`, `value_set`, `file_exists`, `checksum`, `custom`, `external_tool`, `jpylyzer`, `jhove` a `schematron`. Pole `validations` umožňuje složit více kontrol, například povinnou přítomnost elementu a číselný tvar jeho hodnoty. Registr žádný validační engine zatím nespouští.

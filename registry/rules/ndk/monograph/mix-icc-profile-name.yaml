@@ -15,7 +15,7 @@ versions:
     relation_to_target:
       type: restricts
     category: technical/icc
-    severity: error
+    obligation: mandatory
     object_types:
       vocabulary: NDK-OBJECT-TYPES
       values: [monograph]

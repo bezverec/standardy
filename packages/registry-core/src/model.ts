@@ -118,7 +118,7 @@ export interface RuleVersion {
   target: { entity: string };
   relation_to_target: { type: RelationType };
   category: string;
-  severity: "error" | "warning" | "info";
+  obligation: "mandatory" | "recommended" | "optional" | "forbidden" | "unspecified";
   object_types?: { vocabulary: string; values: string[] };
   normative_requirement: LocalizedText;
   requirement: Record<string, unknown>;

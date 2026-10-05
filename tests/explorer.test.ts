@@ -17,7 +17,7 @@ describe("registry exploration", () => {
     expect(matchesQuery(rule, "Monografie 2.3")).toBe(true);
     expect(matchesQuery(rule, "barevny neexistujici")).toBe(false);
     expect(filterRules(rules, "hlavic profilu", { source: "ICC", verification: "verified" }, registry.relations)).toEqual([rule]);
-    expect(filterRules(rules, "hlavic profilu", { severity: "warning" }, registry.relations)).toEqual([]);
+    expect(filterRules(rules, "hlavic profilu", { obligation: "recommended" }, registry.relations)).toEqual([]);
   });
 
   it("uses direct source relations without inheriting evidence from a related rule", () => {

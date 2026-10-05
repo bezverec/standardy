@@ -26,7 +26,7 @@ export function sourceIds(rule: RuleVersion, relations: Relation[]): string[] {
 
 export function filterRules(rules: RuleVersion[], query: string, filters: Record<string, string>, relations: Relation[]): RuleVersion[] {
   return rules.filter((rule) => matchesQuery(rule, query)
-    && (!filters.severity || rule.severity === filters.severity)
+    && (!filters.obligation || rule.obligation === filters.obligation)
     && (!filters.source || sourceIds(rule, relations).includes(filters.source))
     && (!filters.national || rule.national_standard_id === filters.national)
     && (!filters.version || rule.version === filters.version)

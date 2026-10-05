@@ -17,7 +17,7 @@ První odborně ověřená skupina propojuje trojici `iccProfileName`, `iccProfi
 
 „Počet pravidel“ počítá unikátní ID. Jedno pravidlo může mít více verzovaných záznamů pro různé verze NDK, proto se jejich počet uvádí zvlášť. `pagination.total` v API počítá verzované záznamy. Verze kontraktu API, verze standardu NDK a identita datasetu (`/api/v1/meta`) nejsou tyto počty.
 
-Pravidla lze hledat bez diakritiky a filtrovat podle národního i zdrojového standardu, verze, typu dokumentu, kategorie, závažnosti a stavu ověření. Dotaz a filtry jsou součástí URL. Klikací graf propojuje pravidla, prvky standardů a jejich zdroje; detail zdrojového standardu nabízí související pravidla. NISO Z39.87 je evidován jako samostatný zdroj, jeho nově doplněné položky zatím zůstávají neověřené.
+Pravidla lze hledat bez diakritiky a filtrovat podle národního i zdrojového standardu, verze, typu dokumentu, kategorie, úrovně povinnosti a stavu ověření. Úroveň povinnosti vychází z citovaného standardu, není závažností validačního hlášení. API i YAML používají pole `obligation` (nahrazuje původní `severity`; nejde o automatický převod jeho hodnot). Dotaz a filtry jsou součástí URL. Klikací graf propojuje pravidla, prvky standardů a jejich zdroje; detail zdrojového standardu nabízí související pravidla. NISO Z39.87 je evidován jako samostatný zdroj, jeho nově doplněné položky zatím zůstávají neověřené.
 
 ## Vývoj
 

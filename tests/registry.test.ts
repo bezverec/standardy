@@ -46,11 +46,11 @@ describe("registry vertical slice", () => {
       "NDK-MONO-MIX-ICC-PROFILE-URI",
     ]));
     expect(rules["NDK-MONO-MIX-ICC-PROFILE-NAME"]).toMatchObject({
-      severity: "error",
+      obligation: "mandatory",
       requirement: { presence: "conditional", cardinality: { min: 1, max: 1 } },
     });
     expect(rules["NDK-MONO-MIX-ICC-PROFILE-URI"]).toMatchObject({
-      severity: "warning",
+      obligation: "recommended",
       requirement: { presence: "optional", cardinality: { min: 0, max: 1 } },
     });
 
@@ -128,7 +128,7 @@ describe("semantic diff", () => {
   });
 
   it("separates added, removed and changed rules", () => {
-    const base: any = { national_standard_id: "p", status: "draft", target: { entity: "E" }, relation_to_target: { type: "restricts" }, category: "metadata", severity: "error", normative_requirement: { cs: "x" }, requirement: {}, source: {}, verification: {} };
+    const base: any = { national_standard_id: "p", status: "draft", target: { entity: "E" }, relation_to_target: { type: "restricts" }, category: "metadata", obligation: "mandatory", normative_requirement: { cs: "x" }, requirement: {}, source: {}, verification: {} };
     const result = semanticNationalStandardDiff([
       { ...base, rule_id: "A", version: "1", requirement: { presence: "optional" } },
       { ...base, rule_id: "A", version: "2", requirement: { presence: "required" } },

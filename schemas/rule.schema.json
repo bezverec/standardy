@@ -98,7 +98,7 @@
     },
     "ruleVersion": {
       "type": "object", "additionalProperties": false,
-      "required": ["version", "status", "target", "relation_to_target", "category", "severity", "normative_requirement", "requirement", "source", "verification"],
+      "required": ["version", "status", "target", "relation_to_target", "category", "obligation", "normative_requirement", "requirement", "source", "verification"],
       "properties": {
         "version": { "type": "string", "minLength": 1 },
         "status": { "$ref": "#/$defs/status" },
@@ -115,7 +115,7 @@
           "properties": { "type": { "$ref": "#/$defs/relationType" } }
         },
         "category": { "type": "string", "pattern": "^(metadata|file|structure|technical|cross_file|semantic)(/[A-Za-z0-9._-]+)?$" },
-        "severity": { "enum": ["error", "warning", "info"] },
+        "obligation": { "enum": ["mandatory", "recommended", "optional", "forbidden", "unspecified"], "description": "Úroveň povinnosti podle citovaného standardu: povinné, doporučené, volitelné, zakázané nebo neurčeno. Uplatňuje se pouze za podmínek pravidla; nejde o závažnost validačního hlášení." },
         "object_types": {
           "type": "object", "additionalProperties": false, "required": ["vocabulary", "values"],
           "properties": {

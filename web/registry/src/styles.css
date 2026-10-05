@@ -53,6 +53,8 @@ nav{flex-wrap:wrap}
 .filter-panel{background:var(--surface-quiet);border:1px solid var(--line);border-radius:0;padding:1.15rem;display:grid;gap:1rem}
 .filter-heading{display:flex;align-items:center;justify-content:space-between}
 .filter-heading h2{margin:0;font-size:1rem}
+.obligation-help{font-size:.8rem;line-height:1.6}
+.facts .obligation-help{min-width:0}
 .text-button{border:0;background:transparent;padding:0;font-size:.875rem}
 .results-heading{display:flex;justify-content:space-between;align-items:center;color:var(--muted);gap:1rem;font-size:.875rem;margin:0 0 1rem}
 .results-heading p{margin:0}

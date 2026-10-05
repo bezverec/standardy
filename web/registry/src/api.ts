@@ -10,7 +10,7 @@ export interface RuleVersion {
   target: { entity: string };
   relation_to_target: { type: string };
   category: string;
-  severity: string;
+  obligation: string;
   normative_requirement: Record<string, string>;
   requirement: Record<string, unknown>;
   condition?: unknown;

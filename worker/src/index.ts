@@ -41,13 +41,16 @@ function positiveInteger(value: string | null, fallback: number, maximum: number
 }
 
 async function listRules(requestUrl: URL, env: Env, version: string): Promise<Response> {
+  if (requestUrl.searchParams.has("severity") || requestUrl.searchParams.get("sort") === "severity") {
+    return json({ error: "severity_removed_use_obligation", detail: "Použijte obligation. Úroveň povinnosti není závažnost a hodnoty error/warning/info se nepřevádějí automaticky." }, version, 400, QUERY_CACHE);
+  }
   const clauses: string[] = [];
   const bindings: unknown[] = [];
   const filters: Array<[string, string]> = [
     ["national_standard", "national_standard_id"],
     ["version", "version"],
     ["standard", "standard_id"],
-    ["severity", "severity"],
+    ["obligation", "obligation"],
     ["status", "status"],
   ];
   for (const [parameter, column] of filters) {
@@ -71,7 +74,7 @@ async function listRules(requestUrl: URL, env: Env, version: string): Promise<Re
   const pageSize = positiveInteger(requestUrl.searchParams.get("page_size"), 25, 100);
   const sortMap: Record<string, string> = {
     id: "rule_id", version: "version", national_standard: "national_standard_id", standard: "standard_id",
-    severity: "severity", status: "status", category: "category",
+    obligation: "obligation", status: "status", category: "category",
   };
   const sort = sortMap[requestUrl.searchParams.get("sort") ?? "id"] ?? "rule_id";
   const direction = requestUrl.searchParams.get("direction") === "desc" ? "DESC" : "ASC";

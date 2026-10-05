@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "r
 import { api, type KnowledgeGraphNode, type KnowledgeGraphResponse, type RegistryEntity, type RuleDetailResponse, type RuleVersion } from "./api.ts";
 import { filterRules, ruleCounts, sourceIds, type Relation } from "./explore.ts";
 import { changeProposalUrl } from "./contribute.ts";
+import { issueReferences, linkIssueMentions } from "./evidence.ts";
 
 function routePath(): string {
   const path = window.location.pathname.replace(/^\/registry\/?/, "/");
@@ -47,6 +48,10 @@ function ChangeProposal({ rule }: { rule?: { rule_id: string; version: string } 
   return <a className="button" href={changeProposalUrl(rule)} target="_blank" rel="noopener noreferrer">Navrhnout změnu</a>;
 }
 
+function ObligationHelp() {
+  return <details className="obligation-help"><summary>Co znamená úroveň povinnosti?</summary><p>Přebírá se z citovaného standardu, není hodnocením závažnosti chyby ani výsledkem validace souboru. U DMF NDK znamená M povinný údaj a R doporučený údaj. Platí pouze za podmínek uvedených v pravidle; sporný význam hodnoty a stav ověření se evidují zvlášť.</p></details>;
+}
+
 function LoadingState({ state }: { state: { loading: boolean; error?: string } }) {
   if (state.loading) return <div className="state">Načítám data registru…</div>;
   if (state.error) return <div role="alert" className="state state--error"><strong>Záznam se nepodařilo načíst.</strong><p>{state.error}</p><button onClick={() => window.location.reload()}>Zkusit znovu</button></div>;
@@ -60,7 +65,7 @@ function Rules() {
   }, []);
   const initial = new URLSearchParams(window.location.search);
   const [query, setQuery] = useState(initial.get("q") ?? "");
-  const [filters, setFilters] = useState<Record<string, string>>(Object.fromEntries(["severity", "source", "national", "version", "category", "verification", "status", "object"].map((key) => [key, initial.get(key) ?? ""])));
+  const [filters, setFilters] = useState<Record<string, string>>(Object.fromEntries(["obligation", "source", "national", "version", "category", "verification", "status", "object"].map((key) => [key, initial.get(key) ?? ""])));
   const rules = useMemo(() => filterRules(state.data?.data ?? [], query, filters, state.data?.relations ?? []), [state.data, query, filters]);
   const counts = state.data ? ruleCounts(state.data.data) : undefined;
   useEffect(() => {
@@ -86,7 +91,8 @@ function Rules() {
         {filter("source", "Zdrojový standard", state.data.sources.map((item) => [item.id, item.id]))}
         {filter("category", "Kategorie", values("category"))}
         {filter("object", "Typ dokumentu", [...new Set(state.data.data.flatMap((rule) => rule.object_types?.values ?? []))].map((item) => [item, labels[item] ?? item]))}
-        {filter("severity", "Závažnost", [["error", "Chyba"], ["warning", "Varování"], ["info", "Informace"]])}
+        {filter("obligation", "Úroveň povinnosti", [["mandatory", "Povinné"], ["recommended", "Doporučené"], ["optional", "Volitelné"], ["forbidden", "Zakázané"], ["unspecified", "Neurčeno"]])}
+        <ObligationHelp />
         {filter("verification", "Ověření přepisu", [["verified", "Ověřeno"], ["unverified", "Neověřeno"], ["disputed", "Sporné"]])}
         {filter("status", "Stav požadavku", values("status"))}
       </aside><section className="results"><div className="results-heading"><p role="status" aria-live="polite">Nalezeno <strong>{rules.length}</strong> z {state.data.pagination.total} verzovaných záznamů</p><span>Řazeno podle ID</span></div>
@@ -101,8 +107,10 @@ function Rules() {
 const labels: Record<string, string> = { normative: "Normativní", disputed: "Sporný požadavek", draft: "Částečné pokrytí", verified: "Ověřeno", unverified: "Neověřeno", deprecated: "Historické", ambiguous: "Nejednoznačné", error: "Chyba", warning: "Varování", info: "Informace", monograph: "Monografie", "technical/icc": "Technická metadata · ICC", related_to: "souvisí s", defined_by: "je definováno v", restricts: "omezuje", clarifies: "upřesňuje", generated_by: "je generováno v", validated_by: "je kontrolováno v", derived_from: "vychází z", extends: "rozšiřuje" };
 
 function RuleCard({ rule, relations }: { rule: RuleVersion; relations: Relation[] }) {
-  return <article className="rule-card"><div className="rule-card-heading"><div><p className="rule-meta">{rule.national_standard_id} · {rule.version} · {labels[rule.category] ?? rule.category}</p><h2><Link to={`/rules/${rule.rule_id}`}>{localized(rule.title)}</Link></h2></div><Status tone={rule.status === "disputed" ? "warn" : "neutral"}>{labels[rule.status] ?? rule.status}</Status></div><p>{localized(rule.description)}</p><div className="rule-card-footer"><code>{rule.target.entity}</code><div className="source-chips">{sourceIds(rule, relations).map((id) => <Link key={id} to={`/standards/${id}`} className="source-chip">{id}</Link>)}</div><span>{labels[rule.verification.status]} · {labels[rule.severity]}</span></div></article>;
+  return <article className="rule-card"><div className="rule-card-heading"><div><p className="rule-meta">{rule.national_standard_id} · {rule.version} · {labels[rule.category] ?? rule.category}</p><h2><Link to={`/rules/${rule.rule_id}`}>{localized(rule.title)}</Link></h2></div><Status tone={rule.status === "disputed" ? "warn" : "neutral"}>{labels[rule.status] ?? rule.status}</Status></div><p>{localized(rule.description)}</p><div className="rule-card-footer"><code>{rule.target.entity}</code><div className="source-chips">{sourceIds(rule, relations).map((id) => <Link key={id} to={`/standards/${id}`} className="source-chip">{id}</Link>)}</div><span>{labels[rule.verification.status]} · {obligationLabels[rule.obligation] ?? rule.obligation}</span></div></article>;
 }
+
+const obligationLabels: Record<string, string> = { mandatory: "Povinné", recommended: "Doporučené", optional: "Volitelné", forbidden: "Zakázané", unspecified: "Neurčeno" };
 
 function SourceCard({ source }: { source: Record<string, unknown> }) {
   const raw = typeof source.url === "string" ? source.url : "";
@@ -217,6 +225,8 @@ function RuleDetail({ id }: { id: string }) {
   const [selectedVersion, setSelectedVersion] = useState(initialVersion);
   const versions = state.data?.versions ?? [];
   const rule = versions.find((item) => item.version === selectedVersion) ?? versions[0];
+  const issues = issueReferences(rule?.references ?? []);
+  const evidence = (text: string) => linkIssueMentions(text, issues).map((part, index) => part.href ? <a key={index} href={part.href} target="_blank" rel="noopener noreferrer">{part.text}</a> : part.text);
   useEffect(() => { if (versions[0]) setSelectedVersion(versions.find((item) => item.version === initialVersion)?.version ?? versions[0].version); }, [state.data]);
   useEffect(() => {
     if (!rule) return;
@@ -230,11 +240,12 @@ function RuleDetail({ id }: { id: string }) {
     {rule && <>
       <div className="contribute-action"><ChangeProposal rule={rule} /></div>
       <header className="detail-header"><div><p className="eyebrow">Detail pravidla</p><h1>{localized(rule.title)}</h1><code className="stable-id">{rule.rule_id}</code></div><div className="version-box"><label>Verze standardu NDK<select value={selectedVersion} onChange={(event) => setSelectedVersion(event.target.value)}>{versions.map((item) => <option key={item.version}>{item.version}</option>)}</select></label><Status tone={rule.verification.status === "verified" ? "neutral" : "warn"}>{labels[rule.verification.status]}</Status></div></header>
-      <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Závažnost</span><Status tone={rule.severity === "error" ? "error" : "warn"}>{labels[rule.severity]}</Status></div></div>
+      <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Úroveň povinnosti</span><Status>{obligationLabels[rule.obligation] ?? rule.obligation}</Status><ObligationHelp /></div></div>
       <section className="layer layer--normative"><p className="layer-label">Požadavek NDK · {labels[rule.status] ?? rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><details><summary>Strojový zápis a podmínky platnosti</summary><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Podmínka</h3><JsonBlock value={rule.condition} /></>}</details></section>
-      <section className="detail-grid"><article><p className="layer-label">Výklad registru</p><h2>Interpretace</h2><p>{localized(rule.interpretation)}</p></article><article><p className="layer-label">Ověření přepisu</p><h2>Stav ověření</h2><p>{labels[rule.verification.status]} · {rule.verification.date ?? "Datum neuvedeno"}</p><p>{rule.verification.reference}</p></article></section>
+      {issues.length > 0 && <aside className="layer"><p className="layer-label">Diskuse · nenormativní</p><h2>Související issues</h2>{issues.map((issue) => <p key={issue.url}><a href={issue.url} target="_blank" rel="noopener noreferrer">{issue.title} — otevřít diskusi</a></p>)}</aside>}
+      <section className="detail-grid"><article><p className="layer-label">Výklad registru</p><h2>Interpretace</h2><p>{evidence(localized(rule.interpretation))}</p></article><article><p className="layer-label">Ověření přepisu</p><h2>Stav ověření</h2><p>{labels[rule.verification.status]} · {rule.verification.date ?? "Datum neuvedeno"}</p><p>{evidence(rule.verification.reference ?? "")}</p></article></section>
       <section className="graph-section"><p className="layer-label">Prameny</p><h2>NDK a původní zdroje</h2><div className="card-grid"><SourceCard source={rule.source} />{rule.references?.map((source, index) => <SourceCard key={index} source={source} />)}</div></section>
-      {Boolean(rule.discrepancies?.length) && <section className="layer layer--discrepancy"><p className="layer-label">Rozpory ve zdrojích</p><h2>Známé rozpory ve zdrojích</h2><ul>{rule.discrepancies?.map((item, index) => <li key={index}>{localized(item)}</li>)}</ul></section>}
+      {Boolean(rule.discrepancies?.length) && <section className="layer layer--discrepancy"><p className="layer-label">Rozpory ve zdrojích</p><h2>Známé rozpory ve zdrojích</h2><ul>{rule.discrepancies?.map((item, index) => <li key={index}>{evidence(localized(item))}</li>)}</ul></section>}
       {(rule.validator_behaviour || rule.fix_recommendation) && <section className="detail-grid"><article><p className="layer-label">Návrh kontroly</p><h2>Očekávaná kontrola</h2><p>{localized(rule.validator_behaviour)}</p></article><article><p className="layer-label">Doporučení registru</p><h2>Doporučená oprava</h2><p>{localized(rule.fix_recommendation)}</p></article></section>}
       <section className="layer layer--implementation"><p className="layer-label">Implementace · nenormativní</p><h2>Implementace</h2><div className="implementation-grid">{(rule.implementations ?? []).map((item) => <article key={item.id}><Status tone={item.verification === "verified" ? "neutral" : "warn"}>{labels[item.verification] ?? item.verification}</Status><h3>{item.application}</h3><p>{item.role === "generator" ? "Generátor" : item.role === "validator" ? "Validátor" : "Externí nástroj"} · {({ implemented: "Implementováno", partial: "Částečně implementováno", not_implemented: "Neimplementováno", unknown: "Chování neověřeno", related: "Souvisí s pravidlem" } as Record<string, string>)[item.status] ?? item.status}</p>{item.behaviour && <p>{localized(item.behaviour)}</p>}<small>{localized(item.notes)}</small></article>)}</div></section>
       <section className="graph-section"><p className="layer-label">Vazby mezi záznamy</p><h2>Graf vztahů</h2><p className="graph-intro">Plné čáry zachycují normativní a významové vazby; přerušované čáry nenormativní vazby na implementace. Stav ověření a rozsah platnosti jsou uvedeny v jejich popisu.</p><LoadingState state={graphState} />{graphState.data && <RelationshipGraph graph={graphState.data} />}<details className="relation-data"><summary>Textový výpis vztahů</summary><div className="relations">{state.data?.relations.map((relation) => <code key={relation.id}>{relation.from} —{relation.type}→ {relation.to}</code>)}</div></details></section>
