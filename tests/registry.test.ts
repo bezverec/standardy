@@ -18,6 +18,13 @@ describe("registry vertical slice", () => {
     expect(await validateRegistry(root, documents)).toEqual([]);
   });
 
+  it("excludes the retired demo national standard from compiled data", async () => {
+    const registry = compileRegistry(await loadRegistry(root));
+    expect(registry.national_standards.map((standard) => standard.id)).not.toContain("ndk-base");
+    expect(registry.rule_versions.some((rule) => rule.national_standard_id === "ndk-base")).toBe(false);
+    expect(registry.relations.some((edge) => edge.from === "ndk-base" || edge.to === "ndk-base")).toBe(false);
+  });
+
   it("compiles the MIX ICC profile group to NDK rules and an implementation graph", async () => {
     const registry = compileRegistry(await loadRegistry(root));
     expect(registry.standard_entities.map((entity) => entity.id)).toEqual(expect.arrayContaining([
