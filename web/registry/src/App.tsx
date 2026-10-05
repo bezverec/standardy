@@ -192,7 +192,7 @@ function RelationshipGraph({ graph }: { graph: KnowledgeGraphResponse }) {
         if (!position) return null;
         const lines = wrapGraphLabel(graphNodeLabel(node));
         const content = <g className={`graph-node graph-node--${node.kind}`} transform={`translate(${position.x} ${position.y})`}>
-          <rect width={position.width} height={position.height} rx="3" />
+          <rect width={position.width} height={position.height} />
           <text className="graph-node-kind" x="16" y="20">{graphKindLabels[node.kind]}</text>
           <text className="graph-node-title" x="16" y="42">{lines.map((line, index) => <tspan x="16" dy={index === 0 ? 0 : 17} key={line}>{line}</tspan>)}</text>
           <title>{graphKindLabels[node.kind]}: {graphNodeLabel(node)} ({node.id})</title>
