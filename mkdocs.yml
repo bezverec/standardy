@@ -89,4 +89,5 @@ nav:
       - Logická mapa a výčet stran: development/mets-logical.md
       - Vnitřní části monografie: development/mets-internal-parts.md
       - Blokové vazby METS–ALTO: development/mets-alto-links.md
+      - Obálky MODS/DC v METS: development/mets-dmd.md
       - Lokální vývoj: development/local-development.md

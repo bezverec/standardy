@@ -23,6 +23,149 @@ versions:
       url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
 entities:
   -
+    id: "METS-DMDSEC"
+    type: "element"
+    version: "1.9.1"
+    name: "dmdSec"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Sekce popisných metadat"
+    definition:
+      cs: "MetsType dovoluje 0–n dmdSec typu mdSecType. Sekce může vložit metadata pomocí mdWrap a/nebo odkázat pomocí mdRef; vlastní ID je povinné."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "metsType/dmdSec; mdSecType"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace i anotace oficiálního METS XSD 1.9.1 porovnány. Národní požadavky jsou odděleny v pravidlech."
+  -
+    id: "METS-DMDSEC-ID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "dmdSec/@ID"
+    title:
+      cs: "Identifikátor sekce popisných metadat"
+    definition:
+      cs: "MdSecType vyžaduje xs:ID jedinečné v XML dokumentu. Konvence MODSMD/DCMD není součástí obecného METS."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "mdSecType/@ID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace i anotace oficiálního METS XSD 1.9.1 porovnány. Národní požadavky jsou odděleny v pravidlech."
+  -
+    id: "METS-MDWRAP"
+    type: "element"
+    version: "1.9.1"
+    name: "mdWrap"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Obálka vložených metadat"
+    definition:
+      cs: "MdSecType deklaruje mdWrap v xsd:all s minOccurs=0 a výchozím maxOccurs=1. Obsah tvoří volba binData nebo xmlData. Povinnost vkládat MODS/DC stanoví NDK, nikoli obecné XSD."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "mdSecType/mdWrap"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace i anotace oficiálního METS XSD 1.9.1 porovnány. Národní požadavky jsou odděleny v pravidlech."
+  -
+    id: "METS-MDWRAP-MDTYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "mdWrap/@MDTYPE"
+    title:
+      cs: "Druh vložených metadat"
+    definition:
+      cs: "Povinný atribut skupiny METADATA má číselník obsahující MODS, DC a další formáty. XSD samo nekontroluje sémantickou shodu hodnoty s obsahem xmlData."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "mdSecType/mdWrap; METADATA/@MDTYPE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace i anotace oficiálního METS XSD 1.9.1 porovnány. Národní požadavky jsou odděleny v pravidlech."
+  -
+    id: "METS-MDWRAP-MDTYPEVERSION"
+    type: "attribute"
+    version: "1.9.1"
+    name: "mdWrap/@MDTYPEVERSION"
+    title:
+      cs: "Verze vloženého metadatového formátu"
+    definition:
+      cs: "Volitelný xs:string ve skupině METADATA označuje verzi metadatového formátu. XSD nepředepisuje 3.8 pro MODS ani zákaz atributu u DC."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "mdSecType/mdWrap; METADATA/@MDTYPEVERSION"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace i anotace oficiálního METS XSD 1.9.1 porovnány. Národní požadavky jsou odděleny v pravidlech."
+  -
+    id: "METS-MDWRAP-MIMETYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "mdWrap/@MIMETYPE"
+    title:
+      cs: "MIME typ vložených metadat"
+    definition:
+      cs: "Volitelný xs:string skupiny FILECORE. Hodnota text/xml a povinnost v popisné obálce jsou omezením NDK, nikoli obecným výčtem XSD."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "mdSecType/mdWrap; FILECORE/@MIMETYPE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace i anotace oficiálního METS XSD 1.9.1 porovnány. Národní požadavky jsou odděleny v pravidlech."
+  -
+    id: "METS-MDWRAP-XMLDATA"
+    type: "element"
+    version: "1.9.1"
+    name: "mdWrap/xmlData"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Kontejner XML metadat"
+    definition:
+      cs: "V mdWrap je xmlData volitelnou větví volby s binData, nejvýše jeden výskyt. Jeho sekvence vyžaduje 1–n elementů libovolného namespace s processContents=lax; výběr MODS/DC předepisuje NDK."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "mdSecType/mdWrap/xmlData"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace i anotace oficiálního METS XSD 1.9.1 porovnány. Národní požadavky jsou odděleny v pravidlech."
+  -
     id: "METS-FPTR"
     type: "element"
     version: "1.9.1"

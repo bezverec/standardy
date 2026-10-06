@@ -1,0 +1,110 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-DMD-DC-VERSION"
+title:
+  cs: "Obálka Dublin Core bez čísla verze"
+description:
+  cs: "Obálky bibliografických metadat MODS/DC v hlavním METS podle DMF Monografie 2.3, odděleně od obsahu jednotlivých popisných polí."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-MDWRAP-MDTYPEVERSION"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-dmd"
+    obligation: "forbidden"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "U obálky Dublin Core v dmdSec se MDTYPEVERSION neuvádí."
+    requirement:
+      presence: "forbidden"
+      cardinality:
+        min: 0
+        max: 0
+      validations:
+        -
+          type: "custom"
+          expression: "U bibliografického záznamu Dublin Core ověřit nepřítomnost MDTYPEVERSION na mdWrap. Nezapisovat ani prázdný atribut, hodnotu 1.1 nebo verzi schématu obálky OAI DC."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "descriptive_wrapper"
+        -
+          field: "descriptive_format"
+          operator: "equals"
+          value: "DC"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "21–22"
+      section: "7.4 METS část dmdSec — bibliografická metadata"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/dmdSec; mdSecType; METADATA; FILECORE"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis ověřen v DMF 2.3 včetně vykreslené tabulky s. 21–22 a v deklaracích METS XSD 1.9.1. Zdrojové výřezy ověřeny XPath a SHA-256; nikoli validita celého SIP nebo implementace externích nástrojů."
+    interpretation:
+      cs: "Slovní výjimka v řádku MDTYPEVERSION výslovně říká, že číslo verze DC se neuvádí. Kód M z tohoto řádku se vztahuje k požadované hodnotě MODS; pro zákaz u DC nepřebíráme kód M. Zákaz atributu neznamená zákaz DC záznamu. Obecné METS atribut dovoluje; jde o omezení NDK. Kontext descriptive_format označuje skutečný formát popisného záznamu, ne úspěšnost kontrolovaného atributu. Kardinality platí v příslušném rodiči. Custom kontroly registr nevykonává."
+    examples:
+      -
+        id: "sip-mets-dmd-dc-version-1"
+        title:
+          cs: "Dublin Core první stránky — wrap"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:mdWrap xmlns:mets="http://www.loc.gov/METS/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" MDTYPE="DC" MIMETYPE="text/xml">
+                <mets:xmlData>
+                  <oai_dc:dc>
+                    <dc:identifier>uuid:02db9be9-7074-11f1-b41e-d6a2fa380025</dc:identifier>
+                    <dc:coverage>[1]</dc:coverage>
+                    <dc:type>model:page</dc:type>
+                  </oai_dc:dc>
+                </mets:xmlData>
+              </mets:mdWrap>
+        note:
+          cs: "Úplný vybraný element ze vzorového SIP, beze změny hodnot a struktury; normalizováno pouze odsazení a nepotřebné deklarace namespace. Dokládá konkrétní obálku, nikoli validitu celého bibliografického záznamu nebo celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — dmdSec první stránky"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"DCMD_PAGE_0001\"]/mets:mdWrap"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-06"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-DMD-MDTYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-DMD-MODS-VERSION"

@@ -1,0 +1,158 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-DMD-XMLDATA"
+title:
+  cs: "XML kontejner vloženého záznamu"
+description:
+  cs: "Obálky bibliografických metadat MODS/DC v hlavním METS podle DMF Monografie 2.3, odděleně od obsahu jednotlivých popisných polí."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-MDWRAP-XMLDATA"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-dmd"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "mdWrap v dmdSec obsahuje xmlData s vloženým záznamem mods nebo dc."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat právě jeden mets:xmlData pod mdWrap popisné sekce a skutečný XML záznam odpovídající MDTYPE. MODS má kořen mods v namespace http://www.loc.gov/mods/v3. Text s escapovaným XML, prázdný kontejner, binData nebo pouhý odkaz nenahrazují vložený záznam. Identifikovat elementy podle namespace a local-name, nikoli zvoleného prefixu."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "descriptive_wrapper"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "21–22"
+      section: "7.4 METS část dmdSec — bibliografická metadata"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/dmdSec; mdSecType; METADATA; FILECORE"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "mods; targetNamespace"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "OAI Dublin Core XML Schema"
+        version: "OAI-PMH 2.0"
+        page: null
+        section: "dc; targetNamespace"
+        url: "https://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis ověřen v DMF 2.3 včetně vykreslené tabulky s. 21–22 a v deklaracích METS XSD 1.9.1. Zdrojové výřezy ověřeny XPath a SHA-256; nikoli validita celého SIP nebo implementace externích nástrojů."
+    interpretation:
+      cs: "METS dovoluje volbu binData/xmlData a obsah xmlData ověřuje s processContents=lax; pouhá validita obálky proto neprokazuje úplnou validitu vnořeného MODS/DC. Vzor používá oai_dc:dc v namespace http://www.openarchives.org/OAI/2.0/oai_dc/ s poli dc v http://purl.org/dc/elements/1.1/; název dc není důvod tyto dva namespace zaměnit. Tato sada neurčuje úplné mapování jednotlivých bibliografických polí. Kontext descriptive_format označuje skutečný formát popisného záznamu, ne úspěšnost kontrolovaného atributu. Kardinality platí v příslušném rodiči. Custom kontroly registr nevykonává."
+    examples:
+      -
+        id: "sip-mets-dmd-xmldata-1"
+        title:
+          cs: "MODS první stránky — data"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:xmlData xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3">
+                  <mods:mods ID="MODS_PAGE_0001" version="3.8">
+                    <mods:identifier type="uuid">02db9be9-7074-11f1-b41e-d6a2fa380025</mods:identifier>
+                    <mods:part type="titlePage">
+                      <mods:detail type="pageNumber">
+                        <mods:number>[1]</mods:number>
+                      </mods:detail>
+                      <mods:extent unit="pages">
+                        <mods:start>[1]</mods:start>
+                      </mods:extent>
+                    </mods:part>
+                    <mods:part>
+                      <mods:detail type="pageIndex">
+                        <mods:number>1</mods:number>
+                      </mods:detail>
+                    </mods:part>
+                    <mods:note>right</mods:note>
+                    <mods:genre type="titlePage">reprePage</mods:genre>
+                    <mods:typeOfResource>text</mods:typeOfResource>
+                  </mods:mods>
+                </mets:xmlData>
+        note:
+          cs: "Úplný vybraný element ze vzorového SIP, beze změny hodnot a struktury; normalizováno pouze odsazení a nepotřebné deklarace namespace. Dokládá konkrétní obálku, nikoli validitu celého bibliografického záznamu nebo celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — dmdSec první stránky"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_PAGE_0001\"]/mets:mdWrap/mets:xmlData"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-06"
+      -
+        id: "sip-mets-dmd-xmldata-2"
+        title:
+          cs: "Dublin Core první stránky — data"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:xmlData xmlns:mets="http://www.loc.gov/METS/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+                  <oai_dc:dc>
+                    <dc:identifier>uuid:02db9be9-7074-11f1-b41e-d6a2fa380025</dc:identifier>
+                    <dc:coverage>[1]</dc:coverage>
+                    <dc:type>model:page</dc:type>
+                  </oai_dc:dc>
+                </mets:xmlData>
+        note:
+          cs: "Úplný vybraný element ze vzorového SIP, beze změny hodnot a struktury; normalizováno pouze odsazení a nepotřebné deklarace namespace. Dokládá konkrétní obálku, nikoli validitu celého bibliografického záznamu nebo celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — dmdSec první stránky"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"DCMD_PAGE_0001\"]/mets:mdWrap/mets:xmlData"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-06"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-DMD-WRAP"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-DMD-MDTYPE"

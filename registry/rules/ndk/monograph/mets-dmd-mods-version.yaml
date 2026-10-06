@@ -1,0 +1,126 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-DMD-MODS-VERSION"
+title:
+  cs: "Verze MODS na metadatové obálce"
+description:
+  cs: "Obálky bibliografických metadat MODS/DC v hlavním METS podle DMF Monografie 2.3, odděleně od obsahu jednotlivých popisných polí."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-MDWRAP-MDTYPEVERSION"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-dmd"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Obálka MODS v dmdSec uvádí MDTYPEVERSION s hodnotou 3.8."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Pro bibliografický záznam MODS požadovat na jeho mdWrap atribut MDTYPEVERSION s přesnou řetězcovou hodnotou 3.8. Nepovažovat mods:mods/@version za náhradu atributu na obálce."
+      allowed_values:
+        - "3.8"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "descriptive_wrapper"
+        -
+          field: "descriptive_format"
+          operator: "equals"
+          value: "MODS"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "21–22"
+      section: "7.4 METS část dmdSec — bibliografická metadata"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "metsType/dmdSec; mdSecType; METADATA; FILECORE"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis ověřen v DMF 2.3 včetně vykreslené tabulky s. 21–22 a v deklaracích METS XSD 1.9.1. Zdrojové výřezy ověřeny XPath a SHA-256; nikoli validita celého SIP nebo implementace externích nástrojů."
+    interpretation:
+      cs: "V METS je MDTYPEVERSION volitelný xs:string, DMF 2.3 jej pro MODS požaduje s M. Nejde o verzi METS 1.9.1 ani DMF 2.3. Namespace MODS /v3 nerozlišuje minor verzi; deklarace 3.8 sama nedokazuje obsahovou shodu s XSD. Kontext descriptive_format označuje skutečný formát popisného záznamu, ne úspěšnost kontrolovaného atributu. Kardinality platí v příslušném rodiči. Custom kontroly registr nevykonává."
+    examples:
+      -
+        id: "sip-mets-dmd-mods-version-1"
+        title:
+          cs: "MODS první stránky — wrap"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:mdWrap xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" MDTYPE="MODS" MDTYPEVERSION="3.8" MIMETYPE="text/xml">
+                <mets:xmlData>
+                  <mods:mods ID="MODS_PAGE_0001" version="3.8">
+                    <mods:identifier type="uuid">02db9be9-7074-11f1-b41e-d6a2fa380025</mods:identifier>
+                    <mods:part type="titlePage">
+                      <mods:detail type="pageNumber">
+                        <mods:number>[1]</mods:number>
+                      </mods:detail>
+                      <mods:extent unit="pages">
+                        <mods:start>[1]</mods:start>
+                      </mods:extent>
+                    </mods:part>
+                    <mods:part>
+                      <mods:detail type="pageIndex">
+                        <mods:number>1</mods:number>
+                      </mods:detail>
+                    </mods:part>
+                    <mods:note>right</mods:note>
+                    <mods:genre type="titlePage">reprePage</mods:genre>
+                    <mods:typeOfResource>text</mods:typeOfResource>
+                  </mods:mods>
+                </mets:xmlData>
+              </mets:mdWrap>
+        note:
+          cs: "Úplný vybraný element ze vzorového SIP, beze změny hodnot a struktury; normalizováno pouze odsazení a nepotřebné deklarace namespace. Dokládá konkrétní obálku, nikoli validitu celého bibliografického záznamu nebo celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — dmdSec první stránky"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_PAGE_0001\"]/mets:mdWrap"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+        checked_on: "2026-10-06"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-DMD-MDTYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-DMD-DC-VERSION"
