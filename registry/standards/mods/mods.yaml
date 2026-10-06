@@ -1,0 +1,170 @@
+schema_version: "1.0"
+kind: "standard"
+id: "MODS"
+title:
+  cs: "MODS – Metadata Object Description Schema"
+description:
+  cs: "Vybrané prvky MODS 3.8, verze citované DMF Monografie 2.3. Obecná schématová pravidla jsou oddělena od národních omezení; nejde o tvrzení o nejnovější verzi MODS."
+status: "normative"
+verification:
+  status: "verified"
+  date: "2026-10-06"
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo; volba verze podle DMF Monografie 2.3, s. 5."
+versions:
+  -
+    version: "3.8"
+    status: "normative"
+    namespace: "http://www.loc.gov/mods/v3"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfoDefinition; modsGroup; globální element titleInfo"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+entities:
+  -
+    id: "MODS-TITLEINFO"
+    type: "element"
+    version: "3.8"
+    name: "titleInfo"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Názvové údaje"
+    definition:
+      cs: "Opakovatelný element MODS pro názvové údaje. TitleInfoDefinition používá volbu title, subTitle, partNumber, partName a nonSort s 0–n výskyty; obecné XSD nevynucuje povinný title."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfo; titleInfoDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."
+  -
+    id: "MODS-TITLEINFO-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "titleInfo/@type"
+    title:
+      cs: "Typ názvových údajů"
+    definition:
+      cs: "Nepovinný atribut s hodnotami abbreviated, translated, alternative a uniform. Hodnota primary do tohoto výčtu nepatří; usage je jiný atribut."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfoDefinition/@type"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."
+  -
+    id: "MODS-TITLE"
+    type: "element"
+    version: "3.8"
+    name: "titleInfo/title"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Název"
+    definition:
+      cs: "Element title ve volbě titleInfoDefinition. Obecný model dovoluje nepřítomnost i opakování; povinnost názvu v kontextu NDK není obecným omezením XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfoDefinition/title"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."
+  -
+    id: "MODS-NONSORT"
+    type: "element"
+    version: "3.8"
+    name: "titleInfo/nonSort"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Neřadicí část názvu"
+    definition:
+      cs: "Element nonSort ve volbě titleInfoDefinition obsahuje neřadicí část názvu. Obecný obsahový model jej nevyžaduje a dovoluje opakování."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfoDefinition/nonSort"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."
+  -
+    id: "MODS-SUBTITLE"
+    type: "element"
+    version: "3.8"
+    name: "titleInfo/subTitle"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Podnázev"
+    definition:
+      cs: "Element subTitle ve volbě titleInfoDefinition. Obecný obsahový model jej nevyžaduje a dovoluje opakování; národní dostupnostní povinnost je vedena odděleně."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfoDefinition/subTitle"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."
+  -
+    id: "MODS-PARTNUMBER"
+    type: "element"
+    version: "3.8"
+    name: "titleInfo/partNumber"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Číslo části v názvových údajích"
+    definition:
+      cs: "Element partNumber ve volbě titleInfoDefinition. Není totožný s part/detail/number; obecné XSD jej nevyžaduje a dovoluje opakování."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfoDefinition/partNumber"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."
+  -
+    id: "MODS-PARTNAME"
+    type: "element"
+    version: "3.8"
+    name: "titleInfo/partName"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Název části v názvových údajích"
+    definition:
+      cs: "Element partName ve volbě titleInfoDefinition. Obecné XSD jej nevyžaduje a dovoluje opakování; není totožný s personálním namePart."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "titleInfoDefinition/partName"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."

@@ -1,8 +1,8 @@
 # XML ukázky ze vzorového SIP
 
-U 137 pravidel DMF Monografie 2.3 je dostupných 178 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 178 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 140 pravidel DMF Monografie 2.3 je dostupných 181 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, tři pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 181 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
-Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 178 ukázek.
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 181 ukázek.
 
 ## Původ a meze ověření
 
@@ -21,6 +21,7 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 
 ## Důležité příklady
 
+- [Názvové údaje MODS](mods-titles.md) přidávají tři výřezy u tří pravidel. Vzor dokládá hlavní titleInfo a title, nikoli variantní název, nonSort, podnázev či názvové údaje části.
 - [Obálky MODS/DC](mets-dmd.md) přidávají čtrnáct výřezů u osmi pravidel: úplné sekce, obálky a XML kontejnery první stránky, s odlišenými ID a verzemi.
 - [Blokové vazby METS–ALTO](mets-alto-links.md) přidávají čtyři výřezy u tří pravidel. Jde pouze o záznam souboru ALTO a skutečný TextBlock, ne o existující logický odkaz fptr/area. Vzor neobsahuje ComposedBlock; namespace v4 sám nepotvrzuje minor verzi 4.4.
 

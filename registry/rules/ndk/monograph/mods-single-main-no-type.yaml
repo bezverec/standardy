@@ -1,0 +1,106 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-MAIN-NO-TYPE"
+title:
+  cs: "Hlavní název bez atributu type"
+description:
+  cs: "Názvové údaje MODS pro svazek jednosvazkové monografie podle DMF 2.3. Nevztahuje se automaticky na ostatní bibliografické úrovně."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-TITLEINFO-TYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-titles"
+    obligation: "forbidden"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "TitleInfo hlavního názvu nemá atribut type."
+    requirement:
+      presence: "forbidden"
+      cardinality:
+        min: 0
+        max: 0
+      validations:
+        -
+          type: "custom"
+          expression: "U titleInfo s rolí hlavního názvu ověřit nepřítomnost atributu type. Neuvádět prázdný atribut ani hodnotu primary; případné usage=primary není náhradou tohoto požadavku ani povinným údajem z tohoto pravidla."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_titleinfo"
+        -
+          field: "title_role"
+          operator: "equals"
+          value: "main"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 48
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — titleInfo"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "titleInfoDefinition; modsGroup; globální element titleInfo"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Požadavky porovnány s textem i vykreslenými tabulkami s. 48–49 DMF 2.3 a s titleInfoDefinition v oficiálním MODS XSD 3.8. Zdrojové ukázky mají XPath a SHA-256. Ověřen přepis, nikoli úplná validita SIP nebo implementace nástrojů."
+    interpretation:
+      cs: "DMF spojuje hlavní název s MARC 245 $a a výslovně jej požaduje bez type. Slovní zákaz se vede bez převzetí kódu MA, který v tabulce patří typům dalších názvů. Role hlavního názvu se určuje podle významu a zdrojového popisu, nikoli právě podle nepřítomnosti type. Kontext single_volume označuje popis svazku jednosvazkového dokumentu, nikoli hodnotu zvolenou podle úspěšnosti kontrolovaného XML. Role a dostupnost údajů vycházejí z nezávislého zdrojového popisu; neznámá dostupnost se nesmí zaměnit za false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-titles-main-no-type"
+        title:
+          cs: "Hlavní názvové údaje svazku ze vzoru"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mods:titleInfo xmlns:mods="http://www.loc.gov/mods/v3">
+                      <mods:title>Tomáš Alva Edison a jeho fonograf</mods:title>
+                    </mods:titleInfo>
+        note:
+          cs: "Úplný vybraný element ze vzorového SIP, bez změny textové hodnoty. Ukázka dokládá hlavní název bez type; neprokazuje úplnost převodu z původního katalogizačního záznamu ani validitu celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, titleInfo"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:titleInfo"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-06"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-TITLEINFO"

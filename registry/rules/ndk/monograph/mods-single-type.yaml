@@ -1,0 +1,89 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-TYPE"
+title:
+  cs: "Typ dalšího názvu monografie"
+description:
+  cs: "Názvové údaje MODS pro svazek jednosvazkové monografie podle DMF 2.3. Nevztahuje se automaticky na ostatní bibliografické úrovně."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-TITLEINFO-TYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-titles"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Další druh názvu je v titleInfo rozlišen příslušným atributem type."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Pro další druh názvu zapsat typ odpovídající zdrojovému popisu: abbreviated pro zkrácený (MARC 210), alternative pro variantní (246), translated pro název v jiném jazyce (242), uniform pro unifikovaný (130 nebo 240). Ověřit věcnou shodu hodnoty se zdrojem, nikoli pouze členství v číselníku."
+      allowed_values:
+        - "abbreviated"
+        - "alternative"
+        - "translated"
+        - "uniform"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_titleinfo"
+        -
+          field: "title_role"
+          operator: "equals"
+          value: "additional"
+        -
+          field: "title_type_available"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 48
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — titleInfo"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "titleInfoDefinition; modsGroup; globální element titleInfo"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Požadavky porovnány s textem i vykreslenými tabulkami s. 48–49 DMF 2.3 a s titleInfoDefinition v oficiálním MODS XSD 3.8. Zdrojové ukázky mají XPath a SHA-256. Ověřen přepis, nikoli úplná validita SIP nebo implementace nástrojů."
+    interpretation:
+      cs: "MA zachovává původní kód DMF. Kontrola platí pro další druh názvu, jehož typ je dostupný ze zdrojového popisu, a nikdy nevyžaduje type u hlavního názvu. Neznámá role není automaticky main ani důvod k tichému uznání shody. Toto není obecné mapování všech polí MARC 1:1. Kontext single_volume označuje popis svazku jednosvazkového dokumentu, nikoli hodnotu zvolenou podle úspěšnosti kontrolovaného XML. Role a dostupnost údajů vycházejí z nezávislého zdrojového popisu; neznámá dostupnost se nesmí zaměnit za false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-TITLEINFO"

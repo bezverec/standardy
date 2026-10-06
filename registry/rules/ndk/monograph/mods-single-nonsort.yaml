@@ -1,0 +1,76 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-NONSORT"
+title:
+  cs: "Volitelná neřadicí část názvu"
+description:
+  cs: "Názvové údaje MODS pro svazek jednosvazkové monografie podle DMF 2.3. Nevztahuje se automaticky na ostatní bibliografické úrovně."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-NONSORT"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-titles"
+    obligation: "optional"
+    obligation_code: "O"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "NonSort může vymezit neřadicí část názvu se zachováním znaků potřebných ke správnému spojení s title."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Je-li nonSort použit, zachovat na konci mezeru tam, kde odděluje neřadicí část od názvu; u přiléhajícího členu ji nevkládat. Při převodu hlavního názvu z MARC 245 $a vycházet z druhého indikátoru; při hodnotě 0 se nonSort nepoužije. Neprovádět plošné trimování nonSort ani doplňování mezery bez ohledu na text."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_titleinfo"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 49
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — titleInfo"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "titleInfoDefinition; modsGroup; globální element titleInfo"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Požadavky porovnány s textem i vykreslenými tabulkami s. 48–49 DMF 2.3 a s titleInfoDefinition v oficiálním MODS XSD 3.8. Zdrojové ukázky mají XPath a SHA-256. Ověřen přepis, nikoli úplná validita SIP nebo implementace nástrojů."
+    interpretation:
+      cs: "O znamená volitelný element, nikoli povinný výskyt u všech názvů začínajících členem. Při jeho použití se ale musí dodržet pravidla plnění. Příklady The + mezera a přiléhající L´ v DMF ilustrují dvě různé situace, nejsou číselníkem. Zdrojový SIP nonSort neobsahuje. Kontext single_volume označuje popis svazku jednosvazkového dokumentu, nikoli hodnotu zvolenou podle úspěšnosti kontrolovaného XML. Role a dostupnost údajů vycházejí z nezávislého zdrojového popisu; neznámá dostupnost se nesmí zaměnit za false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-TITLEINFO"

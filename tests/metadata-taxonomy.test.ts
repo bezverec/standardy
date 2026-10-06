@@ -60,7 +60,11 @@ describe("metadata taxonomy", () => {
       [{ category: "structure/mets-internal-parts", obligation: "optional" }, 1],
       [{ category: "structure/mets-internal-parts", status: "ambiguous" }, 1],
       [{ standard: "METS", category: "structure/mets-amd" }, 8],
-      [{ metadata_area: "descriptive" }, 0], [{ metadata_area: "administrative-technical", standard: "MIX" }, 13],
+      [{ metadata_area: "descriptive" }, 8], [{ standard: "MODS" }, 8], [{ standard: "DC" }, 0],
+      [{ standard: "MODS", category: "metadata/mods-titles" }, 8],
+      [{ category: "metadata/mods-titles", obligation: "mandatory_if_available" }, 4],
+      [{ category: "metadata/mods-titles", obligation: "optional" }, 1],
+      [{ category: "metadata/mods-titles", obligation: "forbidden" }, 1], [{ metadata_area: "administrative-technical", standard: "MIX" }, 13],
       [{ metadata_area: "package", standard: "MIX" }, 0], [{ standard: "NDK-INFO" }, 18],
     ] as Array<[Record<string, string>, number]>) {
       const response = await request(`/rules?${new URLSearchParams({ ...filters, page_size: "2" })}`);

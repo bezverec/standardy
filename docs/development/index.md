@@ -7,7 +7,7 @@ Registr propojuje požadavky národních standardů s původními specifikacemi,
 
 ## Současný stav
 
-K 6. 10. 2026 registr obsahuje **177 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 77 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku, 12 pro fyzickou mapu, 10 pro logickou mapu a výčet stran, 13 pro vnitřní části, 8 pro blokové vazby ALTO, 8 pro obálky MODS/DC), osm pro vedlejší METS a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
+K 6. 10. 2026 registr obsahuje **185 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 77 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku, 12 pro fyzickou mapu, 10 pro logickou mapu a výčet stran, 13 pro vnitřní části, 8 pro blokové vazby ALTO, 8 pro obálky MODS/DC), osm pro vedlejší METS, osm pro názvové údaje MODS jednosvazkové monografie a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
 
 | Skupina | Počet pravidel | Obsah a podklady |
 |---|---:|---|
@@ -23,6 +23,7 @@ K 6. 10. 2026 registr obsahuje **177 pravidel pro DMF Monografie 2.3**: 13 pro t
 | METS – vnitřní části | 13 | [Kapitoly, obrazy a jejich stránky](mets-internal-parts.md); rozdílné režimy popisu a volitelná logická PAGE |
 | METS – blokové vazby ALTO | 8 | [fptr/area, FILEID, BEGIN a BETYPE](mets-alto-links.md); textové a obrazové cíle |
 | METS – obálky MODS/DC | 8 | [dmdSec, ID, mdWrap a xmlData](mets-dmd.md); verze MODS 3.8 a výjimka DC |
+| MODS – názvové údaje jednosvazku | 8 | [titleInfo, type, title, nonSort, subTitle, partNumber a partName](mods-titles.md); M/MA/O a hlavní název bez type |
 | Vedlejší METS | 8 | [Inventář stránky, ADMID a fyzická mapa](mets-amd.md); včetně doložených nesouladů ve vzoru |
 | PREMIS Object | 17 | [Identifikace, charakteristiky, fixity, velikost a formát](premis-object.md); rozdíly PREMIS 2.2 a povinností DMF |
 | PREMIS – vznik a ochrana | 8 | [Úroveň ochrany, aplikace, data a původní název](premis-provenance.md); povinnosti M/R a ukázky MC, PS a ALTO |
@@ -46,6 +47,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Informace o balíčku info.xml](info-xml.md) — povinnosti M/MA/R/O, vazby na soubory a rozpory DMF/XSD.
 - [Soubory a jejich vazby v METS](mets-files.md) — hlavní METS, inventář souborů a fyzická mapa.
 - [Kořen a hlavička hlavního METS](mets-header.md) — LABEL, TYPE, schémata, časy a tvůrce/vlastník záznamu.
+- [Názvové údaje MODS](mods-titles.md) — první popisná skupina, pouze pro jednosvazkovou úroveň.
 - [Obálky bibliografických metadat](mets-dmd.md) — oddělení ID obálky a záznamu, MODS/DC a rozsah ověření.
 - [Blokové vazby METS–ALTO](mets-alto-links.md) — dva rozsahy identifikátorů, textové/obrazové cíle a doložené dílčí XML ukázky.
 - [Vnitřní části monografie](mets-internal-parts.md) — kapitoly, obrazy, jejich metadata a výčty stran; bez předstírání ukázek z jednoduchého SIP.

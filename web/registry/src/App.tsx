@@ -142,6 +142,7 @@ Object.assign(labels, {
   "structure/mets-internal-parts": "METS · kapitoly a obrazy",
   "structure/mets-alto-links": "METS · blokové vazby ALTO",
   "structure/mets-dmd": "METS · obálky MODS/DC",
+  "metadata/mods-titles": "MODS · názvy jednosvazkové monografie",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",
   "technical/premis-provenance": "PREMIS · vznik a ochrana souboru",

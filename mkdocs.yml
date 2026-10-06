@@ -90,4 +90,5 @@ nav:
       - Vnitřní části monografie: development/mets-internal-parts.md
       - Blokové vazby METS–ALTO: development/mets-alto-links.md
       - Obálky MODS/DC v METS: development/mets-dmd.md
+      - Názvové údaje MODS: development/mods-titles.md
       - Lokální vývoj: development/local-development.md
