@@ -94,6 +94,9 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-METS-PARTS-CHAPTER"
+  -
+    type: "related_to"
     target: "NDK-MONO-METS-ROOT"
   -
     type: "related_to"

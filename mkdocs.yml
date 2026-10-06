@@ -87,4 +87,5 @@ nav:
       - Kořen a hlavička hlavního METS: development/mets-header.md
       - Fyzická mapa hlavního METS: development/mets-physical.md
       - Logická mapa a výčet stran: development/mets-logical.md
+      - Vnitřní části monografie: development/mets-internal-parts.md
       - Lokální vývoj: development/local-development.md

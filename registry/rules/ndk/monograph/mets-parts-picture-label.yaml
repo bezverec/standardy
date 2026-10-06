@@ -1,0 +1,101 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-PARTS-PICTURE-LABEL"
+title:
+  cs: "Název obrazu, pokud existuje"
+description:
+  cs: "Vnitřní logické členění monografií podle DMF 2.3: kapitoly, obrazy, volitelné logické stránky a vazby na fyzické strany; bez implementace blokových odkazů ALTO."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-DIV-LABEL"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-internal-parts"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Má-li obraz název, obsahuje jej atribut LABEL jeho logického uzlu."
+    requirement:
+      presence: "conditional"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Podle předlohy a bibliografického popisu určit, zda obraz má název. Pokud ano, požadovat odpovídající LABEL; podmínku nezjišťovat z pouhé existence kontrolovaného atributu."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "logical_description_mode"
+          operator: "in"
+          value:
+            - "internal_parts_pages"
+            - "internal_parts_alto"
+        -
+          field: "structmap_type"
+          operator: "equals"
+          value: "LOGICAL"
+        -
+          field: "structural_level"
+          operator: "equals"
+          value: "picture"
+        -
+          field: "picture_has_title"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 96
+      section: "7.7.1.2.1 — PICTURE/LABEL"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "structMapType; divType; ORDERLABELS; structLinkType"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 4
+        section: "1.3 Dohoda mezi dodavatelem dat a zadavatelem — granularita záznamů"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: 98
+        section: "7.7.1.2.2 Varianta vnitřního popisu bez vazeb na bloky ALTO"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis porovnán s DMF 2.3, s. 4, 93–99, včetně vizuální kontroly tabulek a s deklaracemi METS XSD 1.9.1. U TYPE je ověřena existence rozporu, nikoli jedna závazná hodnota. Externí validátor nebyl spuštěn."
+    interpretation:
+      cs: "Slovní podmínka pokud existuje se vztahuje k názvu, nikoli k existenci XML atributu. Nevyžaduje se vymyšlený název bezejmenného obrazu. Řádek LABEL nemá vlastní vytištěný kód MA, proto zůstává obligation_source: prose. Rozsah vnitřního popisu vychází ze zadání projektu (§ 1.3), nikoli z pouhé existence nebo absence uzlů. Strukturální role vyjadřuje význam uzlu, ne shodu jeho kontrolovaného TYPE či prefixu ID. Custom kontroly registr nevykonává. Vzorový SIP bez kapitol tuto variantu nedokládá; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-LOGICAL-MAP"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PARTS-PICTURE"

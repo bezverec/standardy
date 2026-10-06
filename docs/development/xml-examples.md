@@ -2,6 +2,8 @@
 
 U 126 pravidel DMF Monografie 2.3 je dostupných 160 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtyřicet tři pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 160 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 160 ukázek.
+
 ## Původ a meze ověření
 
 Zdrojem je uživatelem dodaný rozbalený balíček `75faba8d-c629-11f0-8950-12e8557df20e`, označený jako oficiální vzor, s [odkazem na stažení z CESNET](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download). Obsahuje monografii *Tomáš Alva Edison a jeho fonograf*, [1890], a v `info.xml` deklaruje metadatovou verzi 2.3. Kontrola proběhla 5. 10. 2026 nad dodanou lokální kopií; identita kopie s aktuálním obsahem vzdáleného archivu nebyla nezávisle ověřena. Celý balíček ani obrazové soubory se do registru nekopírují.

@@ -107,4 +107,7 @@ versions:
 relations:
   -
     type: "related_to"
+    target: "NDK-MONO-METS-PARTS-PART-PAGE-COVERAGE"
+  -
+    type: "related_to"
     target: "NDK-MONO-METS-LOGICAL-MAP"
