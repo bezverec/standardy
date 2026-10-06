@@ -93,4 +93,5 @@ nav:
       - Názvové údaje MODS: development/mods-titles.md
       - Původci a role MODS: development/mods-names.md
       - Podrobnosti jmen MODS: development/mods-name-details.md
+      - Typ dokumentu a žánr MODS: development/mods-resource-genre.md
       - Lokální vývoj: development/local-development.md

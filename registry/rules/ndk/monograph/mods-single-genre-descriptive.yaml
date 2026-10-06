@@ -1,0 +1,127 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-GENRE-DESCRIPTIVE"
+title:
+  cs: "Další bibliografický žánr předlohy"
+description:
+  cs: "Typ předlohy, povinný strukturální typ a doporučený bibliografický žánr svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-GENRE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-resource-genre"
+    obligation: "recommended"
+    obligation_code: "R"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Vedle strukturálního typu se doporučuje opakovaným genre vyjádřit konkrétní žánr předlohy podle údajů MARC 655, 336 a 008."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Doporučit další přímý genre s konkrétním žánrem předlohy, pokud jej zdrojový popis umožňuje věcně určit. Zachovat význam hodnot z MARC 655, 336 a 008, nepřepisovat je mechanicky bez interpretace. Posuzovat bibliografickou podmnožinu genre odděleně od povinného strukturálního typu; samotné volume či jiný strukturální typ bibliografický žánr nenahrazuje."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 51
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — typeOfResource a genre"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; typeOfResourceDefinition; genreDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Požadavky porovnány s textem i vykreslenými tabulkami s. 50–51 DMF 2.3 a deklaracemi MODS XSD 3.8. Ukázky vybrány z přímých polí MODS svazku a ukotveny XPath a SHA-256; nejde o ověření původního MARC, autoritního slovníku ani celého SIP."
+    interpretation:
+      cs: "Původní kód je R, ne RA ani M. Neznámý či nedostupný zdrojový žánr se nesmí vymýšlet jen k vyplnění doporučeného pole. Bibliografické genre není omezeno na čtyři strukturální hodnoty, ani na biografie či biography ze vzoru. DMF výslovně odlišuje jeho převod do dc:type bez prefixu model:; samostatná pravidla a úplná konverze DC nejsou součástí této sady. Kontext monograph označuje DMF Monografie, nikoli automaticky textovou knihu. Druh předlohy a úroveň popisu se určují nezávisle ze zdroje, ne podle právě kontrolované hodnoty; neznámý druh není potvrzení správnosti ani důvod tiše přeskočit požadavek. Pravidlo se týká přímých polí MODS záznamu svazku jednosvazkové monografie, ne relatedItem, subject, stránky či titulu vícesvazku. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-resource-genre-descriptive-czenas"
+        title:
+          cs: "Bibliografický žánr biografie s czenas"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:genre xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"czenas\">biografie</mods:genre>"
+        note:
+          cs: "Přesný výřez přímého pole MODS svazku dodaného SIP. Nejde o univerzální šablonu, ověření původního MARC, autoritního přiřazení ani platnosti celého balíčku."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, typ zdroje a žánry"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:genre[@authority=\"czenas\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-06"
+      -
+        id: "sip-mods-resource-genre-descriptive-marcgt"
+        title:
+          cs: "Další žánr biography s marcgt"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:genre xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"marcgt\">biography</mods:genre>"
+        note:
+          cs: "Přesný výřez dalšího bibliografického genre. Authority marcgt není doporučené czenas; ukázka dokládá zdrojový zápis, ne splnění doporučení czenas. Nepřejmenovávat autoritu bez převodu odpovídajícího termínu."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, typ zdroje a žánry"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:genre[@authority=\"marcgt\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-06"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-GENRE-STRUCTURAL"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-GENRE-AUTHORITY"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-RESOURCE-TYPE"

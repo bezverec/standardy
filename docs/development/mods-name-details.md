@@ -25,7 +25,7 @@ Prefix ID je `NDK-MONO-MODS-SINGLE-`.
 | ALTERNATIVE-NAME-PART | NamePart uvnitř uvedeného alternativeName | M |
 | ETAL | Označení dalších neuvedených autorů v samostatném name | O, při použití platí omezení struktury |
 
-Sada tedy zachovává tři MA, dvě RA, dvě O, jedno M a jeden slovní zákaz. Po jejím doplnění registr obsahuje 203 pravidel, z toho 26 pro MODS.
+Sada tedy zachovává tři MA, dvě RA, dvě O, jedno M a jeden slovní zákaz. Registr nyní obsahuje 207 pravidel, z toho 30 pro MODS.
 
 ## Části osobního jména a dostupnost
 
@@ -78,6 +78,6 @@ Následující autorský příklad ukazuje oddělení běžného jména a etal. 
 </mods:mods>
 ```
 
-Ve [vzorovém SIP](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download) je přímý původce Mařík, J. bez typovaných částí, alternativeName a etal. Životopisná data Edisona se nacházejí v subject/name, tedy mimo rozsah této skupiny. Z ukázky nelze určit rozlišitelnost jména Mařík, J. v původním katalogu. Novým pravidlům proto nepřidáváme zdánlivě vyhovující zdrojové ukázky; počet zůstává 190 výřezů u 149 pravidel.
+Ve [vzorovém SIP](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download) je přímý původce Mařík, J. bez typovaných částí, alternativeName a etal. Životopisná data Edisona se nacházejí v subject/name, tedy mimo rozsah této skupiny. Z ukázky nelze určit rozlišitelnost jména Mařík, J. v původním katalogu. Novým pravidlům proto nepřidáváme zdánlivě vyhovující zdrojové ukázky; počet zůstává 196 výřezů u 153 pravidel.
 
 Testy ověřují přepis dat, kontexty, povinnosti, vazby a zařazení do API a mapy. **Custom kontroly registr nevykonává** a implementace externích nástrojů nebyly ověřeny.

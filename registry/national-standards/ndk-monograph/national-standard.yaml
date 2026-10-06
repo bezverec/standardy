@@ -5,7 +5,7 @@ title:
   cs: NDK DMF Monografie
   en: NDK DMF Monograph
 description:
-  cs: Strojově čitelný přepis vybraných požadavků DMF Monografie 2.3 na info.xml, názvové údaje, původce, role, části jmen, alternativní jména a etal MODS jednosvazkové monografie, metadata MIX, PREMIS Object, Event a Agent a kořen, hlavičku, soubory, fyzickou i logickou mapu, vnitřní části monografie a obálky MODS/DC a vazby hlavního i vedlejšího METS.
+  cs: Strojově čitelný přepis vybraných požadavků DMF Monografie 2.3 na info.xml, názvové údaje, původce, role, části jmen, alternativní jména, etal, typ zdroje a žánry MODS jednosvazkové monografie, metadata MIX, PREMIS Object, Event a Agent a kořen, hlavičku, soubory, fyzickou i logickou mapu, vnitřní části monografie a obálky MODS/DC a vazby hlavního i vedlejšího METS.
 status: draft
 verification:
   status: verified
@@ -17,6 +17,6 @@ versions:
     source:
       document: DMF Monografie
       version: "2.3"
-      page: "4–5, 17–23, 48–50, 73, 75–99"
-      section: "7.1 Soubor info.xml; 7.2 Kořen hlavního METS; 7.3 METS hlavička; 7.4 Obálky MODS/DC; 7.4.1.3 Názvové údaje, původci, role a podrobnosti jmen jednosvazkové monografie; 7.5.1 PREMIS Object; 7.5.2 PREMIS Event; 7.5.3 PREMIS Agent; 7.5.4 Technická metadata MIX; 7.6 fileSec; 7.7.1.1 Fyzická strukturální mapa; 7.7.1.2 Logická strukturální mapa; 7.7.2 structMap vedlejšího METS; 7.8 structLink"
+      page: "4–5, 17–23, 48–51, 73, 75–99"
+      section: "7.1 Soubor info.xml; 7.2 Kořen hlavního METS; 7.3 METS hlavička; 7.4 Obálky MODS/DC; 7.4.1.3 Názvové údaje, původci, role, podrobnosti jmen, typ zdroje a žánry jednosvazkové monografie; 7.5.1 PREMIS Object; 7.5.2 PREMIS Event; 7.5.3 PREMIS Agent; 7.5.4 Technická metadata MIX; 7.6 fileSec; 7.7.1.1 Fyzická strukturální mapa; 7.7.1.2 Logická strukturální mapa; 7.7.2 structMap vedlejšího METS; 7.8 structLink"
       url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"

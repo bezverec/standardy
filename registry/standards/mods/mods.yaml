@@ -9,7 +9,7 @@ status: "normative"
 verification:
   status: "verified"
   date: "2026-10-06"
-  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName a etal; volba verze podle DMF Monografie 2.3, s. 5."
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource a genre; volba verze podle DMF Monografie 2.3, s. 5."
 versions:
   -
     version: "3.8"
@@ -19,9 +19,71 @@ versions:
       document: "MODS XML Schema"
       version: "3.8"
       page: null
-      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; modsGroup"
+      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  -
+    id: "MODS-TYPE-OF-RESOURCE"
+    type: "element"
+    version: "3.8"
+    name: "typeOfResource"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Druh zdroje"
+    definition:
+      cs: "TypeOfResourceDefinition v MODS 3.8 rozšiřuje stringPlusLanguagePlusAuthority. V tomto XSD není uzavřený výčet text, cartographic, still image a notated music; ten zde přebírá národní pravidlo. Top-level element je v modsGroup opakovatelný."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "typeOfResourceDefinition; modsDefinition; modsGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny příslušné deklarace MODS XSD 3.8 včetně zděděných textových typů; požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-GENRE"
+    type: "element"
+    version: "3.8"
+    name: "genre"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Žánr či bližší druh dokumentu"
+    definition:
+      cs: "GenreDefinition rozšiřuje stringPlusLanguagePlusAuthority a dovoluje opakované top-level genre. XSD nerozlišuje strukturální typ NDK a další bibliografický žánr ani jim nepřiřazuje různé povinnosti; to dělá národní předpis."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "genreDefinition; modsDefinition; modsGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny příslušné deklarace MODS XSD 3.8 včetně zděděných textových typů; požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-GENRE-AUTHORITY"
+    type: "attribute"
+    version: "3.8"
+    name: "genre/@authority"
+    title:
+      cs: "Autorita žánrového termínu"
+    definition:
+      cs: "Volitelný atribut xs:string bez namespace, převzatý z authorityAttributeGroup přes stringPlusLanguagePlusAuthority. XSD nevyžaduje czenas ani neověřuje příslušnost termínu k uvedenému slovníku."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "genreDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny příslušné deklarace MODS XSD 3.8 včetně zděděných textových typů; požadavky DMF jsou vedeny odděleně."
   -
     id: "MODS-NAME-PART-TYPE"
     type: "attribute"

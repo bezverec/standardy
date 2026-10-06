@@ -7,7 +7,7 @@ Registr propojuje požadavky národních standardů s původními specifikacemi,
 
 ## Současný stav
 
-K 6. 10. 2026 registr obsahuje **203 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 77 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku, 12 pro fyzickou mapu, 10 pro logickou mapu a výčet stran, 13 pro vnitřní části, 8 pro blokové vazby ALTO, 8 pro obálky MODS/DC), osm pro vedlejší METS, 26 pro MODS jednosvazkové monografie (osm názvové údaje, devět původci a role, devět podrobnosti jmen) a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
+K 6. 10. 2026 registr obsahuje **207 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 77 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku, 12 pro fyzickou mapu, 10 pro logickou mapu a výčet stran, 13 pro vnitřní části, 8 pro blokové vazby ALTO, 8 pro obálky MODS/DC), osm pro vedlejší METS, 30 pro MODS jednosvazkové monografie (osm názvové údaje, devět původci a role, devět podrobnosti jmen, čtyři typ dokumentu a žánr) a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
 
 | Skupina | Počet pravidel | Obsah a podklady |
 |---|---:|---|
@@ -26,6 +26,7 @@ K 6. 10. 2026 registr obsahuje **203 pravidel pro DMF Monografie 2.3**: 13 pro t
 | MODS – názvové údaje jednosvazku | 8 | [titleInfo, type, title, nonSort, subTitle, partNumber a partName](mods-titles.md); M/MA/O a hlavní název bez type |
 | MODS – původci a role jednosvazku | 9 | [name, namePart, nameIdentifier a role](mods-names.md); MA/O/M a slovník marcrelator |
 | MODS – podrobnosti jmen jednosvazku | 9 | [Typované části jmen, alternativeName a etal](mods-name-details.md); MA/RA/O/M a slovní zákaz type |
+| MODS – typ dokumentu a žánr jednosvazku | 4 | [typeOfResource, strukturální a bibliografický genre, authority](mods-resource-genre.md); M/R a čtyři druhy předloh |
 | Vedlejší METS | 8 | [Inventář stránky, ADMID a fyzická mapa](mets-amd.md); včetně doložených nesouladů ve vzoru |
 | PREMIS Object | 17 | [Identifikace, charakteristiky, fixity, velikost a formát](premis-object.md); rozdíly PREMIS 2.2 a povinností DMF |
 | PREMIS – vznik a ochrana | 8 | [Úroveň ochrany, aplikace, data a původní název](premis-provenance.md); povinnosti M/R a ukázky MC, PS a ALTO |
@@ -49,6 +50,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Informace o balíčku info.xml](info-xml.md) — povinnosti M/MA/R/O, vazby na soubory a rozpory DMF/XSD.
 - [Soubory a jejich vazby v METS](mets-files.md) — hlavní METS, inventář souborů a fyzická mapa.
 - [Kořen a hlavička hlavního METS](mets-header.md) — LABEL, TYPE, schémata, časy a tvůrce/vlastník záznamu.
+- [Typ dokumentu a žánr MODS](mods-resource-genre.md) — oddělení strukturálního modelu, bibliografického žánru a autority.
 - [Podrobnosti jmen MODS](mods-name-details.md) — rozlišení MA/RA, alternativní jména a samostatné etal.
 - [Původci a role MODS](mods-names.md) — pojmenované autorství a další odpovědnosti, identifikátory a kódované role.
 - [Názvové údaje MODS](mods-titles.md) — první popisná skupina, pouze pro jednosvazkovou úroveň.

@@ -1,8 +1,8 @@
 # XML ukázky ze vzorového SIP
 
-U 149 pravidel DMF Monografie 2.3 je dostupných 190 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, dvanáct pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 190 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 153 pravidel DMF Monografie 2.3 je dostupných 196 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, šestnáct pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 196 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
-Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 190 ukázek.
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 196 ukázek.
 
 ## Původ a meze ověření
 
@@ -22,6 +22,8 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 [Podrobnosti jmen MODS](mods-name-details.md) nepřidávají další zdrojové ukázky: přímý původce svazku nemá typované namePart, alternativeName ani etal. Životopisná data Edisona jsou v subject/name, nikoli u původce, a nesmějí být vydávána za ukázku této skupiny.
 
 ## Důležité příklady
+
+- [Typ dokumentu a žánr MODS](mods-resource-genre.md) přidávají šest ukázek u čtyř pravidel: text, volume a dvojici czenas/biografie a marcgt/biography. Druhá autorita není splněním doporučení czenas; ukázka není univerzálním potvrzením správnosti.
 
 - [Původci a role MODS](mods-names.md) přidávají devět výřezů u devíti pravidel: jméno Mařík, J., jeho autoritní identifikátor a role aut. Nejde o ověření autoritní služby nebo původního MARC záznamu.
 - [Názvové údaje MODS](mods-titles.md) přidávají tři výřezy u tří pravidel. Vzor dokládá hlavní titleInfo a title, nikoli variantní název, nonSort, podnázev či názvové údaje části.

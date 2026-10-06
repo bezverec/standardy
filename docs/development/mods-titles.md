@@ -64,7 +64,7 @@ Namespace elementů je `http://www.loc.gov/mods/v3`. Atribut type je bez namespa
 
 ## Vzorový SIP a ověření
 
-Dodaná monografie obsahuje jedno titleInfo svazku s názvem Tomáš Alva Edison a jeho fonograf a bez atributu type. Z něj přidáváme **tři výřezy u tří pravidel**: titleInfo pro TITLEINFO a MAIN-NO-TYPE a samostatný title pro TITLE. Vzor neobsahuje další druh názvu, nonSort, subTitle, partNumber ani partName; k těmto pravidlům nepřidáváme vymyšlenou ukázku. Celkem má registr 190 zdrojových ukázek u 149 pravidel.
+Dodaná monografie obsahuje jedno titleInfo svazku s názvem Tomáš Alva Edison a jeho fonograf a bez atributu type. Z něj přidáváme **tři výřezy u tří pravidel**: titleInfo pro TITLEINFO a MAIN-NO-TYPE a samostatný title pro TITLE. Vzor neobsahuje další druh názvu, nonSort, subTitle, partNumber ani partName; k těmto pravidlům nepřidáváme vymyšlenou ukázku. Celkem má registr 196 zdrojových ukázek u 153 pravidel.
 
 Zdroj: [dodaný SIP](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download), soubor `mets_75faba8d-c629-11f0-8950-12e8557df20e.xml`, SHA-256 `7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473`. XPath k titleInfo:
 

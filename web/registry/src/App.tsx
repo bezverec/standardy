@@ -145,6 +145,7 @@ Object.assign(labels, {
   "metadata/mods-titles": "MODS · názvy jednosvazkové monografie",
   "metadata/mods-names": "MODS · původci a role jednosvazkové monografie",
   "metadata/mods-name-details": "MODS · podrobnosti jmen jednosvazkové monografie",
+  "metadata/mods-resource-genre": "MODS · typ dokumentu a žánr jednosvazkové monografie",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",
   "technical/premis-provenance": "PREMIS · vznik a ochrana souboru",
