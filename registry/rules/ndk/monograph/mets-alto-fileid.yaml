@@ -1,0 +1,156 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-ALTO-FILEID"
+title:
+  cs: "Soubor ALTO pro odkazovaný blok"
+description:
+  cs: "Blokové vazby logické struktury METS do souborů ALTO podle DMF Monografie 2.3, oddělené od fyzických odkazů na celé soubory a od výčtů stran."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-AREA-FILEID"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-alto-links"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "FILEID blokové area odkazuje na záznam příslušného souboru ALTO v hlavním METS."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat area/@FILEID jako jeden IDREF na file v fileSec téhož METS. Přes tento záznam dohledat skutečný příslušný soubor ALTO; nestačí odkaz na JPEG 2000, TXT, dmdSec nebo libovolný XML soubor. Nespoléhat pouze na prefix ID či MIME typ text/xml."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "logical_description_mode"
+          operator: "equals"
+          value: "internal_parts_alto"
+        -
+          field: "structmap_type"
+          operator: "equals"
+          value: "LOGICAL"
+        -
+          field: "logical_content_role"
+          operator: "in"
+          value:
+            - "text_block"
+            - "image_block"
+            - "image_only_page"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "alto_block_area"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "93, 95–98"
+      section: "7.7.1.2.1 Logická struktura s vazbou na ALTO bloky"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "divType/fptr; areaType"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+      -
+        document: "ALTO XML Schema"
+        version: "2.0"
+        page: null
+        section: "TextBlock; ComposedBlock; BlockType/@ID"
+        url: "https://www.loc.gov/standards/alto/v2/alto-2-0.xsd"
+      -
+        document: "ALTO XML Schema"
+        version: "4.4"
+        page: null
+        section: "TextBlock; ComposedBlock; BlockType/@ID"
+        url: "https://www.loc.gov/standards/alto/v4/alto-4-4.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "4–5"
+        section: "1.3 Granularita popisu; 1.4 Verze standardů"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    examples:
+      -
+        id: "sip-mets-alto-links-fileid-1"
+        title:
+          cs: "Záznam prvního souboru ALTO v METS"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mets:file CHECKSUM="a5cceecc68f28b235510803181545aab" CHECKSUMTYPE="MD5" CREATED="2026-06-25T09:09:42" ID="alto_0001" MIMETYPE="text/xml" SEQ="0" SIZE="5693" xmlns:mets="http://www.loc.gov/METS/">
+            <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml" xmlns:xlink="http://www.w3.org/1999/xlink" />
+          </mets:file>
+        note:
+          cs: "Přesný výřez ukazuje pouze záznam souboru nebo existující textový blok. Zdrojový SIP nemá logické blokové odkazy: ukázka nedokládá existenci fptr/area ani správné přiřazení kapitoly. Není univerzální šablonou ani potvrzením validity."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — záznam ALTO"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID=\"alto_0001\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          alto: "http://www.loc.gov/standards/alto/ns-v4#"
+          xlink: "http://www.w3.org/1999/xlink"
+        checked_on: "2026-10-06"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "DMF 2.3, s. 93 a vizuálně ověřené s. 95–98; deklarace METS 1.9.1 a ALTO 2.0/4.4 porovnány. Ukázky mají XPath a SHA-256. Ověřen přepis požadavků a původ výřezů, nikoli validita celého SIP nebo implementace nástrojů."
+    interpretation:
+      cs: "FILEID není cesta ani ID bloku. Rozvržení tabulek DMF místy vizuálně přiřazuje FILEID k fptr; XSD však vyžaduje FILEID na area. Pouhé umístění FILEID na rodiče nenahrazuje povinný atribut potomka. Dokumentace METS doporučuje při použití area nepoužívat FILEID na fptr; samotné XSD jeho souběžný výskyt nezakazuje. Platí pouze pro zvolený režim internal_parts_alto. Role bloku vychází z významu popisovaného obsahu, nikoli z existence kontrolovaného odkazu nebo správně vyplněného TYPE. Nevyžaduje se výskyt všech druhů bloků v každé knize; pravidlo řeší vazbu již popisovaného bloku. Kódy povinnosti uzlů v tabulce se nekopírují k těmto vazebním požadavkům. Custom kontroly registr nevykonává; externí validátor ani implementace nástrojů nebyly ověřeny."
+    discrepancies:
+      -
+        cs: "Tabulky DMF místy uvádějí FILEID vizuálně u fptr (např. s. 96). METS areaType však vyžaduje vlastní FILEID; fptr/@FILEID je volitelný a jeho dokumentace doporučuje nepoužívat jej společně s potomkem area/par/seq. Nejde o dva zaměnitelné atributy ani o povinnost uvést oba."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PARTS-CHAPTER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PARTS-PART-PAGE-COVERAGE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-FPTR"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-AREA"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-BEGIN"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-BETYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-FPTR-FILEID"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-HREF"

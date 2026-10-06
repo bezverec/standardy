@@ -23,6 +23,108 @@ versions:
       url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
 entities:
   -
+    id: "METS-FPTR"
+    type: "element"
+    version: "1.9.1"
+    name: "fptr"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Odkaz strukturálního uzlu na digitální obsah"
+    definition:
+      cs: "DivType umožňuje 0–n fptr. Fptr má volitelný FILEID a volbu par, seq nebo area; nemusí mít potomka. Dokumentace doporučuje FILEID na fptr pouze bez těchto potomků."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType/fptr"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace a dokumentace METS XSD 1.9.1 přečteny; národní omezení zůstávají oddělena v pravidlech."
+  -
+    id: "METS-AREA"
+    type: "element"
+    version: "1.9.1"
+    name: "area"
+    namespace: "http://www.loc.gov/METS/"
+    title:
+      cs: "Odkaz na část souboru"
+    definition:
+      cs: "AreaType vymezuje soubor nebo jeho část pomocí atributů. Přímá větev fptr/area má 0–1 výskyt; obecné METS dovoluje i area v par/seq. FILEID je povinný, BEGIN a BETYPE volitelné."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "divType/fptr/area; areaType"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace a dokumentace METS XSD 1.9.1 přečteny; národní omezení zůstávají oddělena v pravidlech."
+  -
+    id: "METS-AREA-FILEID"
+    type: "attribute"
+    version: "1.9.1"
+    name: "area/@FILEID"
+    title:
+      cs: "Soubor obsahující odkazovanou oblast"
+    definition:
+      cs: "Povinný xs:IDREF na file v fileSec téhož METS. Není totožný s volitelným fptr/@FILEID; omezení cílového souboru na ALTO je pravidlem NDK."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "areaType/@FILEID"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace a dokumentace METS XSD 1.9.1 přečteny; národní omezení zůstávají oddělena v pravidlech."
+  -
+    id: "METS-AREA-BEGIN"
+    type: "attribute"
+    version: "1.9.1"
+    name: "area/@BEGIN"
+    title:
+      cs: "Počátek odkazované oblasti"
+    definition:
+      cs: "Volitelný xs:string. Význam určuje BETYPE; při IDREF označuje ID elementu v odkazovaném strukturovaném souboru. Samotné XSD METS neověřuje ID v externím ALTO."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "areaType/@BEGIN"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace a dokumentace METS XSD 1.9.1 přečteny; národní omezení zůstávají oddělena v pravidlech."
+  -
+    id: "METS-AREA-BETYPE"
+    type: "attribute"
+    version: "1.9.1"
+    name: "area/@BETYPE"
+    title:
+      cs: "Způsob adresování počátku a konce"
+    definition:
+      cs: "Volitelný atribut s výčtem způsobů adresování (například IDREF, BYTE, XPTR). Zúžení na IDREF pro blokové odkazy ALTO pochází z DMF, nikoli z obecného METS."
+    status: "normative"
+    source:
+      document: "METS XML Schema"
+      version: "1.9.1"
+      page: null
+      section: "areaType/@BETYPE"
+      url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace a dokumentace METS XSD 1.9.1 přečteny; národní omezení zůstávají oddělena v pravidlech."
+  -
     id: "METS-STRUCTLINK"
     type: "element"
     version: "1.9.1"

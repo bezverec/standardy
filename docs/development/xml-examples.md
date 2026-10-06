@@ -1,8 +1,8 @@
 # XML ukázky ze vzorového SIP
 
-U 126 pravidel DMF Monografie 2.3 je dostupných 160 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtyřicet tři pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 160 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 129 pravidel DMF Monografie 2.3 je dostupných 164 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, čtyřicet šest pro hlavní METS, osm pro vedlejší METS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 164 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
-Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 160 ukázek.
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 164 ukázek.
 
 ## Původ a meze ověření
 
@@ -20,6 +20,8 @@ Každá ukázka obsahuje:
 Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správnost jeho obsahu. Původní normativní `source` a `verification` pravidla jsou nezávislé na původu ukázky.
 
 ## Důležité příklady
+
+- [Blokové vazby METS–ALTO](mets-alto-links.md) přidávají čtyři výřezy u tří pravidel. Jde pouze o záznam souboru ALTO a skutečný TextBlock, ne o existující logický odkaz fptr/area. Vzor neobsahuje ComposedBlock; namespace v4 sám nepotvrzuje minor verzi 4.4.
 
 - [Logická mapa a výčet stran](mets-logical.md) přidávají 13 výřezů u devíti pravidel; pravidlo titulu vícesvazkové monografie nemá ukázku, protože dodaný SIP je jednodílný. Úplný structLink zachovává všech 16 vazeb, nikoli předepsaný počet pro jiné knihy.
 - [Fyzická mapa](mets-physical.md) přidává 17 výřezů u 12 pravidel, včetně porovnání s MODS a doloženého rozdílu mezi cílem ADMID v DMF a dokumentaci METS. Plné mapy obsahují všech 16 stran vzoru; číslo 16 není normativní požadavek.

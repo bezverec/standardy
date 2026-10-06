@@ -1,6 +1,6 @@
 # Logická mapa a výčet stran hlavního METS
 
-Deset pravidel `structure/mets-logical` navazuje na [fyzickou mapu](mets-physical.md). Pokrývá společné vazební požadavky a variantu logického popisu **bez vnitřních částí**. Na kapitoly, obrazy a jejich stránky navazuje [samostatná sada vnitřních částí](mets-internal-parts.md). Podrobná struktura blokových odkazů ALTO dosud není pokryta. Pravidla se nevztahují na [vedlejší METS](mets-amd.md).
+Deset pravidel `structure/mets-logical` navazuje na [fyzickou mapu](mets-physical.md). Pokrývá společné vazební požadavky a variantu logického popisu **bez vnitřních částí**. Na kapitoly, obrazy a jejich stránky navazuje [samostatná sada vnitřních částí](mets-internal-parts.md). Na jednotlivé blokové odkazy se zaměřuje [sada METS–ALTO](mets-alto-links.md). Pravidla se nevztahují na [vedlejší METS](mets-amd.md).
 
 ## Zdroje a verze
 

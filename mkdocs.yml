@@ -88,4 +88,5 @@ nav:
       - Fyzická mapa hlavního METS: development/mets-physical.md
       - Logická mapa a výčet stran: development/mets-logical.md
       - Vnitřní části monografie: development/mets-internal-parts.md
+      - Blokové vazby METS–ALTO: development/mets-alto-links.md
       - Lokální vývoj: development/local-development.md

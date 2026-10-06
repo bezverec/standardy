@@ -1,0 +1,122 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-METS-ALTO-BETYPE"
+title:
+  cs: "Způsob interpretace BEGIN"
+description:
+  cs: "Blokové vazby logické struktury METS do souborů ALTO podle DMF Monografie 2.3, oddělené od fyzických odkazů na celé soubory a od výčtů stran."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "METS-AREA-BETYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "structure/mets-alto-links"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "BETYPE blokového odkazu má hodnotu IDREF."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat area/@BETYPE s přesnou hodnotou IDREF. Obecně povolené hodnoty BYTE, XPTR nebo časové způsoby adresování nenahrazují zde předepsanou vazbu na ID bloku."
+      allowed_values:
+        - "IDREF"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "logical_description_mode"
+          operator: "equals"
+          value: "internal_parts_alto"
+        -
+          field: "structmap_type"
+          operator: "equals"
+          value: "LOGICAL"
+        -
+          field: "logical_content_role"
+          operator: "in"
+          value:
+            - "text_block"
+            - "image_block"
+            - "image_only_page"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "alto_block_area"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "93, 95–98"
+      section: "7.7.1.2.1 Logická struktura s vazbou na ALTO bloky"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "METS XML Schema"
+        version: "1.9.1"
+        page: null
+        section: "divType/fptr; areaType"
+        url: "https://www.loc.gov/standards/mets/version191/mets.xsd"
+      -
+        document: "ALTO XML Schema"
+        version: "2.0"
+        page: null
+        section: "TextBlock; ComposedBlock; BlockType/@ID"
+        url: "https://www.loc.gov/standards/alto/v2/alto-2-0.xsd"
+      -
+        document: "ALTO XML Schema"
+        version: "4.4"
+        page: null
+        section: "TextBlock; ComposedBlock; BlockType/@ID"
+        url: "https://www.loc.gov/standards/alto/v4/alto-4-4.xsd"
+      -
+        document: "DMF Monografie"
+        version: "2.3"
+        page: "4–5"
+        section: "1.3 Granularita popisu; 1.4 Verze standardů"
+        url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "DMF 2.3, s. 93 a vizuálně ověřené s. 95–98; deklarace METS 1.9.1 a ALTO 2.0/4.4 porovnány. Ukázky mají XPath a SHA-256. Ověřen přepis požadavků a původ výřezů, nikoli validita celého SIP nebo implementace nástrojů."
+    interpretation:
+      cs: "V obecném METS je BETYPE volitelný atribut s více hodnotami. NDK pro uvedené blokové odkazy výslovně stanoví IDREF; nejde o změnu datového typu atributu BEGIN. Platí pouze pro zvolený režim internal_parts_alto. Role bloku vychází z významu popisovaného obsahu, nikoli z existence kontrolovaného odkazu nebo správně vyplněného TYPE. Nevyžaduje se výskyt všech druhů bloků v každé knize; pravidlo řeší vazbu již popisovaného bloku. Kódy povinnosti uzlů v tabulce se nekopírují k těmto vazebním požadavkům. Custom kontroly registr nevykonává; externí validátor ani implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PARTS-CHAPTER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-PARTS-PART-PAGE-COVERAGE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-FPTR"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-AREA"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-FILEID"
+  -
+    type: "related_to"
+    target: "NDK-MONO-METS-ALTO-BEGIN"

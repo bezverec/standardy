@@ -1,6 +1,6 @@
 # Kapitoly, obrazy a jejich stránky v METS
 
-Třináct pravidel `structure/mets-internal-parts` navazuje na [logickou mapu a structLink](mets-logical.md). Popisuje vnitřní části monografie, jejich metadata a výčty fyzických stran. Nenahrazuje skupinu pro jednoduchý popis bez kapitol a zatím neimplementuje podrobnou strukturu blokových vazeb ALTO.
+Třináct pravidel `structure/mets-internal-parts` navazuje na [logickou mapu a structLink](mets-logical.md). Popisuje vnitřní části monografie, jejich metadata a výčty fyzických stran. Nenahrazuje skupinu pro jednoduchý popis bez kapitol a blokové vazby ALTO předává [samostatné sadě](mets-alto-links.md).
 
 ## Zdroje
 
@@ -15,7 +15,7 @@ Ověření z 6. 10. 2026 se týká přepisu pramenů, nikoli chování ProArcu, 
 |---|---|---|
 | `no_internal_parts` | Bez popisu kapitol | Tato sada se neuplatní; platí předchozí skupina |
 | `internal_parts_pages` | Kapitoly a obrazy propojené se stránkami | Uzly, metadata, výčty stran; bez fptr/area v logické mapě |
-| `internal_parts_alto` | Vnitřní části s vazbami na bloky ALTO | Společné uzly a výčty stran; vlastní blokové odkazy zatím mimo sadu |
+| `internal_parts_alto` | Vnitřní části s vazbami na bloky ALTO | Společné uzly a výčty stran; vlastní blokové odkazy v [navazující sadě](mets-alto-links.md) |
 
 Tyto názvy jsou kontexty registru, nikoli předepsané XML atributy METS. Zvolený režim pochází ze zadání projektu podle § 1.3, ne z toho, zda vadný dokument náhodou obsahuje kapitoly nebo blokové odkazy.
 
@@ -76,10 +76,10 @@ Ve variantě `internal_parts_pages` jsou fptr/area zakázány pouze uvnitř logi
 
 PAGE je v logické mapě volitelná. Pokud se použije, je nejnižší úrovní pod vyššími celky, nikoli rodičem kapitoly či obrazu. Její absence neruší povinnost fyzických stran a jejich vazeb. Logický a fyzický uzel stejné stránky jsou dva XML uzly, takže nemohou sdílet stejné ID.
 
-Rozdělování oddílu na CHAPTER_PART není automatickým důsledkem toho, že kapitola zabírá více stran. Podrobné podtypy a blokové odkazy ALTO tato sada ještě nepokrývá.
+Rozdělování oddílu na CHAPTER_PART není automatickým důsledkem toho, že kapitola zabírá více stran. Na typy dílčích bloků a jejich odkazy navazuje [sada METS–ALTO](mets-alto-links.md); kompletní povinnosti všech podtypů a CHAPTER_PART zatím pokryté nejsou.
 
 ## Ukázky a meze ověření
 
-Dodaný SIP obsahuje jednoduchou logickou mapu bez kapitol. Nová pravidla proto nemají vymyšlené `source_excerpt`; celkový počet zůstává **160 zdrojových ukázek u 126 pravidel**. Autorský příklad výše není zahrnut do těchto počtů.
+Dodaný SIP obsahuje jednoduchou logickou mapu bez kapitol. Nová pravidla proto nemají vymyšlené `source_excerpt`; tato sada počet zdrojových ukázek nezvyšuje (aktuální počty jsou v [přehledu XML ukázek](xml-examples.md)). Autorský příklad výše není zahrnut do těchto počtů.
 
 Testy ověřují kontexty, povinnosti, zachování rozporu TYPE, sémantické cíle DMDID, zařazení do filtrů a mapy i vztahy mezi pravidly. Registr **nevykonává custom kontroly**, není plným validátorem SIP a touto sadou není doloženo chování externích nástrojů.
