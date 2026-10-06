@@ -91,4 +91,5 @@ nav:
       - Blokové vazby METS–ALTO: development/mets-alto-links.md
       - Obálky MODS/DC v METS: development/mets-dmd.md
       - Názvové údaje MODS: development/mods-titles.md
+      - Původci a role MODS: development/mods-names.md
       - Lokální vývoj: development/local-development.md

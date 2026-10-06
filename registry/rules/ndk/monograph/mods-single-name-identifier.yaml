@@ -1,0 +1,103 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-NAME-IDENTIFIER"
+title:
+  cs: "Číslo národní autority původce"
+description:
+  cs: "Pojmenovaní původci a jejich role ve svazku jednosvazkové monografie podle DMF 2.3; samostatně od názvových údajů, subject/name a metadat digitalizačních agentů."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-NAME-IDENTIFIER"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-names"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Dostupné číslo národní autority původce se uvede v nameIdentifier."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Je-li ve zdrojových údajích dostupné číslo národní autority daného původce, požadovat je v jeho nameIdentifier a porovnat přiřazení ke správnému jménu. Nezaměnit je s UUID SIP, bibliografickým identifikátorem díla nebo hodnotou jiného původce."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_contributor_name"
+        -
+          field: "national_authority_id_available"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 50
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — name a role"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "nameDefinition; namePartDefinition; roleDefinition; roleTermDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis porovnán s textem a vykreslenými tabulkami s. 49–50 DMF 2.3, deklaracemi MODS XSD 3.8 a seznamem MARC rolí LOC. XML výřezy jsou ukotveny XPath a SHA-256. Nejde o validaci celého SIP, autoritního záznamu ani implementace nástroje."
+    interpretation:
+      cs: "Jde o textový identifikátor, nikoli požadavek na celočíselnou hodnotu; doložený identifikátor obsahuje písmena. Obecné MODS dovoluje jiné druhy identifikátorů, ale ty samy nenahrazují dostupné číslo národní autority. Nevynucujeme vymyšlený regex, konstantu ani atribut type nepožadovaný tímto řádkem DMF. Autoritní služba nebyla dotazována. Kontexty contributor označují jmenné údaje o odpovědnosti přímo pod MODS záznamem svazku jednosvazkové monografie, ne subject, relatedItem, originInfo nebo PREMIS Agent. Dostupnost se zjišťuje nezávisle ze zdroje; nepřítomnost pole v XML není důkaz nedostupnosti a neznámá hodnota není false. Custom kontroly registr nevykonává."
+    examples:
+      -
+        id: "sip-mods-names-name-identifier"
+        title:
+          cs: "Původce a jeho role — číslo autority"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:nameIdentifier xmlns:mods=\"http://www.loc.gov/mods/v3\">jx20101005005</mods:nameIdentifier>"
+        note:
+          cs: "Úplný vybraný uzel vzorového SIP, bez změny hodnot. Dokládá zápis původce Mařík, J. a související údaje; neprokazuje shodu s původním MARC, správnost autoritního přiřazení nebo validitu celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, jméno původce"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:name/mods:nameIdentifier"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-06"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME"

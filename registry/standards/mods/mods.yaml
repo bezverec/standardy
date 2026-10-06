@@ -9,7 +9,7 @@ status: "normative"
 verification:
   status: "verified"
   date: "2026-10-06"
-  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo; volba verze podle DMF Monografie 2.3, s. 5."
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name a role; volba verze podle DMF Monografie 2.3, s. 5."
 versions:
   -
     version: "3.8"
@@ -19,9 +19,194 @@ versions:
       document: "MODS XML Schema"
       version: "3.8"
       page: null
-      section: "titleInfoDefinition; modsGroup; globální element titleInfo"
+      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; modsGroup"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  -
+    id: "MODS-NAME"
+    type: "element"
+    version: "3.8"
+    name: "name"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Jméno původce"
+    definition:
+      cs: "Opakovatelný element MODS. NameDefinition rozlišuje větev jmenných údajů a větev s etal. V první větvi se mohou opakovat namePart, role, nameIdentifier a další prvky; obecné XSD nevynucuje namePart."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "name; nameDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-NAME-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "name/@type"
+    title:
+      cs: "Typ pojmenovaného původce"
+    definition:
+      cs: "Volitelný atribut nameDefinition s hodnotami personal, corporate, conference a family. Národní dostupnostní povinnost není vlastností XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "nameDefinition/@type"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-NAME-USAGE"
+    type: "attribute"
+    version: "3.8"
+    name: "name/@usage"
+    title:
+      cs: "Primární použití jména"
+    definition:
+      cs: "Volitelný atribut typu usagePrimary má jedinou hodnotu primary. Není totožný s rolí aut ani s typem personal."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "nameDefinition/@usage; usagePrimary"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-NAME-PART"
+    type: "element"
+    version: "3.8"
+    name: "name/namePart"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Část jména původce"
+    definition:
+      cs: "NamePart ve jmenné větvi nameDefinition je opakovatelné. NamePartDefinition dovoluje nepovinné type; jeho podmínky a povinnosti NDK nejsou totožné s obecným XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "nameDefinition; namePartDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-NAME-IDENTIFIER"
+    type: "element"
+    version: "3.8"
+    name: "name/nameIdentifier"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Identifikátor pojmenovaného původce"
+    definition:
+      cs: "NameIdentifier typu identifierDefinition je dostupný ve jmenné větvi nameDefinition a může se opakovat. Obecné MODS jej neomezuje na české národní autority."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "nameDefinition/nameIdentifier; globální nameIdentifier"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-NAME-ROLE"
+    type: "element"
+    version: "3.8"
+    name: "name/role"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Role původce vůči dokumentu"
+    definition:
+      cs: "RoleDefinition obsahuje jeden nebo více roleTerm. Role je ve jmenné větvi nameDefinition opakovatelné; jeho národní dostupnostní povinnost z XSD neplyne."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "nameDefinition/role; roleDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-ROLE-TERM"
+    type: "element"
+    version: "3.8"
+    name: "name/role/roleTerm"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Výraz popisující roli původce"
+    definition:
+      cs: "RoleTermDefinition rozšiřuje stringPlusLanguagePlusAuthority. Obecné XSD roleTerm neomezuje na slovník MARC rolí a dovoluje nepovinné type code/text."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "roleDefinition; roleTermDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-ROLE-TERM-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "roleTerm/@type"
+    title:
+      cs: "Způsob zápisu role"
+    definition:
+      cs: "Volitelný atribut roleTermDefinition typu codeOrText dovoluje code nebo text. Povinnost a zúžení na code v NDK je samostatné pravidlo."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "roleTermDefinition/@type; codeOrText"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
+  -
+    id: "MODS-ROLE-TERM-AUTHORITY"
+    type: "attribute"
+    version: "3.8"
+    name: "roleTerm/@authority"
+    title:
+      cs: "Slovník použitý pro roli"
+    definition:
+      cs: "Volitelný atribut xs:string přebíraný přes stringPlusLanguagePlusAuthority z authorityAttributeGroup. Obecné XSD nepředepisuje hodnotu marcrelator."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "roleTermDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Deklarace MODS XSD 3.8 pro name a role přečteny. Povinnosti NDK jsou vedeny odděleně."
   -
     id: "MODS-TITLEINFO"
     type: "element"
