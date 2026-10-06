@@ -92,4 +92,5 @@ nav:
       - Obálky MODS/DC v METS: development/mets-dmd.md
       - Názvové údaje MODS: development/mods-titles.md
       - Původci a role MODS: development/mods-names.md
+      - Podrobnosti jmen MODS: development/mods-name-details.md
       - Lokální vývoj: development/local-development.md

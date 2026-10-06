@@ -9,7 +9,7 @@ status: "normative"
 verification:
   status: "verified"
   date: "2026-10-06"
-  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name a role; volba verze podle DMF Monografie 2.3, s. 5."
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName a etal; volba verze podle DMF Monografie 2.3, s. 5."
 versions:
   -
     version: "3.8"
@@ -19,9 +19,92 @@ versions:
       document: "MODS XML Schema"
       version: "3.8"
       page: null
-      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; modsGroup"
+      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; modsGroup"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  -
+    id: "MODS-NAME-PART-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "name/namePart/@type"
+    title:
+      cs: "Typ části jména"
+    definition:
+      cs: "Volitelný atribut namePartDefinition bez namespace. Dovoluje date, family, given a termsOfAddress; XSD nestanovuje kódy povinnosti NDK a nepodmiňuje atribut osobou."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "namePartDefinition/@type"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace namePartDefinition, alternativeNameDefinition a etal v nameDefinition; národní povinnosti jsou vedeny odděleně."
+  -
+    id: "MODS-ALTERNATIVE-NAME"
+    type: "element"
+    version: "3.8"
+    name: "name/alternativeName"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Alternativní jméno"
+    definition:
+      cs: "AlternativeName je v běžné jmenné větvi nameDefinition opakovatelné. AlternativeNameDefinition má opakovatelnou volbu potomků s minOccurs=0; dovoluje namePart, displayForm, affiliation, role, description a nameIdentifier, nikoli etal nebo další alternativeName."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "nameDefinition; alternativeNameDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace namePartDefinition, alternativeNameDefinition a etal v nameDefinition; národní povinnosti jsou vedeny odděleně."
+  -
+    id: "MODS-ALTERNATIVE-NAME-PART"
+    type: "element"
+    version: "3.8"
+    name: "name/alternativeName/namePart"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Část alternativního jména"
+    definition:
+      cs: "Element namePart v alternativeNameDefinition používá stejný typ namePartDefinition jako přímé jmenné části. Je opakovatelný, ale obecné XSD jeho výskyt nevyžaduje; M přidává národní předpis."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "alternativeNameDefinition; namePartDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace namePartDefinition, alternativeNameDefinition a etal v nameDefinition; národní povinnosti jsou vedeny odděleně."
+  -
+    id: "MODS-NAME-ETAL"
+    type: "element"
+    version: "3.8"
+    name: "name/etal"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Označení dalších neuvedených jmen"
+    definition:
+      cs: "Etal typu stringPlusLanguage může být prázdné nebo obsahovat text. Ve zvláštní větvi nameDefinition je jediným prvním elementem; následuje opakovatelná volba affiliation, role a description. Běžné jmenné potomky tato větev nepřipouští."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "etal; nameDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace namePartDefinition, alternativeNameDefinition a etal v nameDefinition; národní povinnosti jsou vedeny odděleně."
   -
     id: "MODS-NAME"
     type: "element"

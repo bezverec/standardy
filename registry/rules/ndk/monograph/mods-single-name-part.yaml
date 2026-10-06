@@ -73,7 +73,7 @@ versions:
       date: "2026-10-06"
       reference: "Přepis porovnán s textem a vykreslenými tabulkami s. 49–50 DMF 2.3, deklaracemi MODS XSD 3.8 a seznamem MARC rolí LOC. XML výřezy jsou ukotveny XPath a SHA-256. Nejde o validaci celého SIP, autoritního záznamu ani implementace nástroje."
     interpretation:
-      cs: "Toto pravidlo zachycuje dostupnost jmenné informace a základní způsob zápisu. Detailní povinnosti atributu namePart/@type, včetně RA pro životopisná data a titul, zůstávají pro navazující sadu. Nevyžaduje namePart v samostatném name s etal; alternativní namePart pod alternativeName má jiný kontext. Ukázka Mařík, J. nedokládá, že rozdělení nebylo možné ve zdrojovém katalogu. Kontexty contributor označují jmenné údaje o odpovědnosti přímo pod MODS záznamem svazku jednosvazkové monografie, ne subject, relatedItem, originInfo nebo PREMIS Agent. Dostupnost se zjišťuje nezávisle ze zdroje; nepřítomnost pole v XML není důkaz nedostupnosti a neznámá hodnota není false. Custom kontroly registr nevykonává."
+      cs: "Toto pravidlo zachycuje dostupnost jmenné informace a základní způsob zápisu. Detailní povinnosti atributu namePart/@type, včetně RA pro životopisná data a titul, rozvádí navazující sada metadata/mods-name-details. Nevyžaduje namePart v samostatném name s etal; alternativní namePart pod alternativeName má jiný kontext. Ukázka Mařík, J. nedokládá, že rozdělení nebylo možné ve zdrojovém katalogu. Kontexty contributor označují jmenné údaje o odpovědnosti přímo pod MODS záznamem svazku jednosvazkové monografie, ne subject, relatedItem, originInfo nebo PREMIS Agent. Dostupnost se zjišťuje nezávisle ze zdroje; nepřítomnost pole v XML není důkaz nedostupnosti a neznámá hodnota není false. Custom kontroly registr nevykonává."
     examples:
       -
         id: "sip-mods-names-name-part"
@@ -101,3 +101,22 @@ relations:
   -
     type: "related_to"
     target: "NDK-MONO-MODS-SINGLE-NAME"
+
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-FAMILY"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-GIVEN"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-DATE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-ADDRESS"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-NO-TYPE"

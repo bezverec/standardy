@@ -1,0 +1,87 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-NAME-PART-DATE"
+title:
+  cs: "Dostupná životopisná data osoby"
+description:
+  cs: "Rozvedení jmenných údajů svazku jednosvazkové monografie podle DMF 2.3: části osobního jména, alternativní jméno a samostatná konstrukce etal."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-NAME-PART"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-name-details"
+    obligation: "recommended_if_available"
+    obligation_code: "RA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Dostupná životopisná data osoby se doporučuje uvést v namePart s type=date."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Doporučit neprázdný přímý namePart[@type='date'] s dostupnými životopisnými daty správné osoby. Pokud je údaj uveden, ověřit věcnou shodu se zdrojem; absence je nesplněným doporučením, nikoli porušením M nebo MA."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_contributor_name"
+        -
+          field: "contributor_kind"
+          operator: "equals"
+          value: "personal"
+        -
+          field: "biographical_dates_available"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 50
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — části jména, alternativeName a etal"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "nameDefinition; namePartDefinition; alternativeNameDefinition; etal"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis porovnán s textem a vykreslenou tabulkou s. 49–50 DMF 2.3 a s deklaracemi MODS XSD 3.8. Ověřeny rozdíly MA/RA/O/M a slovní zákaz. Nejde o validaci SIP nebo implementace nástroje."
+    interpretation:
+      cs: "RA je výslovně uvedeno u hodnoty date v tabulce DMF 2.3. Presence optional a minimum 0 zachovávají doporučení, ne zákaz absence. Nejde o datum vydání díla, datum digitalizace ani datum v názvu konference. DMF zde nepředepisuje ISO 8601 nebo konkrétní regex. Platí jen pro přímé jmenné údaje o odpovědnosti ve svazku jednosvazkové monografie, nikoli subject/name, relatedItem/name nebo originInfo/agent. Kontexty a dostupnost se určují z nezávislého zdrojového popisu, nikoli z přítomnosti či správnosti kontrolovaného atributu; neznámá dostupnost není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-TYPE"

@@ -1,0 +1,108 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-NAME-PART-NO-TYPE"
+title:
+  cs: "Jmenné údaje bez typu části"
+description:
+  cs: "Rozvedení jmenných údajů svazku jednosvazkové monografie podle DMF 2.3: části osobního jména, alternativní jméno a samostatná konstrukce etal."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-NAME-PART-TYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-name-details"
+    obligation: "forbidden"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Type se nepoužije u neosobního jména; pokud nelze rozlišit křestní jméno a příjmení osoby, zapíše se celé jméno do jednoho namePart bez type."
+    requirement:
+      presence: "forbidden"
+      cardinality:
+        min: 0
+        max: 0
+      validations:
+        -
+          type: "custom"
+          expression: "Ověřit skutečnou nepřítomnost type; prázdná hodnota se nepočítá jako absence. U nerozlišitelného osobního jména zapsat jeho nerozlišené znění do jediného namePart bez type. Zákaz pro neosobní jméno platí pro každý jeho přímý namePart."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_contributor_name_part"
+        -
+          any:
+            -
+              field: "contributor_kind"
+              operator: "in"
+              value:
+                - "corporate"
+                - "conference"
+                - "family"
+            -
+              all:
+                -
+                  field: "contributor_kind"
+                  operator: "equals"
+                  value: "personal"
+                -
+                  field: "name_components_distinguishable"
+                  operator: "equals"
+                  value: false
+                -
+                  field: "name_part_kind"
+                  operator: "equals"
+                  value: "unparsed"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 50
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — části jména, alternativeName a etal"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "nameDefinition; namePartDefinition; alternativeNameDefinition; etal"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis porovnán s textem a vykreslenou tabulkou s. 49–50 DMF 2.3 a s deklaracemi MODS XSD 3.8. Ověřeny rozdíly MA/RA/O/M a slovní zákaz. Nejde o validaci SIP nebo implementace nástroje."
+    interpretation:
+      cs: "Zákaz je slovní, bez vymyšleného kódu M/MA. Neznámý druh původce není důkaz neosobního jména. Nerozlišené osobní jméno neznamená zákaz samostatného date nebo termsOfAddress: podmínka name_part_kind=unparsed omezuje druhou větev na nerozdělené jméno. Obecné MODS type u namePart umožňuje; zde jej omezuje NDK. Platí jen pro přímé jmenné údaje o odpovědnosti ve svazku jednosvazkové monografie, nikoli subject/name, relatedItem/name nebo originInfo/agent. Kontexty a dostupnost se určují z nezávislého zdrojového popisu, nikoli z přítomnosti či správnosti kontrolovaného atributu; neznámá dostupnost není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-FAMILY"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART-GIVEN"

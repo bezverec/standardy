@@ -8,7 +8,7 @@ Devět pravidel `metadata/mods-names` navazuje na [názvové údaje](mods-titles
 - [MODS XSD 3.8](https://www.loc.gov/standards/mods/v3/mods-3-8.xsd): nameDefinition, namePartDefinition, roleDefinition, roleTermDefinition a authorityAttributeGroup.
 - [MARC Code List for Relators](https://www.loc.gov/marc/relators/relaterm.html): identifikátor slovníku marcrelator a význam kódů rolí.
 
-Ověřeno 6. 10. 2026. Pravidla neplatí automaticky pro titul či svazek vícesvazku, stránku, přílohu nebo vnitřní část. Neřeší jména v subject či relatedItem, originInfo ani digitalizační agenty PREMIS. Samostatná zástupná konstrukce etal a alternativeName zůstávají pro navazující sadu; požadavek na jmenné údaje nesmí vynucovat namePart u etal.
+Ověřeno 6. 10. 2026. Pravidla neplatí automaticky pro titul či svazek vícesvazku, stránku, přílohu nebo vnitřní část. Neřeší jména v subject či relatedItem, originInfo ani digitalizační agenty PREMIS. Samostatnou zástupnou konstrukci etal a alternativeName popisuje [navazující sada](mods-name-details.md); požadavek na jmenné údaje nesmí vynucovat namePart u etal.
 
 ## Pravidla a povinnosti
 
@@ -42,7 +42,7 @@ Name/@type rozlišuje personal, corporate, conference a family. Není totožné 
 
 Volitelné usage=primary označuje primární autoritu podle zdroje (DMF uvádí MARC 100/110/111). Neznamená automaticky autora ani osobu a neplyne z prvního místa v XML. Tato sada nevyžaduje právě jedno usage v každém záznamu.
 
-Jméno se při možnosti rozlišení zapisuje po částech. Není-li rozlišení křestního jména a příjmení možné, DMF připouští jeden namePart bez type. Z iniciály J. nelze vymyslet celé křestní jméno. Detailní povinnosti namePart/@type, včetně RA pro date a termsOfAddress, nejsou nahrazeny plošným MA; zůstávají pro další sadu spolu s alternativeName a etal.
+Jméno se při možnosti rozlišení zapisuje po částech. Není-li rozlišení křestního jména a příjmení možné, DMF připouští jeden namePart bez type. Z iniciály J. nelze vymyslet celé křestní jméno. Detailní povinnosti namePart/@type, včetně RA pro date a termsOfAddress, nejsou nahrazeny plošným MA; popisuje je [navazující sada](mods-name-details.md) spolu s alternativeName a etal.
 
 NameIdentifier je textový identifikátor národní autority, ne celočíselná hodnota. Není totožný s UUID balíčku, bibliografickým identifikátorem dokumentu ani s roleTerm/@authority. Registr nevymýšlí regex nebo povinný atribut type. Dostupný identifikátor musí být přiřazen správnému původci; autoritní služba nebyla v této sadě dotazována.
 
@@ -64,6 +64,6 @@ Zdroj: [dodaný SIP](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/down
 /mets:mets/mets:dmdSec[@ID="MODSMD_VOLUME_0001"]/mets:mdWrap/mets:xmlData/mods:mods/mods:name
 ```
 
-Ukázka nerozhoduje, zda bylo ve zdrojovém katalogu možné rozdělit jméno, ani neověřuje převod MARC nebo přiřazení autority. Kontrola výřezů není validací celého SIP. Registr má po doplnění 194 pravidel a 190 zdrojových ukázek u 149 pravidel.
+Ukázka nerozhoduje, zda bylo ve zdrojovém katalogu možné rozdělit jméno, ani neověřuje převod MARC nebo přiřazení autority. Kontrola výřezů není validací celého SIP. Registr nyní obsahuje 203 pravidel a 190 zdrojových ukázek u 149 pravidel.
 
 Testy kontrolují datovou strukturu, povinnosti, kontexty, číselníky, vazby a zařazení v API a mapě. **Custom kontroly registr nevykonává**; implementace ProArcu, Krameria ani Komplexního validátoru nebyly pro tuto skupinu ověřeny.

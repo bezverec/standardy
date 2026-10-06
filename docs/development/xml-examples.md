@@ -19,6 +19,8 @@ Každá ukázka obsahuje:
 
 Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správnost jeho obsahu. Původní normativní `source` a `verification` pravidla jsou nezávislé na původu ukázky.
 
+[Podrobnosti jmen MODS](mods-name-details.md) nepřidávají další zdrojové ukázky: přímý původce svazku nemá typované namePart, alternativeName ani etal. Životopisná data Edisona jsou v subject/name, nikoli u původce, a nesmějí být vydávána za ukázku této skupiny.
+
 ## Důležité příklady
 
 - [Původci a role MODS](mods-names.md) přidávají devět výřezů u devíti pravidel: jméno Mařík, J., jeho autoritní identifikátor a role aut. Nejde o ověření autoritní služby nebo původního MARC záznamu.

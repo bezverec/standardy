@@ -1,0 +1,85 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-ETAL"
+title:
+  cs: "Samostatné označení dalších neuvedených autorů"
+description:
+  cs: "Rozvedení jmenných údajů svazku jednosvazkové monografie podle DMF 2.3: části osobního jména, alternativní jméno a samostatná konstrukce etal."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-NAME-ETAL"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-name-details"
+    obligation: "optional"
+    obligation_code: "O"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Další neuvedené autory lze označit etal v samostatném top-level name; v tomto name nesmějí být namePart, nameIdentifier ani alternativeName. Etal je neopakovatelné uvnitř jednoho name."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Je-li etal uvedeno, ověřit samostatné name přímo pod mods:mods daného svazku, nejvýše jeden přímý etal a nepřítomnost namePart, nameIdentifier a alternativeName ve stejném name. Ověřit význam dalších neuvedených autorů; DMF stanoví ruční vložení, které ze samotného XML nelze prokázat."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_top_level_name"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 50
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — části jména, alternativeName a etal"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "nameDefinition; namePartDefinition; alternativeNameDefinition; etal"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Přepis porovnán s textem a vykreslenou tabulkou s. 49–50 DMF 2.3 a s deklaracemi MODS XSD 3.8. Ověřeny rozdíly MA/RA/O/M a slovní zákaz. Nejde o validaci SIP nebo implementace nástroje."
+    interpretation:
+      cs: "O nevyžaduje etal při každé neúplnosti ani nedovoluje automaticky zamlčet dostupné původce. Kontext zahrnuje všechna top-level name v posuzovaném záznamu, i chybné kombinace etal s jmennými potomky. Maximum 1 platí na jedno name, ne na celý záznam. Text a kol. je příklad, nikoli povinná konstanta; MODS dovoluje i prázdné etal. Větev XSD vyžaduje etal jako první a připouští za ním affiliation, role a description, nikoli displayForm; pořadí a další omezení XSD jsou odlišeny od citovaného řádku DMF. Platí jen pro přímé jmenné údaje o odpovědnosti ve svazku jednosvazkové monografie, nikoli subject/name, relatedItem/name nebo originInfo/agent. Kontexty a dostupnost se určují z nezávislého zdrojového popisu, nikoli z přítomnosti či správnosti kontrolovaného atributu; neznámá dostupnost není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-PART"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NAME-IDENTIFIER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ALTERNATIVE-NAME"
