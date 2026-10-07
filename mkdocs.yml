@@ -94,4 +94,6 @@ nav:
       - Původci a role MODS: development/mods-names.md
       - Podrobnosti jmen MODS: development/mods-name-details.md
       - Typ dokumentu a žánr MODS: development/mods-resource-genre.md
+      - Původ a místa vydání MODS: development/mods-origin.md
+      - Nakladatelé a výrobci MODS: development/mods-origin-agents.md
       - Lokální vývoj: development/local-development.md

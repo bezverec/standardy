@@ -1,0 +1,98 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-ORIGIN-COPYRIGHT-NO-ROLE"
+title:
+  cs: "Událost copyright z 264_4 bez role agenta"
+description:
+  cs: "Nakladatelé, výrobci a další entity v originInfo svazku jednosvazkové monografie podle DMF 2.3; odděleně od autorů a agentů digitalizace."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-ORIGIN-AGENT-ROLE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-agents"
+    obligation: "forbidden"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Pro výskyt pole MARC 264 s druhým indikátorem 4 se popis role u agent nepoužije."
+    requirement:
+      presence: "forbidden"
+      cardinality:
+        min: 0
+        max: 0
+      validations:
+        -
+          type: "custom"
+          expression: "V agent příslušejícím nezávisle doloženému zdrojovému 264_4 požadovat nulový počet role, včetně prázdných kontejnerů. Zákaz není podmíněn dostupností role ani přítomností správného eventType. Jiná událost téhož záznamu své role neztrácí."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_origin_agent"
+        -
+          field: "origin_copyright_notice"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 52
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — originInfo/agent, namePart, role a roleTerm"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; agent; nameDefinition; namePartDefinition; roleDefinition; roleTermDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — 264"
+        version: "July 2022"
+        page: null
+        section: "Second Indicator — Function of entity; $b"
+        url: "https://www.loc.gov/marc/bibliographic/bd264.html"
+      -
+        document: "MARC 21 Bibliographic — 260"
+        version: "September 2011"
+        page: null
+        section: "$b; $f"
+        url: "https://www.loc.gov/marc/bibliographic/bd260.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Přepis ověřen proti textu i vykreslené tabulce s. 52 DMF 2.3, MODS XSD 3.8 a významům MARC 260/264. U distibutor ověřen tisk zdroje, nikoli závazná oprava. Ukázky ukotveny XPath a SHA-256; původní katalogizační MARC ani externí implementace nebyly ověřeny."
+    interpretation:
+      cs: "Jde o slovní zákaz z poznámky DMF, bez domyšleného kódu M/MA. Origin_copyright_notice=true označuje význam a původ konkrétní události 264_4; není odvozen jen z kontrolovaného XML. Výjimka neznamená zákaz všech agentů, odstranění copyrightDate ani zákaz role v jiném publication/manufacture originInfo. Nevyžaduje vytvořit agent, pokud není dostupný; kontroluje obsah případného agenta. Kontext je omezen na agent v přímém originInfo MODS záznamu svazku jednosvazkové monografie, nikoli na top-level name, subject/name, relatedItem nebo PREMIS Agent. Dostupnost a funkce zdrojového údaje se určují nezávisle z katalogu či předlohy, ne z přítomnosti nebo správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-AGENT-ROLE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-AGENT-ROLE-TERM"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-EVENT-TYPE"

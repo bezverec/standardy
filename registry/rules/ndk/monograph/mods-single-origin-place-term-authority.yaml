@@ -1,0 +1,105 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-ORIGIN-PLACE-TERM-AUTHORITY"
+title:
+  cs: "Autorita kódu země z MARC 008"
+description:
+  cs: "Původ a místa vydání svazku jednosvazkové monografie podle DMF 2.3; odlišení AACR a RDA a vazby na MARC 260/264 a 008."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-ORIGIN-PLACE-TERM-AUTHORITY"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "U údaje převzatého z MARC 008/15–17 se uvede dostupná autorita marccountry. DMF omezuje tento atribut na údaj z pole 008."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      allowed_values:
+        - "marccountry"
+      validations:
+        -
+          type: "custom"
+          expression: "Je-li místo doloženě převzato z 008/15–17, požadovat authority=marccountry. Dostupnost autority zde plyne ze známého zdrojového pole a jeho předepsaného slovníku. Marccountry nepřenášet na text z 260$a/264$a; omezení jen u údaje z 008 není obecná povinnost autority všech míst."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_origin_place_term"
+        -
+          field: "origin_place_source"
+          operator: "equals"
+          value: "marc_008_15_17"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "51–52"
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — originInfo, eventType a place"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; codeOrText; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Porovnáno s textem a vykreslenými tabulkami s. 51–52 DMF 2.3 a deklaracemi MODS XSD 3.8. Výřezy ukotveny XPath a SHA-256; ověřena deklarace AACR ve vzoru. Původní MARC a implementace nástrojů nebyly ověřeny."
+    interpretation:
+      cs: "MA je zachováno přesně podle tabulky. Podmínka origin_place_source je původ údaje z katalogu, nikoli současná hodnota type=code nebo přítomnost authority. Neznámý zdroj neprokazuje nedostupnost ani správnost. Obecné XSD 3.8 má authority jako volitelný xs:string; starší výčet autorit zde neplatí. Ukázka dokládá atribut v SIP, nikoli ověření převodu z původního MARC či členství kódu ve slovníku. Kontext je omezen na přímé originInfo MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, subject, stránku nebo titul vícesvazku. Katalogizační pravidla a dostupnost údajů se zjišťují nezávisle ze zdroje, ne podle existence či správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-origin-place-term-authority-code"
+        title:
+          cs: "Kód země xr"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:placeTerm xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"marccountry\" type=\"code\">xr</mods:placeTerm>"
+        note:
+          cs: "Přesný výřez uzlu vzorového SIP, pouze se sjednoceným odsazením. RecordInfo/descriptionStandard v témže MODS záznamu uvádí aacr; originInfo nemá eventType. Výřez není RDA příkladem ani potvrzením původního převodu MARC nebo validity celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, originInfo a místo vydání"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type=\"code\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-06"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-PLACE-TERM-TYPE"

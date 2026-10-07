@@ -8,8 +8,8 @@ description:
 status: "normative"
 verification:
   status: "verified"
-  date: "2026-10-06"
-  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource a genre; volba verze podle DMF Monografie 2.3, s. 5."
+  date: "2026-10-07"
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource, genre, originInfo, place a agent; volba verze podle DMF Monografie 2.3, s. 5."
 versions:
   -
     version: "3.8"
@@ -19,7 +19,7 @@ versions:
       document: "MODS XML Schema"
       version: "3.8"
       page: null
-      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup"
+      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
   -
@@ -498,3 +498,210 @@ entities:
       status: "verified"
       date: "2026-10-06"
       reference: "Deklarace titleInfoDefinition v MODS XSD 3.8 přečtena; rozsah povinnosti NDK je veden samostatně."
+  -
+    id: "MODS-ORIGININFO"
+    type: "element"
+    version: "3.8"
+    name: "originInfo"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Údaje o původu dokumentu"
+    definition:
+      cs: "OriginInfoDefinition nabízí opakovatelnou volbu míst, agentů, dat a dalších údajů. OriginInfo je opakovatelné v modsGroup; obecné XSD nevynucuje národní povinnost kontejneru ani hlavní událost production/publication."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; originInfoDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace originInfoDefinition, placeDefinition a placeTermDefinition v MODS XSD 3.8; národní požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGININFO-EVENT-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "originInfo/@eventType"
+    title:
+      cs: "Druh události původu"
+    definition:
+      cs: "Volitelný atribut originInfoDefinition typu xs:string bez namespace. XSD 3.8 nepředepisuje uzavřený výčet pěti hodnot ani rozdíl AACR/RDA; tyto požadavky přidává DMF."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition/@eventType"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace originInfoDefinition, placeDefinition a placeTermDefinition v MODS XSD 3.8; národní požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-PLACE"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/place"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Místo původu nebo vydání"
+    definition:
+      cs: "Place je opakovatelné v originInfoDefinition. PlaceDefinition v MODS 3.8 obsahuje opakovatelnou volbu placeTerm, placeIdentifier a cartographics. Samotné XSD proto nevynucuje placeTerm při každém použití place."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition; placeDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace originInfoDefinition, placeDefinition a placeTermDefinition v MODS XSD 3.8; národní požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-PLACE-TERM"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/place/placeTerm"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Textový nebo kódovaný místní údaj"
+    definition:
+      cs: "PlaceTermDefinition rozšiřuje stringPlusLanguagePlusAuthority; termín se může v place opakovat. Zdrojová pole MARC, dostupnostní povinnosti a vztahy k jiným údajům nejsou určeny obecným XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "placeDefinition; placeTermDefinition; stringPlusLanguagePlusAuthority"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace originInfoDefinition, placeDefinition a placeTermDefinition v MODS XSD 3.8; národní požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-PLACE-TERM-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "placeTerm/@type"
+    title:
+      cs: "Způsob zápisu místa"
+    definition:
+      cs: "Volitelný atribut placeTermDefinition bez namespace typu codeOrText s hodnotami code a text. XSD nevynucuje jeho přítomnost ani mapování ze zdrojových polí MARC."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "placeTermDefinition/@type; codeOrText"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace originInfoDefinition, placeDefinition a placeTermDefinition v MODS XSD 3.8; národní požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-PLACE-TERM-AUTHORITY"
+    type: "attribute"
+    version: "3.8"
+    name: "placeTerm/@authority"
+    title:
+      cs: "Autorita místního údaje"
+    definition:
+      cs: "Volitelný atribut xs:string bez namespace z authorityAttributeGroup přes stringPlusLanguagePlusAuthority. V MODS 3.8 byl odstraněn starší omezený výčet; XSD nevyžaduje marccountry ani neověřuje členství kódu v autoritním slovníku."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "placeTermDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Ověřeny deklarace originInfoDefinition, placeDefinition a placeTermDefinition v MODS XSD 3.8; národní požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-AGENT"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/agent"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Entita odpovědná za vydání nebo výrobu"
+    definition:
+      cs: "Agent je od MODS 3.8 členem opakovatelné volby originInfoDefinition a používá nameDefinition. Obecné XSD agent nevyžaduje a nadále dovoluje publisher; národní předpis pracuje s agent samostatně."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      section: "originInfoDefinition; agent; nameDefinition"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace agent=nameDefinition, originInfoDefinition a zděděné typy namePart/role/roleTerm v MODS XSD 3.8; požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-AGENT-NAME-PART"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/agent/namePart"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Jméno nakladatelského agenta"
+    definition:
+      cs: "NamePart v běžné větvi nameDefinition je opakovatelné, ale obecné XSD je nevyžaduje. NamePartDefinition rozšiřuje stringPlusLanguage; národní M a mapování MARC jsou samostatné požadavky."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      section: "agent; nameDefinition; namePartDefinition"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace agent=nameDefinition, originInfoDefinition a zděděné typy namePart/role/roleTerm v MODS XSD 3.8; požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-AGENT-ROLE"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/agent/role"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Role nakladatelského agenta"
+    definition:
+      cs: "Role je v nameDefinition opakovatelné; roleDefinition vyžaduje jeden nebo více roleTerm. XSD neobsahuje národní dostupnostní podmínku ani zákaz role pro zdrojové 264_4."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      section: "agent; nameDefinition; roleDefinition"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace agent=nameDefinition, originInfoDefinition a zděděné typy namePart/role/roleTerm v MODS XSD 3.8; požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-ORIGIN-AGENT-ROLE-TERM"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/agent/role/roleTerm"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Pojmenování role nakladatelského agenta"
+    definition:
+      cs: "RoleTermDefinition rozšiřuje stringPlusLanguagePlusAuthority, s nepovinným type code/text. Textový obsah nemá číselník nakladatelských rolí. Obecné XSD nerozhodne zápis distibutor/distributor a nevynucuje type=code nebo authority=marcrelator."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      section: "roleDefinition; roleTermDefinition; stringPlusLanguagePlusAuthority; stringPlusLanguage"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace agent=nameDefinition, originInfoDefinition a zděděné typy namePart/role/roleTerm v MODS XSD 3.8; požadavky DMF jsou vedeny odděleně."

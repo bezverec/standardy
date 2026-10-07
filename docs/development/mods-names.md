@@ -64,6 +64,6 @@ Zdroj: [dodaný SIP](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/down
 /mets:mets/mets:dmdSec[@ID="MODSMD_VOLUME_0001"]/mets:mdWrap/mets:xmlData/mods:mods/mods:name
 ```
 
-Ukázka nerozhoduje, zda bylo ve zdrojovém katalogu možné rozdělit jméno, ani neověřuje převod MARC nebo přiřazení autority. Kontrola výřezů není validací celého SIP. Registr nyní obsahuje 207 pravidel a 196 zdrojových ukázek u 153 pravidel.
+Ukázka nerozhoduje, zda bylo ve zdrojovém katalogu možné rozdělit jméno, ani neověřuje převod MARC nebo přiřazení autority. Kontrola výřezů není validací celého SIP. Registr nyní obsahuje 220 pravidel a 208 zdrojových ukázek u 163 pravidel.
 
 Testy kontrolují datovou strukturu, povinnosti, kontexty, číselníky, vazby a zařazení v API a mapě. **Custom kontroly registr nevykonává**; implementace ProArcu, Krameria ani Komplexního validátoru nebyly pro tuto skupinu ověřeny.

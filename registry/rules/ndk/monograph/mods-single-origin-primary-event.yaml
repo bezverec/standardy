@@ -1,0 +1,80 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-ORIGIN-PRIMARY-EVENT"
+title:
+  cs: "Alespoň jedna hlavní událost původu v RDA"
+description:
+  cs: "Původ a místa vydání svazku jednosvazkové monografie podle DMF 2.3; odlišení AACR a RDA a vazby na MARC 260/264 a 008."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-ORIGININFO"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin"
+    obligation: "mandatory"
+    obligation_source: "prose"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "V RDA záznamu musí mít alespoň jedno originInfo hodnotu eventType production nebo publication."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Na úrovni celého RDA MODS záznamu požadovat alespoň jedno přímé originInfo s eventType=production nebo eventType=publication. Samotné distribution, manufacture a copyright tuto podmínku nesplní. Minimum 1 se vztahuje na tuto podmnožinu; ostatní originInfo mohou zůstat přítomna. Kontrolu neaktivovat až existencí správné události."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+        -
+          field: "cataloguing_rules"
+          operator: "equals"
+          value: "rda"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: "51–52"
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — originInfo, eventType a place"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; codeOrText; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-06"
+      reference: "Porovnáno s textem a vykreslenými tabulkami s. 51–52 DMF 2.3 a deklaracemi MODS XSD 3.8. Výřezy ukotveny XPath a SHA-256; ověřena deklarace AACR ve vzoru. Původní MARC a implementace nástrojů nebyly ověřeny."
+    interpretation:
+      cs: "Jde o výslovný slovní požadavek DMF, nikoli o dodatečně domyšlený tabulkový kód M. Nevyžaduje současný výskyt obou hodnot production i publication. RDA rozsah vyplývá z omezení eventType na RDA v předchozím řádku. Výskyt copyright nesmí vypnout kontrolu chybějící hlavní události. Kontext je omezen na přímé originInfo MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, subject, stránku nebo titul vícesvazku. Katalogizační pravidla a dostupnost údajů se zjišťují nezávisle ze zdroje, ne podle existence či správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-EVENT-TYPE"

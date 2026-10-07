@@ -1,0 +1,127 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-ORIGIN-AGENT"
+title:
+  cs: "Nakladatel nebo výrobce v originInfo/agent"
+description:
+  cs: "Nakladatelé, výrobci a další entity v originInfo svazku jednosvazkové monografie podle DMF 2.3; odděleně od autorů a agentů digitalizace."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-ORIGIN-AGENT"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-agents"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Dostupné údaje o entitě, která dokument vydala, vytiskla nebo jinak vyprodukovala, se uvedou v agent. Více vydavatelů z opakovaných podpolí $b se vyjádří samostatným agent pro každého z nich."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Požadovat dostupný agent v odpovídajícím originInfo. Pro každého vydavatele z opakovaného $b vytvořit vlastní agent a zachovat vazbu na správnou událost a místo. Nesloučit různé vydavatele jen do opakovaných namePart jednoho agenta."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_origin_info"
+        -
+          field: "origin_agent_available"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 52
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — originInfo/agent, namePart, role a roleTerm"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; agent; nameDefinition; namePartDefinition; roleDefinition; roleTermDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — 264"
+        version: "July 2022"
+        page: null
+        section: "Second Indicator — Function of entity; $b"
+        url: "https://www.loc.gov/marc/bibliographic/bd264.html"
+      -
+        document: "MARC 21 Bibliographic — 260"
+        version: "September 2011"
+        page: null
+        section: "$b; $f"
+        url: "https://www.loc.gov/marc/bibliographic/bd260.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Přepis ověřen proti textu i vykreslené tabulce s. 52 DMF 2.3, MODS XSD 3.8 a významům MARC 260/264. U distibutor ověřen tisk zdroje, nikoli závazná oprava. Ukázky ukotveny XPath a SHA-256; původní katalogizační MARC ani externí implementace nebyly ověřeny."
+    interpretation:
+      cs: "MA kontejneru nevynucuje vymyšleného vydavatele při nedostupnosti údajů. Obecné MODS 3.8 zavádí agent s typem nameDefinition, avšak agent samo nevyžaduje. Starší publisher zůstává ve schématu povolený, není však totožným elementem s agent předepsaným v tomto řádku DMF. Kontext je omezen na agent v přímém originInfo MODS záznamu svazku jednosvazkové monografie, nikoli na top-level name, subject/name, relatedItem nebo PREMIS Agent. Dostupnost a funkce zdrojového údaje se určují nezávisle z katalogu či předlohy, ne z přítomnosti nebo správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-origin-agent"
+        title:
+          cs: "Nakladatelský agent ze vzoru"
+        language: "xml"
+        kind: "source_excerpt"
+        code: |
+          <mods:agent xmlns:mods="http://www.loc.gov/mods/v3">
+                        <mods:namePart>Tiskem a nákl. Th. Venty (dříve Jos. Neuberta)</mods:namePart>
+                        <mods:role>
+                          <mods:roleTerm>publisher</mods:roleTerm>
+                        </mods:role>
+                      </mods:agent>
+        note:
+          cs: "Doložený výřez agent z originInfo svazku vzorového SIP. Záznam uvádí AACR a roleTerm publisher bez type a authority. Ukázka neprokazuje převod původního MARC, distributorskou ani copyright větev či validitu celého SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, originInfo/agent"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:originInfo/mods:agent"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-07"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGININFO"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-AGENT-NAME"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-AGENT-ROLE"
