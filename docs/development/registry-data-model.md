@@ -61,7 +61,15 @@ Neověřené údaje nejsou prezentovány jako potvrzené normativní závěry.
 | RA | `recommended_if_available` | Doporučené, pokud je údaj dostupný / lze jej plnit |
 | O | `optional` | Volitelné |
 
-Obecný model navíc podporuje `forbidden` (zakázané) a `unspecified` (neurčeno); těm se žádný z kódů NDK nepřiřazuje. Mimo NDK lze `obligation_code` vynechat. Sémantická validace vyžaduje původní kód pro známé úrovně M/MA/R/RA/O u pravidel národních standardů s prefixem `ndk-` a kontroluje jeho soulad s obecnou úrovní. Pokud je požadavek v prameni pouze slovní, pravidlo výslovně uvádí `obligation_source: prose` a kód vynechá; tato pole nelze kombinovat. Například skupina METS má `obligation: mandatory` podle slovního požadavku, nikoli domyšlené `obligation_code: M`. U neurčené povinnosti se kód nevymýšlí. Pole jsou součástí konkrétní `RuleVersion` a její provenance `source`, exportu a OpenAPI kontraktu.
+Obecný model navíc podporuje `forbidden` (**v daném kontextu se nepoužívá**) a `unspecified` (neurčeno); těm se žádný z kódů NDK nepřiřazuje. Mimo NDK lze `obligation_code` vynechat. Sémantická validace vyžaduje původní kód pro známé úrovně M/MA/R/RA/O u pravidel národních standardů s prefixem `ndk-` a kontroluje jeho soulad s obecnou úrovní. Pokud je požadavek v prameni pouze slovní, pravidlo výslovně uvádí `obligation_source: prose` a kód vynechá; tato pole nelze kombinovat. Například skupina METS má `obligation: mandatory` podle slovního požadavku, nikoli domyšlené `obligation_code: M`. U neurčené povinnosti se kód nevymýšlí. Pole jsou součástí konkrétní `RuleVersion` a její provenance `source`, exportu a OpenAPI kontraktu.
+
+### Nepoužití není totéž co odlišnost standardů
+
+`forbidden` zůstává interní hodnotou pro požadovanou nepřítomnost, nikoli názvem relace mezi standardy. Vyžaduje `requirement.presence: forbidden` a blok `non_use` s vysvětlením a `basis: explicit` (zdroj nepoužití výslovně požaduje) nebo `basis: interpretation` (redakční výklad omezení zdroje). Pramen je v `source`, rozsah v národním standardu/verzi, případně `cataloguing_rules` a `condition`. Kód neprokazuje obecnou neplatnost XML.
+
+Z dosavadních pěti záznamů mají čtyři výslovné nepoužití podle citovaného DMF: MDTYPEVERSION u DC, type u hlavního názvu, type u příslušných částí jména a role u události z MARC 264_4. U AACR2/eventType je zaznamenán **výklad** vyhrazení atributu pouze pro RDA. Jeho ověřený přepis není samostatné potvrzení správnosti výkladu. Normativní texty, kardinality, podmínky a zdrojové XML se touto změnou nepřepisují.
+
+Vztah k mezinárodnímu standardu se posuzuje samostatně: `restricts` označuje užší výběr možností, `extends` rozšíření a `conflicts_with` doložený nesoulad. Pouhý rozdíl nebo užší výběr není automaticky rozpor ani zákaz. Nepoužití může dokonce odpovídat obecnému standardu; samotná existence takového pravidla neprokazuje omezení oproti němu. Pokud byl doložen jen rozdíl, uvede se s prameny v interpretační vrstvě a případně k odbornému posouzení, nikoli automaticky jako `forbidden`.
 
 Povinnost se nesmí odvozovat ze závažnosti hlášení validátoru; nahrazuje původní ručně přidělené pole `severity`. API filtr a řazení používají `obligation`, přesný zdrojový kód lze filtrovat přes `obligation_code`. Migrace 0003 přejmenovala indexovaný sloupec; nové MA/RA nevyžadují další migraci. Původní kód se uchovává v JSON záznamu a aktualizuje importem YAML.
 
@@ -82,6 +90,47 @@ Pravidla frekvencí X/Y zachovávají MA a mají podmínku hodnoty `samplingFreq
 ## Relace
 
 Compiler normalizuje deklarované i odvozené vazby do hran `{from, to, type}`. Kontrola referenční integrity odmítne build s neexistujícím cílem. První verze podporuje všechny dohodnuté typy včetně `restricts`, `extends`, `defined_by`, `validated_by` a `generated_by`.
+
+## Porovnávání DMF a AACR2/RDA
+
+Porovnání musí oddělit několik nezávislých os:
+
+| Osa | Zápis |
+|---|---|
+| Druh DMF a jeho verze | `national_standard.id` + `versions[].version` |
+| Objekt a bibliografická úroveň | `object_types` a podmínky `object_type`, `bibliographic_level` |
+| Katalogizační pravidla | volitelné `cataloguing_rules: [aacr2]`, `[rda]` nebo `[aacr2, rda]` |
+| Role záznamu/elementu a technický kontext | `condition`, například `document_role`, `element_role`, role souboru |
+| Srovnávaný význam a aspekt | explicitní `comparison.key` + zdůvodnění `comparison.note` |
+
+Dosavadní `monograph` v číselníku označuje rozsah DMF Monografie; není univerzální klasifikací všech fyzických předloh. Existující kontexty se nepřepisují ani neslučují do jediné kategorie.
+
+Chybějící `cataloguing_rules` znamená **samostatně neprověřený rozsah**, nikoli obě varianty. U společného pravidla je třeba výslovně doložit obě. Seznam i případné katalogizační podmínky se uplatňují současně; validace odmítá zjevný rozpor. Interní podmínka nyní používá `aacr2`; doslovný kód `aacr` v MODS `descriptionStandard`, zdrojových výřezech a stabilních ID zůstává zachován. Režim nelze odvozovat z existence kontrolovaného eventType. Katalogizační podmínky používají `equals`/`in` a řízené hodnoty; `all`/`any`/`not` zachovávají neznámé ostatní okolnosti.
+
+První zmapovanou dvojicí je `mods.descriptive-origin.event-type`: nepoužití v AACR2 versus požadavek pro RDA. Tři pravidla skupiny originInfo mají deklarovaný katalogizační rozsah; ostatní pravidla zatím nebyla takto plošně anotována. Klíče se nepřidělují odstraněním prefixu ID nebo shodou lokálního názvu elementu: různé role `name` či `type` nejsou automaticky ekvivalentní. Podmínky se vždy vracejí a porovnávají celé.
+
+### Čtecí API a výsledek
+
+Nový endpoint `/api/v1/compare/contexts` dovoluje nezávisle vybrat `national_standard_a`, `version_a`, `national_standard_b`, `version_b` a volitelně `cataloguing_a`/`cataloguing_b`. Existující diff verzí jednoho standardu zůstává beze změny. Kontrakt a zkoušení nového endpointu jsou ve Swaggeru; samostatná porovnávací obrazovka zatím není implementována.
+
+```bash
+curl 'https://standardy.digitalizaty.cz/api/v1/compare/contexts?national_standard_a=ndk-monograph&version_a=2.3&cataloguing_a=aacr2&national_standard_b=ndk-monograph&version_b=2.3&cataloguing_b=rda'
+```
+
+Výstup obsahuje obě kompletní pravidla včetně pramenů, změněná pole a stav:
+
+- `same_recorded_requirement`: stejný zaznamenaný požadavek a kontext; nikoli důkaz obecné sémantické ekvivalence.
+- `different_context`: liší se zaznamenané podmínky, objektové typy nebo katalogizační rozsah; nejde automaticky o zamýšlenou odlišnost.
+- `difference_for_review`: ostatní rozdíl k posouzení, nikoli potvrzená chyba.
+- `no_counterpart`: ve výběru nebyl nalezen protějšek se společným klíčem.
+- `ambiguous_mapping`: klíč má na některé straně více kandidátů; žádný se potichu nevybere.
+- `unverified`: alespoň jeden spárovaný požadavek není ověřený a normativní; tento stav brání vykázání potvrzené shody.
+
+Samostatně se vracejí nezmapovaná pravidla (`unmapped`), neurčený katalogizační rozsah (`unresolved_context`) a pravidla vyloučená zvoleným režimem (`excluded_context`). **Nenalezené pravidlo neznamená, že zdrojový DMF mlčí, údaj dovoluje nebo zakazuje.** Neexistující standard/verze vrací 404, neúplný výběr či neznámý katalogizační kód 400.
+
+Porovnání je strukturální: zahrnuje normativní text, strojové požadavky, povinnost, cíl a podmínky; ignoruje rozdíly stránkování zdroje, data přepisu či ukázek. Nerozhoduje ekvivalenci různě formulovaných kontrol ani různě uspořádaných polí. Nevyhodnocuje XML, další kontextové podmínky ani dědičnost standardů. Přidání druhé DMF je ověřeno syntetickým testem, nikoli vymyšlenými produkčními záznamy.
+
+Další kroky: rozšířit odborně ověřené mapování na další DMF a pravidla, doplnit porovnávací obrazovku a evidenci výsledku odborného posouzení (zamýšlený rozdíl, podezření, potvrzený nesoulad). Automatická detekce rozdílu tento redakční závěr nenahrazuje.
 
 ## Přidání záznamu
 

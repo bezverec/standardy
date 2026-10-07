@@ -43,7 +43,7 @@ function useAsync<T>(loader: () => Promise<T>, dependencies: unknown[]) {
   return state;
 }
 
-function localized(value: Record<string, string> | undefined): string {
+function localized(value: Record<string, string | undefined> | undefined): string {
   return value?.cs ?? value?.en ?? "—";
 }
 
@@ -200,6 +200,10 @@ function RuleDetail({ id }: { id: string }) {
       <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Úroveň povinnosti</span><Status>{obligationLabel(rule)}</Status><ObligationHelp /></div></div>
       <section className="layer layer--normative"><p className="layer-label">Požadavek NDK · {labels[rule.status] ?? rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><details><summary>Strojový zápis a podmínky platnosti</summary><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Podmínka</h3><JsonBlock value={rule.condition} /></>}</details></section>
       {rule.examples && <CodeExamples key={`${id}@${rule.version}`} examples={rule.examples} />}
+      <section className="layer"><h2>Rozsah a porovnávání</h2><p>Katalogizační pravidla: {rule.cataloguing_rules ? rule.cataloguing_rules.map((value) => value === "aacr2" ? "AACR2" : "RDA").join(", ") : "rozsah zatím samostatně neprověřen; nelze předpokládat platnost pro AACR2 i RDA"}. Další podmínky jsou ve strojovém zápisu výše.</p>
+        {rule.non_use ? <><h3>Nepoužití v daném kontextu</h3><p>{rule.non_use.basis === "explicit" ? "Výslovný požadavek citovaného zdroje." : "Výklad omezení citovaného zdroje, nikoli doslovný zákaz."} {localized(rule.non_use.note)}</p><p>Nejde o obecný zákaz v mezinárodním standardu ani o tvrzení, že údaj nemůže být platný podle XML schématu.</p></> : null}
+        {rule.comparison ? <><h3>Významový klíč pro porovnání</h3><code>{rule.comparison.key}</code><p>{localized(rule.comparison.note)}</p></> : null}
+      </section>
       {issues.length > 0 && <aside className="layer"><p className="layer-label">Diskuse · nenormativní</p><h2>Související issues</h2>{issues.map((issue) => <p key={issue.url}><a href={issue.url} target="_blank" rel="noopener noreferrer">{issue.title} — otevřít diskusi</a></p>)}</aside>}
       <section className="detail-grid"><article><p className="layer-label">Výklad registru</p><h2>Interpretace</h2><p>{evidence(localized(rule.interpretation))}</p></article><article><p className="layer-label">Ověření přepisu</p><h2>Stav ověření</h2><p>{labels[rule.verification.status]} · {rule.verification.date ?? "Datum neuvedeno"}</p><p>{evidence(rule.verification.reference ?? "")}</p></article></section>
       <section className="graph-section"><p className="layer-label">Prameny</p><h2>NDK a původní zdroje</h2><div className="card-grid"><SourceCard source={rule.source} />{rule.references?.map((source, index) => <SourceCard key={index} source={source} />)}</div></section>

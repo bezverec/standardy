@@ -16,6 +16,7 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "metadata/mods-origin"
+    cataloguing_rules: ["rda"]
     obligation: "mandatory"
     obligation_source: "prose"
     object_types:

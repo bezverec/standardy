@@ -3,7 +3,7 @@ import type { RegistryEntity, RuleVersion } from "./api.ts";
 import type { Relation } from "./explore.ts";
 import { buildRegistryMap, mapRulesUrl, type summarizeRules } from "./registry-map.ts";
 
-const shortObligations: Record<string, string> = { mandatory: "M", mandatory_if_available: "MA", recommended: "R", recommended_if_available: "RA", optional: "O", forbidden: "Zakázané", unspecified: "Neurčeno" };
+const shortObligations: Record<string, string> = { mandatory: "M", mandatory_if_available: "MA", recommended: "R", recommended_if_available: "RA", optional: "O", forbidden: "Nepoužívá se", unspecified: "Neurčeno" };
 type Summary = ReturnType<typeof summarizeRules>;
 const ruleWord = (count: number) => count === 1 ? "pravidlo" : count >= 2 && count <= 4 ? "pravidla" : "pravidel";
 const recordWord = (count: number) => count === 1 ? "záznam" : count >= 2 && count <= 4 ? "záznamy" : "záznamů";
@@ -32,7 +32,7 @@ export function RegistryMap({ rules, relations, nationalStandards, topicLabels, 
       <a className="button" href={href()} onClick={onNavigate}>Otevřít seznam pravidel</a></div>
     <p className="map-summary" role="status"><strong>{model.rules}</strong> {ruleWord(model.rules)} · <strong>{model.records}</strong> {model.records === 1 ? "verzovaný záznam" : model.records >= 2 && model.records <= 4 ? "verzované záznamy" : "verzovaných záznamů"} ve vybraném rozsahu</p>
     <p className="muted">Mapa obsahu podle cílových prvků, nikoli citovaných pramenů. Barevné pruhy ukazují rozložení povinností ve vložených záznamech, ne úplnost standardu nebo závažnost chyb.</p>
-    <details className="map-legend"><summary>Legenda povinností a počítání</summary><p>M — povinné; MA — povinné, pokud je údaj dostupný; R — doporučené; RA — doporučené, pokud je údaj dostupný; O — volitelné. Zakázané a neurčené požadavky se zobrazí samostatně. Podmínky platnosti jsou v detailu pravidla.</p><p>Počet pravidel označuje unikátní ID; jeden záznam patří ke konkrétní verzi NDK. Při výběru všech verzí se povinnosti počítají za každou verzi zvlášť, bez automatického převodu historických kódů.</p></details>
+    <details className="map-legend"><summary>Legenda povinností a počítání</summary><p>M — povinné; MA — povinné, pokud je údaj dostupný; R — doporučené; RA — doporučené, pokud je údaj dostupný; O — volitelné. „Nepoužívá se“ znamená nepoužití pouze v kontextu daného pravidla NDK, nikoli obecný zákaz v mezinárodním standardu. Podmínky, zdůvodnění a neurčené povinnosti jsou v detailu pravidla.</p><p>Počet pravidel označuje unikátní ID; jeden záznam patří ke konkrétní verzi NDK. Při výběru všech verzí se povinnosti počítají za každou verzi zvlášť, bez automatického převodu historických kódů.</p></details>
     {populated.map((area) => <section className="map-area" key={area.id}><h2>{area.label}</h2>{area.standards.filter((standard) => standard.records).map((standard) =>
       <div className="map-standard" key={standard.id}><div className="map-standard-heading"><h3><a href={href({ standard: standard.id })} onClick={onNavigate}>{standard.label}</a></h3><span>{standard.rules} {ruleWord(standard.rules)} · {standard.records} {recordWord(standard.records)}</span></div>
         <div className="map-tiles">{standard.topics.map((topic) => <a className="map-tile" key={topic.category} href={href({ standard: standard.id, category: topic.category })} onClick={onNavigate}>

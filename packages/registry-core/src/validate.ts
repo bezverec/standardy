@@ -3,6 +3,8 @@ import path from "node:path";
 import Ajv2020, { type ErrorObject, type ValidateFunction } from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { ndkObligations } from "./obligation.ts";
+import { cataloguingCondition } from "./rule-comparison.ts";
+import type { Condition } from "./model.ts";
 import type {
   NationalStandardDocument,
   RegistryDocument,
@@ -45,6 +47,14 @@ function duplicateValues(values: string[]): string[] {
     seen.add(value);
   }
   return [...duplicates].sort();
+}
+
+function cataloguingLeaves(condition: Condition | undefined): Array<Extract<Condition, { field: string }>> {
+  if (!condition) return [];
+  if ("all" in condition) return condition.all.flatMap(cataloguingLeaves);
+  if ("any" in condition) return condition.any.flatMap(cataloguingLeaves);
+  if ("not" in condition) return cataloguingLeaves(condition.not);
+  return condition.field === "cataloguing_rules" ? [condition] : [];
 }
 
 export async function validateRegistry(
@@ -119,6 +129,22 @@ export async function validateRegistry(
     const nationalStandard = nationalStandardById.get(rule.national_standard.id);
     if (!nationalStandard) issues.push({ file: rule.source_file, message: `${rule.id} references unknown national standard ${rule.national_standard.id}` });
     for (const version of rule.versions) {
+      if (!options.relationsOnly) {
+        const addIssue = (message: string) => issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} ${message}` });
+        const leaves = cataloguingLeaves(version.condition);
+        if (leaves.length && !version.cataloguing_rules) addIssue("must declare audited cataloguing_rules for its cataloguing condition");
+        for (const leaf of leaves) {
+          const values = leaf.operator === "equals" ? [leaf.value] : leaf.operator === "in" && Array.isArray(leaf.value) ? leaf.value : [];
+          if (!values.length || values.some((value) => value !== "aacr2" && value !== "rda")) addIssue("cataloguing condition must use equals/in with canonical aacr2 or rda values");
+        }
+        for (const value of version.cataloguing_rules ?? []) {
+          if (cataloguingCondition(version.condition, value) === false) addIssue(`cataloguing_rules ${value} contradicts condition`);
+        }
+        if (version.obligation === "forbidden" && (!version.non_use || version.requirement.presence !== "forbidden")) {
+          addIssue("forbidden must document non_use and require absence; a difference between standards is not a prohibition");
+        }
+        if (version.non_use && version.obligation !== "forbidden") addIssue("non_use requires obligation forbidden");
+      }
       const exampleIds = new Set<string>();
       for (const example of version.examples ?? []) {
         if (exampleIds.has(example.id)) issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} has duplicate example ID ${example.id}` });

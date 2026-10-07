@@ -16,6 +16,11 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "metadata/mods-origin"
+    cataloguing_rules: ["rda"]
+    comparison:
+      key: "mods.descriptive-origin.event-type"
+      note:
+        cs: "Použití eventType v přímém originInfo popisného záznamu. Společný aspekt s pravidlem AACR2; bibliografická úroveň a další kontext zůstávají v condition a musí se porovnat."
     obligation: "mandatory"
     obligation_code: "M"
     object_types:

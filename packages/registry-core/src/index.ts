@@ -3,5 +3,6 @@ export * from "./loader.ts";
 export * from "./model.ts";
 export * from "./national-standard-inheritance.ts";
 export * from "./semantic-diff.ts";
+export * from "./rule-comparison.ts";
 export * from "./sql.ts";
 export * from "./validate.ts";

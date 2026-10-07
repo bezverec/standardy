@@ -53,7 +53,7 @@ describe("MODS origin and publication places of a single-volume monograph, DMF 2
     expect(rule("ORIGIN-PRIMARY-EVENT").interpretation?.cs).toContain("Nevyžaduje současný výskyt obou hodnot");
   });
   it("uses explicit AACR rather than not-RDA, and forbids empty attributes too", () => {
-    expect(rule("ORIGIN-AACR-NO-EVENT-TYPE").condition).toEqual({ all: [...base, eq("element_role", "mods_origin_info"), eq("cataloguing_rules", "aacr")] });
+    expect(rule("ORIGIN-AACR-NO-EVENT-TYPE").condition).toEqual({ all: [...base, eq("element_role", "mods_origin_info"), eq("cataloguing_rules", "aacr2")] });
     expect(rule("ORIGIN-AACR-NO-EVENT-TYPE").interpretation?.cs).toContain("Prázdný eventType není totéž jako vynechaný atribut");
   });
   it("keeps MA availability independent from XML and supports repeated places and terms", () => {

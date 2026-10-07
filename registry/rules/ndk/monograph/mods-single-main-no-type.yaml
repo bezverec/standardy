@@ -18,6 +18,10 @@ versions:
     category: "metadata/mods-titles"
     obligation: "forbidden"
     obligation_source: "prose"
+    non_use:
+      basis: "explicit"
+      note:
+        cs: "DMF požaduje hlavní název bez type. Nepoužití platí jen pro tuto roli titleInfo, nikoli pro další názvy nebo obecně pro atribut type v MODS. Samo o sobě neprokazuje rozdíl vůči mezinárodnímu standardu."
     object_types:
       vocabulary: "NDK-OBJECT-TYPES"
       values:

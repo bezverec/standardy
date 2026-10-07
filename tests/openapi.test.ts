@@ -11,8 +11,8 @@ import { handleRequest, type Env } from "../worker/src/index.ts";
 describe("OpenAPI contract", () => {
   it("validates all operations and schema references as OpenAPI 3.1", async () => {
     await SwaggerParser.validate(JSON.parse(JSON.stringify(openApiDocument)));
-    expect(Object.keys(openApiDocument.paths)).toHaveLength(15);
-    expect(new Set(Object.values(openApiDocument.paths).map((path) => path.get.operationId)).size).toBe(15);
+    expect(Object.keys(openApiDocument.paths)).toHaveLength(16);
+    expect(new Set(Object.values(openApiDocument.paths).map((path) => path.get.operationId)).size).toBe(16);
   });
   it("describes normalized records and response envelopes using actual registry data", async () => {
     const registry = compileRegistry(await loadRegistry(path.resolve(import.meta.dirname, "..")));

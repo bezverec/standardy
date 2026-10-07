@@ -18,6 +18,10 @@ versions:
     category: "metadata/mods-name-details"
     obligation: "forbidden"
     obligation_source: "prose"
+    non_use:
+      basis: "explicit"
+      note:
+        cs: "Nepoužití type vychází ze slovního požadavku DMF pro neosobní či nerozlišené jméno za uvedených podmínek; nejde o obecný zákaz atributu namePart/@type v MODS."
     object_types:
       vocabulary: "NDK-OBJECT-TYPES"
       values:

@@ -18,6 +18,10 @@ versions:
     category: "structure/mets-dmd"
     obligation: "forbidden"
     obligation_source: "prose"
+    non_use:
+      basis: "explicit"
+      note:
+        cs: "DMF výslovně uvádí, že se verze DC neuvádí. Jde o nepoužití MDTYPEVERSION v obálce DC podle NDK, nikoli o obecný zákaz atributu v METS nebo zákaz záznamu DC."
     object_types:
       vocabulary: "NDK-OBJECT-TYPES"
       values:

@@ -6,7 +6,7 @@ export const obligationOptions: Array<[RuleVersion["obligation"], string]> = [
   ["recommended", "Doporučené"],
   ["recommended_if_available", "Doporučené, pokud je údaj dostupný"],
   ["optional", "Volitelné"],
-  ["forbidden", "Zakázané"],
+  ["forbidden", "V daném kontextu se nepoužívá"],
   ["unspecified", "Neurčeno"],
 ];
 

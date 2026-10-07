@@ -18,6 +18,15 @@ versions:
     category: "metadata/mods-origin"
     obligation: "forbidden"
     obligation_source: "prose"
+    cataloguing_rules: ["aacr2"]
+    comparison:
+      key: "mods.descriptive-origin.event-type"
+      note:
+        cs: "Použití eventType v přímém originInfo popisného záznamu. Společný aspekt s pravidlem RDA; bibliografická úroveň a další kontext zůstávají v condition a musí se porovnat."
+    non_use:
+      basis: "interpretation"
+      note:
+        cs: "DMF vyhrazuje eventType pouze RDA. Nepoužití v doloženém AACR2 je výklad tohoto omezení, nikoli obecný zákaz atributu v MODS. Neznámý katalogizační režim není AACR2."
     object_types:
       vocabulary: "NDK-OBJECT-TYPES"
       values:
@@ -54,7 +63,7 @@ versions:
         -
           field: "cataloguing_rules"
           operator: "equals"
-          value: "aacr"
+          value: "aacr2"
     source:
       document: "DMF Monografie"
       version: "2.3"

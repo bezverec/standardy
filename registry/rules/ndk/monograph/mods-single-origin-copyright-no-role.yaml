@@ -18,6 +18,10 @@ versions:
     category: "metadata/mods-origin-agents"
     obligation: "forbidden"
     obligation_source: "prose"
+    non_use:
+      basis: "explicit"
+      note:
+        cs: "DMF výslovně nepoužívá popis role u události ze zdrojového MARC 264_4. Nejde o obecný zákaz role v MODS nebo o zákaz všech agentů u copyrightu."
     object_types:
       vocabulary: "NDK-OBJECT-TYPES"
       values:

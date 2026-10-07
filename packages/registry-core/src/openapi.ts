@@ -55,6 +55,16 @@ schemas.Graph = object({ root: string(), nodes: array(object({ id: string(), kin
 schemas.SearchResult = object({ query: string(), data: array(object({ kind: { type: "string", enum: ["rule", "standard_entity", "standard", "national_standard"] }, id: string(), title: { type: ["string", "null"] }, version: { type: ["string", "null"] }, data: { type: "object", additionalProperties: true } }, ["kind", "id", "title", "data"])) });
 schemas.XmlResolution = object({ entity: { anyOf: [ref("StandardEntity"), { type: "null" }] }, rules: array(ref("RuleVersion")), relations: array(ref("Relation")), implementations: array(ref("Implementation")) });
 schemas.Diff = object({ national_standard: string(), version_a: string(), version_b: string(), added: array(string()), removed: array(string()), changed: array(object({ rule: string(), changes: array(object({ field: string(), old: {}, new: {} }, ["field"])) })) });
+schemas.ComparisonSelection = object({ national_standard: string(), version: string(), cataloguing_rules: { enum: ["aacr2", "rda"] } }, ["national_standard", "version"]);
+const comparisonSides = object({ left: array(ref("RuleVersion")), right: array(ref("RuleVersion")) });
+schemas.ContextComparison = object({
+  left: ref("ComparisonSelection"), right: ref("ComparisonSelection"), notice: string(),
+  comparisons: array(object({ key: string(), left: array(ref("RuleVersion")), right: array(ref("RuleVersion")),
+    status: { enum: ["same_recorded_requirement", "different_context", "difference_for_review", "no_counterpart", "ambiguous_mapping", "unverified"] },
+    changes: array(object({ field: string(), old: {}, new: {} }, ["field"])),
+  })),
+  unmapped: comparisonSides, unresolved_context: comparisonSides, excluded_context: comparisonSides,
+});
 
 const query = (name: string, description: string, schema: Schema = string(), required = false) => ({ name, in: "query", description, required, schema });
 const id = (example: string) => ({ name: "id", in: "path", required: true, description: "Stabilní ID záznamu.", schema: string(), example });
@@ -73,8 +83,8 @@ const relationFilters = [query("from", "ID výchozího uzlu."), query("to", "ID 
 
 export const openApiDocument = {
   openapi: "3.1.1",
-  info: { title: "Standardy digitalizace – Registry API", version: "1.3.0",
-    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.3.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření. Volitelné examples obsahují nenormativní XML výřezy s původem; nejsou potvrzením validity zdrojového balíčku.",
+  info: { title: "Standardy digitalizace – Registry API", version: "1.4.0",
+    description: "Veřejné read-only API registru pravidel NDK. Bez přihlášení; Try it out provádí skutečný GET, ale data nemění. YAML v Git je zdroj pravdy, D1 je odvozený index. Verze kontraktu API (1.4.0), verze standardu NDK (např. 2.3) a identita datasetu (/meta) jsou odlišné údaje. Počty seznamů pravidel počítají verzované záznamy, nikoli unikátní ID. U každého pravidla rozlišujte normativní požadavek, interpretaci a stav ověření. Volitelné examples obsahují nenormativní XML výřezy s původem; nejsou potvrzením validity zdrojového balíčku.",
     contact: { name: "Návrhy a chyby", url: "https://github.com/bezverec/standardy/issues" },
   },
   servers: [{ url: "/api/v1", description: "API na stejném serveru jako dokumentace (produkce i lokální vývoj)." }],
@@ -103,6 +113,13 @@ export const openApiDocument = {
     "/relations": operation("listRelations", "Vztahy", "Stránkovaný seznam relací", "RelationPage", [...relationFilters, page, pageSize(500, 500)]),
     "/resolve/xml": operation("resolveXml", "Registr", "Pravidla pro XML element a namespace", "XmlResolution", [query("namespace", "Jmenný prostor XML, např. http://www.loc.gov/mix/v20.", { type: "string", example: "http://www.loc.gov/mix/v20" }, true), query("element", "Lokální název elementu.", { type: "string", example: "iccProfileVersion" }, true), query("national_standard", "Volitelné ID národního standardu."), query("version", "Volitelná verze národního standardu.")], "Vybere zdrojovou entitu podle sestupně textově řazené standard_version. Implementace v obálce mohou zahrnovat další verze nalezených pravidel.", { "400": error("Chybí namespace nebo element."), "404": { description: "Entita nebyla nalezena: entity=null a prázdné seznamy.", content: content(ref("XmlResolution")) } }),
     "/compare/national-standards/{id}": operation("compareNationalStandards", "Standardy", "Porovnání dvou evidovaných verzí národního standardu", "Diff", [id("ndk-monograph"), query("version_a", "Výchozí verze.", string(), true), query("version_b", "Cílová verze.", string(), true)], "Vrací změny polí, přidaná a odstraněná ID. Neexistující ID nebo verze zatím znamenají prázdnou množinu, nikoli 404.", { "400": error("Chybí version_a nebo version_b.") }),
+    "/compare/contexts": operation("compareRuleContexts", "Standardy", "Porovnání požadavků napříč DMF a katalogizačními režimy", "ContextComparison", [
+      ...["a", "b"].flatMap((side) => [
+        query(`national_standard_${side}`, "ID národního standardu; na obou stranách může být různé.", { type: "string", example: "ndk-monograph" }, true),
+        query(`version_${side}`, "Verze příslušného národního standardu.", { type: "string", example: "2.3" }, true),
+        query(`cataloguing_${side}`, "Volitelný katalogizační režim; chybějící deklarace pravidla zůstává unresolved_context, nikoli automaticky společná.", { type: "string", enum: ["aacr2", "rda"], example: side === "a" ? "aacr2" : "rda" }),
+      ]),
+    ], "Páruje pouze explicitní comparison.key; ne podle ID pravidla nebo XML local-name. Vrací obě znění, podmínky a prameny. Rozdíl není potvrzená chyba; different_context neprokazuje záměrnost. same_recorded_requirement znamená stejný zaznamenaný požadavek, ne obecný důkaz ekvivalence. no_counterpart znamená nenalezený protějšek ve výběru, ne absenci požadavku v DMF. unmapped a unresolved_context se nezamlčují. Další podmínky se nevyhodnocují a dědičnost standardů se nerozbaluje. Bez katalogizačního filtru mohou varianty téhož klíče vrátit ambiguous_mapping.", { "400": error("Chybí výběr standardu/verze nebo neznámý katalogizační režim."), "404": error("Neexistující standard nebo jeho verze.") }),
     "/openapi.json": { get: { operationId: "getOpenApi", tags: ["Registr"], summary: "OpenAPI dokument ve strojově čitelném JSON", responses: { "200": { description: "Tento kontrakt. Kanonická adresa je /openapi.json; dostupné i bez D1.", content: content({ type: "object", additionalProperties: true }) } } } },
   },
   components: { schemas },

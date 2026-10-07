@@ -1,6 +1,7 @@
 import type { Relation } from "./explore.ts";
 import type { NdkObligationCode, Obligation } from "../../../packages/registry-core/src/model.ts";
 import type { RuleExample } from "../../../packages/registry-core/src/model.ts";
+import type { RuleVersion as CoreRuleVersion } from "../../../packages/registry-core/src/model.ts";
 
 export interface RuleVersion {
   rule_id: string;
@@ -15,6 +16,9 @@ export interface RuleVersion {
   obligation: Obligation;
   obligation_code?: NdkObligationCode;
   obligation_source?: "prose";
+  cataloguing_rules?: CoreRuleVersion["cataloguing_rules"];
+  comparison?: CoreRuleVersion["comparison"];
+  non_use?: CoreRuleVersion["non_use"];
   normative_requirement: Record<string, string>;
   requirement: Record<string, unknown>;
   condition?: unknown;

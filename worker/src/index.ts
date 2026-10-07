@@ -1,4 +1,5 @@
 import { semanticNationalStandardDiff } from "../../packages/registry-core/src/semantic-diff.ts";
+import { compareRuleContexts, type ComparableRule, type ComparisonSelection } from "../../packages/registry-core/src/rule-comparison.ts";
 import type { RuleVersion } from "../../packages/registry-core/src/model.ts";
 import { openApiDocument } from "../../packages/registry-core/src/openapi.ts";
 import { metadataAreas, metadataStandards, metadataTaxonomy } from "../../packages/registry-core/src/metadata-taxonomy.ts";
@@ -244,6 +245,27 @@ async function compareNationalStandard(nationalStandardId: string, url: URL, env
   return json(semanticNationalStandardDiff(rules, nationalStandardId, versionA, versionB), version, 200, QUERY_CACHE);
 }
 
+async function compareContexts(url: URL, env: Env, version: string): Promise<Response> {
+  const selections: ComparisonSelection[] = [];
+  for (const side of ["a", "b"]) {
+    const national_standard = url.searchParams.get(`national_standard_${side}`);
+    const selectedVersion = url.searchParams.get(`version_${side}`);
+    const cataloguing = url.searchParams.get(`cataloguing_${side}`);
+    if (!national_standard || !selectedVersion) return json({ error: "comparison_selections_required" }, version, 400, QUERY_CACHE);
+    if (cataloguing !== null && cataloguing !== "aacr2" && cataloguing !== "rda") return json({ error: "unknown_cataloguing_rules" }, version, 400, QUERY_CACHE);
+    selections.push({ national_standard, version: selectedVersion, ...(cataloguing ? { cataloguing_rules: cataloguing } : {}) });
+  }
+  for (const selection of selections) {
+    const row = await env.DB.prepare("SELECT data_json FROM national_standards WHERE id = ?").bind(selection.national_standard).first();
+    const standard = row ? parseJsonRow<{ versions: Array<{ version: string }> }>(row) : null;
+    if (!standard?.versions.some((item) => item.version === selection.version)) return json({ error: "comparison_standard_version_not_found", selection }, version, 404, QUERY_CACHE);
+  }
+  const [left, right] = selections as [ComparisonSelection, ComparisonSelection];
+  const rows = await env.DB.prepare("SELECT data_json FROM rule_versions WHERE (national_standard_id = ? AND version = ?) OR (national_standard_id = ? AND version = ?) ORDER BY rule_id, version")
+    .bind(left.national_standard, left.version, right.national_standard, right.version).all();
+  return json(compareRuleContexts(rows.results.map((row) => parseJsonRow<ComparableRule>(row)), left, right), version, 200, QUERY_CACHE);
+}
+
 async function handleApi(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   let meta: Record<string, string>;
@@ -265,6 +287,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (path === "/search") return search(url, env, version);
   if (path === "/relations") return relations(url, env, version);
   if (path === "/resolve/xml") return resolveXml(url, env, version);
+  if (path === "/compare/contexts") return compareContexts(url, env, version);
 
   const whyMatch = path.match(/^\/rules\/([^/]+)\/why$/);
   if (whyMatch?.[1]) return why(decodeURIComponent(whyMatch[1]), env, version);

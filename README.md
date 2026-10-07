@@ -13,6 +13,8 @@ Projekt není oficiálním vydáním standardů ani náhradou validačních nás
 
 ## Veřejný web a API
 
+Registr má také základ pro porovnávání pravidel napříč DMF/verzemi a AACR2/RDA přes `/api/v1/compare/contexts` (Swagger). Páruje explicitní významové klíče, vrací oba prameny a nezaměňuje chybějící záznam za zákaz či absenci požadavku. První dvojicí je `originInfo/@eventType`; širší anotace a porovnávací obrazovka teprve navážou. [Datový model a meze porovnání](docs/development/registry-data-model.md).
+
 - [Dokumentace · standardy.digitalizaty.cz](https://standardy.digitalizaty.cz/)
 - [Registr pravidel – domovská mapa](https://standardy.digitalizaty.cz/registry/)
 - [Mapa registru podle oblastí metadat](https://standardy.digitalizaty.cz/registry/map)

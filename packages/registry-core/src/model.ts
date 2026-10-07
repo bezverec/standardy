@@ -114,6 +114,7 @@ export type Condition =
 
 export type Obligation = "mandatory" | "mandatory_if_available" | "recommended" | "recommended_if_available" | "optional" | "forbidden" | "unspecified";
 export type NdkObligationCode = "M" | "MA" | "R" | "RA" | "O";
+export type CataloguingRules = "aacr2" | "rda";
 
 export interface RuleExample {
   id: string;
@@ -139,6 +140,10 @@ export interface RuleVersion {
   obligation: Obligation;
   obligation_code?: NdkObligationCode;
   obligation_source?: "prose";
+  /** Omission means unaudited, not automatically common to AACR2 and RDA. */
+  cataloguing_rules?: CataloguingRules[];
+  comparison?: { key: string; note: LocalizedText };
+  non_use?: { basis: "explicit" | "interpretation"; note: LocalizedText };
   object_types?: { vocabulary: string; values: string[] };
   normative_requirement: LocalizedText;
   requirement: Record<string, unknown>;
