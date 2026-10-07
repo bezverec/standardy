@@ -9,7 +9,7 @@ status: "normative"
 verification:
   status: "verified"
   date: "2026-10-07"
-  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource, genre, originInfo, place a agent; volba verze podle DMF Monografie 2.3, s. 5."
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource, genre, originInfo, place, agent, dateIssued a dateOther; volba verze podle DMF Monografie 2.3, s. 5."
 versions:
   -
     version: "3.8"
@@ -19,7 +19,7 @@ versions:
       document: "MODS XML Schema"
       version: "3.8"
       page: null
-      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent"
+      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
   -
@@ -705,3 +705,145 @@ entities:
       status: "verified"
       date: "2026-10-07"
       reference: "Ověřena deklarace agent=nameDefinition, originInfoDefinition a zděděné typy namePart/role/roleTerm v MODS XSD 3.8; požadavky DMF jsou vedeny odděleně."
+  -
+    id: "MODS-DATE-ISSUED"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/dateIssued"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Datum vydání"
+    definition:
+      cs: "DateIssued používá dateDefinition odvozený od stringPlusLanguage, nikoli xs:date. V originInfoDefinition se může opakovat; obecné XSD nevyžaduje jeho přítomnost a nerozlišuje národní zdroje MARC."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition; dateIssued; dateDefinition; stringPlusLanguage"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."
+  -
+    id: "MODS-DATE-ISSUED-ENCODING"
+    type: "attribute"
+    version: "3.8"
+    name: "dateIssued/@encoding"
+    title:
+      cs: "Kódování data vydání"
+    definition:
+      cs: "Volitelný atribut dateDefinition s hodnotami w3cdtf, iso8601, marc, temper a edtf. Příslušnost k poli 008 ani národní doporučení R neurčuje XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "dateDefinition/@encoding"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."
+  -
+    id: "MODS-DATE-ISSUED-POINT"
+    type: "attribute"
+    version: "3.8"
+    name: "dateIssued/@point"
+    title:
+      cs: "Mez časového rozmezí"
+    definition:
+      cs: "Volitelný atribut dateDefinition s hodnotami start a end. Obecné schéma nevynucuje dvojici mezí ani nerozhoduje, zda údaje z MARC tvoří interval."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "dateDefinition/@point"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."
+  -
+    id: "MODS-DATE-ISSUED-QUALIFIER"
+    type: "attribute"
+    version: "3.8"
+    name: "dateIssued/@qualifier"
+    title:
+      cs: "Upřesnění povahy data"
+    definition:
+      cs: "Volitelný atribut dateDefinition s hodnotami approximate, inferred a questionable. Správnost sémantického přiřazení ani národní úroveň povinnosti nejsou ověřovány obecným XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "dateDefinition/@qualifier"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."
+  -
+    id: "MODS-DATE-ISSUED-CALENDAR"
+    type: "attribute"
+    version: "3.8"
+    name: "dateIssued/@calendar"
+    title:
+      cs: "Kalendář data vydání"
+    definition:
+      cs: "Volitelný atribut dateDefinition typu xs:string bez omezení na gregorian, hebrew a julian. Národní tříhodnotový výčet je samostatný požadavek."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "dateDefinition/@calendar"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."
+  -
+    id: "MODS-DATE-OTHER"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/dateOther"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Doplňující datum"
+    definition:
+      cs: "DateOther používá dateOtherDefinition rozšiřující dateDefinition a je opakovatelné v originInfo. Dědí datum jako text i volitelné atributy data; obecné XSD nepředepisuje jeho národní významy."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition; dateOther; dateOtherDefinition; dateDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."
+  -
+    id: "MODS-DATE-OTHER-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "dateOther/@type"
+    title:
+      cs: "Typ doplňujícího data"
+    definition:
+      cs: "Volitelný atribut dateOtherDefinition typu xs:string. XSD nevynucuje národní M ani výčet production, distribution a manufacture."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "dateOtherDefinition/@type"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."

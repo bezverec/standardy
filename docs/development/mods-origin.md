@@ -1,6 +1,6 @@
 # Původ a místa vydání v MODS jednosvazkové monografie
 
-Osm pravidel `metadata/mods-origin` popisuje kontejner originInfo, rozdíl AACR/RDA, druh nakladatelské události a místo vydání. Rozsah je omezen na svazek jednosvazkové monografie podle DMF 2.3, ne na relatedItem, subject, titul vícesvazku nebo stránku. Údaje agent a jeho role popisuje navazující [sada nakladatelů a výrobců](mods-origin-agents.md); data a issuance zůstávají pro další sadu.
+Osm pravidel `metadata/mods-origin` popisuje kontejner originInfo, rozdíl AACR/RDA, druh nakladatelské události a místo vydání. Rozsah je omezen na svazek jednosvazkové monografie podle DMF 2.3, ne na relatedItem, subject, titul vícesvazku nebo stránku. Údaje agent a jeho role popisuje navazující [sada nakladatelů a výrobců](mods-origin-agents.md); dateIssued a dateOther popisuje [sada dat](mods-origin-dates.md). CopyrightDate, dateCreated, edition a issuance zůstávají pro další sadu.
 
 ## Podklady
 
@@ -90,4 +90,4 @@ RecordInfo/descriptionStandard v tomto záznamu uvádí aacr a originInfo nemá 
 
 Původní MARC nebyl analyzován. Shoda ukázek se SIP neprokazuje správnost původního převodu ani validitu celého balíčku.
 
-Registr nyní obsahuje 220 pravidel, z toho 43 pro MODS, a 208 XML ukázek u 163 pravidel. Testy kontrolují přepis, kontexty, povinnosti, mapování hodnot, vazby, API filtry a mapu registru. **Custom kontroly registr nevykonává**; nejde o nově implementovaný validátor SIP.
+Registr nyní obsahuje 227 pravidel, z toho 50 pro MODS, a 211 XML ukázek u 165 pravidel. Testy kontrolují přepis, kontexty, povinnosti, mapování hodnot, vazby, API filtry a mapu registru. **Custom kontroly registr nevykonává**; nejde o nově implementovaný validátor SIP.

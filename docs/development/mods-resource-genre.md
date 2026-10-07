@@ -71,4 +71,4 @@ Zdrojový soubor je `mets_75faba8d-c629-11f0-8950-12e8557df20e.xml`, SHA-256 `7d
 
 XPath genre[3] pouze ukotvuje konkrétní zdrojový uzel s hodnotou volume, ne pravidlo, že strukturální genre má být třetí. Původní katalogizační MARC nebyl analyzován; shoda výřezu se SIP není potvrzení úplného převodu ani validity celého balíčku.
 
-Registr nyní obsahuje 220 pravidel, 43 pro MODS, a 208 zdrojových XML ukázek u 163 pravidel. Testy kontrolují přepis, kontext, povinnosti, slovníky, vazby a klasifikaci v API a mapě. **Custom kontroly registr nevykonává**; implementace externích nástrojů pro tuto skupinu nebyly ověřeny.
+Registr nyní obsahuje 227 pravidel, 50 pro MODS, a 211 zdrojových XML ukázek u 165 pravidel. Testy kontrolují přepis, kontext, povinnosti, slovníky, vazby a klasifikaci v API a mapě. **Custom kontroly registr nevykonává**; implementace externích nástrojů pro tuto skupinu nebyly ověřeny.

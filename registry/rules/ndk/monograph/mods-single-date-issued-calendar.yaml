@@ -1,0 +1,86 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-DATE-ISSUED-CALENDAR"
+title:
+  cs: "Volitelné určení kalendáře data vydání"
+description:
+  cs: "Datum vydání a doplňující data předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3; význam dat a povinnosti oddělené od obecného XSD."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-DATE-ISSUED-CALENDAR"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-dates"
+    obligation: "optional"
+    obligation_code: "O"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Kalendář použitý pro dataci lze volitelně upřesnit atributem calendar s hodnotou gregorian, hebrew nebo julian."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: 1
+      allowed_values:
+        - "gregorian"
+        - "hebrew"
+        - "julian"
+      validations:
+        -
+          type: "custom"
+          expression: "Při použití calendar ověřit gregorian, hebrew nebo julian a soulad s kalendářem skutečně použité datace. Nepřítomnost atributu nepovažovat za chybu; automaticky nedoplňovat gregorian ani nepřepočítávat datum jen změnou označení kalendáře."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_date_issued"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 53
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — dateIssued, jeho atributy a dateOther"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; dateIssued; dateDefinition; dateOther; dateOtherDefinition; stringPlusLanguage"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — 008 All Materials"
+        version: "May 2026"
+        page: null
+        section: "008/06, 07–10 a 11–14"
+        url: "https://www.loc.gov/marc/bibliographic/bd008a.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeno textově a vizuálně proti s. 53 DMF 2.3 a deklaracím MODS XSD 3.8; význam polí 008/260/264 porovnán s dokumentací MARC. Dvě zdrojová dateIssued ukotvena XPath a SHA-256. Původní MARC ani externí implementace nebyly ověřeny."
+    interpretation:
+      cs: "O znamená volitelné. Obecné MODS 3.8 má calendar jako xs:string, nikoli tento tříhodnotový výčet; národní omezení je samostatné. Určení kalendáře není převod mezi kalendáři a samotný rok neurčuje spolehlivě jeho kalendář. Rozsah je omezen na data v přímém originInfo MODS záznamu svazku jednosvazkové monografie, nikoli na relatedItem, subject, datum metadat nebo digitalizace. Zdroj pole a význam data se určují nezávisle z katalogu, ne podle přítomnosti či správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-ISSUED"

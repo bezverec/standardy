@@ -1,0 +1,96 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-DATE-ISSUED-POINT"
+title:
+  cs: "Počátek a konec rozmezí dat z MARC 008"
+description:
+  cs: "Datum vydání a doplňující data předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3; význam dat a povinnosti oddělené od obecného XSD."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-DATE-ISSUED-POINT"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-dates"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "U data z pole 008, které vyjadřuje dostupnou mez datového rozmezí, se uvede point=start nebo point=end podle významu meze."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      allowed_values:
+        - "start"
+        - "end"
+      validations:
+        -
+          type: "custom"
+          expression: "Pro skutečné rozmezí dat z 008 požadovat point na příslušných dateIssued: start označuje počáteční mez, end koncovou. Ověřit obě meze proti zdroji a související opakované dateIssued; dvě hodnoty start nejsou pár start/end. Samotná dvojice Date 1/Date 2 ani rozdílné roky neprokazují interval. Při 008/06=t jde o vydání a copyright, při r o reedici a původní vydání, při e může druhá část obsahovat měsíc a den. U jediné datace nebo textového údaje z 260/264 point podle tohoto řádku nepoužívat."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_date_issued"
+        -
+          field: "origin_date_source"
+          operator: "equals"
+          value: "marc_008"
+        -
+          field: "origin_date_range_available"
+          operator: "equals"
+          value: true
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 53
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — dateIssued, jeho atributy a dateOther"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; dateIssued; dateDefinition; dateOther; dateOtherDefinition; stringPlusLanguage"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — 008 All Materials"
+        version: "May 2026"
+        page: null
+        section: "008/06, 07–10 a 11–14"
+        url: "https://www.loc.gov/marc/bibliographic/bd008a.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeno textově a vizuálně proti s. 53 DMF 2.3 a deklaracím MODS XSD 3.8; význam polí 008/260/264 porovnán s dokumentací MARC. Dvě zdrojová dateIssued ukotvena XPath a SHA-256. Původní MARC ani externí implementace nebyly ověřeny."
+    interpretation:
+      cs: "MA se aktivuje doloženým rozmezím z 008, ne přítomností point a ne shodou aktuálních dat. Dostupnost intervalu vychází z významu zdroje včetně 008/06. Neznámé či částečné údaje se nezmění na přesné roky ani nuly. XSD dovoluje volitelné start/end, ale nerozhodne, zda zdroj opravdu popisuje interval. Maximum 1 platí pro atribut jednoho dateIssued, ne pro počet hranic celého intervalu. Rozsah je omezen na data v přímém originInfo MODS záznamu svazku jednosvazkové monografie, nikoli na relatedItem, subject, datum metadat nebo digitalizace. Zdroj pole a význam data se určují nezávisle z katalogu, ne podle přítomnosti či správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-ISSUED"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-ISSUED-ENCODING"

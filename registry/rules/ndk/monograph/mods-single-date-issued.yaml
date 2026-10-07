@@ -1,0 +1,136 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-DATE-ISSUED"
+title:
+  cs: "Datum vydání předlohy"
+description:
+  cs: "Datum vydání a doplňující data předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3; význam dat a povinnosti oddělené od obecného XSD."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-DATE-ISSUED"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-dates"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "DateIssued je povinné datum vydání předlohy převzaté z katalogu. DMF je omezuje na 260$c/264_1$c a 008/07–10, případně 008/07–14; další druhy dat je mohou doplnit, nikoli nahradit."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V MODS záznamu požadovat alespoň jedno dateIssued v přímém originInfo a ověřit jeho zdroj 260$c, 264_1$c nebo příslušné pozice 008. Nepřesouvat sem datum výroby z 260$g/264_3$c, distribuce z 264_2$c ani copyright z 264_4$c. Význam Date 1/Date 2 v 008 ověřit podle 008/06; nejsou automaticky začátkem a koncem intervalu. Při převodu doloženého rozmezí z 008 zachovat obě jeho meze v opakovaných dateIssued s odpovídajícím point. Encoding=marc směřuje jen k údaji z 008; point jen k rozmezí z 008, nikoli k libovolným dvěma datům."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 53
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — dateIssued, jeho atributy a dateOther"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; dateIssued; dateDefinition; dateOther; dateOtherDefinition; stringPlusLanguage"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — 008 All Materials"
+        version: "May 2026"
+        page: null
+        section: "008/06, 07–10 a 11–14"
+        url: "https://www.loc.gov/marc/bibliographic/bd008a.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeno textově a vizuálně proti s. 53 DMF 2.3 a deklaracím MODS XSD 3.8; význam polí 008/260/264 porovnán s dokumentací MARC. Dvě zdrojová dateIssued ukotvena XPath a SHA-256. Původní MARC ani externí implementace nebyly ověřeny."
+    interpretation:
+      cs: "M se kontroluje na úrovni záznamu, nikoli až při existenci dateIssued. Neznamená kopírovat datum vydání do každého originInfo pro distribuci či copyright. Povinnost nezmizí proto, že je přítomno dateOther. Textový a kódovaný zápis mohou být opakované; nevynucuje se jediný výskyt ani totožný řetězec. Obecné XSD má textový dateDefinition, nikoli xs:date: [1890] se nesmí bez dalšího odmítnout jako chybný ISO datum. Samostatná pravidla copyrightDate a dateCreated tato sada zatím nepřidává. Rozsah je omezen na data v přímém originInfo MODS záznamu svazku jednosvazkové monografie, nikoli na relatedItem, subject, datum metadat nebo digitalizace. Zdroj pole a význam data se určují nezávisle z katalogu, ne podle přítomnosti či správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-date-issued-literal"
+        title:
+          cs: "Textové datum vydání [1890]"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:dateIssued xmlns:mods=\"http://www.loc.gov/mods/v3\">[1890]</mods:dateIssued>"
+        note:
+          cs: "Přesný výřez dateIssued svazku vzorového SIP. Záznam obsahuje [1890] i encoding=marc s hodnotou 1890; jde o dva zápisy, nikoli dvě hranice intervalu. Původní MARC nebyl analyzován, takže ukázka nepotvrzuje správnost převodu ani nutnost určitého qualifier. XPath pořadí pouze identifikuje uzel ve vzoru."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, dateIssued"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:originInfo/mods:dateIssued[1]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-07"
+      -
+        id: "sip-mods-date-issued-marc"
+        title:
+          cs: "Kódované datum vydání 1890"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:dateIssued xmlns:mods=\"http://www.loc.gov/mods/v3\" encoding=\"marc\">1890</mods:dateIssued>"
+        note:
+          cs: "Přesný výřez dateIssued svazku vzorového SIP. Záznam obsahuje [1890] i encoding=marc s hodnotou 1890; jde o dva zápisy, nikoli dvě hranice intervalu. Původní MARC nebyl analyzován, takže ukázka nepotvrzuje správnost převodu ani nutnost určitého qualifier. XPath pořadí pouze identifikuje uzel ve vzoru."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, dateIssued"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:originInfo/mods:dateIssued[2]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-07"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGININFO"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-ISSUED-ENCODING"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-ISSUED-POINT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-OTHER"

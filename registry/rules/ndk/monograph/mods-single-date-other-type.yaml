@@ -1,0 +1,95 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-DATE-OTHER-TYPE"
+title:
+  cs: "Povinný typ doplňujícího data"
+description:
+  cs: "Datum vydání a doplňující data předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3; význam dat a povinnosti oddělené od obecného XSD."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-DATE-OTHER-TYPE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-dates"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Každé použité dateOther musí mít type: production pro 264_0, distribution pro 264_2 nebo manufacture pro 260$g/264_3."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      allowed_values:
+        - "production"
+        - "distribution"
+        - "manufacture"
+      validations:
+        -
+          type: "custom"
+          expression: "Uvnitř každého dateOther požadovat type a jeho sémantickou shodu se zdrojem: 264_0 → production; 264_2 → distribution; 260$g/264_3 → manufacture. Nepřijímat libovolný člen číselníku jen proto, že je syntakticky platný. Slova producer, publisher a manufacturer označují role agenta, ne type data."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_date_other"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 53
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — dateIssued, jeho atributy a dateOther"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; dateIssued; dateDefinition; dateOther; dateOtherDefinition; stringPlusLanguage"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — 264"
+        version: "July 2022"
+        page: null
+        section: "Second Indicator; $c"
+        url: "https://www.loc.gov/marc/bibliographic/bd264.html"
+      -
+        document: "MARC 21 Bibliographic — 260"
+        version: "September 2011"
+        page: null
+        section: "$g — Date of manufacture"
+        url: "https://www.loc.gov/marc/bibliographic/bd260.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřeno textově a vizuálně proti s. 53 DMF 2.3 a deklaracím MODS XSD 3.8; význam polí 008/260/264 porovnán s dokumentací MARC. Dvě zdrojová dateIssued ukotvena XPath a SHA-256. Původní MARC ani externí implementace nebyly ověřeny."
+    interpretation:
+      cs: "M platí v použitém dateOther, i když má samotný element R. Podmínkou není již existující type. Nejde o atribut originInfo/@eventType: může mít související význam, ale je to jiný uzel. Obecné dateOtherDefinition má volitelné type typu xs:string a tento národní výčet nevynucuje. Rozsah je omezen na data v přímém originInfo MODS záznamu svazku jednosvazkové monografie, nikoli na relatedItem, subject, datum metadat nebo digitalizace. Zdroj pole a význam data se určují nezávisle z katalogu, ne podle přítomnosti či správnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-OTHER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-EVENT-TYPE"

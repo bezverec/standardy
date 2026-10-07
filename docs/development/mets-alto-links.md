@@ -80,7 +80,7 @@ Následující **autorská ilustrace** skládá blokový odkaz s ID pozorovaným
 </mets:div>
 ```
 
-Sada přidává **čtyři přesné výřezy u tří pravidel**: záznam `file ID=alto_0001` a `TextBlock ID=Page1_Block1`, opakovaně tam, kde pomáhají ukázat obě úrovně cíle. Ukázky nedokládají existenci logické vazby ve vzoru. Celý registr nyní obsahuje 208 zdrojových ukázek u 163 pravidel.
+Sada přidává **čtyři přesné výřezy u tří pravidel**: záznam `file ID=alto_0001` a `TextBlock ID=Page1_Block1`, opakovaně tam, kde pomáhají ukázat obě úrovně cíle. Ukázky nedokládají existenci logické vazby ve vzoru. Celý registr nyní obsahuje 211 zdrojových ukázek u 165 pravidel.
 
 Zdroj: [dodaný SIP](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download).
 

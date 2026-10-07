@@ -54,7 +54,7 @@ DC vzoru používá kořen oai_dc:dc v namespace `http://www.openarchives.org/OA
 
 ## Doložené ukázky a meze ověření
 
-Přidáno je **14 zdrojových výřezů u osmi pravidel**: sekce, mdWrap a xmlData první stránky, v podobě MODS i DC. Opakované výřezy u různých pravidel umožňují číst detail samostatně. Celý registr obsahuje 208 ukázek u 163 pravidel.
+Přidáno je **14 zdrojových výřezů u osmi pravidel**: sekce, mdWrap a xmlData první stránky, v podobě MODS i DC. Opakované výřezy u různých pravidel umožňují číst detail samostatně. Celý registr obsahuje 211 ukázek u 165 pravidel.
 
 Zdroj: [dodaný SIP](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download), soubor `mets_75faba8d-c629-11f0-8950-12e8557df20e.xml`, SHA-256 `7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473`.
 

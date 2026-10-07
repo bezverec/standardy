@@ -87,4 +87,4 @@ Soubor `mets_75faba8d-c629-11f0-8950-12e8557df20e.xml` má SHA-256 `7dcc4fe0de7f
 /mets:mets/mets:dmdSec[@ID="MODSMD_VOLUME_0001"]/mets:mdWrap/mets:xmlData/mods:mods/mods:originInfo/mods:agent
 ```
 
-Shoda výřezů se zdrojem není potvrzení správnosti původního převodu nebo validity celého SIP. Registr nyní obsahuje 220 pravidel, z toho 43 pro MODS, a 208 XML ukázek u 163 pravidel. Testy kontrolují přepis, kontext, výjimku, nesrovnalost, vztahy, API filtry a mapu. **Custom kontroly registr nevykonává**; implementace nástrojů nebyly ověřeny.
+Shoda výřezů se zdrojem není potvrzení správnosti původního převodu nebo validity celého SIP. Registr nyní obsahuje 227 pravidel, z toho 50 pro MODS, a 211 XML ukázek u 165 pravidel. Testy kontrolují přepis, kontext, výjimku, nesrovnalost, vztahy, API filtry a mapu. **Custom kontroly registr nevykonává**; implementace nástrojů nebyly ověřeny.
