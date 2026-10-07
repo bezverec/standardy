@@ -16,8 +16,8 @@ const relations = compiled.relations;
 describe("registry map", () => {
   it("accounts for every version exactly once, following target owners rather than citations", () => {
     const map = buildRegistryMap(rules, relations);
-    expect(map.rules).toBe(227);
-    expect(map.records).toBe(227);
+    expect(map.rules).toBe(232);
+    expect(map.records).toBe(232);
     const standards = map.areas.flatMap((area) => area.standards);
     expect(standards.find(({ id }) => id === "MIX")?.records).toBe(13);
     expect(standards.find(({ id }) => id === "NDK-INFO")?.records).toBe(18);
@@ -40,7 +40,8 @@ describe("registry map", () => {
       expect.objectContaining({ category: "structure/mets-dmd", records: 8 }),
       expect.objectContaining({ category: "structure/mets-amd", records: 8 }),
     ]));
-    expect(standards.find(({ id }) => id === "MODS")?.records).toBe(50);
+    expect(standards.find(({ id }) => id === "MODS")?.records).toBe(55);
+    expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-origin-completion", records: 5 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-titles", records: 8 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-names", records: 9 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-name-details", records: 9 }));

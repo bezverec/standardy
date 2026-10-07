@@ -1,0 +1,118 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-COPYRIGHT-DATE"
+title:
+  cs: "Datum copyrightu předlohy"
+description:
+  cs: "Doplňující údaje o vzniku a vydávání předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-COPYRIGHT-DATE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-completion"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Doporučení copyrightDate a mapování 008/06=t jsou společné. Dodatečná podmínka existence 264_4$c se vztahuje výslovně na RDA a je vedena v samostatném pravidle; společný předpis neznamená totožný zdroj dat v obou režimech."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 53
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — copyrightDate, dateCreated, edition a issuance (pokračování s. 54)"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "recommended"
+    obligation_code: "R"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Datum copyrightu předlohy se doporučeně zapisuje do copyrightDate. Je-li MARC 008/06=t, DMF požaduje převzít hodnotu 008/11–14; v RDA současně omezuje použití na výskyt 264_4$c."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Doporučit copyrightDate pro datum copyrightu, nikoli vydání nebo digitalizace. Při 008/06=t převzít 008/11–14; 008/07–10 zůstává datem vydání, nikoli copyrightu. Pro RDA uplatnit samostatné omezení COPYRIGHT-DATE-RDA-SOURCE. Při rozporu 008 a 264_4$c nebo neznámém zdroji předat záznam k posouzení, nikoli vymyslet datum či automaticky zvolit vítězný zdroj."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 53
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — copyrightDate, dateCreated, edition a issuance (pokračování s. 54)"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; dateDefinition; edition; issuanceDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — 008 All Materials"
+        version: "May 2026"
+        page: null
+        section: "008/06=t, 07–10 a 11–14"
+        url: "https://www.loc.gov/marc/bibliographic/bd008a.html"
+      -
+        document: "MARC 21 Bibliographic — 264"
+        version: "July 2022"
+        page: null
+        section: "Second Indicator; $c"
+        url: "https://www.loc.gov/marc/bibliographic/bd264.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Přepis ověřen vizuálně proti DMF 2.3 s. 53–54 a legendě s. 24, deklaracím MODS XSD 3.8 a citovaným významům polí MARC. Ověření přepisu neřeší nejasnosti DMF; původní MARC ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "Tabulkové R zachováváme, obecné minimum je 0. Slovní požadavek „vždy“ u 008/06=t je zaznamenán v custom kontrole; nepřepisujeme jím celé pravidlo na M. CopyrightDate nenahrazuje dateIssued a samo neurčuje právní stav ani datum konce ochrany díla. XSD dateDefinition má textový obsah, nikoli xs:date; nepřidáváme čtyřciferný regex. DMF nepopisuje prioritu protichůdných zdrojů ani řešení RDA záznamu s 008/06=t bez 264_4$c. Rozsah tvoří přímá originInfo MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, subject, stránka nebo titul vícesvazku. Kontext a zdrojové údaje se zjišťují nezávisle z katalogu či předlohy, nikoli z přítomnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    discrepancies:
+      -
+        cs: "V témže řádku stojí doporučení R, slovní „vždy“ při 008/06=t a omezení použití v RDA na 264_4$c. Pro kolizní zdrojová data DMF neurčuje postup; registr zachovává obě formulace, nedeklaruje jejich automatické vyřešení."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-ISSUED"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-COPYRIGHT-DATE-RDA-SOURCE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-COPYRIGHT-NO-ROLE"

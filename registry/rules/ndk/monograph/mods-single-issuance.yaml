@@ -1,0 +1,142 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-ISSUANCE"
+title:
+  cs: "Způsob vydávání monografie"
+description:
+  cs: "Doplňující údaje o vzniku a vydávání předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-ISSUANCE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-completion"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Povinné issuance a jeho hodnoty jsou v tabulce s. 53–54 společné pro AACR2/RDA. Jde o bibliografický způsob vydávání podle LDR/07, nikoli technicky nezávislé pravidlo jen proto, že používá řízený výčet."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 53
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — copyrightDate, dateCreated, edition a issuance (pokračování s. 54)"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Záznam obsahuje issuance vyjadřující způsob vydávání podle MARC LDR/07. DMF uvádí monographic nebo podrobnější multipart monograph a single unit."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      allowed_values:
+        - "monographic"
+        - "multipart monograph"
+        - "single unit"
+      validations:
+        -
+          type: "custom"
+          expression: "Na úrovni záznamu požadovat issuance v přímém originInfo a hodnotu z národního výčtu. Porovnat význam se zdrojovým LDR/07 a skutečnou bibliografickou jednotkou; LDR/07=m samo nerozlišuje single unit od multipart monograph. Pro jednosvazkový objekt odpovídá podrobný termín single unit, obecný monographic zůstává přípustný. Multipart monograph označit k posouzení kontextu, nikoli automaticky vydávat za správnou hodnotu jednosvazku jen proto, že je v tabulce."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 53
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — copyrightDate, dateCreated, edition a issuance (pokračování s. 54)"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; dateDefinition; edition; issuanceDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — Leader"
+        version: "November 2016"
+        page: null
+        section: "LDR/06 — Type of record; LDR/07 — Bibliographic level"
+        url: "https://www.loc.gov/marc/bibliographic/bdleader.html"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "originInfo — issuance"
+        url: "https://www.loc.gov/standards/mods/userguide/origininfo.html#issuance"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Přepis ověřen vizuálně proti DMF 2.3 s. 53–54 a legendě s. 24, deklaracím MODS XSD 3.8 a citovaným významům polí MARC. Ověření přepisu neřeší nejasnosti DMF; původní MARC ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "Přepis výčtu DMF zachovává všechny tři hodnoty; nerozšiřuje jej o continuing, serial a integrating resource, které dovoluje obecné XSD. MODS chápe monographic jako obecnější termín; nepožadujeme současně obecný i podrobný zápis a nevyžadujeme přesně jeden výskyt bez opory ve zdroji. Povinnost je na úrovni záznamu, nikoli požadavek kopírovat issuance do každého originInfo s jinou událostí. Problém názvu tabulky a hodnoty multipart monograph je oddělen od doslovného výčtu. Rozsah tvoří přímá originInfo MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, subject, stránka nebo titul vícesvazku. Kontext a zdrojové údaje se zjišťují nezávisle z katalogu či předlohy, nikoli z přítomnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    discrepancies:
+      -
+        cs: "Tabulka pro jednosvazkovou monografii uvádí i multipart monograph. Podle MODS tento termín označuje vícedílný celek; registr výčet svévolně nezužuje, ale vyžaduje sémantické posouzení konkrétní jednotky."
+    examples:
+      -
+        id: "sip-mods-issuance-single-unit"
+        title:
+          cs: "Způsob vydávání single unit ve vzorovém SIP"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:issuance xmlns:mods=\"http://www.loc.gov/mods/v3\">single unit</mods:issuance>"
+        note:
+          cs: "Výřez dokládá jedinou hodnotu single unit v přímém originInfo. Původní MARC nebyl analyzován; ukázka nepotvrzuje převod LDR/07, katalogizační režim ani úplnou validitu SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, issuance"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:originInfo/mods:issuance"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-07"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGININFO"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-GENRE-STRUCTURAL"

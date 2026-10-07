@@ -7,7 +7,7 @@ Registr propojuje požadavky národních standardů s původními specifikacemi,
 
 ## Současný stav
 
-K 7. 10. 2026 registr obsahuje **227 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 77 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku, 12 pro fyzickou mapu, 10 pro logickou mapu a výčet stran, 13 pro vnitřní části, 8 pro blokové vazby ALTO, 8 pro obálky MODS/DC), osm pro vedlejší METS, 50 pro MODS jednosvazkové monografie (osm názvové údaje, devět původci a role, devět podrobnosti jmen, čtyři typ dokumentu a žánr, osm původ a místa vydání, pět nakladatelé a výrobci, sedm data vydání a dalších událostí) a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
+K 7. 10. 2026 registr obsahuje **232 pravidel pro DMF Monografie 2.3**: 13 pro technická metadata MIX pro MC a PS, 18 pro obsah info.xml, 77 pro hlavní METS (14 pro soubory a vazby, 12 pro kořen a hlavičku, 12 pro fyzickou mapu, 10 pro logickou mapu a výčet stran, 13 pro vnitřní části, 8 pro blokové vazby ALTO, 8 pro obálky MODS/DC), osm pro vedlejší METS, 55 pro MODS jednosvazkové monografie (osm názvové údaje, devět původci a role, devět podrobnosti jmen, čtyři typ dokumentu a žánr, osm původ a místa vydání, pět nakladatelé a výrobci, sedm data vydání a dalších událostí a pět copyright, vznik a vydávání) a 61 pro PREMIS (38 Object, 16 Event a sedm Agent). Nejde o úplné pokrytí monografií ani o hotový validační engine.
 
 | Skupina | Počet pravidel | Obsah a podklady |
 |---|---:|---|
@@ -30,6 +30,7 @@ K 7. 10. 2026 registr obsahuje **227 pravidel pro DMF Monografie 2.3**: 13 pro t
 | MODS – původ a místa vydání jednosvazku | 8 | [originInfo, eventType, place a placeTerm](mods-origin.md); AACR/RDA, M/MA a slovní požadavky |
 | MODS – nakladatelé a výrobci jednosvazku | 5 | [agent, namePart, role a roleTerm](mods-origin-agents.md); MA/M, výjimka copyright a sporný zápis distributora |
 | MODS – data vydání a dalších událostí jednosvazku | 7 | [dateIssued, encoding, point, qualifier, calendar a dateOther](mods-origin-dates.md); M/MA/R/O a význam polí MARC |
+| MODS – copyright, vznik a vydávání jednosvazku | 5 | [copyrightDate, dateCreated, edition a issuance](mods-origin-completion.md); samostatné omezení RDA a nejasnosti mapování |
 | Vedlejší METS | 8 | [Inventář stránky, ADMID a fyzická mapa](mets-amd.md); včetně doložených nesouladů ve vzoru |
 | PREMIS Object | 17 | [Identifikace, charakteristiky, fixity, velikost a formát](premis-object.md); rozdíly PREMIS 2.2 a povinností DMF |
 | PREMIS – vznik a ochrana | 8 | [Úroveň ochrany, aplikace, data a původní název](premis-provenance.md); povinnosti M/R a ukázky MC, PS a ALTO |
@@ -54,6 +55,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 - [Soubory a jejich vazby v METS](mets-files.md) — hlavní METS, inventář souborů a fyzická mapa.
 - [Kořen a hlavička hlavního METS](mets-header.md) — LABEL, TYPE, schémata, časy a tvůrce/vlastník záznamu.
 - [Data vydání a dalších událostí MODS](mods-origin-dates.md) — datum vydání, rozmezí, nejistota, kalendář a další typy dat.
+- [Copyright, vznik a vydávání MODS](mods-origin-completion.md) — datum copyrightu a rukopisu, údaj o vydání, způsob vydávání a oddělená větev RDA.
 - [Nakladatelé a výrobci MODS](mods-origin-agents.md) — odlišení od autorů, role a výjimka copyright.
 - [Původ a místa vydání MODS](mods-origin.md) — opakování originInfo, povinnosti RDA/AACR a převod místních údajů z MARC.
 - [Typ dokumentu a žánr MODS](mods-resource-genre.md) — oddělení strukturálního modelu, bibliografického žánru a autority.
@@ -74,7 +76,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 
 ## Rozhraní registru a API
 
-Základ [porovnávání DMF a katalogizačních režimů](registry-data-model.md) pracuje s explicitními významovými klíči a rozsahem AACR2/RDA. [Porovnávací obrazovka](https://standardy.digitalizaty.cz/registry/compare) nabízí výběr obou stran, prohození, sdílený odkaz, filtr výsledků a hledání. První dvojice porovnává `originInfo/@eventType`; API `/api/v1/compare/contexts` vrací i nezmapované a nejednoznačné případy, které obrazovka uvádí odděleně. [Audit katalogizačního rozsahu](cataloguing-scope-audit.md) u všech 227 pravidel doložil 178 nezávislých, 45 společných, jeden AACR2 a tři RDA předpisy. Nezávislost se nezaměňuje s neprověřeným rozsahem ani se společným bibliografickým předpisem. Rozdíl není automaticky chyba. Nepoužití údaje v kontextu DMF se v rozhraní neoznačuje jako obecný zákaz v MODS/METS a rozlišuje výslovný požadavek od výkladu. Další významové mapování a další DMF jsou samostatný krok.
+Základ [porovnávání DMF a katalogizačních režimů](registry-data-model.md) pracuje s explicitními významovými klíči a rozsahem AACR2/RDA. [Porovnávací obrazovka](https://standardy.digitalizaty.cz/registry/compare) nabízí výběr obou stran, prohození, sdílený odkaz, filtr výsledků a hledání. První dvojice porovnává `originInfo/@eventType`; API `/api/v1/compare/contexts` vrací i nezmapované a nejednoznačné případy, které obrazovka uvádí odděleně. [Audit katalogizačního rozsahu](cataloguing-scope-audit.md) u všech 232 pravidel doložil 178 nezávislých, 49 společných, jeden AACR2 a čtyři RDA předpisy. Nezávislost se nezaměňuje s neprověřeným rozsahem ani se společným bibliografickým předpisem. Rozdíl není automaticky chyba. Nepoužití údaje v kontextu DMF se v rozhraní neoznačuje jako obecný zákaz v MODS/METS a rozlišuje výslovný požadavek od výkladu. Další významové mapování a další DMF jsou samostatný krok.
 
 Web nabízí hledání bez diakritiky, kombinovatelné filtry, sdílené odkazy, detail konkrétní verze pravidla a interaktivní graf vztahů. Tlačítko **Navrhnout změnu** otevře předvyplněný návrh GitHub issue; samo nic neodesílá.
 

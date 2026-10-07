@@ -151,6 +151,7 @@ Object.assign(labels, {
   "metadata/mods-origin": "MODS · původ a místa vydání jednosvazkové monografie",
   "metadata/mods-origin-agents": "MODS · nakladatelé a výrobci jednosvazkové monografie",
   "metadata/mods-origin-dates": "MODS · data vydání a dalších událostí jednosvazkové monografie",
+  "metadata/mods-origin-completion": "MODS · copyright, vznik a vydávání jednosvazkové monografie",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",
   "technical/premis-provenance": "PREMIS · vznik a ochrana souboru",

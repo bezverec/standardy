@@ -98,4 +98,5 @@ nav:
       - Původ a místa vydání MODS: development/mods-origin.md
       - Nakladatelé a výrobci MODS: development/mods-origin-agents.md
       - Data vydání a dalších událostí MODS: development/mods-origin-dates.md
+      - Copyright, vznik a vydávání MODS: development/mods-origin-completion.md
       - Lokální vývoj: development/local-development.md

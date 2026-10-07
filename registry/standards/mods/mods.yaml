@@ -847,3 +847,87 @@ entities:
       status: "verified"
       date: "2026-10-07"
       reference: "Ověřeny dateIssued/dateOther, dateDefinition/dateOtherDefinition a zděděný textový typ v MODS XSD 3.8. Národní povinnosti a zdrojové mapování jsou vedeny odděleně."
+  -
+    id: "MODS-COPYRIGHT-DATE"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/copyrightDate"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Datum copyrightu"
+    definition:
+      cs: "DateDefinition rozšiřuje textový stringPlusLanguage o nepovinné atributy data. CopyrightDate je opakovatelnou volbou v originInfo; XSD nevyžaduje zdrojové MARC 264_4$c ani nepředepisuje národní R."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition; copyrightDate; dateDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace elementu, jeho typ a opakovatelnost v MODS XSD 3.8; národní podmínky jsou vedeny samostatně."
+  -
+    id: "MODS-DATE-CREATED"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/dateCreated"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Datum vytvoření"
+    definition:
+      cs: "DateCreated je opakovatelnou volbou v originInfo a používá textový dateDefinition. XSD neomezuje jeho použití na rukopisy ani na konkrétní hodnoty MARC LDR/06."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition; dateCreated; dateDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace elementu, jeho typ a opakovatelnost v MODS XSD 3.8; národní podmínky jsou vedeny samostatně."
+  -
+    id: "MODS-EDITION"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/edition"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Údaj o vydání"
+    definition:
+      cs: "Edition používá stringPlusLanguagePlusSupplied, tedy text s jazykovými atributy a volitelným supplied. Není to číselný typ. V originInfo jde o opakovatelnou volbu; národní R a MARC 250$a stanovuje DMF."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition; edition; stringPlusLanguagePlusSupplied"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace elementu, jeho typ a opakovatelnost v MODS XSD 3.8; národní podmínky jsou vedeny samostatně."
+  -
+    id: "MODS-ISSUANCE"
+    type: "element"
+    version: "3.8"
+    name: "originInfo/issuance"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Způsob vydávání"
+    definition:
+      cs: "Issuance je opakovatelná volba v originInfo. IssuanceDefinition dovoluje continuing, monographic, single unit, multipart monograph, serial a integrating resource. Národní M a omezený výčet nejsou vlastností obecného XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "originInfoDefinition; issuance; issuanceDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Ověřena deklarace elementu, jeho typ a opakovatelnost v MODS XSD 3.8; národní podmínky jsou vedeny samostatně."

@@ -1,0 +1,125 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-DATE-CREATED"
+title:
+  cs: "Datum vzniku rukopisné předlohy"
+description:
+  cs: "Doplňující údaje o vzniku a vydávání předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-DATE-CREATED"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-origin-completion"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Řádek dateCreated je společný pro AACR2/RDA; červeně je odlišen pouze druhý odkaz na 264_0$c. Opakovaný odkaz nepřepisujeme na předpokládané 260$c a nejistota mapování je výslovně popsána."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 53
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — copyrightDate, dateCreated, edition a issuance (pokračování s. 54)"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "recommended"
+    obligation_code: "R"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "U rukopisné předlohy odpovídající LDR/06=d, f nebo t se doporučuje převzít datum vytvoření z katalogu do dateCreated; DMF uvádí zdroj 264_0$c."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "V kontextu rukopisné předlohy s MARC LDR/06 v množině d, f, t doporučit dateCreated odpovídající datu vzniku předlohy ze zdrojového katalogu. Nezaměnit LDR/06 s LDR/07, datum rukopisu s datem skenování ani production (264_0) s manufacture (264_3). Kvůli opakovanému odkazu ve zdroji neprovádět bez doložení automatickou opravu mapování na 260$c."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+        -
+          field: "marc_leader_06"
+          operator: "in"
+          value:
+            - "d"
+            - "f"
+            - "t"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 53
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — copyrightDate, dateCreated, edition a issuance (pokračování s. 54)"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "originInfoDefinition; dateDefinition; edition; issuanceDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MARC 21 Bibliographic — Leader"
+        version: "November 2016"
+        page: null
+        section: "LDR/06 — Type of record; LDR/07 — Bibliographic level"
+        url: "https://www.loc.gov/marc/bibliographic/bdleader.html"
+      -
+        document: "MARC 21 Bibliographic — 264"
+        version: "July 2022"
+        page: null
+        section: "Second Indicator; $c"
+        url: "https://www.loc.gov/marc/bibliographic/bd264.html"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Přepis ověřen vizuálně proti DMF 2.3 s. 53–54 a legendě s. 24, deklaracím MODS XSD 3.8 a citovaným významům polí MARC. Ověření přepisu neřeší nejasnosti DMF; původní MARC ani implementace nástrojů nebyly testovány."
+    interpretation:
+      cs: "LDR/06=d označuje rukopisnou hudebninu, f rukopisný kartografický dokument a t rukopisný text. Příslušnost se neurčuje jen názvem souboru nebo strukturálním genre. R není MA a nevyžaduje vymyšlené datum, pokud katalog žádné neobsahuje. Obecné MODS dovoluje dateCreated šířeji; tento požadavek neprohlašuje jeho zákaz u jiných dokumentů. DateCreated nenahrazuje evidovaný požadavek na dateIssued; případný konflikt u nevydané rukopisné předlohy vyžaduje posouzení. XSD připouští text, nikoli jen xs:date. Rozsah tvoří přímá originInfo MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, subject, stránka nebo titul vícesvazku. Kontext a zdrojové údaje se zjišťují nezávisle z katalogu či předlohy, nikoli z přítomnosti kontrolovaného XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    discrepancies:
+      -
+        cs: "DMF s. 53 tiskne 264_0$c / 264_0$c (druhý odkaz červeně). Možný překlep evidujeme, avšak bez oficiální opravy nenahrazujeme první výskyt polem 260$c."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-ISSUED"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-DATE-OTHER"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ORIGIN-PRIMARY-EVENT"

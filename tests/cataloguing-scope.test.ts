@@ -14,7 +14,7 @@ const rule = (id: string) => rules.find((item) => item.rule_id === `NDK-MONO-${i
 
 describe("cataloguing relevance audit", () => {
   it("assesses every current rule with evidence, separately from requirement verification", () => {
-    expect(rules).toHaveLength(227);
+    expect(rules).toHaveLength(232);
     for (const item of rules) {
       expect(item.cataloguing_scope?.note.cs).toBeTruthy();
       expect(item.cataloguing_scope?.sources.length).toBeGreaterThan(0);
@@ -22,8 +22,8 @@ describe("cataloguing relevance audit", () => {
       expect(item.cataloguing_scope?.sources[0]).toEqual(item.source);
     }
     expect(rules.filter((item) => item.cataloguing_scope?.applicability === "independent")).toHaveLength(178);
-    expect(rules.filter((item) => item.cataloguing_rules?.length === 2)).toHaveLength(45);
-    expect(rules.filter((item) => item.cataloguing_rules?.length === 1)).toHaveLength(4);
+    expect(rules.filter((item) => item.cataloguing_rules?.length === 2)).toHaveLength(49);
+    expect(rules.filter((item) => item.cataloguing_rules?.length === 1)).toHaveLength(5);
   });
 
   it("distinguishes structural MODS, common descriptive requirements, and RDA-specific clauses", () => {

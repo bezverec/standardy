@@ -1,8 +1,8 @@
 # XML ukázky ze vzorového SIP
 
-U 165 pravidel DMF Monografie 2.3 je dostupných 211 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, dvacet osm pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 211 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 166 pravidel DMF Monografie 2.3 je dostupných 212 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, dvacet devět pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 212 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
-Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 211 ukázek.
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 212 ukázek.
 
 ## Původ a meze ověření
 
@@ -24,6 +24,7 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 ## Důležité příklady
 
 - [Data vydání a dalších událostí MODS](mods-origin-dates.md) přidávají tři ukázky u dvou pravidel: textové [1890] a kódované 1890. Dva zápisy nejsou dvěma mezemi intervalu; vzor nedokládá point, qualifier, calendar ani dateOther.
+- [Copyright, vznik a vydávání MODS](mods-origin-completion.md) přidává výřez issuance=single unit. Vzor nedokládá copyrightDate, dateCreated ani edition; původní MARC nebyl analyzován.
 - [Nakladatelé a výrobci MODS](mods-origin-agents.md) doplňují čtyři výřezy u čtyř pravidel: agent, jeho jméno a textovou roli publisher. Ukázky nedokládají distributora ani větev copyright.
 - [Původ a místa vydání MODS](mods-origin.md) přidávají osm ukázek u šesti pravidel: AACR originInfo bez eventType, place a kódový i textový placeTerm. Dodaný vzor nedokládá větev RDA.
 - [Typ dokumentu a žánr MODS](mods-resource-genre.md) přidávají šest ukázek u čtyř pravidel: text, volume a dvojici czenas/biografie a marcgt/biography. Druhá autorita není splněním doporučení czenas; ukázka není univerzálním potvrzením správnosti.

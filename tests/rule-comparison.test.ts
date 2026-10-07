@@ -33,8 +33,8 @@ describe("context-aware comparison foundation", () => {
     }
     expect(result.unresolved_context.left).toHaveLength(0);
     expect(result.unresolved_context.right).toHaveLength(0);
-    expect(result.unmapped.left).toHaveLength(223);
-    expect(result.unmapped.right).toHaveLength(225);
+    expect(result.unmapped.left).toHaveLength(227);
+    expect(result.unmapped.right).toHaveLength(230);
     expect(result.unmapped.right.map((rule) => rule.rule_id)).toContain("NDK-MONO-MODS-SINGLE-ORIGIN-PRIMARY-EVENT");
   });
 
@@ -72,9 +72,9 @@ describe("context-aware comparison foundation", () => {
     expect(compareRuleContexts([{ ...original, status: "disputed" }], rda, rda).comparisons[0]?.status).toBe("unverified");
   });
 
-  it("documents all five scoped non-use rules, keeping an inferred restriction distinct", () => {
+  it("documents all six scoped non-use rules, keeping an inferred restriction distinct", () => {
     const rules = registry.rule_versions.filter((rule) => rule.obligation === "forbidden");
-    expect(rules).toHaveLength(5);
+    expect(rules).toHaveLength(6);
     expect(rules.every((rule) => rule.non_use?.note.cs && rule.condition && rule.requirement.presence === "forbidden")).toBe(true);
     expect(rules.filter((rule) => rule.non_use?.basis === "interpretation").map((rule) => rule.rule_id)).toEqual(["NDK-MONO-MODS-SINGLE-ORIGIN-AACR-NO-EVENT-TYPE"]);
     expect(obligationLabel({ obligation: "forbidden" })).toBe("V daném kontextu se nepoužívá");

@@ -1,13 +1,13 @@
 # Rozsah AACR2/RDA v registru
 
-Posouzeno 7. 10. 2026: všech 227 evidovaných pravidel DMF Monografie 2.3.
+Posouzeno 7. 10. 2026: všech 232 evidovaných pravidel DMF Monografie 2.3.
 Jde o audit relevance katalogizace, nikoli nové ověření každé technické kontroly,
 implementací validátorů nebo úplnosti DMF v registru.
 
 ## Podklad a metoda
 
 Rozhodující je [DMF Monografie 2.3](https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf),
-zejména legenda barev na s. 24 a vizuálně ověřené tabulky jednosvazku na s. 48–53.
+zejména legenda barev na s. 24 a vizuálně ověřené tabulky jednosvazku na s. 48–54.
 Legenda vyhrazuje červené definice pro RDA; nerozlišené předpisy jsou společné
 pro AACR2 a RDA. Barvy pro druhy předloh nejsou katalogizační režimy.
 
@@ -22,9 +22,9 @@ neaplikuje novější Official RDA zpětně na historické požadavky DMF 2.3.
 | Rozsah | Počet | Důvod |
 |---|---:|---|
 | Nezávislé na katalogizaci | 178 | 13 MIX, 18 info.xml, 85 METS, 61 PREMIS a strukturální genre v MODS |
-| Společný předpis AACR2/RDA | 45 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
+| Společný předpis AACR2/RDA | 49 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
 | Pouze AACR2 | 1 | Nepoužití eventType jako výklad vyhrazení atributu pro RDA |
-| Pouze RDA | 3 | eventType, hlavní událost a nepoužití role pro 264_4 |
+| Pouze RDA | 4 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c |
 | Neurčený rozsah | 0 | Stav zůstává dostupný pro nové nebo nedostatečně doložené záznamy |
 
 Každá verze pravidla obsahuje vlastní `cataloguing_scope` se zdůvodněním, datem
@@ -32,6 +32,8 @@ a prameny včetně lokátoru. Nejde o runtime výchozí hodnotu podle prefixu ID
 Pravidla bez anotace se nadále považují za neposouzená.
 
 ### Důležité hranice
+
+- **Copyright, vznik a vydávání:** [navazující sada](mods-origin-completion.md) přidává čtyři společné požadavky a samostatné RDA omezení copyrightDate. Společný copyrightový předpis zachovává odlišenou větev RDA; nejasnost opakovaného 264_0$c u dateCreated není potichu opravena. Issuance je bibliografický požadavek, ne technicky nezávislý jen proto, že používá řízený výčet.
 
 - **ICC, rozměry, checksum:** kontrola digitálního souboru nezávisí na AACR2/RDA.
 - **PREMIS Agent versus MODS name:** původce ochranné události není bibliografický

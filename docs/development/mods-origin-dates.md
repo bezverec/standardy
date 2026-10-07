@@ -2,7 +2,7 @@
 
 Sedm pravidel `metadata/mods-origin-dates` navazuje na [originInfo](mods-origin.md). Zahrnuje dateIssued, atributy encoding/point/qualifier/calendar a dateOther s povinným type. Platí pro záznam svazku jednosvazkové monografie, ne automaticky pro titul vícesvazku, stránku, relatedItem nebo subject.
 
-Samostatná pravidla copyrightDate, dateCreated, edition a issuance zůstávají pro další sadu. Jejich odlišný význam se zde uvádí tam, kde brání chybnému převodu do dateIssued nebo dateOther.
+Na tuto sadu navazují [copyrightDate, dateCreated, edition a issuance](mods-origin-completion.md). Jejich odlišný význam se zde uvádí tam, kde brání chybnému převodu do dateIssued nebo dateOther.
 
 ## Podklady
 

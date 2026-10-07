@@ -42,7 +42,7 @@ describe("comparison screen", () => {
     expect(html).toContain("DMF Monografie · verze 2.3 · s. 51–52");
     expect(html).toContain("Katalogizační rozsah dosud neurčen — A: 0, B: 0");
     expect(html).toContain("Nezávislé požadavky zahrnuté ve výběru — A: 178, B: 178");
-    expect(html).toContain("Zahrnutá pravidla bez významového klíče — A: 223, B: 225");
+    expect(html).toContain("Zahrnutá pravidla bez významového klíče — A: 227, B: 230");
     expect(html).toContain("Rozdíly zaznamenaných polí");
     // Hundreds of unpaired records are not mounted until their disclosure opens.
     expect(html).not.toContain("NDK-MONO-MIX-ICC-PROFILE-VERSION?version=2.3");
