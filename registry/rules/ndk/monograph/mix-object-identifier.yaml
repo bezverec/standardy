@@ -1,0 +1,98 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-OBJECT-IDENTIFIER
+title:
+  cs: Identifikátor obrazového souboru v MIX
+description:
+  cs: ObjectIdentifier v základních technických údajích MIX pro DMF Monografie 2.3.
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-OBJECT-IDENTIFIER
+    relation_to_target:
+      type: restricts
+    category: technical/mix-basic
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: 2026-10-07
+      note:
+        cs: Technická identifikace a popis jednotlivého obrazového souboru MC/PS podle § 7.5.4. Nejde o bibliografický popis; AACR2/RDA platnost tohoto požadavku neomezuje.
+      sources:
+        - document: DMF Monografie
+          version: "2.3"
+          page: 82
+          section: 7.5.4 Technická metadata MIX — ObjectIdentifier
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: recommended
+    obligation_code: R
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Pro MC a PS se doporučuje ObjectIdentifier s identifikátorem popisovaného obrazového souboru; kontejner se může opakovat.
+    requirement:
+      presence: optional
+      cardinality:
+        min: 0
+        max: null
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value:
+            - MC
+            - PS
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 82
+      section: 7.5.4 Technická metadata MIX — ObjectIdentifier
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: /mix:mix/mix:BasicDigitalObjectInformation/mix:ObjectIdentifier
+        url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Text, kód R a rozsah MC/PS ověřeny ve vykreslené tabulce DMF Monografie 2.3 s. 82; hierarchie a datové typy zvlášť proti MIX 2.0 XSD. Jde o ověření přepisu, nikoli validaci SIP nebo nástrojů.
+    interpretation:
+      cs: Doporučení R se týká kontejneru. Kódy M jeho potomků se uplatní v každém uvedeném ObjectIdentifier, nikoli jako skrytá povinnost vytvořit doporučený kontejner. Identifikátor popisuje soubor, není automaticky identifikátorem titulu nebo celého SIP. Kontextem je příslušný MIX záznam s kořenem mix:mix a namespace http://www.loc.gov/mix/v20; UC není součástí rozsahu. Registr evidované kontroly nevykonává. XML ukázka, pokud je uvedena, je výřez dodaného monografického SIP, nikoli univerzální šablona nebo potvrzení validity.
+    comparison:
+      key: mix.mc-ps.object-identifier
+      note:
+        cs: "Ručně porovnáno: DMF Monografie 2.3 § 7.5.4 s. 82 a DMF Periodika 2.2 § 7.5.4 s. 69. Shoduje se povinnost R, obsah a podmínky MC/PS. Rozdíl druhu dokumentu je samostatný rozsah platnosti. Shoda této položky není ekvivalence celých DMF."
+    examples:
+      - id: sip-75faba8d-mix-object-identifier
+        title:
+          cs: Identifikátor obrazového souboru v MIX — MC
+        language: xml
+        kind: source_excerpt
+        code: <mix:ObjectIdentifier xmlns:mix="http://www.loc.gov/mix/v20"><mix:objectIdentifierType>JHOVE</mix:objectIdentifierType><mix:objectIdentifierValue>MC_1_00010003_2R</mix:objectIdentifierValue></mix:ObjectIdentifier>
+        note:
+          cs: Výřez MC, blok MIX_003, z dodaného SIP. Zachovává pozorované hodnoty; není předepsanou hodnotou pro jiný soubor ani ověřením chování JHOVE.
+        source:
+          document: Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml
+        file_sha256: 4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f
+        source_xpath: /mets:mets/mets:amdSec/mets:techMD[@ID='MIX_003']/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation/mix:ObjectIdentifier
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mix: http://www.loc.gov/mix/v20
+        checked_on: 2026-10-07
+relations:
+  - type: related_to
+    target: NDK-PER-MIX-OBJECT-IDENTIFIER

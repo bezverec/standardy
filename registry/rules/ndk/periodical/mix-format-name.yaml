@@ -1,0 +1,115 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-PER-MIX-FORMAT-NAME
+title:
+  cs: Název obrazového formátu v MIX
+description:
+  cs: formatName v základních technických údajích MIX pro DMF Periodika 2.2.
+national_standard:
+  id: ndk-periodical
+versions:
+  - version: "2.2"
+    status: normative
+    target:
+      entity: MIX-FORMAT-NAME
+    relation_to_target:
+      type: restricts
+    category: technical/mix-basic
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: 2026-10-07
+      note:
+        cs: Technická identifikace a popis jednotlivého obrazového souboru MC/PS podle § 7.5.4. Nejde o bibliografický
+          popis; AACR2/RDA platnost tohoto požadavku neomezuje.
+      sources:
+        - document: DMF Periodika
+          version: "2.2"
+          page: 69
+          section: 7.5.4 Technická metadata MIX — formatName
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - periodical
+    normative_requirement:
+      cs: Pro MC a PS se vyžaduje formatName uvnitř FormatDesignation s názvem formátu obrazového souboru.
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        - type: xpath
+          expression: /mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation/mix:formatName
+          assertion: exists
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: periodical
+        - field: file_role
+          operator: in
+          value:
+            - MC
+            - PS
+    source:
+      document: DMF Periodika
+      version: "2.2"
+      page: 69
+      section: 7.5.4 Technická metadata MIX — formatName
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: /mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation/mix:formatName
+        url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Text, kód M a rozsah MC/PS ověřeny ve vykreslené tabulce DMF Periodika 2.2 s. 69; hierarchie a
+        datové typy zvlášť proti MIX 2.0 XSD. Jde o ověření přepisu, nikoli validaci SIP nebo nástrojů.
+    interpretation:
+      cs: DMF připouští například zápis MIME type, ale nevyžaduje jedinou hodnotu image/jp2 ani neuzavírá celý
+        seznam podporovaných formátů. Pole neslouží jako seznam přípustných archivních formátů; ty řeší další
+        požadavky DMF. Kontextem je příslušný MIX záznam s kořenem mix:mix a namespace
+        http://www.loc.gov/mix/v20; UC není součástí rozsahu. Registr evidované kontroly nevykonává. Byly
+        ověřeny pouze níže uvedené metadatové výřezy dodaného periodického SIP, nikoli jeho celková validita
+        nebo implementace nástrojů.
+    comparison:
+      key: mix.mc-ps.format-name
+      note:
+        cs: "Ručně porovnáno: DMF Monografie 2.3 § 7.5.4 s. 83 a DMF Periodika 2.2 § 7.5.4 s. 69. Shoduje se povinnost
+          M, obsah a podmínky MC/PS. Rozdíl druhu dokumentu je samostatný rozsah platnosti. Shoda této položky
+          není ekvivalence celých DMF."
+    examples:
+      - id: sip-19abc49f-mix-format-name
+        title:
+          cs: Název obrazového formátu v MIX — periodický MIX_003
+        language: xml
+        kind: source_excerpt
+        code: <mix:formatName xmlns:mix="http://www.loc.gov/mix/v20">image/jp2</mix:formatName>
+        note:
+          cs: "Skutečný výřez MIX_003, který se identifikuje jako MC_1_0008_2R a popisuje image/jp2. Pozor: fileSec
+            téhož amd_mets odkazuje pro mastercopy přes ADMID na MIX_002 popisující TIFF; vazba je nesoulad
+            vzoru, který zde neopravujeme. Výřez nedokládá celkovou validitu balíčku ani chování JHOVE."
+        source:
+          document: Vzorový SIP periodik z odkazu dodaného uživatelem, 19abc49f-8c9c-11f1-9b37-7a8cbcd65e2f
+          version: DMF Periodika 2.2 (deklarováno v info_19abc49f-8c9c-11f1-9b37-7a8cbcd65e2f.xml)
+          page: null
+          section: amdsec/amd_mets_19abc49f-8c9c-11f1-9b37-7a8cbcd65e2f_0001.xml
+          url: https://owncloud.cesnet.cz/index.php/s/5RGtiExK6K9MJEc/download
+        file_path: amdsec/amd_mets_19abc49f-8c9c-11f1-9b37-7a8cbcd65e2f_0001.xml
+        file_sha256: c5b5e451618486b3a333daa1d504a6b48662465903f9cfe0bb6dc98534e870ec
+        source_xpath: /mets:mets/mets:amdSec/mets:techMD[@ID='MIX_003']/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation/mix:formatName
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mix: http://www.loc.gov/mix/v20
+        checked_on: 2026-10-07
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-FORMAT-NAME
+  - type: related_to
+    target: NDK-PER-MIX-FORMAT-DESIGNATION

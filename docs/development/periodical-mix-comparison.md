@@ -3,7 +3,7 @@
 Zpracováno 7. 10. 2026: deset pravidel **DMF pro digitalizaci periodik 2.2**
 (vydání 22. 12. 2025), § 7.5.4. Nejde o standard pro elektronická periodika.
 Pravidla mají vlastní identitu `NDK-PER-MIX-*`, standard `ndk-periodical`,
-verzi 2.2 a prameny. Registry nyní obsahují 232 monografických a deset periodických
+verzi 2.2 a prameny. Po první sadě registr obsahoval 232 monografických a deset periodických
 pravidel; nejde o úplný přepis ani jednoho DMF.
 
 ## Ověřené dvojice
@@ -80,10 +80,8 @@ SHA-256 kontrolovaných kopií:
 | Monografie 2.3 PDF | `77671bf58d0ea816c8bcad658b26cab23555d3a56ce5570cc1303c1627605313` |
 | MIX 2.0 XSD | `aaff5ad9b49e7116b1a3f521e4f3aaa2e75df9f38a2cf708379679c53a107dac` |
 
-Periodický SIP ani chování nástrojů nebyly v této sadě ověřeny. Nepřebíráme tedy
-monografické XML ukázky ani tvrzení o implementacích. Dosavadních 212 XML ukázek
-u 166 monografických pravidel se nemění.
+Při této první sadě periodický SIP ani chování nástrojů ověřeny nebyly; tehdejších 212 XML ukázek u 166 monografických pravidel zůstalo beze změny. Navazující [sada základních údajů MIX](mix-basic-information.md) již používá samostatný periodický vzor: přidává osm dvojic pravidel a sedm XML výřezů z každého druhu SIP. Registr nyní obsahuje 226 ukázek u 180 pravidel.
 
 Regresní testy kontrolují zdroje, kódy, podmíněné frekvence, opakovatelnost,
 ruční klíče, zachování kontextu, nezávislost na katalogizaci, API/D1/OpenAPI
-i odkaz a vysvětlení párování v rozhraní. Registry mají celkem 242 pravidel.
+i odkaz a vysvětlení párování v rozhraní. Registr má po navazující sadě celkem 258 pravidel.

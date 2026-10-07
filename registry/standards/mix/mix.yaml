@@ -285,6 +285,180 @@ entities:
       status: verified
       date: "2026-10-05"
       reference: "Ověřeno přímo proti oficiálnímu MIX 2.0 XSD: název, jmenný prostor, hierarchie, datový typ a minOccurs/maxOccurs."
+  - id: MIX-OBJECT-IDENTIFIER
+    type: element
+    version: "2.0"
+    name: ObjectIdentifier
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Identifikátor obrazového souboru v MIX
+    definition:
+      cs: Opakovatelný volitelný kontejner v BasicDigitalObjectInformation. Potomci objectIdentifierType a
+        objectIdentifierValue jsou v obecném XSD volitelní a nejvýše jednou.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:ObjectIdentifier
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
+  - id: MIX-OBJECT-IDENTIFIER-TYPE
+    type: element
+    version: "2.0"
+    name: objectIdentifierType
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Typ identifikátoru souboru v MIX
+    definition:
+      cs: stringType odvozený z xsd:string, minOccurs=0 a maxOccurs=1 v každém ObjectIdentifier. Povinnost národního
+        DMF je samostatná.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:ObjectIdentifier/mix:objectIdentifierType
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
+  - id: MIX-OBJECT-IDENTIFIER-VALUE
+    type: element
+    version: "2.0"
+    name: objectIdentifierValue
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Hodnota identifikátoru souboru v MIX
+    definition:
+      cs: stringType odvozený z xsd:string, minOccurs=0 a maxOccurs=1 v každém ObjectIdentifier.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:ObjectIdentifier/mix:objectIdentifierValue
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
+  - id: MIX-FILE-SIZE
+    type: element
+    version: "2.0"
+    name: fileSize
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Velikost obrazového souboru v MIX
+    definition:
+      cs: Volitelný nejvýše jeden prvek typu nonNegativeIntegerType odvozeného z xsd:nonNegativeInteger v
+        BasicDigitalObjectInformation.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:fileSize
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
+  - id: MIX-FORMAT-DESIGNATION
+    type: element
+    version: "2.0"
+    name: FormatDesignation
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Označení formátu obrazového souboru v MIX
+    definition:
+      cs: Volitelný nejvýše jeden kontejner v BasicDigitalObjectInformation; obsahuje v pořadí formatName a
+        formatVersion, oba v XSD volitelné.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
+  - id: MIX-FORMAT-NAME
+    type: element
+    version: "2.0"
+    name: formatName
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Název obrazového formátu v MIX
+    definition:
+      cs: stringType odvozený z xsd:string, v FormatDesignation volitelný a nejvýše jeden.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation/mix:formatName
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
+  - id: MIX-FORMAT-VERSION
+    type: element
+    version: "2.0"
+    name: formatVersion
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Verze obrazového formátu v MIX
+    definition:
+      cs: stringType odvozený z xsd:string, v FormatDesignation volitelný a nejvýše jeden. XSD jej neomezuje na
+        číslo.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation/mix:formatVersion
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
+  - id: MIX-BYTE-ORDER
+    type: element
+    version: "2.0"
+    name: byteOrder
+    namespace: http://www.loc.gov/mix/v20
+    title:
+      cs: Pořadí bajtů obrazového souboru v MIX
+    definition:
+      cs: Volitelný nejvýše jeden prvek typeOfByteOrderType; byteOrderType připouští přesné hodnoty big endian a
+        little endian.
+    status: normative
+    source:
+      document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+      version: "2.0"
+      page: null
+      section: /mix:mix/mix:BasicDigitalObjectInformation/mix:byteOrder
+      url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Ověřena deklarace prvku, hierarchie, kardinalita a datový typ v MIX 2.0 XSD; národní povinnost se
+        eviduje odděleně.
 relations:
   - type: related_to
     target: ICC

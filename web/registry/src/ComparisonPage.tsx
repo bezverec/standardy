@@ -108,7 +108,7 @@ export function PeriodicalComparisonLink({ standards }: { standards: RegistryEnt
   const params = comparisonParams(
     { national_standard: "ndk-monograph", version: "2.3", cataloguing: "" },
     { national_standard: "ndk-periodical", version: "2.2", cataloguing: "" });
-  return <p><a href={`/registry/compare?${params}`}>Porovnat Monografie 2.3 a Periodika 2.2</a> — zpracováno deset dvojic MIX pro MC/PS, nezávislých na AACR2/RDA. Pro jejich výběr zadejte do hledání výsledků „mix.mc-ps.“.</p>;
+  return <p><a href={`/registry/compare?${params}`}>Porovnat Monografie 2.3 a Periodika 2.2</a> — zpracované dvojice MIX pro MC/PS, nezávislých na AACR2/RDA. Pro jejich výběr zadejte do hledání výsledků „mix.mc-ps.“.</p>;
 }
 
 export function ComparisonPage() {

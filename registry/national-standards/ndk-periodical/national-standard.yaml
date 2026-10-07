@@ -5,7 +5,7 @@ title:
   cs: "NDK DMF Periodika"
   en: "NDK DMF Periodicals"
 description:
-  cs: "Vybrané požadavky DMF pro digitalizaci periodik 2.2 na rozměry, vzorkování a barevné kódování obrazových souborů MC/PS v MIX 2.0. První porovnávací sada vůči Monografiím 2.3; nejde o DMF pro elektronická periodika ani o úplné pokrytí periodik."
+  cs: "Vybrané požadavky DMF pro digitalizaci periodik 2.2 na identifikaci, velikost, formát, rozměry, vzorkování a barevné kódování obrazových souborů MC/PS v MIX 2.0. Porovnávací sady vůči Monografiím 2.3; nejde o DMF pro elektronická periodika ani o úplné pokrytí periodik."
 status: "draft"
 verification:
   status: "verified"

@@ -73,6 +73,7 @@ nav:
       - Architektura: development/architecture.md
       - Datový model: development/registry-data-model.md
       - Periodika a monografie — srovnání MIX: development/periodical-mix-comparison.md
+      - Identifikace, velikost a formát v MIX: development/mix-basic-information.md
       - Rozsah AACR2 a RDA: development/cataloguing-scope-audit.md
       - Kategorie a graf vztahů: development/graph-and-categories.md
       - XML ukázky ze vzorového SIP: development/xml-examples.md

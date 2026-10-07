@@ -1,0 +1,102 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MIX-FORMAT-DESIGNATION
+title:
+  cs: Označení formátu obrazového souboru v MIX
+description:
+  cs: FormatDesignation v základních technických údajích MIX pro DMF Monografie 2.3.
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MIX-FORMAT-DESIGNATION
+    relation_to_target:
+      type: restricts
+    category: technical/mix-basic
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: 2026-10-07
+      note:
+        cs: Technická identifikace a popis jednotlivého obrazového souboru MC/PS podle § 7.5.4. Nejde o bibliografický popis; AACR2/RDA platnost tohoto požadavku neomezuje.
+      sources:
+        - document: DMF Monografie
+          version: "2.3"
+          page: 83
+          section: 7.5.4 Technická metadata MIX — FormatDesignation
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Pro MC a PS se vyžaduje jeden FormatDesignation s údaji o formátu obrazového souboru.
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        - type: xpath
+          expression: /mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation
+          assertion: exists
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: file_role
+          operator: in
+          value:
+            - MC
+            - PS
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 83
+      section: 7.5.4 Technická metadata MIX — FormatDesignation
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: /mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation
+        url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Text, kód M a rozsah MC/PS ověřeny ve vykreslené tabulce DMF Monografie 2.3 s. 83; hierarchie a datové typy zvlášť proti MIX 2.0 XSD. Jde o ověření přepisu, nikoli validaci SIP nebo nástrojů.
+    interpretation:
+      cs: Povinný kontejner doplňují samostatná pravidla M pro název a verzi. Obecné minOccurs=0 v MIX XSD nevylučuje přísnější národní povinnost. Označení formátu není údaj o kompresním schématu ani ICC profilu. Kontextem je příslušný MIX záznam s kořenem mix:mix a namespace http://www.loc.gov/mix/v20; UC není součástí rozsahu. Registr evidované kontroly nevykonává. XML ukázka, pokud je uvedena, je výřez dodaného monografického SIP, nikoli univerzální šablona nebo potvrzení validity.
+    comparison:
+      key: mix.mc-ps.format-designation
+      note:
+        cs: "Ručně porovnáno: DMF Monografie 2.3 § 7.5.4 s. 83 a DMF Periodika 2.2 § 7.5.4 s. 69. Shoduje se povinnost M, obsah a podmínky MC/PS. Rozdíl druhu dokumentu je samostatný rozsah platnosti. Shoda této položky není ekvivalence celých DMF."
+    examples:
+      - id: sip-75faba8d-mix-format-designation
+        title:
+          cs: Označení formátu obrazového souboru v MIX — MC
+        language: xml
+        kind: source_excerpt
+        code: <mix:FormatDesignation xmlns:mix="http://www.loc.gov/mix/v20"><mix:formatName>image/jp2</mix:formatName><mix:formatVersion>1.0</mix:formatVersion></mix:FormatDesignation>
+        note:
+          cs: Výřez MC, blok MIX_003, z dodaného SIP. Zachovává pozorované hodnoty; není předepsanou hodnotou pro jiný soubor ani ověřením chování JHOVE.
+        source:
+          document: Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: amdsec/amd_mets_75faba8d-c629-11f0-8950-12e8557df20e_0001.xml
+        file_sha256: 4a8d9098cb15b621a0dee3fd5501a3eee2b107088dc728dcace2a36f1e2b583f
+        source_xpath: /mets:mets/mets:amdSec/mets:techMD[@ID='MIX_003']/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation/mix:FormatDesignation
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mix: http://www.loc.gov/mix/v20
+        checked_on: 2026-10-07
+relations:
+  - type: related_to
+    target: NDK-PER-MIX-FORMAT-DESIGNATION

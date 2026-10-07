@@ -1,14 +1,18 @@
-# XML ukázky ze vzorového SIP
+# XML ukázky ze vzorových SIP
 
-U 166 pravidel DMF Monografie 2.3 je dostupných 212 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, devět pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, dvacet devět pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 212 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+Registr obsahuje celkem **226 XML ukázek u 180 pravidel**: 219 u 173 monografických a sedm u sedmi periodických pravidel.
 
-Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 212 ukázek.
+U 173 pravidel DMF Monografie 2.3 je dostupných 219 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, šestnáct pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, dvacet devět pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 219 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
-[První sada periodik](periodical-mix-comparison.md) nepřidává XML ukázky: periodický SIP dosud nebyl ověřen. Shodný technický požadavek neopravňuje přeznačit monografický výřez na periodický. Počet 212 ukázek u 166 monografických pravidel se nemění.
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 219 ukázek.
+
+[První sada periodik](periodical-mix-comparison.md) původně XML ukázky neobsahovala. Navazující sada [základních údajů MIX](mix-basic-information.md) přidává sedm monografických a sedm samostatně ověřených periodických výřezů. Shodný technický požadavek neopravňuje přeznačit monografický výřez na periodický.
 
 ## Původ a meze ověření
 
 Zdrojem je uživatelem dodaný rozbalený balíček `75faba8d-c629-11f0-8950-12e8557df20e`, označený jako oficiální vzor, s [odkazem na stažení z CESNET](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download). Obsahuje monografii *Tomáš Alva Edison a jeho fonograf*, [1890], a v `info.xml` deklaruje metadatovou verzi 2.3. Kontrola proběhla 5. 10. 2026 nad dodanou lokální kopií; identita kopie s aktuálním obsahem vzdáleného archivu nebyla nezávisle ověřena. Celý balíček ani obrazové soubory se do registru nekopírují.
+
+Periodický balíček `19abc49f-8c9c-11f1-9b37-7a8cbcd65e2f` byl stažen 7. 10. 2026 z [odkazu CESNET dodaného uživatelem](https://owncloud.cesnet.cz/index.php/s/5RGtiExK6K9MJEc/download). Obsahuje číslo *Troppauer Zeitung* z 4. 1. 1902 a deklaruje DMF Periodika 2.2. Sedm výřezů pochází z prvního administrativního METS, bloku `MIX_003`. Ten popisuje JPEG 2000 a identifikuje se jako MC, ale `fileSec` pro MC odkazuje na `MIX_002` popisující TIFF. Tuto chybnou vazbu neopravujeme; upozornění je součástí každé ukázky. Záznam `Valid` v info.xml není výsledkem naší validace. Otisky a rozsah kontroly uvádí [rozbor sady](mix-basic-information.md).
 
 Ukázka typu `source_excerpt` je pozorovaný výřez, **nikoli potvrzení validity nebo univerzální šablona**. Mění se pouze odsazení a přidávají se zděděné deklarace namespace pro samostatné čtení. Hodnoty a pořadí elementů zůstávají zachované. XPath označuje uzel v původním celém dokumentu, ne cestu v osamostatněném výřezu.
 
@@ -62,7 +66,9 @@ Po sestavení lze výřezy porovnat s rozbaleným zdrojem. Ve Windows PowerShell
 
 ```powershell
 npm run registry:build
-Get-Content -Raw dist/registry/rules.json | python scripts/verify-xml-examples.py --source-root 'D:/75faba8d-c629-11f0-8950-12e8557df20e'
+$rules = Get-Content -Raw dist/registry/rules.json | ConvertFrom-Json
+ConvertTo-Json -Depth 100 -InputObject @($rules | Where-Object national_standard_id -eq 'ndk-monograph') | python scripts/verify-xml-examples.py --source-root 'D:/75faba8d-c629-11f0-8950-12e8557df20e'
+ConvertTo-Json -Depth 100 -InputObject @($rules | Where-Object national_standard_id -eq 'ndk-periodical') | python scripts/verify-xml-examples.py --source-root 'D:/ndk-rules/tmp/periodical-source-19abc49f'
 ```
 
 Bez `--source-root` skript kontroluje jen XML syntaxi. S ním ověřuje SHA-256 a strukturu vybraného uzlu včetně hodnot a atributů. Nepřistupuje na síť a nic nemění. Podporuje absolutní cesty po elementech a predikáty atributů používané v těchto ukázkách, nikoli obecný XPath 2.0. Při přidávání dalšího balíčku spouštějte porovnání pouze nad pravidly či ukázkami z odpovídajícího zdroje.

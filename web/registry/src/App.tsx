@@ -159,6 +159,7 @@ Object.assign(labels, {
   "technical/premis-events": "PREMIS · události a jejich vazby",
   "technical/premis-agents": "PREMIS · původci událostí",
   "technical/dimensions": "Technická metadata · Rozměry obrazu",
+  "technical/mix-basic": "MIX · identifikace, velikost a formát souboru",
   "technical/sampling": "Technická metadata · Vzorkování",
   "technical/color": "Technická metadata · Barevné kódování",
 });

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { compareRuleContexts, compileRegistry, loadRegistry } from "../packages/registry-core/src/index.ts";
 
 const registry = compileRegistry(await loadRegistry(path.resolve(import.meta.dirname, "..")));
-const rules = registry.rule_versions.filter((rule) => rule.national_standard_id === "ndk-periodical");
+const rules = registry.rule_versions.filter((rule) => rule.national_standard_id === "ndk-periodical" && rule.category !== "technical/mix-basic");
 const per = { national_standard: "ndk-periodical", version: "2.2" };
 const mono = { national_standard: "ndk-monograph", version: "2.3" };
 const get = (suffix: string) => rules.find((rule) => rule.rule_id === `NDK-PER-MIX-${suffix}`)!;
@@ -80,7 +80,7 @@ describe("digitized periodicals 2.2: first MIX comparison set", () => {
     for (const [left, right] of [[mono, per], [per, mono]]) {
       const result = compareRuleContexts(registry.rule_versions, left!, right!);
       const pairs = result.comparisons.filter((item) => item.key.startsWith("mix.mc-ps."));
-      expect(pairs).toHaveLength(10);
+      expect(pairs).toHaveLength(18);
       for (const pair of pairs) {
         expect(pair.status).toBe("same_recorded_requirement");
         expect(pair.left).toHaveLength(1);
@@ -91,7 +91,7 @@ describe("digitized periodicals 2.2: first MIX comparison set", () => {
       }
     }
     const same = compareRuleContexts(registry.rule_versions, { ...per, cataloguing_rules: "aacr2" }, { ...per, cataloguing_rules: "rda" });
-    expect(same.comparisons).toHaveLength(10);
+    expect(same.comparisons).toHaveLength(18);
     expect(same.comparisons.every((item) => item.status === "same_recorded_requirement")).toBe(true);
     expect(same.excluded_context).toEqual({ left: [], right: [] });
     expect(same.unresolved_context).toEqual({ left: [], right: [] });

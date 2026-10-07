@@ -21,8 +21,8 @@ const compare = (rules = registry.rule_versions) => compareRuleContexts(rules, a
 describe("context-aware comparison foundation", () => {
   it("pairs the documented AACR2/RDA aspect without declaring a conflict", () => {
     const result = compare();
-    expect(result.comparisons).toHaveLength(11);
-    expect(result.comparisons.filter((item) => item.status === "same_recorded_requirement")).toHaveLength(10);
+    expect(result.comparisons).toHaveLength(19);
+    expect(result.comparisons.filter((item) => item.status === "same_recorded_requirement")).toHaveLength(18);
     const item = result.comparisons.find((item) => item.key === "mods.descriptive-origin.event-type")!;
     expect(item.status).toBe("different_context");
     expect(item.left[0]?.rule_id).toBe("NDK-MONO-MODS-SINGLE-ORIGIN-AACR-NO-EVENT-TYPE");

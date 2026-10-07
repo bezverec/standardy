@@ -17,15 +17,16 @@ const python = existsSync(pythonVenv) ? pythonVenv : process.platform === "win32
 const checkXml = (data: unknown) => spawnSync(python, [path.join(root, "scripts/verify-xml-examples.py")], { input: JSON.stringify(data), encoding: "utf8" });
 
 describe("source-backed XML examples", () => {
-  it("ships 212 source excerpts for 166 rules with provenance in versioned API/export records", () => {
-    expect(examples).toHaveLength(212);
-    expect(rules.filter((rule) => rule.examples?.length)).toHaveLength(166);
+  it("ships 226 source excerpts for 180 rules with provenance in versioned API/export records", () => {
+    expect(examples).toHaveLength(226);
+    expect(rules.filter((rule) => rule.examples?.length)).toHaveLength(180);
     for (const rule of rules.filter((rule) => rule.examples?.length)) {
-      expect(rule.version).toBe("2.3");
+      const periodic = rule.national_standard_id === "ndk-periodical";
+      expect(rule.version).toBe(periodic ? "2.2" : "2.3");
       for (const example of rule.examples!) {
         expect(example.kind).toBe("source_excerpt");
         expect(example.file_sha256).toMatch(/^[a-f0-9]{64}$/);
-        expect(example.source.url).toBe("https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download");
+        expect(example.source.url).toBe(periodic ? "https://owncloud.cesnet.cz/index.php/s/5RGtiExK6K9MJEc/download" : "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download");
         expect(example.file_path).not.toMatch(/^[A-Za-z]:|^\/|\.\./);
       }
     }
@@ -36,7 +37,7 @@ describe("source-backed XML examples", () => {
     const result = checkXml(rules);
     expect(result.error).toBeUndefined();
     expect(result.status, result.stderr).toBe(0);
-    expect(JSON.parse(result.stdout)).toMatchObject({ examples: 212, xml_syntax: "ok" });
+    expect(JSON.parse(result.stdout)).toMatchObject({ examples: 226, xml_syntax: "ok" });
     for (const code of ["<mix:mix/>", "<created>", '<!DOCTYPE x [<!ENTITY data SYSTEM "file:///test">]><x>&data;</x>']) {
       expect(checkXml([{ rule_id: "fixture", examples: [{ ...examples[0], code }] }]).status).toBe(1);
     }

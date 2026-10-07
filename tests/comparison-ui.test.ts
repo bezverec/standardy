@@ -22,7 +22,7 @@ describe("comparison screen", () => {
       { national_standard: "ndk-periodical", version: "2.2" }))) as ComparisonResult;
     data.comparisons = data.comparisons.filter((item) => item.key.startsWith("mix.mc-ps."));
     const html = render(data);
-    expect(html).toContain("Shodný požadavek (10)");
+    expect(html).toContain("Shodný požadavek (18)");
     expect(html).toContain("Odlišný kontext (0)");
     expect(html).toContain("Rozdílný rozsah dokumentů");
     expect(html).toContain("monograph");
@@ -75,7 +75,7 @@ describe("comparison screen", () => {
     expect(html).toContain("NDK-MONO-MODS-SINGLE-ORIGIN-AACR-NO-EVENT-TYPE?version=2.3");
     expect(html).toContain("DMF Monografie · verze 2.3 · s. 51–52");
     expect(html).toContain("Katalogizační rozsah dosud neurčen — A: 0, B: 0");
-    expect(html).toContain("Nezávislé požadavky zahrnuté ve výběru — A: 178, B: 178");
+    expect(html).toContain("Nezávislé požadavky zahrnuté ve výběru — A: 186, B: 186");
     expect(html).toContain("Zahrnutá pravidla bez významového klíče — A: 217, B: 220");
     expect(html).toContain("Rozdíly zaznamenaných polí");
     // Hundreds of unpaired records are not mounted until their disclosure opens.

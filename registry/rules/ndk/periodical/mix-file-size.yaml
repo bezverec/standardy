@@ -1,0 +1,90 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-PER-MIX-FILE-SIZE
+title:
+  cs: Velikost obrazového souboru v MIX
+description:
+  cs: fileSize v základních technických údajích MIX pro DMF Periodika 2.2.
+national_standard:
+  id: ndk-periodical
+versions:
+  - version: "2.2"
+    status: normative
+    target:
+      entity: MIX-FILE-SIZE
+    relation_to_target:
+      type: restricts
+    category: technical/mix-basic
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: 2026-10-07
+      note:
+        cs: Technická identifikace a popis jednotlivého obrazového souboru MC/PS podle § 7.5.4. Nejde o bibliografický
+          popis; AACR2/RDA platnost tohoto požadavku neomezuje.
+      sources:
+        - document: DMF Periodika
+          version: "2.2"
+          page: 69
+          section: 7.5.4 Technická metadata MIX — fileSize
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf
+    obligation: recommended
+    obligation_code: R
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - periodical
+    normative_requirement:
+      cs: Pro MC a PS se doporučuje fileSize s velikostí obrazového souboru.
+    requirement:
+      presence: optional
+      cardinality:
+        min: 0
+        max: 1
+      validations:
+        - type: regex
+          expression: ^[ \t\r\n]*(?:\+?[0-9]+|-0+)[ \t\r\n]*$
+          assertion: matches
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: periodical
+        - field: file_role
+          operator: in
+          value:
+            - MC
+            - PS
+    source:
+      document: DMF Periodika
+      version: "2.2"
+      page: 69
+      section: 7.5.4 Technická metadata MIX — fileSize
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf
+    references:
+      - document: NISO Metadata for Images in XML (MIX), XML Schema 2.0
+        version: "2.0"
+        page: null
+        section: /mix:mix/mix:BasicDigitalObjectInformation/mix:fileSize
+        url: https://www.loc.gov/standards/mix/mix20/mix20.xsd
+    verification:
+      status: verified
+      date: 2026-10-07
+      reference: Text, kód R a rozsah MC/PS ověřeny ve vykreslené tabulce DMF Periodika 2.2 s. 69; hierarchie a
+        datové typy zvlášť proti MIX 2.0 XSD. Jde o ověření přepisu, nikoli validaci SIP nebo nástrojů.
+    interpretation:
+      cs: Úvod § 7.5.4 výslovně uvádí pouze doporučenou povinnost, protože velikost je také v PREMIS Object.
+        Chybějící fileSize v MIX není porušením M v jiném metadatovém standardu ani důvodem vynechat povinný
+        údaj PREMIS. XSD připouští nulu a její lexikální zápis -0; to samo nepotvrzuje validitu prázdného
+        obrazového souboru. Porovnání hodnoty se skutečným souborem tato sada neimplementuje. Kontextem je
+        příslušný MIX záznam s kořenem mix:mix a namespace http://www.loc.gov/mix/v20; UC není součástí
+        rozsahu. Registr evidované kontroly nevykonává. Byly ověřeny pouze vybrané metadatové výřezy
+        dodaného periodického SIP, nikoli jeho celková validita nebo implementace nástrojů.
+    comparison:
+      key: mix.mc-ps.file-size
+      note:
+        cs: "Ručně porovnáno: DMF Monografie 2.3 § 7.5.4 s. 83 a DMF Periodika 2.2 § 7.5.4 s. 69. Shoduje se povinnost
+          R, obsah a podmínky MC/PS. Rozdíl druhu dokumentu je samostatný rozsah platnosti. Shoda této položky
+          není ekvivalence celých DMF."
+relations:
+  - type: related_to
+    target: NDK-MONO-MIX-FILE-SIZE
