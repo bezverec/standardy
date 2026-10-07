@@ -16,6 +16,18 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "technical/premis-object"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Požadavek na ochranná metadata souborů, událostí nebo jejich původců. Nejde o bibliografické vztahy děl a tvůrců podle AACR2/RDA."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 78
+          section: "7.5.1 PREMIS Object — objectCharacteristics/format/formatRegistry/formatRegistryName"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "mandatory"
     obligation_code: "M"
     object_types:

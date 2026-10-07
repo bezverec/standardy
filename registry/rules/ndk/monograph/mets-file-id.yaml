@@ -16,6 +16,18 @@ versions:
     relation_to_target:
       type: "clarifies"
     category: "structure/mets-files"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Požadavek na strukturu, obálku, inventář nebo vazby METS. Bibliografický obsah vložených či odkazovaných záznamů se tímto pravidlem nekatalogizuje."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: "90–91"
+          section: "7.6.1 fileSec hlavního záznamu METS"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "mandatory"
     obligation_source: "prose"
     object_types:

@@ -16,6 +16,25 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "metadata/mods-name-details"
+    cataloguing_rules: ["aacr2","rda"]
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Volitelný kontejner alternativního jména je společný předpis DMF. Nevytváří společnou politiku AACR2/RDA pro volbu preferovaného jména či identit."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 50
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — části jména, alternativeName a etal"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "optional"
     obligation_code: "O"
     object_types:

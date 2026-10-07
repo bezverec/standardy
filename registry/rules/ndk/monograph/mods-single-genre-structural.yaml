@@ -16,6 +16,18 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "metadata/mods-resource-genre"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Požadavek na strukturální model NDK podle druhu předlohy, nikoli bibliografický žánr nebo katalogizační popis. Barevné rozlišení zde označuje druh dokumentu, ne AACR2/RDA."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 51
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — typeOfResource a genre"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "mandatory"
     obligation_code: "M"
     object_types:

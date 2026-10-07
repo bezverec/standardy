@@ -10,6 +10,8 @@ import { changeProposalUrl } from "./contribute.ts";
 import { issueReferences, linkIssueMentions } from "./evidence.ts";
 import { RegistryNavigation } from "./RegistryNavigation.tsx";
 import { obligationLabel, obligationOptions } from "./obligation.ts";
+import { ComparisonPage } from "./ComparisonPage.tsx";
+import { CataloguingScope } from "./CataloguingScope.tsx";
 
 function routePath(): string {
   const path = window.location.pathname.replace(/^\/registry\/?/, "/");
@@ -200,7 +202,7 @@ function RuleDetail({ id }: { id: string }) {
       <div className="facts"><div><span>Standard NDK</span><Link to={`/national-standards/${rule.national_standard_id}`}>{rule.national_standard_id}</Link></div><div><span>Cíl</span><code>{rule.target.entity}</code></div><div><span>Kategorie</span>{labels[rule.category] ?? rule.category}</div><div><span>Úroveň povinnosti</span><Status>{obligationLabel(rule)}</Status><ObligationHelp /></div></div>
       <section className="layer layer--normative"><p className="layer-label">Požadavek NDK · {labels[rule.status] ?? rule.status}</p><h2>Požadavek</h2><p>{localized(rule.normative_requirement)}</p><details><summary>Strojový zápis a podmínky platnosti</summary><JsonBlock value={rule.requirement} />{Boolean(rule.condition) && <><h3>Podmínka</h3><JsonBlock value={rule.condition} /></>}</details></section>
       {rule.examples && <CodeExamples key={`${id}@${rule.version}`} examples={rule.examples} />}
-      <section className="layer"><h2>Rozsah a porovnávání</h2><p>Katalogizační pravidla: {rule.cataloguing_rules ? rule.cataloguing_rules.map((value) => value === "aacr2" ? "AACR2" : "RDA").join(", ") : "rozsah zatím samostatně neprověřen; nelze předpokládat platnost pro AACR2 i RDA"}. Další podmínky jsou ve strojovém zápisu výše.</p>
+      <section className="layer"><h2>Rozsah a porovnávání</h2><CataloguingScope rule={rule} /><p>Další podmínky jsou ve strojovém zápisu výše.</p>
         {rule.non_use ? <><h3>Nepoužití v daném kontextu</h3><p>{rule.non_use.basis === "explicit" ? "Výslovný požadavek citovaného zdroje." : "Výklad omezení citovaného zdroje, nikoli doslovný zákaz."} {localized(rule.non_use.note)}</p><p>Nejde o obecný zákaz v mezinárodním standardu ani o tvrzení, že údaj nemůže být platný podle XML schématu.</p></> : null}
         {rule.comparison ? <><h3>Významový klíč pro porovnání</h3><code>{rule.comparison.key}</code><p>{localized(rule.comparison.note)}</p></> : null}
       </section>
@@ -249,6 +251,7 @@ export function App() {
   const nationalStandard = path.match(/^\/national-standards\/([^/]+)\/?$/);
   if (path === "/" || path === "/map" || path === "/map/") page = <MapPage />;
   else if (path === "/rules" || path === "/rules/") page = <Rules key={path} />;
+  else if (path === "/compare" || path === "/compare/") page = <ComparisonPage />;
   else if (rule?.[1]) page = <RuleDetail key={rule[1]} id={decodeURIComponent(rule[1])} />;
   else if (path === "/standards" || path === "/standards/") page = <EntityList type="standards" />;
   else if (standard?.[1]) page = <EntityDetail type="standards" id={decodeURIComponent(standard[1])} />;

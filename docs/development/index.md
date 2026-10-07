@@ -74,7 +74,7 @@ Ověřený přepis požadavku není potvrzením správnosti souboru ani všech i
 
 ## Rozhraní registru a API
 
-Základ [porovnávání DMF a katalogizačních režimů](registry-data-model.md) pracuje s explicitními významovými klíči a rozsahem AACR2/RDA. První dvojice porovnává `originInfo/@eventType`; API `/api/v1/compare/contexts` vrací i nezpracované a nejednoznačné případy. Rozdíl není automaticky chyba. Nepoužití údaje v kontextu DMF se v rozhraní neoznačuje jako obecný zákaz v MODS/METS a rozlišuje výslovný požadavek od výkladu. Samostatná porovnávací obrazovka a širší anotace jsou další krok.
+Základ [porovnávání DMF a katalogizačních režimů](registry-data-model.md) pracuje s explicitními významovými klíči a rozsahem AACR2/RDA. [Porovnávací obrazovka](https://standardy.digitalizaty.cz/registry/compare) nabízí výběr obou stran, prohození, sdílený odkaz, filtr výsledků a hledání. První dvojice porovnává `originInfo/@eventType`; API `/api/v1/compare/contexts` vrací i nezmapované a nejednoznačné případy, které obrazovka uvádí odděleně. [Audit katalogizačního rozsahu](cataloguing-scope-audit.md) u všech 227 pravidel doložil 178 nezávislých, 45 společných, jeden AACR2 a tři RDA předpisy. Nezávislost se nezaměňuje s neprověřeným rozsahem ani se společným bibliografickým předpisem. Rozdíl není automaticky chyba. Nepoužití údaje v kontextu DMF se v rozhraní neoznačuje jako obecný zákaz v MODS/METS a rozlišuje výslovný požadavek od výkladu. Další významové mapování a další DMF jsou samostatný krok.
 
 Web nabízí hledání bez diakritiky, kombinovatelné filtry, sdílené odkazy, detail konkrétní verze pravidla a interaktivní graf vztahů. Tlačítko **Navrhnout změnu** otevře předvyplněný návrh GitHub issue; samo nic neodesílá.
 

@@ -16,6 +16,25 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "metadata/mods-names"
+    cataloguing_rules: ["aacr2","rda"]
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Společná povinnost dostupné role pojmenovaného původce. Rozdíly ve výběru původců při katalogizaci nejsou tímto pravidlem odstraněny."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 50
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — name a role"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "mandatory_if_available"
     obligation_code: "MA"
     object_types:

@@ -16,6 +16,18 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "structure/mets-internal-parts"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Kontrola přenosu dostupného názvu obrazu do logické mapy. Není samostatným předpisem bibliografické katalogizace obrazu."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 96
+          section: "7.7.1.2.1 — PICTURE/LABEL"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "mandatory"
     obligation_source: "prose"
     object_types:

@@ -15,6 +15,18 @@ versions:
     relation_to_target:
       type: restricts
     category: technical/color
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Požadavek na technická obrazová metadata souboru MC/PS. Neřeší bibliografický popis nosiče ani katalogizační obsah."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 88
+          section: "7.5.4 Technická metadata MIX — samplesPerPixel"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: mandatory
     obligation_code: M
     object_types:

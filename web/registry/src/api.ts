@@ -2,6 +2,7 @@ import type { Relation } from "./explore.ts";
 import type { NdkObligationCode, Obligation } from "../../../packages/registry-core/src/model.ts";
 import type { RuleExample } from "../../../packages/registry-core/src/model.ts";
 import type { RuleVersion as CoreRuleVersion } from "../../../packages/registry-core/src/model.ts";
+import type { ComparisonResult } from "./comparison.ts";
 
 export interface RuleVersion {
   rule_id: string;
@@ -17,6 +18,7 @@ export interface RuleVersion {
   obligation_code?: NdkObligationCode;
   obligation_source?: "prose";
   cataloguing_rules?: CoreRuleVersion["cataloguing_rules"];
+  cataloguing_scope?: CoreRuleVersion["cataloguing_scope"];
   comparison?: CoreRuleVersion["comparison"];
   non_use?: CoreRuleVersion["non_use"];
   normative_requirement: Record<string, string>;
@@ -85,8 +87,8 @@ export interface RegistryEntity {
   verification?: { status: string; date: string | null; reference: string | null };
 }
 
-async function request<T>(path: string): Promise<T> {
-  const response = await fetch(`/api/v1${path}`, { cache: "no-cache", headers: { Accept: "application/json" } });
+async function request<T>(path: string, signal?: AbortSignal): Promise<T> {
+  const response = await fetch(`/api/v1${path}`, { cache: "no-cache", headers: { Accept: "application/json" }, ...(signal ? { signal } : {}) });
   if (!response.ok) {
     const body = await response.json().catch(() => ({})) as { error?: string };
     throw new Error(body.error ?? `API odpovědělo ${response.status}`);
@@ -112,6 +114,7 @@ export const api = {
   why: (id: string) => request<KnowledgeGraphResponse>(`/rules/${encodeURIComponent(id)}/why`),
   standards: () => request<{ data: RegistryEntity[] }>("/standards"),
   standard: (id: string) => request<RegistryEntity & { entities: unknown[] }>(`/standards/${encodeURIComponent(id)}`),
-  nationalStandards: () => request<{ data: RegistryEntity[] }>("/national-standards"),
+  nationalStandards: (signal?: AbortSignal) => request<{ data: RegistryEntity[] }>("/national-standards", signal),
+  compare: (params: string, signal?: AbortSignal) => request<ComparisonResult>(`/compare/contexts?${params}`, signal),
   nationalStandard: (id: string) => request<RegistryEntity & { effective_rules: RuleVersion[] }>(`/national-standards/${encodeURIComponent(id)}`),
 };

@@ -48,7 +48,7 @@ describe("MODS origin agents of a single-volume monograph, DMF 2.3", () => {
     expect(rule("ORIGIN-AGENT-ROLE").interpretation?.cs).toContain("nikoli pouhou absenci eventType=copyright");
   });
   it("checks the copyright prohibition at agent level regardless of role availability", () => {
-    expect(rule("ORIGIN-COPYRIGHT-NO-ROLE").condition).toEqual({ all: [...base, eq("element_role", "mods_origin_agent"), eq("origin_copyright_notice", true)] });
+    expect(rule("ORIGIN-COPYRIGHT-NO-ROLE").condition).toEqual({ all: [...base, eq("element_role", "mods_origin_agent"), eq("origin_copyright_notice", true), eq("cataloguing_rules", "rda")] });
     check("ORIGIN-COPYRIGHT-NO-ROLE", "včetně prázdných kontejnerů");
     check("ORIGIN-COPYRIGHT-NO-ROLE", "Jiná událost téhož záznamu své role neztrácí");
     expect(rule("ORIGIN-COPYRIGHT-NO-ROLE").interpretation?.cs).toContain("neznamená zákaz všech agentů");

@@ -31,7 +31,10 @@ describe("context-aware comparison foundation", () => {
       expect(rule.source).toMatchObject({ document: "DMF Monografie", version: "2.3", page: "51–52" });
       expect(rule.condition).toBeDefined();
     }
-    expect(result.unresolved_context.left).toHaveLength(224);
+    expect(result.unresolved_context.left).toHaveLength(0);
+    expect(result.unresolved_context.right).toHaveLength(0);
+    expect(result.unmapped.left).toHaveLength(223);
+    expect(result.unmapped.right).toHaveLength(225);
     expect(result.unmapped.right.map((rule) => rule.rule_id)).toContain("NDK-MONO-MODS-SINGLE-ORIGIN-PRIMARY-EVENT");
   });
 

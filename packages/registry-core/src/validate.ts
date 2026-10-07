@@ -132,6 +132,10 @@ export async function validateRegistry(
       if (!options.relationsOnly) {
         const addIssue = (message: string) => issues.push({ file: rule.source_file, message: `${rule.id}@${version.version} ${message}` });
         const leaves = cataloguingLeaves(version.condition);
+        const applicability = version.cataloguing_scope?.applicability;
+        if (applicability === "applicable" && !version.cataloguing_rules) addIssue("applicable cataloguing_scope requires cataloguing_rules");
+        if (version.cataloguing_rules && applicability !== "applicable") addIssue("cataloguing_rules requires applicable cataloguing_scope");
+        if (leaves.length && applicability !== "applicable") addIssue("cataloguing condition requires applicable cataloguing_scope");
         if (leaves.length && !version.cataloguing_rules) addIssue("must declare audited cataloguing_rules for its cataloguing condition");
         for (const leaf of leaves) {
           const values = leaf.operator === "equals" ? [leaf.value] : leaf.operator === "in" && Array.isArray(leaf.value) ? leaf.value : [];

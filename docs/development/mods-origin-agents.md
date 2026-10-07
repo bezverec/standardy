@@ -57,7 +57,7 @@ Obecné XSD obě textové hodnoty dovoluje a neřeší jejich národní význam.
 
 ## Výjimka copyright a podmínky
 
-Role má MA, ale DMF výslovně říká, že pro výskyt 264_4 se nepoužije. Zákaz má přednost před dostupností role, zahrnuje i prázdné role a vztahuje se pouze k odpovídajícímu agentovi. Nezakazuje role v dalších událostech téhož záznamu, neodstraňuje copyrightDate a sám nezakazuje nebo nevyžaduje agent.
+Role má MA, ale DMF výslovně říká, že pro výskyt 264_4 se nepoužije. Tato výjimka je červeně označena: podle legendy na s. 24 se vztahuje na RDA. [Audit katalogizačního rozsahu](cataloguing-scope-audit.md) proto doplnil do pravidla explicitní rozsah i podmínku RDA. Nepoužití má přednost před dostupností role, zahrnuje i prázdné role a vztahuje se pouze k odpovídajícímu agentovi. Nezakazuje role v dalších událostech téhož záznamu, neodstraňuje copyrightDate a sám nezakazuje nebo nevyžaduje agent.
 
 Společné podmínky jsou object_type=monograph, document_role=main_mets a bibliographic_level=single_volume:
 
@@ -67,7 +67,7 @@ Společné podmínky jsou object_type=monograph, document_role=main_mets a bibli
 | mods_origin_agent pro NAME | Bez podmínky již přítomného namePart |
 | mods_origin_agent pro ROLE | origin_copyright_notice=false a origin_agent_role_available=true |
 | mods_origin_agent_role pro ROLE-TERM | origin_copyright_notice=false |
-| mods_origin_agent pro COPYRIGHT-NO-ROLE | origin_copyright_notice=true, bez podmínky dostupnosti role |
+| mods_origin_agent pro COPYRIGHT-NO-ROLE | origin_copyright_notice=true a cataloguing_rules=rda, bez podmínky dostupnosti role |
 
 Tyto kontexty nejsou nové XML atributy. Dostupnost a původ údaje se stanovují nezávisle z katalogu nebo předlohy. False znamená doložený ne-copyright kontext, ne pouhou nepřítomnost eventType=copyright. Neznámý údaj není false ani potvrzení správnosti. Tak zůstávají možné i role v AACR originInfo, kde se eventType nepoužívá.
 

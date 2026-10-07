@@ -16,6 +16,18 @@ versions:
     relation_to_target:
       type: "clarifies"
     category: "metadata/info"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Kontrola převzetí a typování přidělených identifikátorů z příslušné úrovně MODS. Nejde o pravidlo tvorby bibliografického popisu ani o název titulu."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 17
+          section: "7.1 Soubor info.xml — titleid"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "mandatory"
     obligation_code: "M"
     object_types:

@@ -99,19 +99,24 @@ Porovnání musí oddělit několik nezávislých os:
 |---|---|
 | Druh DMF a jeho verze | `national_standard.id` + `versions[].version` |
 | Objekt a bibliografická úroveň | `object_types` a podmínky `object_type`, `bibliographic_level` |
-| Katalogizační pravidla | volitelné `cataloguing_rules: [aacr2]`, `[rda]` nebo `[aacr2, rda]` |
+| Relevance katalogizace | `cataloguing_scope.applicability`: `independent`, `applicable`, `undetermined`; zdůvodnění, datum a prameny posouzení |
+| Katalogizační pravidla | pro `applicable` povinné `cataloguing_rules: [aacr2]`, `[rda]` nebo `[aacr2, rda]` |
 | Role záznamu/elementu a technický kontext | `condition`, například `document_role`, `element_role`, role souboru |
 | Srovnávaný význam a aspekt | explicitní `comparison.key` + zdůvodnění `comparison.note` |
 
 Dosavadní `monograph` v číselníku označuje rozsah DMF Monografie; není univerzální klasifikací všech fyzických předloh. Existující kontexty se nepřepisují ani neslučují do jediné kategorie.
 
-Chybějící `cataloguing_rules` znamená **samostatně neprověřený rozsah**, nikoli obě varianty. U společného pravidla je třeba výslovně doložit obě. Seznam i případné katalogizační podmínky se uplatňují současně; validace odmítá zjevný rozpor. Interní podmínka nyní používá `aacr2`; doslovný kód `aacr` v MODS `descriptionStandard`, zdrojových výřezech a stabilních ID zůstává zachován. Režim nelze odvozovat z existence kontrolovaného eventType. Katalogizační podmínky používají `equals`/`in` a řízené hodnoty; `all`/`any`/`not` zachovávají neznámé ostatní okolnosti.
+Chybějící `cataloguing_scope` nebo hodnota `undetermined` znamená **neurčený rozsah**, nikoli obě varianty ani nezávislost. Doložené `independent` zůstává zahrnuto při volbě AACR2 i RDA a nemá `cataloguing_rules` ani katalogizační podmínku. `applicable` vyžaduje neprázdné `cataloguing_rules`; dvě hodnoty znamenají společný předpis v relevantní bibliografické oblasti, nikoli irelevanci katalogizace. Každé posouzení má `note`, `reviewed_on` a `sources` s lokátorem; jde o redakční závěr oddělený od `verification` přepisu požadavku. Seznam i případné katalogizační podmínky se uplatňují současně; validace odmítá jejich rozpor i kombinaci nezávislosti s katalogizačním omezením. Interní podmínka používá `aacr2`; doslovný kód `aacr` v MODS `descriptionStandard`, zdrojových výřezech a stabilních ID zůstává zachován. Režim nelze odvozovat z existence kontrolovaného eventType nebo jediného MARC pole. Katalogizační podmínky používají `equals`/`in` a řízené hodnoty; `all`/`any`/`not` zachovávají neznámé ostatní okolnosti.
 
-První zmapovanou dvojicí je `mods.descriptive-origin.event-type`: nepoužití v AACR2 versus požadavek pro RDA. Tři pravidla skupiny originInfo mají deklarovaný katalogizační rozsah; ostatní pravidla zatím nebyla takto plošně anotována. Klíče se nepřidělují odstraněním prefixu ID nebo shodou lokálního názvu elementu: různé role `name` či `type` nejsou automaticky ekvivalentní. Podmínky se vždy vracejí a porovnávají celé.
+První zmapovanou dvojicí je `mods.descriptive-origin.event-type`: nepoužití v AACR2 versus požadavek pro RDA. [Audit všech 227 pravidel](cataloguing-scope-audit.md) rozlišuje 178 nezávislých požadavků, 45 společných bibliografických předpisů, jeden AACR2 a tři RDA předpisy. Relevance se neodvozuje za běhu z namespace ani kategorie. Audit rozsahu není mapování ekvivalence: klíče se nepřidělují odstraněním prefixu ID nebo shodou lokálního názvu elementu. Různé role `name` či `type` nejsou automaticky ekvivalentní. Podmínky se vždy vracejí a porovnávají celé.
 
 ### Čtecí API a výsledek
 
-Nový endpoint `/api/v1/compare/contexts` dovoluje nezávisle vybrat `national_standard_a`, `version_a`, `national_standard_b`, `version_b` a volitelně `cataloguing_a`/`cataloguing_b`. Existující diff verzí jednoho standardu zůstává beze změny. Kontrakt a zkoušení nového endpointu jsou ve Swaggeru; samostatná porovnávací obrazovka zatím není implementována.
+Endpoint `/api/v1/compare/contexts` dovoluje nezávisle vybrat `national_standard_a`, `version_a`, `national_standard_b`, `version_b` a volitelně `cataloguing_a`/`cataloguing_b`. Existující diff verzí jednoho standardu zůstává beze změny. Kontrakt a zkoušení endpointu jsou ve Swaggeru; uživatelské rozhraní je na `/registry/compare` v hlavní navigaci pod **Porovnání**.
+
+Obrazovka nabízí dva nezávislé výběry, prohození stran a odkaz obsahující aplikovaný výběr. Změny formuláře se provedou tlačítkem **Porovnat**; do té doby je původní výsledek označen vlastním kontextem A/B a upozorněním na změnu výběru. Funguje i historie prohlížeče. Neplatný sdílený výběr se nevymění potichu za jiný standard či verzi. Bez parametrů je předvolen příklad Monografie 2.3 AACR2 versus RDA, pokud je v seznamu dostupný.
+
+Výsledky lze filtrovat podle stavu a hledat podle klíče, názvu, ID a normativního textu. Obě strany mají požadavek, povinnost, zdroj s lokátorem, odkaz na konkrétní verzi pravidla a rozbalitelné podmínky. Další detail ukazuje změněná pole A/B. Nezmapované, katalogizačně neprověřené a vyloučené záznamy mají oddělené sbalené seznamy s počty a postupným načítáním do zobrazení po 20 položkách. Na úzké obrazovce jsou strany pod sebou. Nejde o načtení dalších pravidel ze serveru: API vrací úplný výběr, stránkováno je jeho zobrazení. Filtry výsledků nejsou součástí sdíleného odkazu.
 
 ```bash
 curl 'https://standardy.digitalizaty.cz/api/v1/compare/contexts?national_standard_a=ndk-monograph&version_a=2.3&cataloguing_a=aacr2&national_standard_b=ndk-monograph&version_b=2.3&cataloguing_b=rda'
@@ -126,11 +131,11 @@ Výstup obsahuje obě kompletní pravidla včetně pramenů, změněná pole a s
 - `ambiguous_mapping`: klíč má na některé straně více kandidátů; žádný se potichu nevybere.
 - `unverified`: alespoň jeden spárovaný požadavek není ověřený a normativní; tento stav brání vykázání potvrzené shody.
 
-Samostatně se vracejí nezmapovaná pravidla (`unmapped`), neurčený katalogizační rozsah (`unresolved_context`) a pravidla vyloučená zvoleným režimem (`excluded_context`). **Nenalezené pravidlo neznamená, že zdrojový DMF mlčí, údaj dovoluje nebo zakazuje.** Neexistující standard/verze vrací 404, neúplný výběr či neznámý katalogizační kód 400.
+Samostatně se vracejí zahrnutá pravidla bez významového klíče (`unmapped`, včetně nezávislých), neurčený katalogizační rozsah (`unresolved_context`) a pravidla vyloučená zvoleným režimem (`excluded_context`). Obrazovka uvádí počty zahrnutých nezávislých a společných pravidel odděleně od počtu spárovaných aspektů. Pro Monografie 2.3 AACR2/RDA nyní není žádný neurčený rozsah, ale 223/225 záznamů ještě nemá párovací klíč. Bez katalogizačního filtru zůstávají zahrnuta i neposouzená pravidla. **Nenalezené pravidlo neznamená, že zdrojový DMF mlčí, údaj dovoluje nebo zakazuje.** Neexistující standard/verze vrací 404, neúplný výběr či neznámý katalogizační kód 400.
 
 Porovnání je strukturální: zahrnuje normativní text, strojové požadavky, povinnost, cíl a podmínky; ignoruje rozdíly stránkování zdroje, data přepisu či ukázek. Nerozhoduje ekvivalenci různě formulovaných kontrol ani různě uspořádaných polí. Nevyhodnocuje XML, další kontextové podmínky ani dědičnost standardů. Přidání druhé DMF je ověřeno syntetickým testem, nikoli vymyšlenými produkčními záznamy.
 
-Další kroky: rozšířit odborně ověřené mapování na další DMF a pravidla, doplnit porovnávací obrazovku a evidenci výsledku odborného posouzení (zamýšlený rozdíl, podezření, potvrzený nesoulad). Automatická detekce rozdílu tento redakční závěr nenahrazuje.
+Další kroky: rozšířit odborně ověřené mapování na další DMF a pravidla a doplnit evidenci výsledku odborného posouzení (zamýšlený rozdíl, podezření, potvrzený nesoulad). Automatická detekce rozdílu tento redakční závěr nenahrazuje.
 
 ## Přidání záznamu
 

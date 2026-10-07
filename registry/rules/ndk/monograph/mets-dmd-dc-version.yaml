@@ -16,6 +16,18 @@ versions:
     relation_to_target:
       type: "restricts"
     category: "structure/mets-dmd"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Požadavek na strukturu, obálku, inventář nebo vazby METS. Bibliografický obsah vložených či odkazovaných záznamů se tímto pravidlem nekatalogizuje."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: "21–22"
+          section: "7.4 METS část dmdSec — bibliografická metadata"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "forbidden"
     obligation_source: "prose"
     non_use:

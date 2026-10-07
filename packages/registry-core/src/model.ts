@@ -140,7 +140,14 @@ export interface RuleVersion {
   obligation: Obligation;
   obligation_code?: NdkObligationCode;
   obligation_source?: "prose";
-  /** Omission means unaudited, not automatically common to AACR2 and RDA. */
+  /** Editorial assessment of this requirement, not of its entire XML namespace. */
+  cataloguing_scope?: {
+    applicability: "independent" | "applicable" | "undetermined";
+    note: LocalizedText;
+    reviewed_on: string;
+    sources: Source[];
+  };
+  /** Only for applicable scope. Both values mean a documented common requirement. */
   cataloguing_rules?: CataloguingRules[];
   comparison?: { key: string; note: LocalizedText };
   non_use?: { basis: "explicit" | "interpretation"; note: LocalizedText };

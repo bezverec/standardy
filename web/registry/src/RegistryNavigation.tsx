@@ -12,6 +12,7 @@ export function RegistryNavigation({ path, onNavigate }: {
   const links = [
     { href: "/registry/", title: "Mapa registru", active: path === "/" || path === "/map" || path === "/map/" },
     { href: "/registry/rules", title: "Pravidla", active: path.startsWith("/rules") },
+    { href: "/registry/compare", title: "Porovnání", active: path === "/compare" || path === "/compare/" },
     { href: "/registry/standards", title: "Zdrojové standardy", active: path.startsWith("/standards") },
     { href: "/registry/national-standards", title: "Standardy NDK", active: path.startsWith("/national-standards") },
   ];

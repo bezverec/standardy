@@ -16,6 +16,18 @@ versions:
     relation_to_target:
       type: "clarifies"
     category: "metadata/info"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Požadavek na správu, inventář nebo integritu SIP v info.xml, nikoli na bibliografickou katalogizaci předlohy."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 17
+          section: "7.1 Soubor info.xml — metadataversion"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
     obligation: "mandatory"
     obligation_code: "M"
     object_types:

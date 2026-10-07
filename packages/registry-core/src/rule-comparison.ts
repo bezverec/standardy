@@ -37,8 +37,9 @@ function select(rules: ComparableRule[], selection: ComparisonSelection) {
   for (const rule of rules.filter((item) => item.national_standard_id === selection.national_standard && item.version === selection.version)
     .sort((a, b) => a.rule_id.localeCompare(b.rule_id))) {
     if (selection.cataloguing_rules) {
-      if (!rule.cataloguing_rules) { unresolved_context.push(rule); continue; }
-      if (!rule.cataloguing_rules.includes(selection.cataloguing_rules)
+      const applicability = rule.cataloguing_scope?.applicability;
+      if (!applicability || applicability === "undetermined" || (applicability === "applicable" && !rule.cataloguing_rules)) { unresolved_context.push(rule); continue; }
+      if ((applicability === "applicable" && !rule.cataloguing_rules?.includes(selection.cataloguing_rules))
         || cataloguingCondition(rule.condition, selection.cataloguing_rules) === false) {
         excluded_context.push(rule); continue;
       }
@@ -58,6 +59,7 @@ function requirements(rule: ComparableRule) {
     target: rule.target, obligation: rule.obligation, obligation_code: rule.obligation_code,
     normative_requirement: rule.normative_requirement, requirement: rule.requirement,
     condition: rule.condition, object_types: rule.object_types, cataloguing_rules: rule.cataloguing_rules,
+    cataloguing_applicability: rule.cataloguing_scope?.applicability,
   };
 }
 
@@ -74,7 +76,7 @@ export function compareRuleContexts(rules: ComparableRule[], left: ComparisonSel
     if ([before[0], after[0]].some((rule) => rule.verification.status !== "verified" || rule.status !== "normative")) {
       return { ...base, status: "unverified" as const, changes };
     }
-    const differentContext = changes.some((change) => ["condition", "object_types", "cataloguing_rules"].some((field) => change.field === field || change.field.startsWith(`${field}.`)));
+    const differentContext = changes.some((change) => ["condition", "object_types", "cataloguing_rules", "cataloguing_applicability"].some((field) => change.field === field || change.field.startsWith(`${field}.`)));
     return { ...base, status: !changes.length ? "same_recorded_requirement" as const
       : differentContext ? "different_context" as const : "difference_for_review" as const, changes };
   });

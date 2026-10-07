@@ -136,10 +136,21 @@
         "obligation": { "enum": ["mandatory", "mandatory_if_available", "recommended", "recommended_if_available", "optional", "forbidden", "unspecified"], "description": "Úroveň povinnosti podle citované verze standardu. Varianty if_available rozlišují dostupnost údaje, nikoli podmínku platnosti pravidla. Historické RA/O se nepřevádějí na R; nejde o závažnost validačního hlášení." },
         "obligation_code": { "enum": ["M", "MA", "R", "RA", "O"], "description": "Původní kód povinnosti NDK doslova z pramene této verze pravidla. Pokud pramen uvádí pouze slovní požadavek, vynechat a uvést obligation_source: prose. Kód se neodvozuje z obecné úrovně." },
         "obligation_source": { "enum": ["prose"], "description": "Výslovné označení slovního požadavku bez původního kódu povinnosti; nelze kombinovat s obligation_code." },
+        "cataloguing_scope": {
+          "type": "object", "additionalProperties": false,
+          "required": ["applicability", "note", "reviewed_on", "sources"],
+          "properties": {
+            "applicability": { "enum": ["independent", "applicable", "undetermined"] },
+            "note": { "$ref": "#/$defs/localized" },
+            "reviewed_on": { "type": "string", "format": "date" },
+            "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } }
+          },
+          "description": "Redakční posouzení konkrétního požadavku: independent = nezávislý na katalogizaci, applicable = doložený rozsah v cataloguing_rules, undetermined = dosud neurčený rozsah. Nepřítomnost posouzení není důkaz nezávislosti. Zdroje a datum posouzení jsou oddělené od ověření přepisu pravidla."
+        },
         "cataloguing_rules": {
           "type": "array", "minItems": 1, "uniqueItems": true,
           "items": { "enum": ["aacr2", "rda"] },
-          "description": "Ověřený katalogizační rozsah podle source. Vynechání znamená nezpracovaný rozsah, nikoli automaticky oba režimy. Nejde o doslovnou hodnotu MODS descriptionStandard (aacr)."
+          "description": "Doložený rozsah pouze pro cataloguing_scope.applicability=applicable. Obě hodnoty znamenají společný předpis, nikoli nezávislost na katalogizaci. Nejde o doslovnou hodnotu MODS descriptionStandard (aacr)."
         },
         "comparison": {
           "type": "object", "additionalProperties": false, "required": ["key", "note"],

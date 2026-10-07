@@ -72,6 +72,7 @@ nav:
       - Přehled a pokrytí: development/index.md
       - Architektura: development/architecture.md
       - Datový model: development/registry-data-model.md
+      - Rozsah AACR2 a RDA: development/cataloguing-scope-audit.md
       - Kategorie a graf vztahů: development/graph-and-categories.md
       - XML ukázky ze vzorového SIP: development/xml-examples.md
       - Případ ICC profile version: development/icc-profile-version.md
