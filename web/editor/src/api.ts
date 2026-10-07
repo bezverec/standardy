@@ -13,6 +13,8 @@ export const errors: Record<string, string> = {
   revision_conflict: "Koncept mezitím někdo změnil. Vaše změny zůstaly ve formuláři; znovunačtení je zahodí.",
   base_changed: "Publikovaný dataset se změnil. Tento návrh nelze uložit bez nového porovnání s aktuální verzí.",
   owner_required: "Cizí koncept je dostupný jen pro čtení.",
+  create_rule_forbidden: "Nová pravidla mohou vytvářet a upravovat pouze editor a správce. Existující návrh zůstal ve formuláři.",
+  rule_id_exists: "Pravidlo s tímto ID již existuje. Zvolte jiné ID, nebo načtěte existující pravidlo jako návrh změny.",
   not_found: "Záznam není dostupný.",
   rate_limited: "Příliš mnoho požadavků. Zkuste to za minutu.",
 };

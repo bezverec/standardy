@@ -94,7 +94,8 @@ export async function handleEditor(request: Request, env: EditorEnv): Promise<Re
       privateDb.prepare("INSERT INTO editor_rate_limits (user_id, minute, count) VALUES (?, ?, 1) ON CONFLICT(user_id, minute) DO UPDATE SET count = count + 1 RETURNING count").bind(userId, minute),
     ]);
     if (Number(rate[1]?.results[0]?.count) > 120) return editorJson({ error: "rate_limited" }, 429);
-    if (route === "/session" && request.method === "GET") return editorJson({ userId, role: member.role });
+    const canCreateRules = member.role === "editor" || member.role === "admin";
+    if (route === "/session" && request.method === "GET") return editorJson({ userId, role: member.role, capabilities: { create_rules: canCreateRules } });
     if (route === "/drafts" && request.method === "GET") {
       const rows = await privateDb.prepare("SELECT id, owner_id, rule_id, revision, base_commit, content_hash, created_at, updated_at FROM editor_drafts WHERE owner_id = ? OR ? != 'editor' ORDER BY updated_at DESC LIMIT 100").bind(userId, member.role).all();
       return editorJson({ data: rows.results, limit: 100 });
@@ -113,25 +114,35 @@ export async function handleEditor(request: Request, env: EditorEnv): Promise<Re
     const ruleMatch = route.match(/^\/rules\/([A-Za-z0-9._-]+)$/);
     if (!(route === "/catalog" && request.method === "GET") && !(ruleMatch && request.method === "GET") && !isCreate && !isUpdate && !isValidate) return editorJson({ error: "not_found" }, 404);
     const published = await snapshot(env.DB);
-    if (route === "/catalog") return editorJson({ base_commit: published.commit, rules: published.documents.filter((doc) => doc.kind === "rule").map((doc) => ({ id: doc.id, title: doc.title })) });
+    if (route === "/catalog") return editorJson({
+      base_commit: published.commit,
+      rules: published.documents.filter((doc) => doc.kind === "rule").map((doc) => ({ id: doc.id, title: doc.title })),
+      national_standards: published.documents.filter((doc) => doc.kind === "national_standard").map((doc) => ({ id: doc.id, title: doc.title, versions: doc.versions.map((v) => v.version) })),
+      targets: published.documents.filter((doc) => doc.kind === "standard").flatMap((doc) => doc.entities.map((entity) => ({ id: entity.id, title: entity.title }))),
+    });
     if (ruleMatch) {
       const document = published.documents.find((doc) => doc.kind === "rule" && doc.id === ruleMatch[1]);
       return document ? editorJson({ document, base_commit: published.commit }) : editorJson({ error: "not_found" }, 404);
     }
     const input = await body(request);
-    if (Object.keys(input).some((key) => !["document", "base_commit", "revision"].includes(key))) return editorJson({ error: "unknown_fields" }, 400);
+    if (Object.keys(input).some((key) => !["document", "base_commit", "revision", "new_rule"].includes(key))) return editorJson({ error: "unknown_fields" }, 400);
+    if (input.new_rule !== undefined && (typeof input.new_rule !== "boolean" || isUpdate)) return editorJson({ error: "invalid_request" }, 400);
     if (input.base_commit !== published.commit || (draft && draft.base_commit !== published.commit)) return editorJson({ error: "base_changed", current_commit: published.commit }, 409);
     const issues = validateProposal(input.document, published.documents);
     if (issues.length) return editorJson({ error: "validation_failed", issues }, 422);
     const document = input.document as RuleDocument;
     if (draft && draft.rule_id !== document.id) return editorJson({ error: "draft_identity_changed" }, 400);
-    const base = draft?.base_document ? JSON.parse(draft.base_document) : published.documents.find((doc) => doc.kind === "rule" && doc.id === document.id) ?? null;
+    const existing = published.documents.find((doc) => doc.kind === "rule" && doc.id === document.id) ?? null;
+    const base = draft ? (draft.base_document ? JSON.parse(draft.base_document) : null) : existing;
+    // Derive authorization from server data, never from the client creation flag.
+    if (!base && !canCreateRules) return editorJson({ error: "create_rule_forbidden" }, 403);
+    if (input.new_rule && existing) return editorJson({ error: "rule_id_exists" }, 409);
     const changes = changedFields(base, document);
     if (isValidate) return editorJson({ issues: [], changes, note: "Kontrola schématu a sémantických vazeb, nikoli odborné schválení či validace XML/SIP." });
     const now = new Date().toISOString();
     const hash = await documentHash(document);
     const json = JSON.stringify(document);
-    const membership = "EXISTS (SELECT 1 FROM editor_members WHERE user_id = ? AND active = 1)";
+    const membership = `EXISTS (SELECT 1 FROM editor_members WHERE user_id = ? AND active = 1${base ? "" : " AND role IN ('editor', 'admin')"})`;
     if (isCreate) {
       const id = crypto.randomUUID();
       const result = await privateDb.prepare(`INSERT INTO editor_drafts (id, owner_id, rule_id, base_commit, base_document, document, content_hash, revision, created_at, updated_at) SELECT ?, ?, ?, ?, ?, ?, ?, 1, ?, ? WHERE ${membership} RETURNING id`)

@@ -9,6 +9,8 @@ import { changedFields, documentHash, validateProposal } from "../worker/src/edi
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { RuleForm } from "../web/editor/src/RuleForm.tsx";
+import { NewRuleFields } from "../web/editor/src/NewRuleFields.tsx";
+import { blankRule } from "../web/editor/src/new-rule.ts";
 
 // Only the external authentication boundary is mocked, never a production bypass.
 const auth = vi.hoisted(() => vi.fn());
@@ -137,6 +139,59 @@ describe("private editor boundary and persistence", () => {
     document.id = "MIX";
     expect((await request("/validate", "POST", { document, base_commit: commit })).status).toBe(422);
   });
+  it("exposes creation capability and catalog choices for editor, admin and reviewer", async () => {
+    for (const role of ["editor", "admin", "reviewer"]) {
+      privateDb.prepare("UPDATE editor_members SET role=? WHERE user_id='operator'").run(role);
+      expect(await (await request("/session")).json()).toMatchObject({ capabilities: { create_rules: role !== "reviewer" } });
+    }
+    const catalog = await (await request("/catalog")).json() as { national_standards: unknown[]; targets: Array<{ id: string }> };
+    expect(catalog.national_standards.length).toBeGreaterThan(0);
+    expect(catalog.targets.some((item) => item.id === candidate.versions[0]!.target.entity)).toBe(true);
+  });
+  it("denies new rules to reviewer even with omitted or false client flags, but permits existing proposals", async () => {
+    signedIn("reviewer");
+    const document = { ...candidate, id: "NEW-REVIEWER-RULE" };
+    for (const route of ["/validate", "/drafts"]) for (const flag of [undefined, false, true]) {
+      const response = await request(route, "POST", { document, base_commit: commit, ...(flag === undefined ? {} : { new_rule: flag }) });
+      expect(response.status).toBe(403);
+      expect(await response.json()).toEqual({ error: "create_rule_forbidden" });
+    }
+    expect(privateDb.prepare("SELECT COUNT(*) AS count FROM editor_drafts").get()).toEqual({ count: 0 });
+    await create();
+  });
+  it("permits admin creation, protects explicit new IDs and rechecks permissions after demotion", async () => {
+    privateDb.exec("UPDATE editor_members SET role='admin' WHERE user_id='operator'");
+    for (const route of ["/validate", "/drafts"]) {
+      const duplicate = await request(route, "POST", { document: candidate, base_commit: commit, new_rule: true });
+      expect(duplicate.status).toBe(409);
+      expect(await duplicate.json()).toEqual({ error: "rule_id_exists" });
+    }
+    const document = { ...candidate, id: "NEW-ADMIN-RULE" };
+    const draft = await create(document);
+    privateDb.exec("UPDATE editor_members SET role='reviewer' WHERE user_id='operator'");
+    expect((await request(`/drafts/${draft.id}`)).status).toBe(200);
+    expect((await request(`/drafts/${draft.id}`, "PUT", { document, base_commit: commit, revision: 1 })).status).toBe(403);
+    expect(privateDb.prepare("SELECT COUNT(*) AS count FROM editor_revisions").get()).toEqual({ count: 1 });
+    privateDb.exec("UPDATE editor_members SET role='editor' WHERE user_id='operator'");
+    expect((await request(`/drafts/${draft.id}`, "PUT", { document, base_commit: commit, revision: 1 })).status).toBe(200);
+  });
+  it("saves a completed blank form without inherited evidence and keeps it out of the public registry", async () => {
+    const document = blankRule();
+    expect(validateProposal(document, docs).length).toBeGreaterThan(0);
+    document.id = "NEW-FROM-BLANK"; document.title.cs = "Test nového návrhu";
+    document.national_standard = structuredClone(candidate.national_standard);
+    Object.assign(document.versions[0]!, {
+      version: candidate.versions[0]!.version, target: structuredClone(candidate.versions[0]!.target), category: "metadata/MIX",
+      normative_requirement: { cs: "Testovací požadavek" }, requirement: { presence: "required" },
+      source: { document: "Testovací pramen", version: null, page: null, section: null, url: null },
+    });
+    expect(validateProposal(document, docs)).toEqual([]);
+    const response = await request("/drafts", "POST", { document, base_commit: commit, new_rule: true });
+    expect(response.status).toBe(201);
+    expect(document.versions[0]!.verification).toEqual({ status: "unverified", date: null, reference: null });
+    expect(document.versions[0]!.examples).toBeUndefined();
+    expect((await handleRequest(new Request(`${origin}/api/v1/rules/${document.id}`), env)).status).toBe(404);
+  });
   it("limits payloads, methods and per-user requests", async () => {
     expect((await request("/validate", "POST", { huge: "a".repeat(256 * 1024) })).status).toBe(413);
     expect((await request("/validate", "POST", {}, { "Content-Type": "text/plain" })).status).toBe(415);
@@ -171,5 +226,7 @@ describe("shared validation, deterministic evidence and form rendering", () => {
     const html = renderToStaticMarkup(createElement(RuleForm, { document, index: 0, onChange: () => {} }));
     expect(html).toContain("&lt;script&gt;"); expect(html).not.toContain("<script>");
     expect(html).toContain("Normativní požadavek"); expect(html).toContain("Výklad registru");
+    const blank = renderToStaticMarkup(createElement(NewRuleFields, { document: blankRule(), catalog: { national_standards: [], targets: [] }, identityLocked: false, onChange: () => {} }));
+    expect(blank).toContain("ID nového pravidla"); expect(blank).toContain("Cílový prvek");
   });
 });

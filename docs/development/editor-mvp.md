@@ -6,7 +6,8 @@ Implementace k 7. 10. 2026 na `/editor/`: samostatná Clerk aplikace Standardy v
 
 - Samostatný frontend `/editor/`, přihlášení přes `@clerk/react` a serverové ověření session přes `@clerk/backend`. Veřejný frontend Clerk nenačítá.
 - Členství podle stabilního Clerk `user_id`; pouhé přihlášení nestačí. Editor vidí vlastní koncepty, recenzent a správce mohou číst všechny. Všichni upravují jen vlastní koncepty. Správa členů a schvalování zatím nemají API ani UI.
-- Výběr publikovaného pravidla, základní formulář požadavku, výkladu a pramene, výběr verze a pokročilý JSON celého dokumentu. Nové pravidlo lze odvodit změnou ID před prvním uložením, včetně odpovídajících identifikátorů a vazeb.
+- Výběr publikovaného pravidla, základní formulář požadavku, výkladu a pramene, výběr verze a pokročilý JSON celého dokumentu. Editor a správce mohou také založit úplně nové pravidlo z prázdného formuláře: ID, národní standard/verze, cílový prvek, kategorie, povinnost a přítomnost. Nový návrh začíná jako `draft` / `unverified`, bez převzatých pramenů, příkladů nebo ověření. Neúplný formulář nelze uložit.
+- Recenzent může nadále navrhovat změny existujících pravidel, ale nesmí vytvářet ani upravovat koncepty úplně nových pravidel. Oprávnění vynucuje server i při přímém API požadavku nebo změně ID v JSON; klientská schopnost `create_rules` slouží jen pro UI. Po změně role se oprávnění znovu kontroluje při zápisu.
 - Stejné JSON Schema a sémantické kontroly jako CLI. Pro Workers se schema předkompiluje při buildu; validátor nepoužívá runtime `eval`.
 - Strukturovaný diff proti publikovanému základu, ruční uložení do soukromé D1, hash obsahu a historie všech uložených revizí. SQLite triggery ukládají historii ve stejné transakci jako změnu.
 - Optimistický zámek: změna očekávané revize nebo Git SHA výchozího datasetu vrací 409, nikoli přepsání.
@@ -48,8 +49,8 @@ Všechny cesty mají prefix `/api/editor`. Kromě `/config` vyžadují session t
 | Metoda a cesta | Výsledek |
 | --- | --- |
 | `GET /config` | Jen publishable key; bez úplné konfigurace 503 |
-| `GET /session` | ID a role přihlášeného člena |
-| `GET /catalog`, `GET /rules/:id` | Výchozí publikovaná data a Git SHA |
+| `GET /session` | ID, role a `capabilities.create_rules` přihlášeného člena |
+| `GET /catalog`, `GET /rules/:id` | Výchozí publikovaná data a Git SHA; katalog také obsahuje národní standardy/verze a cílové prvky |
 | `GET /drafts` | Nejvýše 100 posledních dostupných konceptů |
 | `GET /drafts/:id` | Dostupný koncept, základ a diff |
 | `POST /validate` | Kontrola `{document, base_commit}` bez uložení |
@@ -57,6 +58,8 @@ Všechny cesty mají prefix `/api/editor`. Kromě `/config` vyžadují session t
 | `PUT /drafts/:id` | Uložení `{document, base_commit, revision}` jen vlastníkem |
 
 Identita vlastníka, základ, hash a nová revize se určují na serveru. Chybějící session vrací 401, chybějící členství 403, cizí koncept běžnému editorovi 404, nevalidní dokument 422. Selhání Clerk/databáze vrací obecnou 503 bez interních údajů.
+
+Při zakládání nového pravidla UI posílá na `/validate` a první `POST /drafts` také `new_rule: true`; kolize s publikovaným ID vrací 409 `rule_id_exists`, nikoli tichý přechod na úpravu existujícího pravidla. Role se vždy kontroluje podle skutečného publikovaného základu, i bez tohoto příznaku. Chybějící oprávnění vrací 403 `create_rule_forbidden`. Soukromé koncepty stejného ID mohou mít více návrhů; tento MVP jim ještě nerezervuje veřejné ID. Po prvním uložení je ID konceptu neměnné.
 
 Soukromé odpovědi mají `private, no-store`, bez otevřeného CORS. Zápisy vyžadují přesný Origin a JSON, limit 256 KiB a maximální hloubku 30. Ověřené členské požadavky mají limit 120 za minutu a uživatele. Statický přihlašovací shell není tajný, ale neobsahuje koncepty; má `noindex` a necachuje se. JSON/XML se vykreslují jako text, ne jako HTML.
 

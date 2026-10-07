@@ -3,11 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import type { RuleDocument } from "../../../packages/registry-core/src/model.ts";
 import { editorRequest, EditorError, errors } from "./api.ts";
 import { RuleForm } from "./RuleForm.tsx";
+import { NewRuleFields } from "./NewRuleFields.tsx";
+import { blankRule, type NewRuleCatalog } from "./new-rule.ts";
 
-type Catalog = { base_commit: string; rules: Array<{ id: string; title: { cs?: string } }> };
-type Session = { userId: string; role: string };
+type Catalog = NewRuleCatalog & { base_commit: string; rules: Array<{ id: string; title: { cs?: string } }> };
+type Session = { userId: string; role: string; capabilities: { create_rules: boolean } };
 type DraftSummary = { id: string; rule_id: string; revision: number; owner_id: string };
-type Draft = DraftSummary & { document: RuleDocument; base_commit: string };
+type Draft = DraftSummary & { document: RuleDocument; base_commit: string; base_document: RuleDocument | null };
 type Change = { path: string; before: unknown; after: unknown };
 type Validation = { issues: Array<{ path?: string; message: string }>; changes: Change[]; note: string };
 
@@ -35,9 +37,10 @@ function Workspace() {
   const [message, setMessage] = useState("");
   const [validation, setValidation] = useState<Validation | null>(null);
   const [selectedRule, setSelectedRule] = useState("");
+  const [newRule, setNewRule] = useState(false);
   const mounted = useRef(true);
-  const forbidden = error?.status === 401 || error?.status === 403;
-  const readOnly = Boolean(draft && draft.owner_id !== session?.userId);
+  const forbidden = error?.status === 401 || (error?.status === 403 && !["create_rule_forbidden", "owner_required"].includes(error.code));
+  const readOnly = Boolean(draft && draft.owner_id !== session?.userId) || (newRule && !session?.capabilities.create_rules);
 
   async function api<T>(path: string, method = "GET", body?: unknown, signal?: AbortSignal): Promise<T> {
     const token = await getToken();
@@ -75,10 +78,16 @@ function Workspace() {
     try { await action(); } catch (reason) { if (mounted.current) failure(reason); }
     finally { if (mounted.current) setPending(false); }
   }
-  function accept(next: RuleDocument, commit: string, selectedDraft: DraftSummary | null) {
+  function accept(next: RuleDocument, commit: string, selectedDraft: DraftSummary | null, isNew = false) {
     if (!mounted.current) return;
     setDocument(next); setBaseCommit(commit); setDraft(selectedDraft); setVersionIndex(0);
+    setNewRule(isNew);
     setJsonText(JSON.stringify(next, null, 2)); setDirty(false); setJsonDirty(false); setValidation(null);
+  }
+  function startNewRule() {
+    if (!catalog || !session?.capabilities.create_rules || !canReplace()) return;
+    accept(blankRule(), catalog.base_commit, null, true);
+    setDirty(true); setError(null); setMessage("");
   }
   async function loadRule() {
     if (!selectedRule || !canReplace()) return;
@@ -91,12 +100,12 @@ function Workspace() {
     if (!canReplace()) return;
     await run(async () => {
       const result = await api<Draft>(`/drafts/${id}`);
-      accept(result.document, result.base_commit, result);
+      accept(result.document, result.base_commit, result, result.base_document === null);
     });
   }
   async function validate(next = document) {
     if (!next) return;
-    const result = await api<Validation>("/validate", "POST", { document: next, base_commit: baseCommit });
+    const result = await api<Validation>("/validate", "POST", { document: next, base_commit: baseCommit, ...(newRule ? { new_rule: true } : {}) });
     if (mounted.current) setValidation(result);
   }
   async function applyJson() {
@@ -110,7 +119,7 @@ function Workspace() {
   }
   async function save() {
     await run(async () => {
-      const result = await api<{ id: string; revision: number }>(draft ? `/drafts/${draft.id}` : "/drafts", draft ? "PUT" : "POST", { document, base_commit: baseCommit, ...(draft ? { revision: draft.revision } : {}) });
+      const result = await api<{ id: string; revision: number }>(draft ? `/drafts/${draft.id}` : "/drafts", draft ? "PUT" : "POST", { document, base_commit: baseCommit, ...(draft ? { revision: draft.revision } : newRule ? { new_rule: true } : {}) });
       if (!mounted.current) return;
       setDraft({ id: result.id, revision: result.revision, owner_id: session!.userId, rule_id: document!.id });
       setDirty(false); setMessage(`Soukromý koncept uložen, revize ${result.revision}. Nebyl publikován.`);
@@ -124,19 +133,21 @@ function Workspace() {
     {catalog && session && !forbidden && <>
       <p>Přístup: {session.role}. Koncepty se nezapisují do veřejného registru. Schvalování a publikace nejsou v této verzi dostupné.</p>
       <div className="workspace"><aside>
-        <h2>Nový návrh</h2><label>Výchozí pravidlo<select value={selectedRule} disabled={pending} onChange={(e) => setSelectedRule(e.target.value)}><option value="">Vyberte pravidlo</option>{catalog.rules.map((rule) => <option key={rule.id} value={rule.id}>{rule.id} — {rule.title.cs}</option>)}</select></label>
+        {session.capabilities.create_rules && <><h2>Nové pravidlo</h2><button disabled={pending} onClick={startNewRule}>Vytvořit úplně nové pravidlo</button><p>Prázdný návrh bez převzatých pramenů a ověření.</p></>}
+        <h2>Změna existujícího pravidla</h2><label>Výchozí pravidlo<select value={selectedRule} disabled={pending} onChange={(e) => setSelectedRule(e.target.value)}><option value="">Vyberte pravidlo</option>{catalog.rules.map((rule) => <option key={rule.id} value={rule.id}>{rule.id} — {rule.title.cs}</option>)}</select></label>
         <button disabled={pending || !selectedRule} onClick={() => void loadRule()}>Načíst jako nový návrh</button>
-        <p>Pro nové pravidlo lze před prvním uložením upravit ID a další pole v JSON. Převzaté prameny a ověření je nutné znovu odborně posoudit.</p>
+        <p>Nová pravidla mohou vytvářet editor a správce. Převzaté prameny a ověření při odvození záznamu je nutné znovu odborně posoudit.</p>
         <h2>Koncepty</h2><p>Zobrazeno nejvýše 100 naposledy změněných konceptů. Editor vidí vlastní; recenzent a správce mohou číst i ostatní.</p>
         <ul>{drafts.map((item) => <li key={item.id}><button className="draft-link" disabled={pending} onClick={() => void loadDraft(item.id)}>{item.rule_id} · r{item.revision}</button></li>)}</ul>
       </aside><section aria-label="Editace pravidla">
         {!document ? <p>Vyberte pravidlo nebo uložený koncept.</p> : <>
-          <h2>{draft ? `Koncept · revize ${draft.revision}` : "Neuložený návrh"}</h2>
+          <h2>{newRule ? "Nové pravidlo · " : ""}{draft ? `Koncept · revize ${draft.revision}` : "Neuložený návrh"}</h2>
           <p>Výchozí commit: <code>{baseCommit}</code>{dirty || jsonDirty ? " · neuložené změny" : ""}{readOnly ? " · pouze čtení" : ""}</p>
           {baseCommit !== catalog.base_commit && <p className="notice">Základ návrhu je jiný než načtený katalog. Server při ukládání znovu ověří aktuální dataset.</p>}
           <fieldset disabled={pending || readOnly || jsonDirty}>
             <legend>Základní údaje</legend>
-            <label>Verze NDK<select value={versionIndex} onChange={(e) => setVersionIndex(Number(e.target.value))}>{document.versions.map((item, index) => <option key={item.version} value={index}>{item.version}</option>)}</select></label>
+            <label>Editovaná verze<select value={versionIndex} onChange={(e) => setVersionIndex(Number(e.target.value))}>{document.versions.map((item, index) => <option key={index} value={index}>{item.version || `Nová verze ${index + 1}`}</option>)}</select></label>
+            {newRule && <NewRuleFields document={document} index={versionIndex} catalog={catalog} identityLocked={Boolean(draft)} onChange={change} />}
             <RuleForm document={document} index={versionIndex} onChange={change} />
           </fieldset>
           <details><summary>Pokročilý zápis JSON</summary><p>Změny použijte před uložením. Server odmítne zápis neodpovídající schématu nebo s neplatnými vazbami.</p><label>Celý zdrojový záznam<textarea className="json" rows={18} disabled={pending || readOnly} value={jsonText} onChange={(e) => { setJsonText(e.target.value); setJsonDirty(true); setValidation(null); setMessage(""); }} /></label><button disabled={pending || readOnly || !jsonDirty} onClick={() => void applyJson()}>Ověřit a použít JSON</button><button disabled={pending || !jsonDirty} onClick={() => { setJsonText(JSON.stringify(document, null, 2)); setJsonDirty(false); }}>Zahodit změny JSON</button></details>
