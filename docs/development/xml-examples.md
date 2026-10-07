@@ -4,6 +4,8 @@ U 166 pravidel DMF Monografie 2.3 je dostupných 212 XML ukázek. Pravidla s uk�
 
 Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 212 ukázek.
 
+[První sada periodik](periodical-mix-comparison.md) nepřidává XML ukázky: periodický SIP dosud nebyl ověřen. Shodný technický požadavek neopravňuje přeznačit monografický výřez na periodický. Počet 212 ukázek u 166 monografických pravidel se nemění.
+
 ## Původ a meze ověření
 
 Zdrojem je uživatelem dodaný rozbalený balíček `75faba8d-c629-11f0-8950-12e8557df20e`, označený jako oficiální vzor, s [odkazem na stažení z CESNET](https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download). Obsahuje monografii *Tomáš Alva Edison a jeho fonograf*, [1890], a v `info.xml` deklaruje metadatovou verzi 2.3. Kontrola proběhla 5. 10. 2026 nad dodanou lokální kopií; identita kopie s aktuálním obsahem vzdáleného archivu nebyla nezávisle ověřena. Celý balíček ani obrazové soubory se do registru nekopírují.

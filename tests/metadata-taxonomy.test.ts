@@ -41,7 +41,7 @@ describe("metadata taxonomy", () => {
   });
   it("matches client and API filters, combinations, pagination and empty results", async () => {
     for (const [filters, count] of [
-      [{ metadata_area: "administrative-technical" }, 74], [{ metadata_area: "package" }, 18],
+      [{ metadata_area: "administrative-technical" }, 84], [{ metadata_area: "package" }, 18],
       [{ standard: "PREMIS" }, 61], [{ standard: "PREMIS", category: "technical/premis-object" }, 17],
       [{ standard: "PREMIS", category: "technical/premis-provenance" }, 8],
       [{ standard: "PREMIS", category: "technical/premis-relationships" }, 13],
@@ -95,7 +95,11 @@ describe("metadata taxonomy", () => {
       [{ category: "metadata/mods-name-details", obligation: "forbidden" }, 1],
       [{ category: "metadata/mods-titles", obligation: "mandatory_if_available" }, 4],
       [{ category: "metadata/mods-titles", obligation: "optional" }, 1],
-      [{ category: "metadata/mods-titles", obligation: "forbidden" }, 1], [{ metadata_area: "administrative-technical", standard: "MIX" }, 13],
+      [{ category: "metadata/mods-titles", obligation: "forbidden" }, 1], [{ metadata_area: "administrative-technical", standard: "MIX" }, 23],
+      [{ national_standard: "ndk-periodical" }, 10],
+      [{ national_standard: "ndk-periodical", version: "2.2", standard: "MIX" }, 10],
+      [{ national_standard: "ndk-periodical", version: "2.3" }, 0],
+      [{ national_standard: "ndk-monograph", standard: "MIX" }, 13],
       [{ metadata_area: "package", standard: "MIX" }, 0], [{ standard: "NDK-INFO" }, 18],
     ] as Array<[Record<string, string>, number]>) {
       const response = await request(`/rules?${new URLSearchParams({ ...filters, page_size: "2" })}`);
@@ -103,7 +107,8 @@ describe("metadata taxonomy", () => {
       const result = await response.json() as { data: RuleVersion[]; pagination: { total: number } };
       expect(result.pagination.total).toBe(count);
       expect(result.data.length).toBe(Math.min(2, count));
-      expect(filterRules(rules, "", filters, registry.relations)).toHaveLength(count);
+      // The browser calls this filter "national"; the public API uses "national_standard".
+      expect(filterRules(rules, "", { ...filters, national: filters.national_standard ?? "" }, registry.relations)).toHaveLength(count);
     }
     const response = await request("/rules?metadata_area=unknown");
     expect(response.status).toBe(400);

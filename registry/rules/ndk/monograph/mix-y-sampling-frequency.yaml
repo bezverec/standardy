@@ -15,6 +15,10 @@ versions:
     relation_to_target:
       type: restricts
     category: technical/sampling
+    comparison:
+      key: "mix.mc-ps.y-sampling-frequency"
+      note:
+        cs: "Ručně ověřená dvojice MIX-Y-SAMPLING-FREQUENCY pro MIX souborů MC/PS: DMF Monografie 2.3 § 7.5.4 s. 87–88 a DMF Periodika 2.2 § 7.5.4 s. 75. Shodují se evidované technické požadavky, povinnost a podmínka MC/PS i podmínka jednotky in./cm; liší se rozsah monograph/periodical. Shoda této položky není ekvivalence celých DMF, potvrzení validity souboru ani důkaz chování nástrojů."
     cataloguing_scope:
       applicability: "independent"
       reviewed_on: "2026-10-07"

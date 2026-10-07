@@ -15,6 +15,10 @@ versions:
     relation_to_target:
       type: restricts
     category: technical/sampling
+    comparison:
+      key: "mix.mc-ps.sampling-frequency-plane"
+      note:
+        cs: "Ručně ověřená dvojice MIX-SAMPLING-FREQUENCY-PLANE pro MIX souborů MC/PS: DMF Monografie 2.3 § 7.5.4 s. 87 a DMF Periodika 2.2 § 7.5.4 s. 74. Shodují se evidované technické požadavky, povinnost a podmínka MC/PS; liší se rozsah monograph/periodical. Shoda této položky není ekvivalence celých DMF, potvrzení validity souboru ani důkaz chování nástrojů."
     cataloguing_scope:
       applicability: "independent"
       reviewed_on: "2026-10-07"
@@ -33,7 +37,7 @@ versions:
       vocabulary: NDK-OBJECT-TYPES
       values: [monograph]
     normative_requirement:
-      cs: "Pro MC a PS DMF 2.3 doporučuje samplingFrequencyPlane určující referenční rovinu vzorkování."
+      cs: "Pro MC a PS se doporučuje samplingFrequencyPlane určující referenční rovinu vzorkování."
     requirement:
       presence: optional
       cardinality:

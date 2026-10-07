@@ -21,8 +21,9 @@ const compare = (rules = registry.rule_versions) => compareRuleContexts(rules, a
 describe("context-aware comparison foundation", () => {
   it("pairs the documented AACR2/RDA aspect without declaring a conflict", () => {
     const result = compare();
-    expect(result.comparisons).toHaveLength(1);
-    const item = result.comparisons[0]!;
+    expect(result.comparisons).toHaveLength(11);
+    expect(result.comparisons.filter((item) => item.status === "same_recorded_requirement")).toHaveLength(10);
+    const item = result.comparisons.find((item) => item.key === "mods.descriptive-origin.event-type")!;
     expect(item.status).toBe("different_context");
     expect(item.left[0]?.rule_id).toBe("NDK-MONO-MODS-SINGLE-ORIGIN-AACR-NO-EVENT-TYPE");
     expect(item.right[0]?.rule_id).toBe(original.rule_id);
@@ -33,15 +34,16 @@ describe("context-aware comparison foundation", () => {
     }
     expect(result.unresolved_context.left).toHaveLength(0);
     expect(result.unresolved_context.right).toHaveLength(0);
-    expect(result.unmapped.left).toHaveLength(227);
-    expect(result.unmapped.right).toHaveLength(230);
+    expect(result.unmapped.left).toHaveLength(217);
+    expect(result.unmapped.right).toHaveLength(220);
     expect(result.unmapped.right.map((rule) => rule.rule_id)).toContain("NDK-MONO-MODS-SINGLE-ORIGIN-PRIMARY-EVENT");
   });
 
   it("does not guess AACR2 from absent data or collapse competing variants", () => {
     const result = compareRuleContexts(registry.rule_versions, { national_standard: "ndk-monograph", version: "2.3" }, rda);
-    expect(result.comparisons[0]?.status).toBe("ambiguous_mapping");
-    expect(result.comparisons[0]?.left).toHaveLength(2);
+    const item = result.comparisons.find((item) => item.key === "mods.descriptive-origin.event-type")!;
+    expect(item.status).toBe("ambiguous_mapping");
+    expect(item.left).toHaveLength(2);
     expect(cataloguingCondition({ not: { field: "unrelated", operator: "equals", value: true } }, "aacr2")).toBeUndefined();
     expect(cataloguingCondition({ all: [{ field: "cataloguing_rules", operator: "equals", value: "rda" }, { field: "unknown", operator: "exists" }] }, "aacr2")).toBe(false);
     expect(cataloguingCondition({ any: [{ field: "cataloguing_rules", operator: "equals", value: "rda" }, { field: "unknown", operator: "exists" }] }, "aacr2")).toBeUndefined();
@@ -125,6 +127,16 @@ describe("context-aware comparison foundation", () => {
       ajv.addSchema({ $id: "https://registry.test/contract", components: openApiDocument.components });
       const validate = ajv.compile({ $ref: "https://registry.test/contract#/components/schemas/ContextComparison" });
       expect(validate(data), JSON.stringify(validate.errors)).toBe(true);
+      const crossUrl = new URL(base);
+      crossUrl.searchParams.set("national_standard_b", "ndk-periodical");
+      crossUrl.searchParams.set("version_b", "2.2");
+      const crossResponse = await handleRequest(new Request(crossUrl), env);
+      expect(crossResponse.status).toBe(200);
+      const crossData = await crossResponse.json();
+      expect(crossData).toEqual(JSON.parse(JSON.stringify(compareRuleContexts(registry.rule_versions, aacr, { national_standard: "ndk-periodical", version: "2.2", cataloguing_rules: "rda" }))));
+      expect(validate(crossData), JSON.stringify(validate.errors)).toBe(true);
+      crossUrl.searchParams.set("version_b", "2.3");
+      expect((await handleRequest(new Request(crossUrl), env)).status).toBe(404);
       for (const [key, value, status] of [["cataloguing_b", "aacr", 400], ["version_b", "missing", 404], ["national_standard_b", "missing", 404], ["version_a", "", 400]] as const) {
         const url = new URL(base);
         url.searchParams.set(key, value);

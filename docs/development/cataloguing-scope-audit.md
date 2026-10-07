@@ -1,6 +1,6 @@
 # Rozsah AACR2/RDA v registru
 
-Posouzeno 7. 10. 2026: všech 232 evidovaných pravidel DMF Monografie 2.3.
+Posouzeno 7. 10. 2026: všech 242 evidovaných pravidel: 232 pro DMF Monografie 2.3 a deset pro DMF Periodika 2.2.
 Jde o audit relevance katalogizace, nikoli nové ověření každé technické kontroly,
 implementací validátorů nebo úplnosti DMF v registru.
 
@@ -17,11 +17,13 @@ není kritériem. [MODS může používat různá katalogizační pravidla](http
 odděluje katalogizační pravidla, formát a národní interpretace. Tato revize
 neaplikuje novější Official RDA zpětně na historické požadavky DMF 2.3.
 
+U periodik je podkladem [DMF Periodika 2.2](https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf), § 7.5.4, s. 70, 74–75. Deset požadavků se týká technických vlastností souborů MC/PS, nikoli katalogizace titulu, ročníku či čísla. Jejich nezávislost se nepřenáší na dosud nezpracovaná bibliografická pravidla periodik.
+
 ## Výsledek
 
 | Rozsah | Počet | Důvod |
 |---|---:|---|
-| Nezávislé na katalogizaci | 178 | 13 MIX, 18 info.xml, 85 METS, 61 PREMIS a strukturální genre v MODS |
+| Nezávislé na katalogizaci | 188 | 23 MIX (13 monografických a 10 periodických), 18 info.xml, 85 METS, 61 PREMIS a strukturální genre v MODS |
 | Společný předpis AACR2/RDA | 49 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
 | Pouze AACR2 | 1 | Nepoužití eventType jako výklad vyhrazení atributu pro RDA |
 | Pouze RDA | 4 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c |
@@ -66,9 +68,9 @@ se neslučuje ani s jedním z nich. Detail ukazuje zdůvodnění v rozbalovací 
 
 Relevance katalogizace a významové párování jsou různé osy. Audit nevytváří
 automaticky stovky domnělých ekvivalencí. V příkladu AACR2 proti RDA zůstává
-jedna explicitně zmapovaná dvojice eventType; 223/225 zahrnutých pravidel nemá
-významový klíč, 3/1 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
-Souhrn uvádí 178/178 nezávislých a 45/45 společných požadavků, nikoli tolik párů.
+jedna dvojice eventType s odlišným kontextem a deset shodných technických aspektů MIX;
+217/220 zahrnutých pravidel nemá významový klíč, 4/1 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
+Souhrn uvádí 178/178 nezávislých a 49/49 společných požadavků, nikoli tolik párů.
 
 Testy ověřují úplnost anotací, hranice MODS/METS/PREMIS, zařazení nezávislých
 pravidel s klíčem i bez něj, bezpečné zachování neznámého rozsahu, validaci

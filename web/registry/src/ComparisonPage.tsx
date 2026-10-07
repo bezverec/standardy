@@ -4,7 +4,7 @@ import { comparisonChoiceError, comparisonLabels, comparisonParams, comparisonVa
 import { obligationLabel } from "./obligation.ts";
 import { CataloguingScope } from "./CataloguingScope.tsx";
 
-const text = (value: Record<string, string> | undefined) => value?.cs ?? value?.en ?? "—";
+const text = (value: Record<string, string | undefined> | undefined) => value?.cs ?? value?.en ?? "—";
 const ruleHref = (rule: RuleVersion) => `/registry/rules/${encodeURIComponent(rule.rule_id)}?version=${encodeURIComponent(rule.version)}`;
 
 function Choice({ side, choice, standards, onChange }: { side: string; choice: ComparisonChoice; standards: RegistryEntity[]; onChange: (choice: ComparisonChoice) => void }) {
@@ -27,6 +27,7 @@ function RuleSide({ side, rules }: { side: string; rules: RuleVersion[] }) {
     return <article key={`${rule.rule_id}@${rule.version}`}><h5><a href={ruleHref(rule)}>{text(rule.title)}</a></h5><code>{rule.rule_id}</code>
       <p><strong>{obligationLabel(rule)}</strong></p><p>{text(rule.normative_requirement)}</p>
       <CataloguingScope rule={rule} />
+      {rule.comparison ? <details><summary>Proč jsou pravidla porovnávána</summary><p>{text(rule.comparison.note)}</p></details> : null}
       {rule.non_use ? <p className="comparison-caution">{rule.non_use.basis === "explicit" ? "Výslovné nepoužití ve zdroji. " : "Nepoužití je výklad omezení zdroje. "}{rule.non_use.note.cs ?? rule.non_use.note.en}</p> : null}
       <div className="comparison-source"><strong>Pramen</strong><p>{String(rule.source.document ?? "Neuveden")}{rule.source.version ? ` · verze ${rule.source.version}` : ""}{rule.source.page ? ` · s. ${rule.source.page}` : ""}</p>{rule.source.section ? <p>{String(rule.source.section)}</p> : null}{url ? <a href={url} target="_blank" rel="noopener noreferrer">Otevřít pramen</a> : <p>Odkaz na pramen neuveden.</p>}</div>
       <details><summary>Podmínky a strojový požadavek</summary><h6>Podmínky platnosti</h6><pre>{comparisonValue(rule.condition)}</pre><h6>Požadavek</h6><pre>{comparisonValue(rule.requirement)}</pre><h6>Ověření přepisu</h6><p>{rule.verification.status} · {rule.verification.date ?? "Datum neuvedeno"}</p><p>{rule.verification.reference}</p></details>
@@ -57,6 +58,7 @@ export function ComparisonResults({ result }: { result: ComparisonResult }) {
     <p role="status">Zobrazeno {Math.min(limit, filtered.length)} z {filtered.length} výsledků · celkem {result.comparisons.length} významových klíčů.</p>
     {!result.comparisons.length ? <p className="state">Pro tento výběr nejsou evidovány žádné významové klíče k porovnání. Nejde o shodu standardů. Prověřte seznamy níže.</p> : !filtered.length ? <p className="state">Žádný výsledek neodpovídá filtru. <button onClick={() => { setStatus(""); setQuery(""); }}>Zrušit filtry</button></p> : null}
     {filtered.slice(0, limit).map((item) => <article className="comparison-card" key={item.key}><header><p className="layer-label">{comparisonLabels[item.status]}</p><h3>{item.key}</h3></header>
+      {item.scope_changes.length ? <div><p>Jiný druh dokumentu, porovnávaný požadavek na stejný prvek. Rozsah platnosti je uveden zvlášť a sám neznamená rozdíl požadavku.</p><details><summary>Rozdílný rozsah dokumentů</summary>{item.scope_changes.map((change) => <section key={change.field}><h4>{change.field}</h4><div className="comparison-columns"><div><strong>A</strong><pre>{comparisonValue(change.old)}</pre></div><div><strong>B</strong><pre>{comparisonValue(change.new)}</pre></div></div></section>)}</details></div> : null}
       {item.status === "different_context" ? <p>Rozdílný kontext sám nepotvrzuje chybu ani záměrnost rozdílu.</p> : null}
       {item.status === "ambiguous_mapping" ? <p>Existuje více kandidátů. Zpřesněte katalogizační režim; žádný kandidát nebyl automaticky vybrán.</p> : null}
       <div className="comparison-columns"><RuleSide side="Strana A" rules={item.left} /><RuleSide side="Strana B" rules={item.right} /></div>
@@ -100,6 +102,15 @@ function ComparisonWorkspace({ standards, search, onApply }: { standards: Regist
   </>;
 }
 
+export function PeriodicalComparisonLink({ standards }: { standards: RegistryEntity[] }) {
+  if (!comparisonVersions(standards.find((item) => item.id === "ndk-monograph")).includes("2.3")
+    || !comparisonVersions(standards.find((item) => item.id === "ndk-periodical")).includes("2.2")) return null;
+  const params = comparisonParams(
+    { national_standard: "ndk-monograph", version: "2.3", cataloguing: "" },
+    { national_standard: "ndk-periodical", version: "2.2", cataloguing: "" });
+  return <p><a href={`/registry/compare?${params}`}>Porovnat Monografie 2.3 a Periodika 2.2</a> — zpracováno deset dvojic MIX pro MC/PS, nezávislých na AACR2/RDA. Pro jejich výběr zadejte do hledání výsledků „mix.mc-ps.“.</p>;
+}
+
 export function ComparisonPage() {
   const [search, setSearch] = useState(() => window.location.search);
   const [standards, setStandards] = useState<RegistryEntity[]>();
@@ -114,6 +125,7 @@ export function ComparisonPage() {
   }, [retry]);
   function apply(query: string) { const next = `?${query}`; if (next !== window.location.search) history.pushState({}, "", `/registry/compare${next}`); setSearch(next); }
   return <main className="comparison-page"><header className="page-header"><div><p className="eyebrow">Pravidla v souvislostech</p><h1>Porovnání standardů</h1></div></header><p className="lead">Porovnejte zaznamenané požadavky dvou DMF, verzí nebo katalogizačních režimů. Výsledky závisí na dosud zpracovaném mapování; nalezený rozdíl není automaticky chyba.</p>
+    {standards ? <PeriodicalComparisonLink standards={standards} /> : null}
     {error ? <div role="alert" className="state state--error"><p>Seznam standardů se nepodařilo načíst.</p><button onClick={() => setRetry((value) => value + 1)}>Zkusit znovu</button></div> : !standards ? <p role="status">Načítám standardy…</p> : !standards.length ? <p className="state">Dosud nejsou evidovány žádné standardy pro porovnání.</p> : <ComparisonWorkspace key={search} standards={standards} search={search} onApply={apply} />}
   </main>;
 }

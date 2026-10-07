@@ -1,0 +1,23 @@
+schema_version: "1.0"
+kind: "national_standard"
+id: "ndk-periodical"
+title:
+  cs: "NDK DMF Periodika"
+  en: "NDK DMF Periodicals"
+description:
+  cs: "Vybrané požadavky DMF pro digitalizaci periodik 2.2 na rozměry, vzorkování a barevné kódování obrazových souborů MC/PS v MIX 2.0. První porovnávací sada vůči Monografiím 2.3; nejde o DMF pro elektronická periodika ani o úplné pokrytí periodik."
+status: "draft"
+verification:
+  status: "verified"
+  date: "2026-10-07"
+  reference: "Identita verze 2.2 (22. 12. 2025) ověřena v oficiálním PDF a na stránce Standardy pro metadata. Přepis zůstává částečný."
+versions:
+  -
+    version: "2.2"
+    status: "draft"
+    source:
+      document: "DMF Periodika"
+      version: "2.2"
+      page: "1, 4–6, 69–70, 74–75"
+      section: "1.4 Použité standardy; 1.5 MC/PS; 7.5.4 Technická metadata MIX"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf"

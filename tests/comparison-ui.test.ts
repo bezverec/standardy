@@ -3,7 +3,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { compareRuleContexts, compileRegistry, loadRegistry } from "../packages/registry-core/src/index.ts";
-import { ComparisonResults } from "../web/registry/src/ComparisonPage.tsx";
+import { ComparisonResults, PeriodicalComparisonLink } from "../web/registry/src/ComparisonPage.tsx";
 import { comparisonChoiceError, comparisonParams, comparisonValue, initialComparison, type ComparisonResult } from "../web/registry/src/comparison.ts";
 import { api, type RegistryEntity } from "../web/registry/src/api.ts";
 import { RegistryNavigation } from "../web/registry/src/RegistryNavigation.tsx";
@@ -16,6 +16,40 @@ const result = JSON.parse(JSON.stringify(compareRuleContexts(registry.rule_versi
 const render = (data = result) => renderToStaticMarkup(createElement(ComparisonResults, { result: data }));
 
 describe("comparison screen", () => {
+  it("shows matching cross-DMF requirements and keeps document scope separate", () => {
+    const data = JSON.parse(JSON.stringify(compareRuleContexts(registry.rule_versions,
+      { national_standard: "ndk-monograph", version: "2.3" },
+      { national_standard: "ndk-periodical", version: "2.2" }))) as ComparisonResult;
+    data.comparisons = data.comparisons.filter((item) => item.key.startsWith("mix.mc-ps."));
+    const html = render(data);
+    expect(html).toContain("Shodný požadavek (10)");
+    expect(html).toContain("Odlišný kontext (0)");
+    expect(html).toContain("Rozdílný rozsah dokumentů");
+    expect(html).toContain("monograph");
+    expect(html).toContain("periodical");
+    expect(html).not.toContain("Rozdíly zaznamenaných polí");
+    expect(html).toContain("DMF Monografie · verze 2.3");
+    expect(html).toContain("DMF Periodika · verze 2.2");
+    data.comparisons[0]!.scope_changes[0]!.new = "<script>scope</script>";
+    expect(render(data)).not.toContain("<script>");
+    expect(render(data)).toContain("&lt;script&gt;scope");
+  });
+  it("offers the real cross-DMF comparison without imposing a cataloguing regime", () => {
+    const html = renderToStaticMarkup(createElement(PeriodicalComparisonLink, { standards }));
+    expect(html).toContain("Porovnat Monografie 2.3 a Periodika 2.2");
+    const href = html.match(/href="([^"]+)"/)![1]!.replaceAll("&amp;", "&");
+    const choices = initialComparison(href.split("?")[1]!, standards);
+    expect(choices).toEqual([
+      { national_standard: "ndk-monograph", version: "2.3", cataloguing: "" },
+      { national_standard: "ndk-periodical", version: "2.2", cataloguing: "" },
+    ]);
+    expect(renderToStaticMarkup(createElement(PeriodicalComparisonLink, { standards: standards.filter((item) => item.id !== "ndk-periodical") }))).toBe("");
+    expect(render()).toContain("Proč jsou pravidla porovnávána");
+    const data = structuredClone(result);
+    data.comparisons[0]!.left[0]!.comparison!.note.cs = "<script>unsafe</script>";
+    expect(render(data)).not.toContain("<script>");
+    expect(render(data)).toContain("&lt;script&gt;unsafe");
+  });
   it("selects an evidenced AACR2/RDA example by default and round-trips share links", () => {
     const selections = initialComparison("", standards);
     expect(selections.map((item) => item.cataloguing)).toEqual(["aacr2", "rda"]);
@@ -42,7 +76,7 @@ describe("comparison screen", () => {
     expect(html).toContain("DMF Monografie · verze 2.3 · s. 51–52");
     expect(html).toContain("Katalogizační rozsah dosud neurčen — A: 0, B: 0");
     expect(html).toContain("Nezávislé požadavky zahrnuté ve výběru — A: 178, B: 178");
-    expect(html).toContain("Zahrnutá pravidla bez významového klíče — A: 227, B: 230");
+    expect(html).toContain("Zahrnutá pravidla bez významového klíče — A: 217, B: 220");
     expect(html).toContain("Rozdíly zaznamenaných polí");
     // Hundreds of unpaired records are not mounted until their disclosure opens.
     expect(html).not.toContain("NDK-MONO-MIX-ICC-PROFILE-VERSION?version=2.3");

@@ -1,0 +1,97 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-PER-MIX-IMAGE-WIDTH"
+title:
+  cs: "Šířka obrazu v pixelech"
+description:
+  cs: "imageWidth v technických metadatech MIX pro DMF Periodika 2.2."
+national_standard:
+  id: "ndk-periodical"
+versions:
+  -
+    version: "2.2"
+    status: "normative"
+    target:
+      entity: "MIX-IMAGE-WIDTH"
+    relation_to_target:
+      type: "restricts"
+    category: "technical/dimensions"
+    cataloguing_scope:
+      applicability: "independent"
+      reviewed_on: "2026-10-07"
+      note:
+        cs: "Technický požadavek na konkrétní obrazový soubor MC/PS podle oddílu 7.5.4 DMF Periodika 2.2. Nejde o bibliografický popis titulu, ročníku či čísla; AACR2/RDA jeho platnost neomezuje."
+      sources:
+        -
+          document: "DMF Periodika"
+          version: "2.2"
+          page: 70
+          section: "7.5.4 Technická metadata MIX — imageWidth"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "periodical"
+    normative_requirement:
+      cs: "Pro MC a PS se vyžaduje imageWidth se šířkou obrazu v pixelech."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      validations:
+        -
+          type: "xpath"
+          expression: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:imageWidth"
+          assertion: "exists"
+        -
+          type: "regex"
+          expression: "^[ \\t\\r\\n]*\\+?0*[1-9][0-9]*[ \\t\\r\\n]*$"
+          assertion: "matches"
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "periodical"
+        -
+          field: "file_role"
+          operator: "in"
+          value:
+            - "MC"
+            - "PS"
+    source:
+      document: "DMF Periodika"
+      version: "2.2"
+      page: 70
+      section: "7.5.4 Technická metadata MIX — imageWidth"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.2_final.pdf"
+    references:
+      -
+        document: "NISO Metadata for Images in XML (MIX), XML Schema 2.0"
+        version: "2.0"
+        page: null
+        section: "/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:imageWidth; positiveIntegerType"
+        url: "https://www.loc.gov/standards/mix/mix20/mix20.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-07"
+      reference: "Přepis, povinnost M, rozsah MC/PS a význam ověřeny v textu a vykreslené tabulce DMF Periodika 2.2 s. 70; struktura a typy proti MIX 2.0 XSD. Monografický protějšek byl zvlášť porovnán, nikoli považován za zdroj tohoto požadavku. Nástroje ani periodický SIP nebyly ověřeny."
+    interpretation:
+      cs: "Hodnota popisuje horizontální rozměr konkrétního obrazového souboru. MIX 2.0 používá xsd:positiveInteger; rozměr nelze zaměnit za rozlišení v PPI. Porovnání s obrazovým souborem vyžaduje samostatné čtení jeho metadat. Kardinalita platí pro příslušný MIX záznam s kořenem mix:mix (namespace http://www.loc.gov/mix/v20), nikoli celý amd_mets.xml. Rozsah MC/PS nezahrnuje UC. Registr kontroly nevykonává; není tím implementován validátor SIP. Bez ověřeného periodického SIP nepřebíráme monografické XML ukázky ani ověření implementací."
+    comparison:
+      key: "mix.mc-ps.image-width"
+      note:
+        cs: "Ručně ověřená dvojice MIX-IMAGE-WIDTH pro MIX souborů MC/PS: DMF Monografie 2.3 § 7.5.4 s. 83 a DMF Periodika 2.2 § 7.5.4 s. 70. Shodují se evidované technické požadavky, povinnost a podmínka MC/PS; liší se rozsah monograph/periodical. Shoda této položky není ekvivalence celých DMF, potvrzení validity souboru ani důkaz chování nástrojů."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-PER-MIX-IMAGE-HEIGHT"
+  -
+    type: "related_to"
+    target: "NDK-PER-MIX-X-SAMPLING-FREQUENCY"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MIX-IMAGE-WIDTH"

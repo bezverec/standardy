@@ -2,6 +2,8 @@
 
 Tato skupina rozšiřuje registr o deset pravidel pro DMF Monografie 2.3. Přepis byl 5. 10. 2026 ověřen proti tabulkám v § 7.5.4 na stranách 83, 87 a 88 a proti oficiálnímu XSD MIX 2.0. Sloupce povinnosti a použití MC/PS byly zkontrolovány i ve vykreslených stránkách PDF.
 
+Od 7. 10. 2026 mají tyto položky samostatně doložené [protějšky pro DMF Periodika 2.2](periodical-mix-comparison.md). Následující tabulka nadále uvádí stránky monografického DMF.
+
 ## Pokrytí
 
 Všechna níže uvedená pravidla se vztahují na technická metadata MC a PS. UC do jejich podmínky platnosti nespadá.

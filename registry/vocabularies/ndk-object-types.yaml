@@ -6,9 +6,12 @@ title:
 status: draft
 verification:
   status: verified
-  date: "2026-09-14"
-  reference: Hodnota monograph označuje národní standard DMF Monografie; seznam není úplným slovníkem typů NDK.
+  date: "2026-10-07"
+  reference: Hodnoty monograph a periodical označují rozsah DMF Monografie a DMF pro digitalizaci periodik; nejde o úplný slovník NDK ani bibliografické úrovně titul, ročník, číslo či strana.
 values:
   - id: monograph
     label:
       cs: monografie
+  - id: periodical
+    label:
+      cs: periodika

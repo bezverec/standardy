@@ -6,7 +6,7 @@ export type ComparisonStatus = ReturnType<typeof compareRuleContexts>["compariso
 export interface ComparisonResult {
   left: ComparisonSelection;
   right: ComparisonSelection;
-  comparisons: Array<{ key: string; status: ComparisonStatus; left: RuleVersion[]; right: RuleVersion[]; changes: FieldChange[] }>;
+  comparisons: Array<{ key: string; status: ComparisonStatus; left: RuleVersion[]; right: RuleVersion[]; changes: FieldChange[]; scope_changes: FieldChange[] }>;
   unmapped: { left: RuleVersion[]; right: RuleVersion[] };
   unresolved_context: { left: RuleVersion[]; right: RuleVersion[] };
   excluded_context: { left: RuleVersion[]; right: RuleVersion[] };
@@ -14,7 +14,7 @@ export interface ComparisonResult {
 }
 export interface ComparisonChoice { national_standard: string; version: string; cataloguing: string }
 export const comparisonLabels: Record<ComparisonStatus, string> = {
-  same_recorded_requirement: "Shodný zaznamenaný požadavek",
+  same_recorded_requirement: "Shodný požadavek",
   different_context: "Odlišný kontext",
   difference_for_review: "Rozdíl k posouzení",
   no_counterpart: "Bez nalezeného protějšku",

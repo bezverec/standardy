@@ -15,6 +15,10 @@ versions:
     relation_to_target:
       type: restricts
     category: technical/color
+    comparison:
+      key: "mix.mc-ps.bits-per-sample-value"
+      note:
+        cs: "Ručně ověřená dvojice MIX-BITS-PER-SAMPLE-VALUE pro MIX souborů MC/PS: DMF Monografie 2.3 § 7.5.4 s. 88 a DMF Periodika 2.2 § 7.5.4 s. 75. Shodují se evidované technické požadavky, povinnost a podmínka MC/PS; liší se rozsah monograph/periodical. Shoda této položky není ekvivalence celých DMF, potvrzení validity souboru ani důkaz chování nástrojů."
     cataloguing_scope:
       applicability: "independent"
       reviewed_on: "2026-10-07"
@@ -33,7 +37,7 @@ versions:
       vocabulary: NDK-OBJECT-TYPES
       values: [monograph]
     normative_requirement:
-      cs: "Pro MC a PS DMF 2.3 vyžaduje bitsPerSampleValue; více hodnot se zapisuje opakováním elementu."
+      cs: "Pro MC a PS se vyžaduje bitsPerSampleValue; více hodnot se zapisuje opakováním elementu."
     requirement:
       presence: required
       cardinality:
