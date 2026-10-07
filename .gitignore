@@ -4,6 +4,12 @@ site/
 dist/
 .wrangler/
 .dev.vars
+.env
+.env.*
+!.env.example
+.clerk/
+worker/generated/
+wrangler.editor.local.jsonc
 wrangler.deploy.jsonc
 web/registry/dist/
 coverage/

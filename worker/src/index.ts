@@ -3,8 +3,9 @@ import { compareRuleContexts, type ComparableRule, type ComparisonSelection } fr
 import type { RuleVersion } from "../../packages/registry-core/src/model.ts";
 import { openApiDocument } from "../../packages/registry-core/src/openapi.ts";
 import { metadataAreas, metadataStandards, metadataTaxonomy } from "../../packages/registry-core/src/metadata-taxonomy.ts";
+import { handleEditor, type EditorEnv } from "./editor.ts";
 
-export interface Env {
+export interface Env extends EditorEnv {
   DB: D1Database;
   ASSETS: Fetcher;
 }
@@ -322,6 +323,17 @@ async function handleRegistryAsset(request: Request, env: Env): Promise<Response
 
 export async function handleRequest(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
+  if (url.pathname === "/api/editor" || url.pathname.startsWith("/api/editor/")) return handleEditor(request, env);
+  if (url.pathname === "/editor" || url.pathname.startsWith("/editor/")) {
+    if (!["GET", "HEAD"].includes(request.method)) return new Response(null, { status: 405, headers: { "Cache-Control": "no-store" } });
+    if (url.pathname === "/editor") return Response.redirect(`${url.origin}/editor/`, 308);
+    const asset = await env.ASSETS.fetch(request);
+    const response = new Response(asset.body, asset);
+    response.headers.set("Cache-Control", "private, no-store");
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    response.headers.set("Referrer-Policy", "no-referrer");
+    return response;
+  }
   if (url.pathname === "/openapi.json" || url.pathname === `${API_PREFIX}/openapi.json`) {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: apiHeaders("openapi", "no-cache") });
     if (!["GET", "HEAD"].includes(request.method)) return json({ error: "method_not_allowed" }, "openapi", 405, "no-store");

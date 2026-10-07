@@ -36,6 +36,8 @@ flowchart TD
 
 ## Adresáře
 
+[MVP editoru](editor-mvp.md) má samostatný frontend `web/editor`, serverové ověření Clerk a členství ve Workeru a oddělenou `EDITOR_DB` s vlastními migracemi. Ukládá pouze koncepty; nezapisuje do veřejného indexu ani Git/YAML. Sdílí s CLI sémantickou validaci, JSON Schema je předkompilované při buildu pro runtime Workers. Bez konfigurace vrací soukromé API 503. Produkční přihlašování používá samostatnou Clerk aplikaci v režimu Invite-only; samotná pozvánka nenahrazuje členství v D1. Schvalování a publikaci teprve navrhuje [redakční postup](editorial-workflow.md); lokální podporu agentů poskytují [projektové skills](agent-skills.md). Veřejné API zůstává read-only.
+
 | Cesta | Úloha |
 |---|---|
 | `docs/` | existující odborná dokumentace a vývojová dokumentace |
@@ -60,7 +62,7 @@ Worker Static Assets publikuje složený adresář `site/`:
 - `/data/*.json` poskytuje statické exporty datasetu,
 - `/api-docs/` poskytuje Swagger UI a `/openapi.json` čtecí kontrakt API z Workeru (také na `/api/v1/openapi.json`).
 
-Selektivní `assets.run_worker_first` zahrnuje `/api/*`, `/registry/*` a `/openapi.json`. Dokumentace, exporty a Swagger assety jsou servírovány přímo. Proto musí existovat `docs/development/index.md`, aby MkDocs vytvořil i samotnou cestu `/development/`.
+Selektivní `assets.run_worker_first` zahrnuje `/api/*`, `/registry/*`, `/editor`, `/editor/*` a `/openapi.json`. Editor shell používá `noindex` a `private, no-store`; data i operace chrání privátní API. Dokumentace, exporty a Swagger assety jsou servírovány přímo. Proto musí existovat `docs/development/index.md`, aby MkDocs vytvořil i samotnou cestu `/development/`.
 
 ## Deployment
 
@@ -70,4 +72,4 @@ Workflow `deploy-cloudflare.yml` po merge do `main` validuje data, spustí testy
 
 ## Pokrytí a hranice ověření
 
-Registr k 7. 10. 2026 obsahuje 227 pravidel DMF Monografie 2.3: 13 pro MIX, 18 pro [info.xml](info-xml.md), 77 pro hlavní METS ([14 pro soubory](mets-files.md), [12 pro kořen a hlavičku](mets-header.md), [12 pro fyzickou mapu](mets-physical.md), [10 pro logickou mapu a výčet stran](mets-logical.md), [13 pro vnitřní části](mets-internal-parts.md), [8 pro blokové vazby ALTO](mets-alto-links.md) a [8 pro obálky MODS/DC](mets-dmd.md)), osm pro [vedlejší METS](mets-amd.md), 50 pro MODS ([osm pro názvové údaje](mods-titles.md), [devět pro původce a role](mods-names.md), [devět pro podrobnosti jmen](mods-name-details.md), [čtyři pro typ dokumentu a žánr](mods-resource-genre.md), [osm pro původ a místa vydání](mods-origin.md), [pět pro nakladatele a výrobce](mods-origin-agents.md) a [sedm pro data vydání a dalších událostí](mods-origin-dates.md)) a 61 pro PREMIS: 38 pro Object ([17 základních pravidel](premis-object.md), [osm pro vznik a ochranu](premis-provenance.md) a [13 pro vazby objektů a událostí](premis-relationships.md)), [16 pro Event](premis-events.md) a [sedm pro Agent](premis-agents.md). Není úplným katalogem ani validačním enginem. [Rozbor ICC](icc-profile-version.md) dokumentuje konkrétní verze a mapování JHOVE, jpylyzeru, ProArcu a konfiguraci Komplexního validátoru; nejde o tvrzení o všech jejich cestách zpracování. [Obrazová skupina](mix-image-characteristics.md), info.xml, skupiny METS a PREMIS mají ověřený přepis DMF/XSD, nikoli implementace nástrojů.
+Aktuální inventář pravidel a skupin uvádí [přehled vývoje](index.md); architektura neduplikuje průběžně měněné počty. Registr není úplným katalogem ani validačním enginem. [Rozbor ICC](icc-profile-version.md) dokumentuje konkrétní verze a mapování nástrojů; ověřený přepis DMF/XSD u jiných skupin není automaticky ověřením implementace. [XML ukázky](xml-examples.md) jsou doložené výřezy konkrétních SIP, nikoli potvrzení validity celých balíčků.

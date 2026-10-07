@@ -110,6 +110,8 @@ Podrobnosti jsou v [návodu pro lokální vývoj](docs/development/local-develop
 
 ## Jak přispět
 
+Pro práci agentů slouží [projektový rozcestník](AGENTS.md) a čtyři [verzované skills](docs/development/agent-skills.md). [MVP neveřejného editoru](docs/development/editor-mvp.md) na `/editor/` nabízí přihlášení Clerk pouze na pozvání, explicitní členství, soukromé koncepty, validaci a diff. Bez úplné konfigurace je uzavřený. [Redakční postup](docs/development/editorial-workflow.md) rozlišuje tuto první implementaci od budoucího schvalování a publikace přes PR. Veřejný registr a jeho read-only API zůstávají oddělené.
+
 Chyby a návrhy patří do [Issues](https://github.com/bezverec/standardy/issues). Tlačítko „Navrhnout změnu“ v registru otevře návrh; v detailu předvyplní ID pravidla, vybranou verzi NDK a odkaz. Návrh musí uživatel sám odeslat z účtu GitHub.
 
 U odborných změn uveďte původní zdroj, verzi dokumentu a konkrétní stránku, oddíl nebo element. Oddělte citovaný požadavek od vlastní interpretace a od chování nástroje. Změny dat lze navrhnout také pull requestem do `registry/`; přiložte výsledek `npm run registry:validate` a `npm test`. Neupravujte pouze odvozenou databázi nebo generované exporty.

@@ -1,0 +1,31 @@
+{
+  // Pouze lokální test. Nenahrazuje produkční wrangler.jsonc; nenasazovat.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "standardy-editor-local",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "workers_dev": false,
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/registry/*", "/editor", "/editor/*", "/openapi.json"]
+  },
+  "vars": {
+    "EDITOR_ENABLED": "true",
+    "EDITOR_ORIGIN": "http://127.0.0.1:8788"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "standardy-editor-public-local",
+      "database_id": "00000000-0000-4000-8000-000000000001",
+      "migrations_dir": "migrations"
+    },
+    {
+      "binding": "EDITOR_DB",
+      "database_name": "standardy-editor-private-local",
+      "database_id": "00000000-0000-4000-8000-000000000002",
+      "migrations_dir": "migrations-editor"
+    }
+  ]
+}

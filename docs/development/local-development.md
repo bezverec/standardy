@@ -57,6 +57,8 @@ Tokeny `CLOUDFLARE_API_TOKEN` a `CLOUDFLARE_ACCOUNT_ID` nastavujte pouze v prost
 
 Produkční API je read-only. Token pro import není dostupný Workeru ani prohlížeči.
 
+Soukromý editor má samostatný binding `EDITOR_DB` a migrace `migrations-editor/`. Veřejný import/reset musí vždy cílit jen na `DB`; nikdy na koncepty. Produkční redakční databáze je `standardy-editor` (jurisdikce EU). Přístup řídí příznak `EDITOR_ENABLED`, přesný `EDITOR_ORIGIN`, serverový Clerk secret a explicitní členství. Při přípravě CI konfigurace se odmítne stejné ID veřejné a soukromé databáze. Postup lokální zkoušky a omezení uvádí [MVP editoru](editor-mvp.md).
+
 ## Nasazení {#nasazeni}
 
 ### Ruční publikování
@@ -68,6 +70,7 @@ npm run typecheck
 npm test
 npm run build
 npx wrangler d1 time-travel info DB --json
+npx wrangler d1 migrations apply EDITOR_DB --remote
 npx wrangler d1 migrations apply DB --remote
 npx wrangler d1 execute DB --remote --file dist/registry/import.sql
 npx wrangler deploy

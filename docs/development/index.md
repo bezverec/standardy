@@ -96,6 +96,8 @@ curl 'https://standardy.digitalizaty.cz/api/v1/meta'
 
 ## Jak přidat nebo opravit pravidlo
 
+Agenti mohou použít [projektové skills](agent-skills.md). [MVP neveřejného editoru](editor-mvp.md) na `/editor/` používá stejná schémata a sémantické kontroly pro soukromé koncepty. Přístup vyžaduje pozvání do samostatné Clerk aplikace a explicitní členství v registru. Budoucí schvalování a publikaci popisuje [redakční postup](editorial-workflow.md).
+
 1. Určete standard, jeho verzi, rozsah platnosti a přesný lokátor původního zdroje.
 2. Zapište pravidlo do YAML v `registry/`; oddělte požadavek od výkladu, rozporů a implementací.
 3. Zachovejte původní kód povinnosti a zdokumentujte podmínky. Ověření nástroje nepřenášejte na jinou verzi nebo jiné pravidlo.

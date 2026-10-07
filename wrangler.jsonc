@@ -3,6 +3,11 @@
   "name": "standardy-registry",
   "main": "worker/src/index.ts",
   "compatibility_date": "2026-09-14",
+  "vars": {
+    "EDITOR_ENABLED": "true",
+    "EDITOR_ORIGIN": "https://standardy.digitalizaty.cz",
+    "CLERK_PUBLISHABLE_KEY": "pk_live_Y2xlcmsuc3RhbmRhcmR5LmRpZ2l0YWxpemF0eS5jeiQ"
+  },
   "routes": [
     {
       "pattern": "standardy.digitalizaty.cz",
@@ -12,7 +17,7 @@
   "assets": {
     "directory": "./site",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*", "/registry/*", "/openapi.json"]
+    "run_worker_first": ["/api/*", "/registry/*", "/editor", "/editor/*", "/openapi.json"]
   },
   "d1_databases": [
     {
@@ -20,6 +25,12 @@
       "database_name": "standardy-registry",
       "database_id": "77690b29-1373-4aec-b486-3f2400492644",
       "migrations_dir": "migrations"
+    },
+    {
+      "binding": "EDITOR_DB",
+      "database_name": "standardy-editor",
+      "database_id": "ff13a592-1c3c-4561-8055-8a4a397ee923",
+      "migrations_dir": "migrations-editor"
     }
   ]
 }

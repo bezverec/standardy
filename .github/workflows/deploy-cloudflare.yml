@@ -35,6 +35,8 @@ jobs:
       - run: pip install -r requirements.txt
       - run: npm run typecheck && npm test && npm run build
       - run: npx tsx scripts/prepare-wrangler-config.ts
+      # Private concepts have separate migrations and are NEVER part of the public import/reset.
+      - run: npx wrangler d1 migrations apply EDITOR_DB --remote --config wrangler.deploy.jsonc
       - run: npx wrangler d1 migrations apply DB --remote --config wrangler.deploy.jsonc
       - run: npx wrangler d1 execute DB --remote --file dist/registry/import.sql --config wrangler.deploy.jsonc
       - run: npx wrangler deploy --config wrangler.deploy.jsonc

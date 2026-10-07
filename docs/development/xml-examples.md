@@ -60,6 +60,8 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 
 ## Ověření a přidávání dalších ukázek
 
+Při více zdrojových balíčcích je vhodnější vybírat nejen národní standard, ale také verzi a přesnou URL zdroje. [Pomocný výběr ukázek](agent-skills.md#vyber-ukazek-pro-jeden-zdroj) filtruje i jednotlivé příklady uvnitř jednoho pravidla a odmítá prázdný výsledek.
+
 `npm test` kontroluje XML syntaxi všech ukázek pomocí standardní knihovny Pythonu, schéma původu, unikátnost ID v jedné verzi pravidla a bezpečné zobrazení XML jako textu. Neprovádí XSD ani úplnou validaci NDK. Python je stejně jako pro sestavení MkDocs nutnou součástí vývojového prostředí.
 
 Po sestavení lze výřezy porovnat s rozbaleným zdrojem. Ve Windows PowerShellu například:

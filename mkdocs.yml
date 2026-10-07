@@ -71,6 +71,9 @@ nav:
   - Vývoj registru:
       - Přehled a pokrytí: development/index.md
       - Architektura: development/architecture.md
+      - Redakční postup a neveřejný editor: development/editorial-workflow.md
+      - Neveřejný editor — MVP: development/editor-mvp.md
+      - Projektové skills pro agenty: development/agent-skills.md
       - Datový model: development/registry-data-model.md
       - Periodika a monografie — srovnání MIX: development/periodical-mix-comparison.md
       - Identifikace, velikost a formát v MIX: development/mix-basic-information.md
