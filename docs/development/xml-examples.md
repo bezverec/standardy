@@ -1,10 +1,10 @@
 # XML ukázky ze vzorových SIP
 
-Registr obsahuje celkem **226 XML ukázek u 180 pravidel**: 219 u 173 monografických a sedm u sedmi periodických pravidel.
+Registr obsahuje celkem **230 XML ukázek u 184 pravidel**: 223 u 177 monografických a sedm u sedmi periodických pravidel.
 
-U 173 pravidel DMF Monografie 2.3 je dostupných 219 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, šestnáct pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, dvacet devět pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 219 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 177 pravidel DMF Monografie 2.3 je dostupných 223 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, šestnáct pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, třicet tři pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 223 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
-Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 219 ukázek.
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 223 ukázek.
 
 [První sada periodik](periodical-mix-comparison.md) původně XML ukázky neobsahovala. Navazující sada [základních údajů MIX](mix-basic-information.md) přidává sedm monografických a sedm samostatně ověřených periodických výřezů. Shodný technický požadavek neopravňuje přeznačit monografický výřez na periodický.
 
@@ -28,6 +28,8 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 [Podrobnosti jmen MODS](mods-name-details.md) nepřidávají další zdrojové ukázky: přímý původce svazku nemá typované namePart, alternativeName ani etal. Životopisná data Edisona jsou v subject/name, nikoli u původce, a nesmějí být vydávána za ukázku této skupiny.
 
 ## Důležité příklady
+
+- [Jazykové údaje MODS](mods-language.md) přidávají čtyři ukázky u čtyř pravidel. Celý language a sdílený languageTerm dokládají cze, type=code a authority=iso639-2b, nikoli objectPart, vícejazyčnost nebo jazyk katalogizace. Tyto výřezy byly ověřeny 8. 10. 2026; původní MARC nebyl analyzován.
 
 - [Data vydání a dalších událostí MODS](mods-origin-dates.md) přidávají tři ukázky u dvou pravidel: textové [1890] a kódované 1890. Dva zápisy nejsou dvěma mezemi intervalu; vzor nedokládá point, qualifier, calendar ani dateOther.
 - [Copyright, vznik a vydávání MODS](mods-origin-completion.md) přidává výřez issuance=single unit. Vzor nedokládá copyrightDate, dateCreated ani edition; původní MARC nebyl analyzován.

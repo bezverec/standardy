@@ -1,0 +1,131 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-LANGUAGE-TERM"
+title:
+  cs: "Kód jazyka obsahu monografie"
+description:
+  cs: "Jazykové údaje MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  - version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-LANGUAGE-TERM"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-language"
+    cataloguing_rules: ["aacr2", "rda"]
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-08"
+      note:
+        cs: "Jazykové údaje na s. 54 nejsou červeně odlišeny; podle legendy s. 24 jde o společný bibliografický předpis AACR2/RDA. Použití řízených kódů z něj nedělá technicky nezávislou kontrolu."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 54
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — language, objectPart a languageTerm"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values: ["monograph"]
+    normative_requirement:
+      cs: "Každé language obsahuje languageTerm vyjadřující jazyk kódem z ISO 639-2. DMF odkazuje na MARC 008/35–37, resp. 041; návazný atribut authority určuje bibliografickou variantu iso639-2b."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: "custom"
+          expression: "V každém přímém language MODS svazku ověřit alespoň jeden languageTerm a jeho neprázdný kód proti ISO 639-2/B. Samotný třípísmenný tvar není ověřením slovníku. Nezaměnit B s T (například cze versus ces), ISO 639-1 ani názvem jazyka. Ověřit význam a roli údaje vůči MARC 008/35–37 nebo příslušnému podpoli 041. Zřetězené kódy nejsou jedním jazykovým termínem; různé jazyky patří do oddělených language."
+    condition:
+      all:
+        - field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        - field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        - field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        - field: "element_role"
+          operator: "equals"
+          value: "mods_language"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 54
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — language, objectPart a languageTerm"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "language — objectPart; languageTerm; opakování jazyků a jejich reprezentací"
+        url: "https://www.loc.gov/standards/mods/userguide/language.html"
+      -
+        document: "MARC 21 Bibliographic — 041 Language Code"
+        version: "online, ověřeno 2026-10-08"
+        page: null
+        section: "008/35–37 a 041$a, $b, $f, $g, $h"
+        url: "https://www.loc.gov/marc/bibliographic/bd041.html"
+      -
+        document: "ISO 639-2 Language Code List"
+        version: "online, ověřeno 2026-10-08"
+        page: null
+        section: "Bibliographic (B) versus terminology (T); cze / ces"
+        url: "https://www.loc.gov/standards/iso639-2/php/code_list.php"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Přepis vizuálně ověřen proti DMF 2.3 s. 54 a legendě s. 24; rozsah a typy proti MODS XSD 3.8. Sémantika ověřena v citovaných pramenech LOC. Nejde o test implementací ani ověření celého SIP."
+    interpretation:
+      cs: "Kardinalita 1..n na jeden language pochází z languageDefinition XSD 3.8; DMF ji nezužuje na přesně jeden termín. Podle MODS opakované languageTerm představují tentýž jazyk, ne různé jazyky. Národní type=code a authority=iso639-2b platí pro každý termín v tomto rozsahu, ačkoli obecné MODS dovoluje i textové reprezentace. Číselník zde nenahrazujeme neúplným allowed_values ani regulárním výrazem. Ukázkové cze není výchozí ani jediný povolený jazyk. DMF uvádí mapování do dc:language; tato sada nevytváří samostatné pravidlo DC. Rozsah tvoří přímé language MODS svazku jednosvazkové monografie a jeho děti, nikoli recordInfo/languageOfCataloging, relatedItem, titul vícesvazku, vnitřní část, příloha nebo stránka. Kontext a dostupnost zdrojových údajů se zjišťují nezávisle na kontrolovaném XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      - id: "sip-mods-language-term-cze"
+        title:
+          cs: "Jazykový kód cze v MODS svazku vzorového SIP"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:languageTerm xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"iso639-2b\" type=\"code\">cze</mods:languageTerm>"
+        note:
+          cs: "Výřez z přímého language svazku dokládá cze, type=code a authority=iso639-2b. Nejde o languageOfCataloging. Vzor nedokládá objectPart ani více jazyků; původní MARC nebyl analyzován a nejde o potvrzení úplné validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, language/languageTerm"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:language/mods:languageTerm"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+relations:
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-LANGUAGE"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-LANGUAGE-TERM-TYPE"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-LANGUAGE-TERM-AUTHORITY"

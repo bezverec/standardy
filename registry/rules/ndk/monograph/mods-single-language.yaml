@@ -1,0 +1,117 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-LANGUAGE"
+title:
+  cs: "Jazyk obsahu jednosvazkové monografie"
+description:
+  cs: "Jazykové údaje MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  - version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-LANGUAGE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-language"
+    cataloguing_rules: ["aacr2", "rda"]
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-08"
+      note:
+        cs: "Jazykové údaje na s. 54 nejsou červeně odlišeny; podle legendy s. 24 jde o společný bibliografický předpis AACR2/RDA. Použití řízených kódů z něj nedělá technicky nezávislou kontrolu."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 54
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — language, objectPart a languageTerm"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values: ["monograph"]
+    normative_requirement:
+      cs: "Záznam svazku obsahuje language s údaji o jazyce dokumentu. Pro více jazyků se opakuje celý element language."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: "custom"
+          expression: "V přímých dětech MODS svazku požadovat alespoň jedno language. Různé jazyky patří do samostatných language; více languageTerm v jednom language nesmí nahrazovat kontejnery pro různé jazyky. Zápis v recordInfo/languageOfCataloging požadavek na jazyk obsahu nesplňuje."
+    condition:
+      all:
+        - field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        - field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        - field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        - field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 54
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — language, objectPart a languageTerm"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "language — objectPart; languageTerm; opakování jazyků a jejich reprezentací"
+        url: "https://www.loc.gov/standards/mods/userguide/language.html"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Přepis vizuálně ověřen proti DMF 2.3 s. 54 a legendě s. 24; rozsah a typy proti MODS XSD 3.8. Sémantika ověřena v citovaných pramenech LOC. Nejde o test implementací ani ověření celého SIP."
+    interpretation:
+      cs: "Kardinalita 1..n je vztažena k přímému MODS záznamu svazku. Obecné MODS dovoluje language jako opakovatelnou volbu, povinnost stanovuje DMF. Jazyk obsahu není jazyk katalogizace ani jazyk hodnot metadat v lang či xml:lang. Rozsah tvoří přímé language MODS svazku jednosvazkové monografie a jeho děti, nikoli recordInfo/languageOfCataloging, relatedItem, titul vícesvazku, vnitřní část, příloha nebo stránka. Kontext a dostupnost zdrojových údajů se zjišťují nezávisle na kontrolovaném XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      - id: "sip-mods-language-cze"
+        title:
+          cs: "Jazykový kód cze v MODS svazku vzorového SIP"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:language xmlns:mods=\"http://www.loc.gov/mods/v3\">\n  <mods:languageTerm authority=\"iso639-2b\" type=\"code\">cze</mods:languageTerm>\n</mods:language>"
+        note:
+          cs: "Výřez z přímého language svazku dokládá cze, type=code a authority=iso639-2b. Nejde o languageOfCataloging. Vzor nedokládá objectPart ani více jazyků; původní MARC nebyl analyzován a nejde o potvrzení úplné validity SIP."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, language"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:language"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+relations:
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-LANGUAGE-TERM"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-LANGUAGE-OBJECT-PART"

@@ -8,8 +8,8 @@ description:
 status: "normative"
 verification:
   status: "verified"
-  date: "2026-10-07"
-  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource, genre, originInfo, place, agent, dateIssued a dateOther; volba verze podle DMF Monografie 2.3, s. 5."
+  date: "2026-10-08"
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource, genre, originInfo, place, agent, dateIssued, dateOther a language; volba verze podle DMF Monografie 2.3, s. 5."
 versions:
   -
     version: "3.8"
@@ -19,9 +19,109 @@ versions:
       document: "MODS XML Schema"
       version: "3.8"
       page: null
-      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition"
+      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  - id: "MODS-LANGUAGE"
+    type: "element"
+    version: "3.8"
+    name: "language"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Jazyk obsahu jednosvazkové monografie"
+    definition:
+      cs: "Language je opakovatelná volba v modsGroup. LanguageDefinition vyžaduje jeden či více languageTerm, dále dovoluje scriptTerm. Povinné language v národním záznamu není požadavkem obecného XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace a dědičnost v MODS XSD 3.8. Význam opakování languageTerm ověřen také v MODS User Guidelines, language. Národní omezení jsou samostatná."
+  - id: "MODS-LANGUAGE-OBJECT-PART"
+    type: "attribute"
+    version: "3.8"
+    name: "language/@objectPart"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Část svazku, k níž se jazyk vztahuje"
+    definition:
+      cs: "ObjectPart je volitelný atribut languageDefinition typu xs:string bez uzavřeného výčtu. Určuje část zdroje, k níž se jazyk vztahuje; národní hodnoty a MA stanovuje DMF."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace a dědičnost v MODS XSD 3.8. Význam opakování languageTerm ověřen také v MODS User Guidelines, language. Národní omezení jsou samostatná."
+  - id: "MODS-LANGUAGE-TERM"
+    type: "element"
+    version: "3.8"
+    name: "language/languageTerm"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Kód jazyka obsahu monografie"
+    definition:
+      cs: "LanguageTerm se v languageDefinition vyskytuje 1..n. LanguageTermDefinition rozšiřuje stringPlusLanguagePlusAuthority; obsah není omezen XSD číselníkem ISO 639-2. Podle MODS User Guidelines jde při opakování o reprezentace téhož jazyka; různé jazyky vyžadují samostatné language."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace a dědičnost v MODS XSD 3.8. Význam opakování languageTerm ověřen také v MODS User Guidelines, language. Národní omezení jsou samostatná."
+  - id: "MODS-LANGUAGE-TERM-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "language/languageTerm/@type"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Kódová podoba jazykového termínu"
+    definition:
+      cs: "Type v languageTermDefinition je volitelný atribut typu codeOrText, který dovoluje code i text. Povinnost a zúžení na code pro jazyk obsahu stanovuje národní DMF, nikoli obecné MODS."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace a dědičnost v MODS XSD 3.8. Význam opakování languageTerm ověřen také v MODS User Guidelines, language. Národní omezení jsou samostatná."
+  - id: "MODS-LANGUAGE-TERM-AUTHORITY"
+    type: "attribute"
+    version: "3.8"
+    name: "language/languageTerm/@authority"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Autorita kódu jazyka monografie"
+    definition:
+      cs: "Authority je přes stringPlusLanguagePlusAuthority zděděný volitelný atribut typu xs:string z authorityAttributeGroup. MODS 3.8 odstranilo dřívější výčet autorit languageTerm; povinnost iso639-2b je národní omezení."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace a dědičnost v MODS XSD 3.8. Význam opakování languageTerm ověřen také v MODS User Guidelines, language. Národní omezení jsou samostatná."
   -
     id: "MODS-TYPE-OF-RESOURCE"
     type: "element"

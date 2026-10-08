@@ -1,6 +1,6 @@
 # Rozsah AACR2/RDA v registru
 
-Posouzeno 7. 10. 2026: všech 258 evidovaných pravidel: 240 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
+Posouzeno 8. 10. 2026: všech 263 evidovaných pravidel: 245 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
 Jde o audit relevance katalogizace, nikoli nové ověření každé technické kontroly,
 implementací validátorů nebo úplnosti DMF v registru.
 
@@ -24,7 +24,7 @@ U periodik je podkladem [DMF Periodika 2.2](https://standardy.ndk.cz/ndk/standar
 | Rozsah | Počet | Důvod |
 |---|---:|---|
 | Nezávislé na katalogizaci | 204 | 39 MIX (21 monografických a 18 periodických), 18 info.xml, 85 METS, 61 PREMIS a strukturální genre v MODS |
-| Společný předpis AACR2/RDA | 49 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
+| Společný předpis AACR2/RDA | 54 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
 | Pouze AACR2 | 1 | Nepoužití eventType jako výklad vyhrazení atributu pro RDA |
 | Pouze RDA | 4 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c |
 | Neurčený rozsah | 0 | Stav zůstává dostupný pro nové nebo nedostatečně doložené záznamy |
@@ -34,6 +34,8 @@ a prameny včetně lokátoru. Nejde o runtime výchozí hodnotu podle prefixu ID
 Pravidla bez anotace se nadále považují za neposouzená.
 
 ### Důležité hranice
+
+- **Jazykové údaje:** [sada language](mods-language.md) doplňuje pět společných bibliografických předpisů ze s. 54. Kódový zápis jazyka obsahu není technicky nezávislý a nesmí být zaměněn s jazykem katalogizace. Název objectPart=translation se zachovává s vysvětlením vazby na jazyk originálu v MARC 041$h.
 
 - **Copyright, vznik a vydávání:** [navazující sada](mods-origin-completion.md) přidává čtyři společné požadavky a samostatné RDA omezení copyrightDate. Společný copyrightový předpis zachovává odlišenou větev RDA; nejasnost opakovaného 264_0$c u dateCreated není potichu opravena. Issuance je bibliografický požadavek, ne technicky nezávislý jen proto, že používá řízený výčet.
 
@@ -69,8 +71,8 @@ se neslučuje ani s jedním z nich. Detail ukazuje zdůvodnění v rozbalovací 
 Relevance katalogizace a významové párování jsou různé osy. Audit nevytváří
 automaticky stovky domnělých ekvivalencí. V příkladu AACR2 proti RDA zůstává
 jedna dvojice eventType s odlišným kontextem a osmnáct shodných technických aspektů MIX;
-217/220 zahrnutých pravidel nemá významový klíč, 4/1 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
-Souhrn uvádí 186/186 nezávislých a 49/49 společných požadavků, nikoli tolik párů.
+222/225 zahrnutých pravidel nemá významový klíč, 4/1 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
+Souhrn uvádí 186/186 nezávislých a 54/54 společných požadavků, nikoli tolik párů.
 
 Testy ověřují úplnost anotací, hranice MODS/METS/PREMIS, zařazení nezávislých
 pravidel s klíčem i bez něj, bezpečné zachování neznámého rozsahu, validaci
