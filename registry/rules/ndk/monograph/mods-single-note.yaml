@@ -1,0 +1,176 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-NOTE"
+title:
+  cs: "Obecná poznámka k jednosvazkové monografii"
+description:
+  cs: "Shrnutí obsahu a obecné poznámky v MODS jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-NOTE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-notes"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-08"
+      note:
+        cs: "Černé, nerozlišené řádky abstract, note a note/@type na s. 55 jsou podle legendy s. 24 společným bibliografickým předpisem AACR2/RDA, nikoli katalogizačně nezávislou technickou vrstvou."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 55
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — abstract, note a note/@type"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "recommended_if_available"
+    obligation_code: "RA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Obecná poznámka note ke svazku jako celku má povinnost RA. DMF uvádí zdroj MARC 245$c (údaj o odpovědnosti) a poznámková pole 5XX."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Je-li obecná poznámka dostupná, doporučit její zápis přímo pod mods svazku. Dostupnost neposuzovat podle přítomnosti cílového note. Při převodu zohlednit 245$c a poznámková pole 5XX; nejde o bezvýhradné kopírování všech 5XX do note. Například obsahové shrnutí z 520 řeší samostatný abstract. Doplnění chybějících zdrojových údajů nesmí být domyšlené."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 55
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — abstract, note a note/@type"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; abstractDefinition; noteDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "Top-level note — Guidelines for Use; type"
+        url: "https://www.loc.gov/standards/mods/userguide/note.html"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Vizuálně ověřeny řádky a kódy R/RA/O v DMF 2.3 s. 55, hlavička jednosvazkové monografie a legenda s. 24. Typy a opakovatelnost ověřeny v MODS XSD 3.8; doplňující význam podle uvedených LOC Guidelines. Ověření přepisu není kontrola SIP ani nástrojů."
+    interpretation:
+      cs: "RA zůstává doporučením při dostupnosti, nikoli povinností M. Obecné MODS Guidelines doporučují samostatný note pro každou poznámku a konkrétnější element tam, kde existuje; tento výklad nepřipisujeme doslovně řádku DMF. PhysicalDescription/note o fyzickém stavu je samostatný rodičovský kontext a pravidlo. Stránkové note s hodnotou left/right nejsou obecné poznámky svazku. DMF uvádí vazbu na dc:description; samostatné pravidlo DC zde nevzniká. Rozsah je přímý MODS záznam svazku jednosvazkové monografie v hlavním METS, nikoli relatedItem, physicalDescription, recordInfo, titul vícesvazku, příloha nebo stránka. Kontext se určuje nezávisle na přítomnosti kontrolovaného elementu; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů ani původní MARC nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-note-responsibility"
+        title:
+          cs: "Údaj o odpovědnosti"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:note xmlns:mods=\"http://www.loc.gov/mods/v3\" type=\"statement of responsibility\">[J. Mařík]</mods:note>"
+        note:
+          cs: "Výřez z přímého MODS svazku, který deklaruje descriptionStandard=aacr. Zachovává původní hodnoty; původní MARC ani úplná validita SIP nebyly ověřeny. Vzor ukazuje typovanou poznámku o odpovědnosti i dvě poznámky bez type; ty nejsou fyzickými ani stránkovými poznámkami. Počet tří note a konkrétní text nejsou univerzální šablona. Vzor nedokládá větev RDA ani abstract."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — přímé poznámky MODS svazku"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:note[@type=\"statement of responsibility\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+      -
+        id: "sip-mods-note-author-source"
+        title:
+          cs: "Poznámka o zjištění autora"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:note xmlns:mods=\"http://www.loc.gov/mods/v3\">Autor ze závěru textu</mods:note>"
+        note:
+          cs: "Výřez z přímého MODS svazku, který deklaruje descriptionStandard=aacr. Zachovává původní hodnoty; původní MARC ani úplná validita SIP nebyly ověřeny. Vzor ukazuje typovanou poznámku o odpovědnosti i dvě poznámky bez type; ty nejsou fyzickými ani stránkovými poznámkami. Počet tří note a konkrétní text nejsou univerzální šablona. Vzor nedokládá větev RDA ani abstract."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — přímé poznámky MODS svazku"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:note[2]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+      -
+        id: "sip-mods-note-date-source"
+        title:
+          cs: "Poznámka o zjištění roku"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:note xmlns:mods=\"http://www.loc.gov/mods/v3\">Rok vyd. z bibliografického katalogu 19. stol.</mods:note>"
+        note:
+          cs: "Výřez z přímého MODS svazku, který deklaruje descriptionStandard=aacr. Zachovává původní hodnoty; původní MARC ani úplná validita SIP nebyly ověřeny. Vzor ukazuje typovanou poznámku o odpovědnosti i dvě poznámky bez type; ty nejsou fyzickými ani stránkovými poznámkami. Počet tří note a konkrétní text nejsou univerzální šablona. Vzor nedokládá větev RDA ani abstract."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — přímé poznámky MODS svazku"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:note[3]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-ABSTRACT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NOTE-TYPE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-PHYSICAL-NOTE"

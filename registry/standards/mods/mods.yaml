@@ -9,7 +9,7 @@ status: "normative"
 verification:
   status: "verified"
   date: "2026-10-08"
-  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource, genre, originInfo, place, agent, dateIssued, dateOther a language; volba verze podle DMF Monografie 2.3, s. 5."
+  reference: "Oficiální MODS XSD 3.8 přečteno v rozsahu titleInfo, name, role, alternativeName, etal, typeOfResource, genre, originInfo, place, agent, dateIssued, dateOther, language, physicalDescription, abstract a note; volba verze podle DMF Monografie 2.3, s. 5."
 versions:
   -
     version: "3.8"
@@ -19,9 +19,192 @@ versions:
       document: "MODS XML Schema"
       version: "3.8"
       page: null
-      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup"
+      section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup; physicalDescriptionDefinition; formDefinition; extent; physicalDescriptionNote; abstractDefinition; noteDefinition"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  -
+    id: "MODS-ABSTRACT"
+    type: "element"
+    name: "abstract"
+    title:
+      cs: "Shrnutí obsahu zdroje"
+    definition:
+      cs: "Abstract je opakovatelná volba v modsGroup. AbstractDefinition má jednoduchý obsah přes stringPlusLanguage; obecné XSD nevyžaduje přítomnost tohoto konkrétního elementu. Národní doporučení a mapování z MARC určuje DMF."
+    version: "3.8"
+    namespace: "http://www.loc.gov/mods/v3"
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; abstractDefinition; noteDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeno v MODS XSD 3.8: modsDefinition/modsGroup, abstractDefinition a noteDefinition; doporučení LOC k významu a otevřenosti type vedena samostatně u národních pravidel."
+  -
+    id: "MODS-NOTE"
+    type: "element"
+    name: "note"
+    title:
+      cs: "Obecná poznámka ke zdroji"
+    definition:
+      cs: "Globální note je opakovatelná volba v modsGroup typu noteDefinition s jednoduchým obsahem přes stringPlusLanguage. Liší se od lokálního physicalDescription/note. Stejný obecný typ může být využit i v jiných kontextech; národní pravidlo vždy určuje rodiče."
+    version: "3.8"
+    namespace: "http://www.loc.gov/mods/v3"
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; abstractDefinition; noteDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeno v MODS XSD 3.8: modsDefinition/modsGroup, abstractDefinition a noteDefinition; doporučení LOC k významu a otevřenosti type vedena samostatně u národních pravidel."
+  -
+    id: "MODS-NOTE-TYPE"
+    type: "attribute"
+    name: "note/@type"
+    title:
+      cs: "Typ obecné poznámky"
+    definition:
+      cs: "Type v noteDefinition je volitelný xs:string bez enumerace. Seznam používaných hodnot LOC není uzavřeným výčtem XSD. Nepřítomnost atributu je obecně dovolena; vlastnosti rodičovských kontextů se neposuzují podle samotného lokálního jména note."
+    version: "3.8"
+    namespace: "http://www.loc.gov/mods/v3"
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; abstractDefinition; noteDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeno v MODS XSD 3.8: modsDefinition/modsGroup, abstractDefinition a noteDefinition; doporučení LOC k významu a otevřenosti type vedena samostatně u národních pravidel."
+  - id: "MODS-PHYSICAL-DESCRIPTION"
+    type: "element"
+    version: "3.8"
+    name: "physicalDescription"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Fyzický popis zdroje"
+    definition:
+      cs: "PhysicalDescription je opakovatelná volba v modsGroup. PhysicalDescriptionDefinition obsahuje opakovatelnou volbu form, reformattingQuality, internetMediaType, extent, digitalOrigin a note; nevyžaduje každé dítě zvlášť. MODS User Guidelines opakování kontejneru nedoporučují, XSD je však nezakazuje."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace, rodičovský kontext, dědičnost a opakovatelnost v MODS XSD 3.8. Doporučení k opakování kontejneru podle MODS User Guidelines — physicalDescription."
+  - id: "MODS-FORM"
+    type: "element"
+    version: "3.8"
+    name: "physicalDescription/form"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Fyzická forma zdroje"
+    definition:
+      cs: "Form je opakovatelná volba v physicalDescriptionDefinition. FormDefinition rozšiřuje stringPlusLanguagePlusAuthority a přidává volitelný type. Nemá uzavřený výčet print/microfilm. Stejná deklarace se používá také v copyInformation; národní pravidla určují konkrétní kontext."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace, rodičovský kontext, dědičnost a opakovatelnost v MODS XSD 3.8. Doporučení k opakování kontejneru podle MODS User Guidelines — physicalDescription."
+  - id: "MODS-FORM-AUTHORITY"
+    type: "attribute"
+    version: "3.8"
+    name: "physicalDescription/form/@authority"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Autorita fyzické formy"
+    definition:
+      cs: "FormDefinition dědí volitelnou authority typu xs:string přes stringPlusLanguagePlusAuthority a authorityAttributeGroup. Žádný pevný seznam autorit ani povinnost tohoto atributu obecné XSD neukládá."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace, rodičovský kontext, dědičnost a opakovatelnost v MODS XSD 3.8. Doporučení k opakování kontejneru podle MODS User Guidelines — physicalDescription."
+  - id: "MODS-FORM-TYPE"
+    type: "attribute"
+    version: "3.8"
+    name: "physicalDescription/form/@type"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Druh údaje fyzické formy"
+    definition:
+      cs: "Type ve formDefinition je volitelný xs:string bez pevného výčtu. Národní významy media/carrier a jejich rozsah RDA nejsou obecnou vlastností XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace, rodičovský kontext, dědičnost a opakovatelnost v MODS XSD 3.8. Doporučení k opakování kontejneru podle MODS User Guidelines — physicalDescription."
+  - id: "MODS-PHYSICAL-EXTENT"
+    type: "element"
+    version: "3.8"
+    name: "physicalDescription/extent"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Textový rozsah zdroje"
+    definition:
+      cs: "Globální extent ve fyzickém popisu má jednoduchý obsah rozšiřující stringPlusLanguagePlusSupplied a volitelný unit. Je opakovatelnou volbou physicalDescriptionDefinition. Není to odlišný lokální part/extent typu extentDefinition s dětmi start/end/total/list."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace, rodičovský kontext, dědičnost a opakovatelnost v MODS XSD 3.8. Doporučení k opakování kontejneru podle MODS User Guidelines — physicalDescription."
+  - id: "MODS-PHYSICAL-NOTE"
+    type: "element"
+    version: "3.8"
+    name: "physicalDescription/note"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Poznámka fyzického popisu"
+    definition:
+      cs: "Lokální note v physicalDescriptionDefinition je opakovatelná volba typu physicalDescriptionNote s textovým obsahem a volitelnými atributy. Liší se rodičem i typem od top-level note; jejich národní požadavky se neslučují."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Ověřeny deklarace, rodičovský kontext, dědičnost a opakovatelnost v MODS XSD 3.8. Doporučení k opakování kontejneru podle MODS User Guidelines — physicalDescription."
   - id: "MODS-LANGUAGE"
     type: "element"
     version: "3.8"

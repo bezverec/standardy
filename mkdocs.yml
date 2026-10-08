@@ -105,4 +105,6 @@ nav:
       - Data vydání a dalších událostí MODS: development/mods-origin-dates.md
       - Copyright, vznik a vydávání MODS: development/mods-origin-completion.md
       - Jazykové údaje MODS: development/mods-language.md
+      - Fyzický popis MODS: development/mods-physical-description.md
+      - Shrnutí a poznámky MODS: development/mods-notes.md
       - Lokální vývoj: development/local-development.md

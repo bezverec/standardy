@@ -1,0 +1,135 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-NOTE-TYPE"
+title:
+  cs: "Typ obecné poznámky monografie"
+description:
+  cs: "Shrnutí obsahu a obecné poznámky v MODS jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-NOTE-TYPE"
+    relation_to_target:
+      type: "clarifies"
+    category: "metadata/mods-notes"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-08"
+      note:
+        cs: "Černé, nerozlišené řádky abstract, note a note/@type na s. 55 jsou podle legendy s. 24 společným bibliografickým předpisem AACR2/RDA, nikoli katalogizačně nezávislou technickou vrstvou."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 55
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — abstract, note a note/@type"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "optional"
+    obligation_code: "O"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Atribut type obecné poznámky má povinnost O a upřesňuje její obsah. DMF doporučuje využít seznam používaných hodnot."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: 1
+      validations:
+        -
+          type: "custom"
+          expression: "Type je volitelný atribut každého přímého note svazku. Chybějící type není chyba ani důvod založit nový note. Při jeho použití doporučit odpovídající označení ze seznamu používaných typů LOC, nikoli vynucovat uzavřený číselník. Statement of responsibility je vhodný typ údaje o odpovědnosti, ne povinná hodnota všech poznámek. Nevyžadovat hodnotu na základě textu jiné poznámky nebo jiného rodiče."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_general_note"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 55
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — abstract, note a note/@type"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; abstractDefinition; noteDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "Top-level note — Guidelines for Use; type"
+        url: "https://www.loc.gov/standards/mods/userguide/note.html"
+      -
+        document: "MODS note Types"
+        version: "2024-12-10"
+        page: null
+        section: "MODS note — seznam používaných typů, oddělený od physicalDescription/note"
+        url: "https://www.loc.gov/standards/mods/mods-notes.html"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Vizuálně ověřeny řádky a kódy R/RA/O v DMF 2.3 s. 55, hlavička jednosvazkové monografie a legenda s. 24. Typy a opakovatelnost ověřeny v MODS XSD 3.8; doplňující význam podle uvedených LOC Guidelines. Ověření přepisu není kontrola SIP ani nástrojů."
+    interpretation:
+      cs: "O se nepřevádí na R jen proto, že text doporučuje výběr označení. Seznam LOC je otevřený seznam používaných hodnot, nikoli výčet dovolených hodnot XSD. Proto nejsou definovány allowed_values ani value_set validace. Atribut je kontextem note, ne kořene mods ani physicalDescription/note; jeho 0..1 kardinalita neomezuje opakování samotných poznámek. Rozsah je přímý MODS záznam svazku jednosvazkové monografie v hlavním METS, nikoli relatedItem, physicalDescription, recordInfo, titul vícesvazku, příloha nebo stránka. Kontext se určuje nezávisle na přítomnosti kontrolovaného elementu; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů ani původní MARC nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-note-type-responsibility"
+        title:
+          cs: "Údaj o odpovědnosti"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:note xmlns:mods=\"http://www.loc.gov/mods/v3\" type=\"statement of responsibility\">[J. Mařík]</mods:note>"
+        note:
+          cs: "Výřez z přímého MODS svazku, který deklaruje descriptionStandard=aacr. Zachovává původní hodnoty; původní MARC ani úplná validita SIP nebyly ověřeny. Vzor ukazuje typovanou poznámku o odpovědnosti i dvě poznámky bez type; ty nejsou fyzickými ani stránkovými poznámkami. Počet tří note a konkrétní text nejsou univerzální šablona. Vzor nedokládá větev RDA ani abstract."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — přímé poznámky MODS svazku"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:note[@type=\"statement of responsibility\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-NOTE"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-PHYSICAL-NOTE"

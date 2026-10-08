@@ -1,13 +1,13 @@
 # Rozsah AACR2/RDA v registru
 
-Posouzeno 8. 10. 2026: všech 263 evidovaných pravidel: 245 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
+Posouzeno 8. 10. 2026: všech 275 evidovaných pravidel: 257 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
 Jde o audit relevance katalogizace, nikoli nové ověření každé technické kontroly,
 implementací validátorů nebo úplnosti DMF v registru.
 
 ## Podklad a metoda
 
 Rozhodující je [DMF Monografie 2.3](https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf),
-zejména legenda barev na s. 24 a vizuálně ověřené tabulky jednosvazku na s. 48–54.
+zejména legenda barev na s. 24 a vizuálně ověřené tabulky jednosvazku na s. 48–55.
 Legenda vyhrazuje červené definice pro RDA; nerozlišené předpisy jsou společné
 pro AACR2 a RDA. Barvy pro druhy předloh nejsou katalogizační režimy.
 
@@ -24,9 +24,9 @@ U periodik je podkladem [DMF Periodika 2.2](https://standardy.ndk.cz/ndk/standar
 | Rozsah | Počet | Důvod |
 |---|---:|---|
 | Nezávislé na katalogizaci | 204 | 39 MIX (21 monografických a 18 periodických), 18 info.xml, 85 METS, 61 PREMIS a strukturální genre v MODS |
-| Společný předpis AACR2/RDA | 54 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
-| Pouze AACR2 | 1 | Nepoužití eventType jako výklad vyhrazení atributu pro RDA |
-| Pouze RDA | 4 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c |
+| Společný předpis AACR2/RDA | 61 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
+| Pouze AACR2 | 2 | Nepoužití eventType jako výklad vyhrazení pro RDA; základní výčet form/authority |
+| Pouze RDA | 8 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c; autorita form, médium, nosič a form/type |
 | Neurčený rozsah | 0 | Stav zůstává dostupný pro nové nebo nedostatečně doložené záznamy |
 
 Každá verze pravidla obsahuje vlastní `cataloguing_scope` se zdůvodněním, datem
@@ -34,6 +34,9 @@ a prameny včetně lokátoru. Nejde o runtime výchozí hodnotu podle prefixu ID
 Pravidla bez anotace se nadále považují za neposouzená.
 
 ### Důležité hranice
+
+- **Shrnutí a obecné poznámky:** [tři pravidla](mods-notes.md) pro abstract, note a note/@type jsou společná AACR2/RDA podle černého zápisu na s. 55 a legendy s. 24. Zachovávají R/RA/O; volitelný type nepodmiňuje použitelnost samotné poznámky.
+- **Fyzický popis:** [navazující sada](mods-physical-description.md) obsahuje čtyři společné předpisy, jednu variantu authority pro AACR2 a čtyři pravidla RDA. Médium z 337 je v DMF nepovinné, nosič z 338 povinný; samotná přítomnost jednoho pole nebo atributu neurčuje režim. RA u extent/note se zachovává a type s MA se nevynucuje na každém jiném form.
 
 - **Jazykové údaje:** [sada language](mods-language.md) doplňuje pět společných bibliografických předpisů ze s. 54. Kódový zápis jazyka obsahu není technicky nezávislý a nesmí být zaměněn s jazykem katalogizace. Název objectPart=translation se zachovává s vysvětlením vazby na jazyk originálu v MARC 041$h.
 
@@ -71,8 +74,8 @@ se neslučuje ani s jedním z nich. Detail ukazuje zdůvodnění v rozbalovací 
 Relevance katalogizace a významové párování jsou různé osy. Audit nevytváří
 automaticky stovky domnělých ekvivalencí. V příkladu AACR2 proti RDA zůstává
 jedna dvojice eventType s odlišným kontextem a osmnáct shodných technických aspektů MIX;
-222/225 zahrnutých pravidel nemá významový klíč, 4/1 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
-Souhrn uvádí 186/186 nezávislých a 54/54 společných požadavků, nikoli tolik párů.
+230/236 zahrnutých pravidel nemá významový klíč, 8/2 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
+Souhrn uvádí 186/186 nezávislých a 61/61 společných požadavků, nikoli tolik párů.
 
 Testy ověřují úplnost anotací, hranice MODS/METS/PREMIS, zařazení nezávislých
 pravidel s klíčem i bez něj, bezpečné zachování neznámého rozsahu, validaci

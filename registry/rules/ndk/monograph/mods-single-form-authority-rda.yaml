@@ -1,0 +1,115 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-FORM-AUTHORITY-RDA"
+title:
+  cs: "Autorita fyzické formy v RDA"
+description:
+  cs: "Fyzický popis předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  - version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-FORM-AUTHORITY"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-physical-description"
+    cataloguing_rules: ["rda"]
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-08"
+      note:
+        cs: "Červené doplňky na s. 54 a řádek type na s. 55 jsou podle legendy s. 24 vyhrazeny RDA. U autority RDA platí i společné základní hodnoty. Režim se neurčuje pouhou existencí cílového atributu."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 54
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — physicalDescription a jeho děti (s. 54–55)"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values: ["monograph"]
+    normative_requirement:
+      cs: "V RDA má každý form fyzického popisu povinnou authority. Ke společnému výčtu marcform, marccategory, marcsmd a gmd DMF přidává rdamedia pro údaje z 337 a rdacarrier pro údaje z 338."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      allowed_values: ["marcform","marccategory","marcsmd","gmd","rdamedia","rdacarrier"]
+      validations:
+        - type: "custom"
+          expression: "Na každém form RDA svazku ověřit authority z povoleného výčtu. Pro údaj typu média z MARC 337 vyžadovat rdamedia, pro typ nosiče z 338 rdacarrier; samotná příslušnost ke sjednocenému výčtu nestačí. Autority se nesmějí zaměnit a nevyžadují se všechny současně. Základní čtyři hodnoty DMF pro RDA nevyškrtává."
+    condition:
+      all:
+        - field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        - field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        - field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        - field: "element_role"
+          operator: "equals"
+          value: "mods_physical_form"
+        - field: "cataloguing_rules"
+          operator: "equals"
+          value: "rda"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 54
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — physicalDescription a jeho děti (s. 54–55)"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "physicalDescription; form; extent; note"
+        url: "https://www.loc.gov/standards/mods/userguide/physicaldescription.html"
+      -
+        document: "MARC 21 Bibliographic — 337 Media Type"
+        version: "December 2017"
+        page: null
+        section: "337$a, $b a $2"
+        url: "https://www.loc.gov/marc/bibliographic/bd337.html"
+      -
+        document: "MARC 21 Bibliographic — 338 Carrier Type"
+        version: "December 2017"
+        page: null
+        section: "338$a, $b a $2"
+        url: "https://www.loc.gov/marc/bibliographic/bd338.html"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Přepis ověřen vizuálně v DMF 2.3 s. 54–55 a legendě s. 24; deklarace a rodičovské typy v MODS XSD 3.8. Doplňující sémantika podle uvedených pramenů LOC. Nejde o ověření implementace nástrojů."
+    interpretation:
+      cs: "Národní seznam je širší než varianta AACR2, ale nejde o konflikt s obecným xs:string v MODS. Kardinalita je na jeden atribut jednoho form. Výčet autorit není výčtem přípustných textů form a hodnota svazek není univerzální pro každý druh předlohy. Rozsah tvoří fyzický popis v přímém MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, copyInformation, titul vícesvazku, příloha, vnitřní část nebo stránka. Kontext a katalogizační režim se zjišťují nezávisle na kontrolovaném XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-FORM"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-FORM-AUTHORITY-AACR"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-FORM-RDA-MEDIA"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-FORM-RDA-CARRIER"

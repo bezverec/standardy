@@ -17,9 +17,9 @@ const python = existsSync(pythonVenv) ? pythonVenv : process.platform === "win32
 const checkXml = (data: unknown) => spawnSync(python, [path.join(root, "scripts/verify-xml-examples.py")], { input: JSON.stringify(data), encoding: "utf8" });
 
 describe("source-backed XML examples", () => {
-  it("ships 230 source excerpts for 184 rules with provenance in versioned API/export records", () => {
-    expect(examples).toHaveLength(230);
-    expect(rules.filter((rule) => rule.examples?.length)).toHaveLength(184);
+  it("ships 242 source excerpts for 190 rules with provenance in versioned API/export records", () => {
+    expect(examples).toHaveLength(242);
+    expect(rules.filter((rule) => rule.examples?.length)).toHaveLength(190);
     for (const rule of rules.filter((rule) => rule.examples?.length)) {
       const periodic = rule.national_standard_id === "ndk-periodical";
       expect(rule.version).toBe(periodic ? "2.2" : "2.3");
@@ -37,7 +37,7 @@ describe("source-backed XML examples", () => {
     const result = checkXml(rules);
     expect(result.error).toBeUndefined();
     expect(result.status, result.stderr).toBe(0);
-    expect(JSON.parse(result.stdout)).toMatchObject({ examples: 230, xml_syntax: "ok" });
+    expect(JSON.parse(result.stdout)).toMatchObject({ examples: 242, xml_syntax: "ok" });
     for (const code of ["<mix:mix/>", "<created>", '<!DOCTYPE x [<!ENTITY data SYSTEM "file:///test">]><x>&data;</x>']) {
       expect(checkXml([{ rule_id: "fixture", examples: [{ ...examples[0], code }] }]).status).toBe(1);
     }

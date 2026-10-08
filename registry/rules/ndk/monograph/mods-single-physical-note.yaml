@@ -1,0 +1,95 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-PHYSICAL-NOTE"
+title:
+  cs: "Poznámka o fyzickém stavu předlohy"
+description:
+  cs: "Fyzický popis předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  - version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-PHYSICAL-NOTE"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-physical-description"
+    cataloguing_rules: ["aacr2","rda"]
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-08"
+      note:
+        cs: "Nerozlišený fyzický popis na s. 54–55 je podle legendy s. 24 společný bibliografický předpis AACR2/RDA. Samostatné červené doplňky 337/338 a type se na AACR2 nepřenášejí."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 55
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — physicalDescription a jeho děti (s. 54–55)"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "recommended_if_available"
+    obligation_code: "RA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values: ["monograph"]
+    normative_requirement:
+      cs: "Poznámka note uvnitř physicalDescription má povinnost RA a popisuje fyzický stav dokumentu. Pro každou poznámku se vytváří samostatný note."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        - type: "custom"
+          expression: "Při dostupné poznámce o fyzickém stavu doporučit její zápis do note v přímém physicalDescription svazku. Každá samostatná poznámka má vlastní element. Obecný note přímo pod mods, například údaj o odpovědnosti z 245$c, tento význam nenahrazuje. Nevymýšlet poznámku o stavu podle stáří dokumentu nebo absence poznámky; dostupnost posoudit ze zdroje."
+    condition:
+      all:
+        - field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        - field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        - field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        - field: "element_role"
+          operator: "equals"
+          value: "mods_physical_description"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 55
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — physicalDescription a jeho děti (s. 54–55)"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "physicalDescription; form; extent; note"
+        url: "https://www.loc.gov/standards/mods/userguide/physicaldescription.html"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Přepis ověřen vizuálně v DMF 2.3 s. 54–55 a legendě s. 24; deklarace a rodičovské typy v MODS XSD 3.8. Doplňující sémantika podle uvedených pramenů LOC. Nejde o ověření implementace nástrojů."
+    interpretation:
+      cs: "RA se nepovyšuje na M kvůli povinnému physicalDescription. Kardinalita 0..n se vztahuje k fyzickému popisu, ne ke všem note v dokumentu. XSD používá physicalDescriptionNote, nikoli typ top-level note. Případné obecně povolené atributy note zde nedostávají povinnost z následujícího řádku tabulky pro top-level note/@type. Vzorový svazek má jen obecné poznámky mimo physicalDescription, proto pro toto pravidlo není zdrojový výřez. Rozsah tvoří fyzický popis v přímém MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, copyInformation, titul vícesvazku, příloha, vnitřní část nebo stránka. Kontext a katalogizační režim se zjišťují nezávisle na kontrolovaném XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-PHYSICAL-DESCRIPTION"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-PHYSICAL-EXTENT"

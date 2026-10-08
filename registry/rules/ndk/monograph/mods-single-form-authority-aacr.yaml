@@ -1,0 +1,163 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-FORM-AUTHORITY-AACR"
+title:
+  cs: "Autorita fyzické formy v AACR2"
+description:
+  cs: "Fyzický popis předlohy v MODS svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  - version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-FORM-AUTHORITY"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-physical-description"
+    cataloguing_rules: ["aacr2"]
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-08"
+      note:
+        cs: "Základní výčet authority na s. 54 platí pro AACR2; dvě další autority jsou výslovně přidány červeně pro RDA. Varianty se vedou odděleně, aby AACR2 nepřebíralo specifické požadavky RDA."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 54
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — physicalDescription a jeho děti (s. 54–55)"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values: ["monograph"]
+    normative_requirement:
+      cs: "V kontextu AACR2 má každý form fyzického popisu povinnou authority s hodnotou marcform, marccategory, marcsmd nebo gmd."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      allowed_values: ["marcform","marccategory","marcsmd","gmd"]
+      validations:
+        - type: "custom"
+          expression: "Na každém form v přímém physicalDescription svazku AACR2 ověřit právě jednu authority z výčtu a soulad obsahu s významem zvolené autority. Nevyžadovat všechny čtyři autority. Doplňky rdamedia a rdacarrier jsou v tabulce vyhrazeny RDA; existence takové autority sama není důkazem katalogizačního režimu."
+    condition:
+      all:
+        - field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        - field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        - field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        - field: "element_role"
+          operator: "equals"
+          value: "mods_physical_form"
+        - field: "cataloguing_rules"
+          operator: "equals"
+          value: "aacr2"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 54
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — physicalDescription a jeho děti (s. 54–55)"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; physicalDescriptionDefinition; formDefinition; authorityAttributeGroup; extent; physicalDescriptionNote"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines"
+        version: "3"
+        page: null
+        section: "physicalDescription; form; extent; note"
+        url: "https://www.loc.gov/standards/mods/userguide/physicaldescription.html"
+    verification:
+      status: "verified"
+      date: "2026-10-08"
+      reference: "Přepis ověřen vizuálně v DMF 2.3 s. 54–55 a legendě s. 24; deklarace a rodičovské typy v MODS XSD 3.8. Doplňující sémantika podle uvedených pramenů LOC. Nejde o ověření implementace nástrojů."
+    interpretation:
+      cs: "Kardinalita 1..1 platí pro atribut jednoho form, nikoli pro počet form. V obecném XSD je authority volitelný řetězec; povinnost a výčet jsou národní. Samostatné varianty autority zachovávají rozdíl režimů bez tvrzení o obecném zákazu RDA slovníků v MODS. Rozsah tvoří fyzický popis v přímém MODS záznamu svazku jednosvazkové monografie, nikoli relatedItem, copyInformation, titul vícesvazku, příloha, vnitřní část nebo stránka. Kontext a katalogizační režim se zjišťují nezávisle na kontrolovaném XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      - id: "sip-mods-authorities-marcform"
+        title:
+          cs: "Fyzický popis předlohy ve vzorovém SIP"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:form xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"marcform\">print</mods:form>"
+        note:
+          cs: "Zdrojový MODS svazku deklaruje descriptionStandard=aacr. Výřez zachovává původní hodnoty; nedokládá větev RDA, původní pole MARC ani úplnou validitu SIP. Tři form neznamenají povinný počet tří pro každý dokument. Text 14 s. ; 16 cm není počet digitálních obrazů. V přímém physicalDescription není note."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, physicalDescription"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:physicalDescription/mods:form[@authority=\"marcform\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+      - id: "sip-mods-authorities-marccategory"
+        title:
+          cs: "Fyzický popis předlohy ve vzorovém SIP"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:form xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"marccategory\">text</mods:form>"
+        note:
+          cs: "Zdrojový MODS svazku deklaruje descriptionStandard=aacr. Výřez zachovává původní hodnoty; nedokládá větev RDA, původní pole MARC ani úplnou validitu SIP. Tři form neznamenají povinný počet tří pro každý dokument. Text 14 s. ; 16 cm není počet digitálních obrazů. V přímém physicalDescription není note."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, physicalDescription"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:physicalDescription/mods:form[@authority=\"marccategory\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+      - id: "sip-mods-authorities-marcsmd"
+        title:
+          cs: "Fyzický popis předlohy ve vzorovém SIP"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:form xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"marcsmd\">regular print</mods:form>"
+        note:
+          cs: "Zdrojový MODS svazku deklaruje descriptionStandard=aacr. Výřez zachovává původní hodnoty; nedokládá větev RDA, původní pole MARC ani úplnou validitu SIP. Tři form neznamenají povinný počet tří pro každý dokument. Text 14 s. ; 16 cm není počet digitálních obrazů. V přímém physicalDescription není note."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, physicalDescription"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:physicalDescription/mods:form[@authority=\"marcsmd\"]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-08"
+relations:
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-FORM"
+  - type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-FORM-AUTHORITY-RDA"
