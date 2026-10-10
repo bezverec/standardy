@@ -14,15 +14,15 @@ const rule = (id: string) => rules.find((item) => item.rule_id === `NDK-MONO-${i
 
 describe("cataloguing relevance audit", () => {
   it("assesses every current rule with evidence, separately from requirement verification", () => {
-    expect(rules).toHaveLength(275);
+    expect(rules).toHaveLength(282);
     for (const item of rules) {
       expect(item.cataloguing_scope?.note.cs).toBeTruthy();
       expect(item.cataloguing_scope?.sources.length).toBeGreaterThan(0);
-      expect(item.cataloguing_scope?.reviewed_on).toBe(["metadata/mods-language", "metadata/mods-physical-description", "metadata/mods-notes"].includes(item.category) ? "2026-10-08" : "2026-10-07");
+      expect(item.cataloguing_scope?.reviewed_on).toBe(item.category === "metadata/mods-subject" ? "2026-10-10" : ["metadata/mods-language", "metadata/mods-physical-description", "metadata/mods-notes"].includes(item.category) ? "2026-10-08" : "2026-10-07");
       expect(item.cataloguing_scope?.sources[0]).toEqual(item.source);
     }
     expect(rules.filter((item) => item.cataloguing_scope?.applicability === "independent")).toHaveLength(204);
-    expect(rules.filter((item) => item.cataloguing_rules?.length === 2)).toHaveLength(61);
+    expect(rules.filter((item) => item.cataloguing_rules?.length === 2)).toHaveLength(68);
     expect(rules.filter((item) => item.cataloguing_rules?.length === 1)).toHaveLength(10);
   });
 

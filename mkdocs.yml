@@ -107,4 +107,5 @@ nav:
       - Jazykové údaje MODS: development/mods-language.md
       - Fyzický popis MODS: development/mods-physical-description.md
       - Shrnutí a poznámky MODS: development/mods-notes.md
+      - Věcné údaje MODS: development/mods-subject.md
       - Lokální vývoj: development/local-development.md

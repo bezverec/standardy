@@ -23,6 +23,150 @@ versions:
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
   -
+    id: "MODS-SUBJECT"
+    type: "element"
+    version: "3.8"
+    name: "subject"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Věcné údaje svazku"
+    definition:
+      cs: "Subject je opakovatelná volba modsGroup. SubjectDefinition připouští opakovanou volbu věcných složek i prázdný obsah; XSD nevyžaduje všechny druhy záhlaví."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřena deklarace a typ v MODS XSD 3.8; národní povinnosti a katalogizační mapování jsou vedeny odděleně."
+  -
+    id: "MODS-SUBJECT-AUTHORITY"
+    type: "attribute"
+    version: "3.8"
+    name: "subject/@authority"
+    title:
+      cs: "Autorita věcného záhlaví"
+    definition:
+      cs: "Volitelný authority v subjectDefinition je z authorityAttributeGroup, typu xs:string bez výčtu hodnot."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřena deklarace a typ v MODS XSD 3.8; národní povinnosti a katalogizační mapování jsou vedeny odděleně."
+  -
+    id: "MODS-SUBJECT-TOPIC"
+    type: "element"
+    version: "3.8"
+    name: "subject/topic"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Tematické věcné údaje"
+    definition:
+      cs: "Topic je opakovatelná volba subjectDefinition typu stringPlusLanguagePlusAuthority; text nemá uzavřený XSD číselník."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřena deklarace a typ v MODS XSD 3.8; národní povinnosti a katalogizační mapování jsou vedeny odděleně."
+  -
+    id: "MODS-SUBJECT-TOPIC-VALUE-URI"
+    type: "attribute"
+    version: "3.8"
+    name: "subject/topic/@valueURI"
+    title:
+      cs: "Odkaz na autoritu tematického termínu"
+    definition:
+      cs: "ValueURI je volitelný atribut topic zděděný z authorityAttributeGroup, typu xs:anyURI; XSD neomezuje adresu na národní autoritní službu."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřena deklarace a typ v MODS XSD 3.8; národní povinnosti a katalogizační mapování jsou vedeny odděleně."
+  -
+    id: "MODS-SUBJECT-GEOGRAPHIC"
+    type: "element"
+    version: "3.8"
+    name: "subject/geographic"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Geografické věcné údaje"
+    definition:
+      cs: "Geographic je opakovatelná volba subjectDefinition typu stringPlusLanguagePlusAuthority; jde o textový termín, nikoli geografický kód."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřena deklarace a typ v MODS XSD 3.8; národní povinnosti a katalogizační mapování jsou vedeny odděleně."
+  -
+    id: "MODS-SUBJECT-GEOGRAPHIC-VALUE-URI"
+    type: "attribute"
+    version: "3.8"
+    name: "subject/geographic/@valueURI"
+    title:
+      cs: "Odkaz na autoritu geografického termínu"
+    definition:
+      cs: "ValueURI je volitelný atribut geographic zděděný z authorityAttributeGroup, typu xs:anyURI; XSD neomezuje adresu na národní autoritní službu."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřena deklarace a typ v MODS XSD 3.8; národní povinnosti a katalogizační mapování jsou vedeny odděleně."
+  -
+    id: "MODS-SUBJECT-TEMPORAL"
+    type: "element"
+    version: "3.8"
+    name: "subject/temporal"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Chronologické věcné údaje"
+    definition:
+      cs: "TemporalDefinition rozšiřuje dateDefinition o authorityAttributeGroup; základem je textový stringPlusLanguage, nikoli povinný xs:date. Temporal je opakovatelná volba subjectDefinition."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřena deklarace a typ v MODS XSD 3.8; národní povinnosti a katalogizační mapování jsou vedeny odděleně."
+  -
     id: "MODS-ABSTRACT"
     type: "element"
     name: "abstract"

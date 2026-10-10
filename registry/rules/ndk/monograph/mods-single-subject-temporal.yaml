@@ -1,0 +1,103 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-SUBJECT-TEMPORAL"
+title:
+  cs: "Chronologické věcné údaje"
+description:
+  cs: "Věcné údaje svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-SUBJECT-TEMPORAL"
+    relation_to_target:
+      type: "clarifies"
+    category: "metadata/mods-subject"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-10"
+      note:
+        cs: "Černě vyznačené doporučení v tabulce jednosvazku je podle legendy s. 24 společné AACR2/RDA. Společný požadavek na převod nedokládá shodnost všech postupů věcné katalogizace ani správnost zdrojového záhlaví."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 56
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — subject"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — Barevné kódování, rozlišení AACR2 a RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "recommended"
+    obligation_code: "R"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Doporučuje se temporal pro chronologické věcné třídění s kontrolovaným slovníkem, např. chronologický údaj AUT NK ČR, nebo obsah MARC 648."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Posoudit shodu temporal s chronologickým věcným údajem ze slovníku nebo MARC 648. Nezaměňovat časové téma s datem vydání ani životními daty osoby. Nevyžadovat temporal v každém subject ani automaticky formát ISO data."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_subject"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 56
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — subject"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; subjectDefinition; stringPlusLanguagePlusAuthority; temporalDefinition; dateDefinition; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines: subject"
+        version: "3"
+        page: null
+        section: "subject, topic, geographic, temporal; authority attributes"
+        url: "https://www.loc.gov/standards/mods/userguide/subject.html"
+    verification:
+      status: "verified"
+      date: "2026-10-10"
+      reference: "Ověřen text i vykreslené tabulky s. 55–56 DMF 2.3, legenda s. 24 a deklarace MODS XSD 3.8. Ověření přepisu není validací celého SIP, zdrojového MARC ani členství termínů v autoritním slovníku."
+    interpretation:
+      cs: "Datum vydání patří do originInfo/dateIssued; životní data osoby v subject/name/namePart nejsou temporal. Formát a encoding se posuzují odděleně. Sloupec dc:subject netvoří samostatné pravidlo DC. Pravidlo se vztahuje pouze k přímému subject MODS záznamu svazku jednosvazkové monografie v hlavním METS, ne relatedItem, stránce či titulu vícesvazku. Kontext se určuje nezávisle ze zdroje; neznámá hodnota není false ani potvrzení shody. Kardinalita je vztažena k jednotlivému rodiči, nevytváří povinnost založit doporučený kontejner. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-SUBJECT"

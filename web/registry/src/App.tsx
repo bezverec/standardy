@@ -154,6 +154,7 @@ Object.assign(labels, {
   "metadata/mods-origin-completion": "MODS · copyright, vznik a vydávání jednosvazkové monografie",
   "metadata/mods-language": "MODS · jazykové údaje jednosvazkové monografie",
   "metadata/mods-notes": "MODS · shrnutí a obecné poznámky jednosvazkové monografie",
+  "metadata/mods-subject": "MODS · věcné údaje jednosvazkové monografie",
   "metadata/mods-physical-description": "MODS · fyzický popis jednosvazkové monografie",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",
