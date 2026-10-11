@@ -1,0 +1,151 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-SUBJECT-NAME-PART"
+title:
+  cs: "Povinná jmenná část věcného záhlaví"
+description:
+  cs: "Kartografické údaje a jmenná věcná záhlaví svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-SUBJECT-NAME-PART"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-subject-details"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-11"
+      note:
+        cs: "Černé řádky na s. 56 jsou podle legendy s. 24 společné AACR2/RDA. Jde o bibliografický popis předlohy a jejích věcných záhlaví, ne technická metadata skenu. Společný přenos údajů nedokládá totožnost katalogizačních postupů."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 56
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — cartographics a subject/name"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a potomka, barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "mandatory"
+    obligation_code: "M"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "V použitém jmenném věcném záhlaví se povinně uvede namePart s údaji o jménu a příjmení nebo názvu korporace; řádek DMF odkazuje na MARC 600$a."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Každé použité subject/name musí obsahovat alespoň jednu jmennou část namePart odpovídající jménu ze zdrojového záhlaví (v DMF MARC 600$a). Pouhý namePart type=date s životními daty nenahrazuje vlastní jméno. M platí uvnitř konkrétního name, ne jako požadavek založit subject/name v každém MODS."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_subject_name"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 56
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — cartographics a subject/name"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "subjectNameDefinition; namePartDefinition"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+      -
+        document: "MODS User Guidelines: subject"
+        version: "3"
+        page: null
+        section: "cartographics; coordinates; scale; name"
+        url: "https://www.loc.gov/standards/mods/userguide/subject.html"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Porovnány text a vykreslená tabulka DMF 2.3 s. 56, pravidla rodičovské povinnosti a barev s. 24 a příslušné deklarace MODS XSD 3.8. XML doklady jsou ukotveny XPath a SHA-256; nejde o validaci celého SIP, původního MARC ani autoritního přiřazení."
+    interpretation:
+      cs: "DMF v tomto řádku používá slovo autor a zmiňuje název korporace vedle 600$a. Podle umístění jde o jmenné věcné záhlaví; výraz se nevykládá jako příkaz přenést původce dokumentu. Případné rozšíření mapování korporací není tímto řádkem vyřešeno. XSD obecně připouští namePart 0..n a nepovinný type; tato sada nevynucuje rozdělení given/family, nepřebírá zákaz type od jiných pravidel a nedělá z životních dat subject/temporal. Sloupec dc:subject zde nevytváří samostatné pravidlo DC. Rozsah je přímý subject MODS záznamu svazku jednosvazkové monografie v hlavním METS, nikoli relatedItem, stránka či titul vícesvazku. Kontext rodiče a případná dostupnost se určují nezávisle ze zdroje; neznámá hodnota není false ani potvrzení shody. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-subject-name-part-edison"
+        title:
+          cs: "Vlastní jmenná část záhlaví"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:namePart xmlns:mods=\"http://www.loc.gov/mods/v3\">Edison, Thomas A. (Thomas Alva)</mods:namePart>"
+        note:
+          cs: "Původní jmenný text je zachován, nerozděluje se dodatečně na given/family. Zdroj deklaruje descriptionStandard=aacr. Původní MARC, autoritní přiřazení ani úplná validita SIP nebyly ověřeny; nejde o univerzální šablonu."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, jmenné věcné záhlaví"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:subject[2]/mods:name/mods:namePart[1]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-11"
+      -
+        id: "sip-mods-subject-name-part-dates"
+        title:
+          cs: "Doplňující životní data stejné osoby"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:namePart xmlns:mods=\"http://www.loc.gov/mods/v3\" type=\"date\">1847-1931</mods:namePart>"
+        note:
+          cs: "Jde o druhou část stejného jména, nikoli subject/temporal. Tento výřez sám neplní požadavek na vlastní jméno. Zdroj deklaruje descriptionStandard=aacr. Původní MARC, autoritní přiřazení ani úplná validita SIP nebyly ověřeny; nejde o univerzální šablonu."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, jmenné věcné záhlaví"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:subject[2]/mods:name/mods:namePart[2]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-11"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-SUBJECT"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-SUBJECT-NAME"

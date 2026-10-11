@@ -23,6 +23,132 @@ versions:
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
   -
+    id: "MODS-SUBJECT-CARTOGRAPHICS"
+    type: "element"
+    version: "3.8"
+    name: "subject/cartographics"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Kartografické údaje věcného popisu"
+    definition:
+      cs: "Cartographics je opakovatelnou volbou subjectDefinition. Jeho cartographicsDefinition obsahuje sekvenci volitelných scale, projection, opakovaných coordinates a cartographicExtension. Prázdný kontejner je syntakticky možný; národní význam a povinnosti řeší DMF."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "subjectDefinition; cartographicsDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny kontextové deklarace MODS XSD 3.8 včetně typu, opakovatelnosti a pořadí. Národní M/MA/R a zdrojová mapování jsou vedeny samostatně."
+  -
+    id: "MODS-SUBJECT-CARTOGRAPHICS-COORDINATES"
+    type: "element"
+    version: "3.8"
+    name: "subject/cartographics/coordinates"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Dostupné kartografické souřadnice"
+    definition:
+      cs: "Coordinates má typ stringPlusLanguage a v sekvenci cartographicsDefinition se vyskytuje 0..n. XSD nestanoví numerický typ ani národní podmínku dostupnosti. Coordinates následují po případných scale a projection."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "cartographicsDefinition; coordinates; stringPlusLanguage"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny kontextové deklarace MODS XSD 3.8 včetně typu, opakovatelnosti a pořadí. Národní M/MA/R a zdrojová mapování jsou vedeny samostatně."
+  -
+    id: "MODS-SUBJECT-CARTOGRAPHICS-SCALE"
+    type: "element"
+    version: "3.8"
+    name: "subject/cartographics/scale"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Dostupné měřítko kartografického popisu"
+    definition:
+      cs: "Scale má textový typ stringPlusLanguage a v sekvenci cartographicsDefinition je 0..1, před projection a coordinates. Nejde o numerický jmenovatel poměru; XSD neobsahuje národní MA ani zdrojové mapování MARC."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "cartographicsDefinition; scale; stringPlusLanguage"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny kontextové deklarace MODS XSD 3.8 včetně typu, opakovatelnosti a pořadí. Národní M/MA/R a zdrojová mapování jsou vedeny samostatně."
+  -
+    id: "MODS-SUBJECT-NAME"
+    type: "element"
+    version: "3.8"
+    name: "subject/name"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Jméno použité jako věcné záhlaví"
+    definition:
+      cs: "Subject/name je opakovatelná volba subjectDefinition s vlastním subjectNameDefinition. Ta dovoluje opakovanou volbu namePart, displayForm, affiliation, role, description a nameIdentifier, nikoli etal či alternativeName. Type je volitelné s hodnotami personal, corporate, conference a family."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "subjectDefinition; subjectNameDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny kontextové deklarace MODS XSD 3.8 včetně typu, opakovatelnosti a pořadí. Národní M/MA/R a zdrojová mapování jsou vedeny samostatně."
+  -
+    id: "MODS-SUBJECT-NAME-PART"
+    type: "element"
+    version: "3.8"
+    name: "subject/name/namePart"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Povinná jmenná část věcného záhlaví"
+    definition:
+      cs: "NamePart v subjectNameDefinition je opakovatelnou volbou 0..n. NamePartDefinition rozšiřuje stringPlusLanguage o nepovinné type s hodnotami date, family, given a termsOfAddress. Povinnou jmennou část v tomto kontextu předepisuje národní DMF, nikoli samotné XSD."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "subjectNameDefinition; namePartDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny kontextové deklarace MODS XSD 3.8 včetně typu, opakovatelnosti a pořadí. Národní M/MA/R a zdrojová mapování jsou vedeny samostatně."
+  -
+    id: "MODS-SUBJECT-NAME-IDENTIFIER"
+    type: "element"
+    version: "3.8"
+    name: "subject/name/nameIdentifier"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Dostupné číslo národní autority věcného záhlaví"
+    definition:
+      cs: "NameIdentifier je opakovatelnou volbou subjectNameDefinition a používá textový identifierDefinition. Ten má volitelné atributy včetně type a typeURI. Národní význam čísla autority a dostupnost nejsou XSD omezením."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "subjectNameDefinition; nameIdentifier; identifierDefinition"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny kontextové deklarace MODS XSD 3.8 včetně typu, opakovatelnosti a pořadí. Národní M/MA/R a zdrojová mapování jsou vedeny samostatně."
+  -
     id: "MODS-SUBJECT"
     type: "element"
     version: "3.8"
