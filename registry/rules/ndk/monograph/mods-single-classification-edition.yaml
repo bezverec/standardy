@@ -1,0 +1,106 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-CLASSIFICATION-EDITION"
+title:
+  cs: "Označení Konspektu při převodu 072$a"
+description:
+  cs: "Klasifikační údaje svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-CLASSIFICATION-EDITION"
+    relation_to_target:
+      type: "restricts"
+    category: "metadata/mods-classification"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-11"
+      note:
+        cs: "Černé řádky classification na s. 56 jsou podle legendy s. 24 společné AACR2/RDA. Jde o bibliografické věcné třídění, nikoli technická metadata. Společný požadavek na převod neprokazuje totožnost všech katalogizačních postupů."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 56
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — classification"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a potomka, barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "mandatory_if_available"
+    obligation_code: "MA"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "DMF označuje edition kódem MA a uvádí hodnotu Konspekt; atribut je povinné použít pouze pro údaj z MARC 072$a."
+    requirement:
+      presence: "required"
+      cardinality:
+        min: 1
+        max: 1
+      allowed_values:
+        - "Konspekt"
+      validations:
+        -
+          type: "custom"
+          expression: "U konkrétního classification doloženě vzniklého z MARC 072$a vyžadovat edition s přesnou hodnotou Konspekt. Původ určit ze zdrojového pole a podpole, nikoli z přítomnosti cílového edition nebo pouze z authority=udc. Pro 080$a ani 072$9 tato podmínka povinnost edition nezakládá. Neznámý původ vykázat jako nevyhodnocený, ne jako splněný."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_classification"
+        -
+          field: "classification_source_marc_subfield"
+          operator: "equals"
+          value: "072$a"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 56
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — classification"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; classificationDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřen přepis a vykreslená tabulka DMF 2.3 s. 56, legenda s. 24 a deklarace MODS XSD 3.8. Ověření není validací celého SIP ani zdrojového MARC; otevřený výklad candocs je označen samostatně."
+    interpretation:
+      cs: "Tabulkový kód MA se zachovává, ačkoli prose požadavek konkretizuje zdrojovým 072$a. Podmínka classification_source_marc_subfield=072$a označuje původ této jediné klasifikace, nikoli výskyt libovolného 072 v záznamu. Chybějící edition nesmí samo vypnout kontrolu. Authority=udc není dostačující podmínka, protože jej používá i 080$a. Slovo pouze vymezuje povinnost; nevytváří obecný zákaz edition mimo tuto podmínku. Obecné XSD dovoluje volitelný textový atribut edition bez konstanty Konspekt. Není to element originInfo/edition označující vydání dokumentu. Rozsah je přímé classification MODS záznamu svazku jednosvazkové monografie v hlavním METS, nikoli subject/classification, relatedItem, stránka či titul vícesvazku. Kardinalita platí pro konkrétního rodiče; M atributu nevytváří povinnost založit doporučené classification. Kontext se určuje nezávisle ze zdroje; neznámá hodnota není false ani potvrzení shody. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-CLASSIFICATION"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-CLASSIFICATION-AUTHORITY"

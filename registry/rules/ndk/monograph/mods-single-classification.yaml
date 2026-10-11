@@ -1,0 +1,145 @@
+schema_version: "1.0"
+kind: "rule"
+id: "NDK-MONO-MODS-SINGLE-CLASSIFICATION"
+title:
+  cs: "Klasifikační údaje svazku"
+description:
+  cs: "Klasifikační údaje svazku jednosvazkové monografie podle DMF 2.3."
+national_standard:
+  id: "ndk-monograph"
+versions:
+  -
+    version: "2.3"
+    status: "normative"
+    target:
+      entity: "MODS-CLASSIFICATION"
+    relation_to_target:
+      type: "clarifies"
+    category: "metadata/mods-classification"
+    cataloguing_rules:
+      - "aacr2"
+      - "rda"
+    cataloguing_scope:
+      applicability: "applicable"
+      reviewed_on: "2026-10-11"
+      note:
+        cs: "Černé řádky classification na s. 56 jsou podle legendy s. 24 společné AACR2/RDA. Jde o bibliografické věcné třídění, nikoli technická metadata. Společný požadavek na převod neprokazuje totožnost všech katalogizačních postupů."
+      sources:
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 56
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — classification"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+        -
+          document: "DMF Monografie"
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a potomka, barevné kódování AACR2/RDA"
+          url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    obligation: "recommended"
+    obligation_code: "R"
+    object_types:
+      vocabulary: "NDK-OBJECT-TYPES"
+      values:
+        - "monograph"
+    normative_requirement:
+      cs: "Doporučuje se uvést klasifikační údaje věcného třídění v classification, zejména třídění podle Mezinárodního desetinného třídění a Konspektu."
+    requirement:
+      presence: "optional"
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        -
+          type: "custom"
+          expression: "Doporučit klasifikační údaje v přímém classification svazku. Absence classification není porušením povinné přítomnosti. Nevyžadovat současně MDT a Konspekt ani nevytvářet classification jen kvůli povinnému authority. Klasifikační znak uchovat jako text, nikoli převádět na číslo."
+    condition:
+      all:
+        -
+          field: "object_type"
+          operator: "equals"
+          value: "monograph"
+        -
+          field: "document_role"
+          operator: "equals"
+          value: "main_mets"
+        -
+          field: "bibliographic_level"
+          operator: "equals"
+          value: "single_volume"
+        -
+          field: "element_role"
+          operator: "equals"
+          value: "mods_record"
+    source:
+      document: "DMF Monografie"
+      version: "2.3"
+      page: 56
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — classification"
+      url: "https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf"
+    references:
+      -
+        document: "MODS XML Schema"
+        version: "3.8"
+        page: null
+        section: "modsDefinition; modsGroup; classificationDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+        url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřen přepis a vykreslená tabulka DMF 2.3 s. 56, legenda s. 24 a deklarace MODS XSD 3.8. Ověření není validací celého SIP ani zdrojového MARC; otevřený výklad candocs je označen samostatně."
+    interpretation:
+      cs: "Classification je samostatný opakovatelný element MODS, nikoli potomek subject. XSD připouští text a nepřikazuje konkrétní klasifikační systém; doporučení DMF nevytváří uzavřený seznam klasifikačních znaků. Sloupec dc:subject není samostatným pravidlem DC. Rozsah je přímé classification MODS záznamu svazku jednosvazkové monografie v hlavním METS, nikoli subject/classification, relatedItem, stránka či titul vícesvazku. Kardinalita platí pro konkrétního rodiče; M atributu nevytváří povinnost založit doporučené classification. Kontext se určuje nezávisle ze zdroje; neznámá hodnota není false ani potvrzení shody. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      -
+        id: "sip-mods-classification-udc"
+        title:
+          cs: "Klasifikační znak s interpunkcí"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:classification xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"udc\">621.3-051</mods:classification>"
+        note:
+          cs: "První z pěti samostatných classification; zachován textový znak 621.3-051. Zdroj deklaruje descriptionStandard=aacr. Původní MARC ani úplná validita SIP nebyly ověřeny; authority=udc samo nerozlišuje původ z 080$a a 072$a. Absence edition proto nedokládá chybu ani splnění podmíněného požadavku."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, klasifikační údaje"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:classification[1]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-11"
+      -
+        id: "sip-mods-classification-parentheses"
+        title:
+          cs: "Další samostatný klasifikační znak"
+        language: "xml"
+        kind: "source_excerpt"
+        code: "<mods:classification xmlns:mods=\"http://www.loc.gov/mods/v3\" authority=\"udc\">(73)</mods:classification>"
+        note:
+          cs: "Čtvrté classification obsahuje (73), nikoli číslo 73. Ukázky nejsou povoleným číselníkem. Zdroj deklaruje descriptionStandard=aacr. Původní MARC ani úplná validita SIP nebyly ověřeny; authority=udc samo nerozlišuje původ z 080$a a 072$a. Absence edition proto nedokládá chybu ani splnění podmíněného požadavku."
+        source:
+          document: "Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e"
+          version: "DMF Monografie 2.3 (deklarováno v info.xml)"
+          page: null
+          section: "Hlavní METS — MODS svazku, klasifikační údaje"
+          url: "https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download"
+        file_path: "mets_75faba8d-c629-11f0-8950-12e8557df20e.xml"
+        file_sha256: "7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473"
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:classification[4]"
+        namespaces:
+          mets: "http://www.loc.gov/METS/"
+          mods: "http://www.loc.gov/mods/v3"
+        checked_on: "2026-10-11"
+relations:
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-CLASSIFICATION-AUTHORITY"
+  -
+    type: "related_to"
+    target: "NDK-MONO-MODS-SINGLE-CLASSIFICATION-EDITION"

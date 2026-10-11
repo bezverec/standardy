@@ -23,6 +23,67 @@ versions:
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
   -
+    id: "MODS-CLASSIFICATION"
+    type: "element"
+    version: "3.8"
+    name: "classification"
+    namespace: "http://www.loc.gov/mods/v3"
+    title:
+      cs: "Klasifikační údaje"
+    definition:
+      cs: "Classification je textový element typu classificationDefinition, rozšiřující stringPlusLanguagePlusAuthority. Je volbou modsGroup opakovatelnou v modsDefinition (0..n pro tento element); nejde o potomka subject. Obecné XSD nevyžaduje konkrétní klasifikační schéma."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; classificationDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny classificationDefinition, modsGroup, modsDefinition a zděděný authorityAttributeGroup v MODS XSD 3.8. Národní povinnosti a mapování MARC jsou vedeny odděleně."
+  -
+    id: "MODS-CLASSIFICATION-AUTHORITY"
+    type: "attribute"
+    version: "3.8"
+    name: "classification/@authority"
+    title:
+      cs: "Označení klasifikačního schématu"
+    definition:
+      cs: "Volitelný atribut typu xs:string zděděný z authorityAttributeGroup přes stringPlusLanguagePlusAuthority. XSD nezavádí národní M ani uzavřený výčet klasifikačních schémat."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; classificationDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny classificationDefinition, modsGroup, modsDefinition a zděděný authorityAttributeGroup v MODS XSD 3.8. Národní povinnosti a mapování MARC jsou vedeny odděleně."
+  -
+    id: "MODS-CLASSIFICATION-EDITION"
+    type: "attribute"
+    version: "3.8"
+    name: "classification/@edition"
+    title:
+      cs: "Edice klasifikačního schématu"
+    definition:
+      cs: "Volitelný atribut classificationDefinition typu xs:string. XSD nepředepisuje konstantu Konspekt ani podmínku MARC 072$a. Není to element originInfo/edition."
+    status: "normative"
+    source:
+      document: "MODS XML Schema"
+      version: "3.8"
+      page: null
+      section: "modsDefinition; modsGroup; classificationDefinition; stringPlusLanguagePlusAuthority; authorityAttributeGroup"
+      url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
+    verification:
+      status: "verified"
+      date: "2026-10-11"
+      reference: "Ověřeny classificationDefinition, modsGroup, modsDefinition a zděděný authorityAttributeGroup v MODS XSD 3.8. Národní povinnosti a mapování MARC jsou vedeny odděleně."
+  -
     id: "MODS-SUBJECT-CARTOGRAPHICS"
     type: "element"
     version: "3.8"

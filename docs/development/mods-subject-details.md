@@ -42,7 +42,7 @@ NamePart musí obsahovat vlastní jméno. Pouhá životní data type=date je nen
 
 NameIdentifier označuje dostupnou národní autoritu konkrétního jména. Není to automaticky celé číslo, UUID SIP, kód slovníku czenas ani identifikátor jiného původce. DMF v tomto řádku neukládá regex nebo povinný type. Správnost autoritního přiřazení nebyla ověřena.
 
-Všechny požadavky jsou společné AACR2/RDA podle černých řádků a legendy. Nevytvářejí se nové významové klíče pro porovnávač ani pravidla DC podle sloupce dc:subject. Classification zůstává pro další sadu.
+Všechny požadavky jsou společné AACR2/RDA podle černých řádků a legendy. Nevytvářejí se nové významové klíče pro porovnávač ani pravidla DC podle sloupce dc:subject. Classification doplňuje [sada klasifikačních údajů](mods-classification.md).
 
 ## Tři skutečné XML výřezy
 

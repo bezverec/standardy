@@ -29,7 +29,7 @@ Topic navazuje na kontrolovaný slovník, MARC 650 či 072$x; geographic na 651;
 
 ValueURI označuje jednotlivý termín, authorityURI slovník. DMF doporučuje adresu ve tvaru `https://aleph.nkp.cz/dai/číslo_autority`; nepřevádíme ji na povinný regex. Tištěná čísla autorit jsou příklady. Správnost odkazu není dána samotnou odpovědí HTTP 200. Autoritní služba ani původní MARC nebyly v této sadě ověřovány.
 
-Samostatné cartographics a jmenná věcná záhlaví doplňuje [navazující sada](mods-subject-details.md); classification zůstává pro další zpracování. Sloupec dc:subject není zde implementován jako další pravidlo DC. Nejsou přidány významové klíče pro porovnávač; společná použitelnost AACR2/RDA není automatickým párováním.
+Samostatné cartographics a jmenná věcná záhlaví doplňuje [navazující sada](mods-subject-details.md); classification doplňuje [sada klasifikačních údajů](mods-classification.md). Sloupec dc:subject není zde implementován jako další pravidlo DC. Nejsou přidány významové klíče pro porovnávač; společná použitelnost AACR2/RDA není automatickým párováním.
 
 ## Pět skutečných XML výřezů
 

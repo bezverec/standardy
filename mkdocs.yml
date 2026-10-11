@@ -109,4 +109,5 @@ nav:
       - Shrnutí a poznámky MODS: development/mods-notes.md
       - Věcné údaje MODS: development/mods-subject.md
       - Kartografické a jmenné věcné údaje MODS: development/mods-subject-details.md
+      - Klasifikační údaje MODS: development/mods-classification.md
       - Lokální vývoj: development/local-development.md
