@@ -157,6 +157,7 @@ Object.assign(labels, {
   "metadata/mods-subject": "MODS · věcné údaje jednosvazkové monografie",
   "metadata/mods-subject-details": "MODS · kartografické a jmenné věcné údaje",
   "metadata/mods-classification": "MODS · klasifikační údaje",
+  "metadata/mods-related-items": "MODS · vztahy a edice",
   "metadata/mods-physical-description": "MODS · fyzický popis jednosvazkové monografie",
   "structure/mets-amd": "METS · vedlejší záznam a technická metadata",
   "technical/premis-object": "PREMIS · identifikace, fixity a formát objektu",

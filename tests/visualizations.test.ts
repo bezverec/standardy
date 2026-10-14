@@ -16,8 +16,8 @@ const relations = compiled.relations;
 describe("registry map", () => {
   it("accounts for every version exactly once, following target owners rather than citations", () => {
     const map = buildRegistryMap(rules, relations);
-    expect(map.rules).toBe(291);
-    expect(map.records).toBe(291);
+    expect(map.rules).toBe(298);
+    expect(map.records).toBe(298);
     const standards = map.areas.flatMap((area) => area.standards);
     expect(standards.find(({ id }) => id === "MIX")?.records).toBe(39);
     expect(standards.find(({ id }) => id === "NDK-INFO")?.records).toBe(18);
@@ -40,11 +40,12 @@ describe("registry map", () => {
       expect.objectContaining({ category: "structure/mets-dmd", records: 8 }),
       expect.objectContaining({ category: "structure/mets-amd", records: 8 }),
     ]));
-    expect(standards.find(({ id }) => id === "MODS")?.records).toBe(88);
+    expect(standards.find(({ id }) => id === "MODS")?.records).toBe(95);
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-notes", records: 3 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-subject", records: 7 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-subject-details", records: 6 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-classification", records: 3 }));
+    expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-related-items", records: 7 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-physical-description", records: 9 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-language", records: 5 }));
     expect(standards.find(({ id }) => id === "MODS")?.topics).toContainEqual(expect.objectContaining({ category: "metadata/mods-origin-completion", records: 5 }));

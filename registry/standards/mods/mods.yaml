@@ -22,6 +22,126 @@ versions:
       section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup; physicalDescriptionDefinition; formDefinition; extent; physicalDescriptionNote; abstractDefinition; noteDefinition"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  - id: MODS-RELATED-ITEM
+    type: element
+    version: "3.8"
+    name: relatedItem
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Související zdroj
+    definition:
+      cs: RelatedItem je volba modsGroup opakovatelná v modsDefinition (0..n); obsahuje modsGroup bez obálky mods. XSD samo nestanovuje národní RA ani mapování edic.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsDefinition; modsGroup; relatedItemDefinition; titleInfoDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-14
+      reference: Ověřeny modsDefinition, modsGroup a relatedItemDefinition v MODS XSD 3.8. Národní povinnosti nejsou odvozeny ze schématu.
+  - id: MODS-RELATED-ITEM-TYPE
+    type: attribute
+    version: "3.8"
+    name: relatedItem/@type
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: type u relatedItem
+    definition:
+      cs: Volitelný atribut relatedItem/@type s výčtem preceding, succeeding, original, host, constituent, series, otherVersion, otherFormat, isReferencedBy, references a reviewOf. XSD nevynucuje vzájemnou výlučnost s otherType/otherTypeURI.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsDefinition; modsGroup; relatedItemDefinition; titleInfoDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-14
+      reference: Ověřeny modsDefinition, modsGroup a relatedItemDefinition v MODS XSD 3.8. Národní povinnosti nejsou odvozeny ze schématu.
+  - id: MODS-RELATED-ITEM-OTHER-TYPE
+    type: attribute
+    version: "3.8"
+    name: relatedItem/@otherType
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: otherType u relatedItem
+    definition:
+      cs: Volitelný atribut relatedItem/@otherType typu xs:string. Sémantické pokyny a národní O jsou oddělené od samotné deklarace XSD.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsDefinition; modsGroup; relatedItemDefinition; titleInfoDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-14
+      reference: Ověřeny modsDefinition, modsGroup a relatedItemDefinition v MODS XSD 3.8. Národní povinnosti nejsou odvozeny ze schématu.
+  - id: MODS-RELATED-ITEM-OTHER-TYPE-URI
+    type: attribute
+    version: "3.8"
+    name: relatedItem/@otherTypeURI
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: otherTypeURI u relatedItem
+    definition:
+      cs: Volitelný atribut relatedItem/@otherTypeURI typu xs:string, nikoli xs:anyURI. Národní popis a sémantika LOC se vedou u pravidla odděleně.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsDefinition; modsGroup; relatedItemDefinition; titleInfoDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-14
+      reference: Ověřeny modsDefinition, modsGroup a relatedItemDefinition v MODS XSD 3.8. Národní povinnosti nejsou odvozeny ze schématu.
+  - id: MODS-RELATED-ITEM-OTHER-TYPE-AUTH
+    type: attribute
+    version: "3.8"
+    name: relatedItem/@otherTypeAuth
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: otherTypeAuth u relatedItem
+    definition:
+      cs: Volitelný atribut relatedItem/@otherTypeAuth typu xs:string. XSD nevynucuje současnou přítomnost otherType.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsDefinition; modsGroup; relatedItemDefinition; titleInfoDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-14
+      reference: Ověřeny modsDefinition, modsGroup a relatedItemDefinition v MODS XSD 3.8. Národní povinnosti nejsou odvozeny ze schématu.
+  - id: MODS-RELATED-ITEM-OTHER-TYPE-AUTH-URI
+    type: attribute
+    version: "3.8"
+    name: relatedItem/@otherTypeAuthURI
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: otherTypeAuthURI u relatedItem
+    definition:
+      cs: Volitelný atribut relatedItem/@otherTypeAuthURI typu xs:string, nikoli xs:anyURI. Samotné XSD neurčuje cíl odkazu.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsDefinition; modsGroup; relatedItemDefinition; titleInfoDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-14
+      reference: Ověřeny modsDefinition, modsGroup a relatedItemDefinition v MODS XSD 3.8. Národní povinnosti nejsou odvozeny ze schématu.
   -
     id: "MODS-CLASSIFICATION"
     type: "element"

@@ -1,0 +1,98 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MODS-SINGLE-RELATED-ITEM-SERIES
+title:
+  cs: Mapování edice v relatedItem
+description:
+  cs: Související zdroje v MODS svazku jednosvazkové monografie podle DMF 2.3.
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MODS-TITLEINFO
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-related-items
+    cataloguing_rules:
+      - aacr2
+      - rda
+    cataloguing_scope:
+      applicability: applicable
+      reviewed_on: 2026-10-14
+      note:
+        cs: Černé řádky relatedItem na s. 56–57 podle legendy s. 24 představují společný bibliografický předpis AACR2/RDA, nikoli technicky nezávislé pravidlo.
+      sources:
+        - document: DMF Monografie
+          version: "2.3"
+          page: 57
+          section: 7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — relatedItem (s. 56–57)
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: "2.3"
+          page: 24
+          section: 7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory
+    obligation_source: prose
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Při zápisu edice DMF požaduje pod společným relatedItem type=series samostatné titleInfo pro každé bibliografické pole. MARC 490$a se mapuje na title a 490$v na partNumber; MARC 830$a na title, 830$n na partNumber, 830$p na partName a 830$v na partNumber.
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: custom
+          expression: "Pro použitý záznam edice a dostupná převáděná pole 490/830 ověřit relatedItem/@type=series a samostatné titleInfo pro každý výskyt bibliografického pole. Mapování: 490$a → title; 490$v → partNumber; 830$a → title; 830$n → partNumber; 830$p → partName; 830$v → partNumber. Zachovat oba údaje 830$n a 830$v, nevynechat jeden a neslučovat je automaticky. Nevyžadovat současnou existenci polí 490 i 830 ani chybějící podpole."
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: single_volume
+        - field: element_role
+          operator: equals
+          value: mods_related_item
+        - field: related_resource_role
+          operator: equals
+          value: series
+        - field: source_series_fields_available
+          operator: equals
+          value: true
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 57
+      section: 7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — relatedItem (s. 56–57)
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: MODS XML Schema
+        version: "3.8"
+        page: null
+        section: modsDefinition; modsGroup; relatedItemDefinition; titleInfoDefinition
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+      - document: MODS User Guidelines
+        version: "3"
+        page: null
+        section: relatedItem — Guidelines for Use; Specific Attribute Information
+        url: https://www.loc.gov/standards/mods/userguide/relateditem.html
+    verification:
+      status: verified
+      date: 2026-10-14
+      reference: Vizuálně ověřen přepis tabulky DMF s. 56–57 a legenda s. 24, deklarace XSD 3.8 a uvedené prameny LOC. Verified označuje přepis pramene; u ambiguous není nejasná sémantika tímto vyřešena. Nejde o ověření implementace.
+    interpretation:
+      cs: Slovní požadavek nemá vlastní tabulkový kód; obligation_source=prose neznamená domyšlené M. Nezakládá povinné relatedItem pro každý dokument a nemění jeho RA. Kardinalita 1..n je pro titleInfo uvnitř použitého záznamu edice s dostupnými poli. Zdrojová role edice a dostupnost 490/830 se nesmějí odvozovat z cílového @type nebo přítomnosti titleInfo. DMF zde nepřikazuje titleInfo/@type=uniform. Rozdělení více různých edic mezi relatedItem není tímto odstavcem úplně určeno; bez dalšího doložení je neslučovat do jedné edice. Rozsah je přímé relatedItem v MODS svazku jednosvazkové monografie, nikoli vnořené relatedItem, titul vícesvazku, příloha, vnitřní část nebo stránka. Kontext a dostupnost zdrojových údajů se zjišťují nezávisle na kontrolovaném XML; neznámá hodnota není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny.
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-SINGLE-RELATED-ITEM
