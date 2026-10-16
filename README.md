@@ -101,10 +101,11 @@ Produkční web běží na Cloudflare Worker + Static Assets s D1. Sestavení sk
 
 ## Lokální vývoj
 
-Požadavky: Node.js 22 nebo novější, Python 3.12 nebo novější a balíčky z `requirements.txt`.
+Požadavky: Node.js 22.19 nebo novější, npm 11.11.0 podle `packageManager`, Python 3.12 nebo novější a balíčky z `requirements.txt`.
 
 ```bash
 python -m pip install -r requirements.txt
+npm install --global npm@11.11.0
 npm ci
 npm run registry:validate
 npm run typecheck
