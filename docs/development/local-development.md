@@ -2,7 +2,8 @@
 
 ## Požadavky
 
-- Node.js 22 nebo novější,
+- Node.js 22.19 nebo novější,
+- npm 11.11.0 (přesná verze je v `package.json` → `packageManager`),
 - Python 3.12 nebo novější,
 - balíčky z `requirements.txt`.
 
@@ -10,6 +11,7 @@
 
 ```bash
 python -m pip install -r requirements.txt
+npm install --global npm@11.11.0
 npm ci
 npm run registry:validate
 npm run typecheck
@@ -19,6 +21,12 @@ npm run registry:reset
 ```
 
 `registry:reset` aplikuje migrace na lokální emulaci D1 a nahradí všechny odvozené řádky sestaveným datasetem. YAML soubory nikdy negeneruje z databáze. Po změně YAML nejprve spusťte `npm run build` a potom import/reset: pokud `dist/registry/import.sql` již existuje, importní skript jej sám znovu nesestavuje.
+
+### Shodné npm lokálně a v CI
+
+Oba Node.js workflow před `npm ci` instalují npm podle `packageManager`. Samotné `actions/setup-node` ani pole `packageManager` nezaručují, že příkaz `npm` používá tuto verzi. Instalace npm nemění globální Node.js; pokud nelze měnit globální npm, lze pro instalaci použít `npx --yes npm@11.11.0 ci`.
+
+Důvodem je reprodukovaný rozdíl mezi npm 10.9.9 (dodávaným v původním CI s Node.js 22) a npm 11.11.0: starší verze odmítala tento lockfile s `Missing: sharp@0.35.4`, přestože projekt záměrně přepisuje závislost Miniflare na `sharp` 0.35.5. Zachováváme override i zamčené verze; nevracíme starší sharp a neobcházíme kontrolu pomocí `npm install` místo `npm ci`. Při změně npm upravte také `engines.npm`, metadata kořenového balíčku v lockfilu a ověřte čistou instalaci.
 
 ## Vývojové servery
 
