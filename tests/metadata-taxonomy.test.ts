@@ -39,8 +39,8 @@ describe("metadata taxonomy", () => {
       expect(filterRules([rule], "", { standard: standard.id, metadata_area: standard.area }, edges)).toEqual([rule]);
     }
   });
-  it("matches client and API filters, combinations, pagination and empty results", async () => {
-    for (const [filters, count] of [
+  // Give every filter combination its own timeout and failure report as the registry grows.
+  it.each([
       [{ metadata_area: "administrative-technical" }, 100], [{ metadata_area: "package" }, 18],
       [{ standard: "PREMIS" }, 61], [{ standard: "PREMIS", category: "technical/premis-object" }, 17],
       [{ standard: "PREMIS", category: "technical/premis-provenance" }, 8],
@@ -126,7 +126,7 @@ describe("metadata taxonomy", () => {
       [{ standard: "MIX", category: "technical/mix-basic" }, 16],
       [{ national_standard: "ndk-periodical", category: "technical/mix-basic" }, 8],
       [{ metadata_area: "package", standard: "MIX" }, 0], [{ standard: "NDK-INFO" }, 18],
-    ] as Array<[Record<string, string>, number]>) {
+    ] as Array<[Record<string, string>, number]>)("matches client/API filters %j (expected count: %i), including pagination and empty results", async (filters, count) => {
       const response = await request(`/rules?${new URLSearchParams({ ...filters, page_size: "2" })}`);
       expect(response.status).toBe(200);
       const result = await response.json() as { data: RuleVersion[]; pagination: { total: number } };
@@ -134,7 +134,8 @@ describe("metadata taxonomy", () => {
       expect(result.data.length).toBe(Math.min(2, count));
       // The browser calls this filter "national"; the public API uses "national_standard".
       expect(filterRules(rules, "", { ...filters, national: filters.national_standard ?? "" }, registry.relations)).toHaveLength(count);
-    }
+  });
+  it("rejects an unknown metadata area", async () => {
     const response = await request("/rules?metadata_area=unknown");
     expect(response.status).toBe(400);
     expect(await response.json()).toMatchObject({ error: "unknown_metadata_area" });
