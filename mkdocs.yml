@@ -111,4 +111,5 @@ nav:
       - Kartografické a jmenné věcné údaje MODS: development/mods-subject-details.md
       - Klasifikační údaje MODS: development/mods-classification.md
       - Vztahy a edice MODS: development/mods-related-items.md
+      - Uložení předlohy MODS: development/mods-location.md
       - Lokální vývoj: development/local-development.md

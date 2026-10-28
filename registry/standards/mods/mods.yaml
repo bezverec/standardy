@@ -22,6 +22,146 @@ versions:
       section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup; physicalDescriptionDefinition; formDefinition; extent; physicalDescriptionNote; abstractDefinition; noteDefinition"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  - id: MODS-LOCATION
+    type: element
+    version: "3.8"
+    name: "location"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Údaje o uložení zdroje"
+    definition:
+      cs: "Location je opakovatelná volba modsGroup. LocationDefinition používá sekvenci physicalLocation, shelfLocator, url, holdingSimple a holdingExternal; první tři prvky jsou nepovinné a opakovatelné. XSD samo nestanovuje národní MA."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-PHYSICAL-LOCATION
+    type: element
+    version: "3.8"
+    name: "location/physicalLocation"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Instituce uchovávající zdroj"
+    definition:
+      cs: "PhysicalLocationDefinition rozšiřuje stringPlusLanguagePlusAuthority, přidává xlink, displayLabel a type. V locationDefinition má physicalLocation 0..n; národní požadavek 1..1 se do obecné definice nepřenáší."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-PHYSICAL-LOCATION-AUTHORITY
+    type: attribute
+    version: "3.8"
+    name: "location/physicalLocation/@authority"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Zdroj identifikátoru instituce"
+    definition:
+      cs: "Authority se dědí přes stringPlusLanguagePlusAuthority z authorityAttributeGroup jako nepovinný xs:string. Označuje zdroj kódu; není totožný s type označujícím druh lokace. Národní výběr siglaADR/ICO/NARP nestanovuje XSD."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-SHELF-LOCATOR
+    type: element
+    version: "3.8"
+    name: "location/shelfLocator"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Signatura či lokační označení exempláře"
+    definition:
+      cs: "Přímý shelfLocator v locationDefinition má typ stringPlusLanguage a 0..n. Není číselný typ. Stejnojmenný prvek uvnitř holdingSimple/copyInformation je jiný kontext; národní povinnost není vlastností obecného schématu."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-IDENTIFIER
+    type: element
+    version: "3.8"
+    name: "identifier"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Identifikátor zdroje"
+    definition:
+      cs: "Identifier je opakovatelná volba modsGroup. IdentifierDefinition rozšiřuje stringPlusLanguage o nepovinné atributy včetně type (xs:string) a invalid (yes). Samotné XSD neurčuje, zda identifikátor označuje vydání, fyzický exemplář nebo digitální objekt."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-LOCATION-URL
+    type: element
+    version: "3.8"
+    name: "location/url"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Elektronická lokace zdroje"
+    definition:
+      cs: "UrlDefinition rozšiřuje xs:anyURI o nepovinné atributy note, dateLastAccessed, displayLabel, access a usage. V locationDefinition je url 0..n; xs:anyURI samo nevyžaduje absolutní HTTPS adresu ani online dostupnost."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-LOCATION-URL-NOTE
+    type: attribute
+    version: "3.8"
+    name: "location/url/@note"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Poznámka k elektronické lokaci"
+    definition:
+      cs: "Note je nepovinný atribut xs:string v urlDefinition. Není to element note, nemá uzavřený výčet hodnot a nevyžaduje existenci rodiče url."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
   - id: MODS-RELATED-ITEM
     type: element
     version: "3.8"

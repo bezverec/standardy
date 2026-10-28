@@ -1,13 +1,13 @@
 # Rozsah AACR2/RDA v registru
 
-Posouzeno 14. 10. 2026: všech 298 evidovaných pravidel: 280 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
+Aktualizováno 28. 10. 2026: všech 305 evidovaných pravidel: 287 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
 Jde o audit relevance katalogizace, nikoli nové ověření každé technické kontroly,
 implementací validátorů nebo úplnosti DMF v registru.
 
 ## Podklad a metoda
 
 Rozhodující je [DMF Monografie 2.3](https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf),
-zejména legenda barev na s. 24 a vizuálně ověřené tabulky jednosvazku na s. 48–57.
+zejména legenda barev na s. 24 a vizuálně ověřené tabulky jednosvazku na s. 48–58.
 Legenda vyhrazuje červené definice pro RDA; nerozlišené předpisy jsou společné
 pro AACR2 a RDA. Barvy pro druhy předloh nejsou katalogizační režimy.
 
@@ -24,7 +24,7 @@ U periodik je podkladem [DMF Periodika 2.2](https://standardy.ndk.cz/ndk/standar
 | Rozsah | Počet | Důvod |
 |---|---:|---|
 | Nezávislé na katalogizaci | 204 | 39 MIX (21 monografických a 18 periodických), 18 info.xml, 85 METS, 61 PREMIS a strukturální genre v MODS |
-| Společný předpis AACR2/RDA | 84 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
+| Společný předpis AACR2/RDA | 91 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
 | Pouze AACR2 | 2 | Nepoužití eventType jako výklad vyhrazení pro RDA; základní výčet form/authority |
 | Pouze RDA | 8 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c; autorita form, médium, nosič a form/type |
 | Neurčený rozsah | 0 | Stav zůstává dostupný pro nové nebo nedostatečně doložené záznamy |
@@ -35,6 +35,7 @@ Pravidla bez anotace se nadále považují za neposouzená.
 
 ### Důležité hranice
 
+- **Uložení předlohy:** [sedm pravidel location](mods-location.md) má společný předpis podle tabulky s. 58 a legendy s. 24. Slovní výjimka pro vlastníka bez signatur se posuzuje nezávisle na existenci XML; MA rodiče se nemění na M.
 - **Vztahy a edice:** [sedm pravidel relatedItem](mods-related-items.md) je společných podle černých řádků s. 56–57. Národní RA/R/O se zachovává; mapování edice z 490/830 je slovní požadavek v použitém záznamu edice, ne povinná edice v každé monografii. Nejasná sémantika tří atributů nemění doložený katalogizační rozsah.
 
 - **Kartografické a jmenné věcné údaje:** [šest navazujících pravidel](mods-subject-details.md) je společných AACR2/RDA podle s. 56 a legendy s. 24. Kartografické souřadnice a měřítko jsou bibliografickým popisem předlohy, ne technickými parametry skenu. Jmenné záhlaví není automaticky původce; M/MA jeho potomků se vztahuje k použitému rodiči.
@@ -81,8 +82,8 @@ se neslučuje ani s jedním z nich. Detail ukazuje zdůvodnění v rozbalovací 
 Relevance katalogizace a významové párování jsou různé osy. Audit nevytváří
 automaticky stovky domnělých ekvivalencí. V příkladu AACR2 proti RDA zůstává
 jedna dvojice eventType s odlišným kontextem a osmnáct shodných technických aspektů MIX;
-253/259 zahrnutých pravidel nemá významový klíč, 8/2 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
-Souhrn uvádí 186/186 nezávislých a 84/84 společných požadavků, nikoli tolik párů.
+260/266 zahrnutých pravidel nemá významový klíč, 8/2 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
+Souhrn uvádí 186/186 nezávislých a 91/91 společných požadavků, nikoli tolik párů.
 
 Testy ověřují úplnost anotací, hranice MODS/METS/PREMIS, zařazení nezávislých
 pravidel s klíčem i bez něj, bezpečné zachování neznámého rozsahu, validaci
