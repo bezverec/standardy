@@ -22,6 +22,446 @@ versions:
       section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup; physicalDescriptionDefinition; formDefinition; extent; physicalDescriptionNote; abstractDefinition; noteDefinition"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  - id: MODS-RECORD-INFO
+    type: element
+    version: "3.8"
+    name: "recordInfo"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Údaje o metadatovém záznamu"
+    definition:
+      cs: "RecordInfo je opakovatelnou volbou modsGroup. RecordInfoDefinition obsahuje opakovatelnou volbu potomků; XSD samo nepředepisuje přítomnost tohoto bloku ani konkrétního dítěte."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-DESCRIPTION-STANDARD
+    type: element
+    version: "3.8"
+    name: "recordInfo/descriptionStandard"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Katalogizační standard převzatého záznamu"
+    definition:
+      cs: "DescriptionStandard je opakovatelná volba recordInfoDefinition typu stringPlusLanguagePlusAuthority. XSD neomezuje text na aacr/rda; národní mapování je samostatným požadavkem."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-CONTENT-SOURCE
+    type: element
+    version: "3.8"
+    name: "recordInfo/recordContentSource"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Instituce původu katalogového záznamu"
+    definition:
+      cs: "RecordContentSource je opakovatelná volba recordInfoDefinition typu stringPlusLanguagePlusAuthority. Obecné MODS umožňuje kód i jméno, nikoli pouze české sigly."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-CONTENT-SOURCE-AUTHORITY
+    type: attribute
+    version: "3.8"
+    name: "recordInfo/recordContentSource/@authority"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Autorita instituce původu záznamu"
+    definition:
+      cs: "Authority je nepovinný xs:string zděděný přes stringPlusLanguagePlusAuthority a authorityAttributeGroup. XSD nestanovuje hodnotu siglaADR."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-CREATION-DATE
+    type: element
+    version: "3.8"
+    name: "recordInfo/recordCreationDate"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Datum vytvoření katalogového záznamu"
+    definition:
+      cs: "RecordCreationDate je opakovatelná volba recordInfoDefinition typu dateDefinition. Ten rozšiřuje řetězec; XSD nevynucuje datum s časem ani minutovou přesnost obsahu."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-CREATION-DATE-ENCODING
+    type: attribute
+    version: "3.8"
+    name: "recordInfo/recordCreationDate/@encoding"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Kódování data vytvoření katalogového záznamu"
+    definition:
+      cs: "Encoding je nepovinný atribut dateDefinition s výčtem w3cdtf, iso8601, marc, temper, edtf. MODS XSD nevyžaduje národní hodnotu iso8601."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-CHANGE-DATE
+    type: element
+    version: "3.8"
+    name: "recordInfo/recordChangeDate"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Datum změny katalogového záznamu"
+    definition:
+      cs: "RecordChangeDate je opakovatelná volba recordInfoDefinition typu dateDefinition. Samotné XSD neukládá povinnost záznam vytvořit ani neověřuje minutovou přesnost řetězce."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-CHANGE-DATE-ENCODING
+    type: attribute
+    version: "3.8"
+    name: "recordInfo/recordChangeDate/@encoding"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Kódování data změny katalogového záznamu"
+    definition:
+      cs: "Encoding v dateDefinition je nepovinný atribut s výčtem w3cdtf, iso8601, marc, temper, edtf. Národní M a jediná hodnota se neodvozují z obecného XSD."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-IDENTIFIER
+    type: element
+    version: "3.8"
+    name: "recordInfo/recordIdentifier"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Identifikátor katalogového záznamu"
+    definition:
+      cs: "RecordIdentifier je opakovatelná volba recordInfoDefinition. RecordIdentifierDefinition rozšiřuje stringPlusLanguage o nepovinný atribut source; nejde o číselný datový typ."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-IDENTIFIER-SOURCE
+    type: attribute
+    version: "3.8"
+    name: "recordInfo/recordIdentifier/@source"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Zdroj identifikátoru katalogového záznamu"
+    definition:
+      cs: "Source je nepovinný xs:string v recordIdentifierDefinition. Obecné MODS neurčuje konkrétní organizační kód ani národní převod z MARC 003."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-RECORD-ORIGIN
+    type: element
+    version: "3.8"
+    name: "recordInfo/recordOrigin"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Způsob vzniku katalogového záznamu"
+    definition:
+      cs: "RecordOrigin je opakovatelná volba recordInfoDefinition typu stringPlusLanguage. Obecné MODS neomezuje text na dvě národní hodnoty."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-CATALOGUING-LANGUAGE
+    type: element
+    version: "3.8"
+    name: "recordInfo/languageOfCataloging"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Jazyk katalogového záznamu"
+    definition:
+      cs: "LanguageOfCataloging je opakovatelná volba recordInfoDefinition typu languageDefinition, jehož sekvence obsahuje 1..n languageTerm a nepovinné scriptTerm."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-CATALOGUING-LANGUAGE-TERM
+    type: element
+    version: "3.8"
+    name: "recordInfo/languageOfCataloging/languageTerm"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Jazykový údaj převzatý z MARC 040$b"
+    definition:
+      cs: "LanguageTerm má v languageDefinition 1..n a typ languageTermDefinition rozšiřující stringPlusLanguagePlusAuthority. Tato entita vymezuje roli uvnitř languageOfCataloging, nikoli přímé language."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-CATALOGUING-LANGUAGE-TERM-AUTHORITY
+    type: attribute
+    version: "3.8"
+    name: "recordInfo/languageOfCataloging/languageTerm/@authority"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Autorita jazyka katalogizace"
+    definition:
+      cs: "Authority se v MODS 3.8 dědí jako nepovinný xs:string; starší omezení hodnot v languageTermDefinition bylo odstraněno. XSD 3.8 samo nevyžaduje iso639-2b."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-CATALOGUING-LANGUAGE-TERM-TYPE
+    type: attribute
+    version: "3.8"
+    name: "recordInfo/languageOfCataloging/languageTerm/@type"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Kódová forma jazyka katalogizace"
+    definition:
+      cs: "Type je nepovinný atribut codeOrText v languageTermDefinition; obecný výčet je code, text. Národní doporučení code je samostatné."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Ověřeny deklarace, dědění atributů a opakovatelnost v MODS XSD 3.8; význam recordInfo v LOC User Guidelines. Národní povinnosti a hodnoty jsou vedeny samostatně."
+  - id: MODS-LOCATION
+    type: element
+    version: "3.8"
+    name: "location"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Údaje o uložení zdroje"
+    definition:
+      cs: "Location je opakovatelná volba modsGroup. LocationDefinition používá sekvenci physicalLocation, shelfLocator, url, holdingSimple a holdingExternal; první tři prvky jsou nepovinné a opakovatelné. XSD samo nestanovuje národní MA."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-PHYSICAL-LOCATION
+    type: element
+    version: "3.8"
+    name: "location/physicalLocation"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Instituce uchovávající zdroj"
+    definition:
+      cs: "PhysicalLocationDefinition rozšiřuje stringPlusLanguagePlusAuthority, přidává xlink, displayLabel a type. V locationDefinition má physicalLocation 0..n; národní požadavek 1..1 se do obecné definice nepřenáší."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-PHYSICAL-LOCATION-AUTHORITY
+    type: attribute
+    version: "3.8"
+    name: "location/physicalLocation/@authority"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Zdroj identifikátoru instituce"
+    definition:
+      cs: "Authority se dědí přes stringPlusLanguagePlusAuthority z authorityAttributeGroup jako nepovinný xs:string. Označuje zdroj kódu; není totožný s type označujícím druh lokace. Národní výběr siglaADR/ICO/NARP nestanovuje XSD."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-SHELF-LOCATOR
+    type: element
+    version: "3.8"
+    name: "location/shelfLocator"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Signatura či lokační označení exempláře"
+    definition:
+      cs: "Přímý shelfLocator v locationDefinition má typ stringPlusLanguage a 0..n. Není číselný typ. Stejnojmenný prvek uvnitř holdingSimple/copyInformation je jiný kontext; národní povinnost není vlastností obecného schématu."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-IDENTIFIER
+    type: element
+    version: "3.8"
+    name: "identifier"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Identifikátor zdroje"
+    definition:
+      cs: "Identifier je opakovatelná volba modsGroup. IdentifierDefinition rozšiřuje stringPlusLanguage o nepovinné atributy včetně type (xs:string) a invalid (yes). Samotné XSD neurčuje, zda identifikátor označuje vydání, fyzický exemplář nebo digitální objekt."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-LOCATION-URL
+    type: element
+    version: "3.8"
+    name: "location/url"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Elektronická lokace zdroje"
+    definition:
+      cs: "UrlDefinition rozšiřuje xs:anyURI o nepovinné atributy note, dateLastAccessed, displayLabel, access a usage. V locationDefinition je url 0..n; xs:anyURI samo nevyžaduje absolutní HTTPS adresu ani online dostupnost."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
+  - id: MODS-LOCATION-URL-NOTE
+    type: attribute
+    version: "3.8"
+    name: "location/url/@note"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Poznámka k elektronické lokaci"
+    definition:
+      cs: "Note je nepovinný atribut xs:string v urlDefinition. Není to element note, nemá uzavřený výčet hodnot a nevyžaduje existenci rodiče url."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: Ověřeny deklarace, typy, dědění atributů a opakovatelnost v MODS XSD 3.8; sémantika location doplněna z LOC User Guidelines. Národní povinnosti jsou vedeny odděleně.
   - id: MODS-RELATED-ITEM
     type: element
     version: "3.8"

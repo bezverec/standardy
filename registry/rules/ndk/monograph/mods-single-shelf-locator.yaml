@@ -1,0 +1,114 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MODS-SINGLE-SHELF-LOCATOR
+title:
+  cs: "Signatura nebo lokační údaj fyzické předlohy"
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MODS-SHELF-LOCATOR
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-location
+    cataloguing_rules: [aacr2, rda]
+    cataloguing_scope:
+      applicability: applicable
+      reviewed_on: 2026-10-28
+      note:
+        cs: "Společný bibliografický předpis pro uložení popisované předlohy: černý text tabulky s. 58 podle legendy s. 24 nerozlišuje AACR2/RDA. Nejde o tvrzení, že každý předpis v namespace MODS závisí na katalogizaci."
+      sources:
+        - document: DMF Monografie
+          version: "2.3"
+          page: 58
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — location"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory_if_available
+    obligation_code: MA
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "Dostupnou signaturu nebo lokační údaj konkrétní fyzické předlohy uvést v shelfLocator (MA). Pokud vlastník signatury vůbec nepřiděluje, platí samostatný slovní požadavek na jiný jednoznačný identifikátor předlohy."
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: custom
+          expression: "Při dostupnosti signatury či lokačního údaje požadovat přímé mods:shelfLocator v příslušném location a ověřit, že označuje použitý fyzický exemplář. Chybějící shelfLocator samo nedokládá, že vlastník signatury nepřiděluje."
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: single_volume
+        - field: element_role
+          operator: equals
+          value: mods_location
+        - field: shelf_locator_metadata_available
+          operator: equals
+          value: true
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 58
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — location"
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: MODS XML Schema
+        version: "3.8"
+        page: null
+        section: modsGroup; locationDefinition; physicalLocationDefinition; authorityAttributeGroup; shelfLocator; urlDefinition; identifierDefinition
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+      - document: MODS User Guidelines
+        version: "3"
+        page: null
+        section: location; physicalLocation; shelfLocator; url
+        url: https://www.loc.gov/standards/mods/userguide/location.html
+    verification:
+      status: verified
+      date: 2026-10-28
+      reference: "Vizuálně ověřena tabulka DMF 2.3 s. 58 a legenda s. 24, deklarace MODS XSD 3.8 a výklad LOC location. Ověřený přepis neprokazuje správnost údajů konkrétního SIP ani implementaci validátoru."
+    interpretation:
+      cs: "Text signatury nemá předepsaný univerzální vzor. XSD dovoluje opakování; DMF u shelfLocator na rozdíl od physicalLocation neopakovatelnost neuvádí. Náhradní identifikátor se řeší samostatně na úrovni metadat záznamu, nikoli pouze uvnitř existujícího location. Rozsah je přímé location MODS svazku jednosvazkové monografie v hlavním METS, nikoli relatedItem/location, holdingSimple/copyInformation, titul vícesvazku, příloha nebo stránka. Kardinalita se vztahuje k uvedenému rodiči, ne k celému SIP. Dostupnost a vlastnosti fyzické předlohy se zjišťují nezávisle na cílovém XML; neznámý kontext není false. Custom kontroly registr nevykonává; implementace nástrojů nebyly ověřeny."
+    examples:
+      - id: sip-mods-shelf-locator
+        title:
+          cs: "Signatura nebo lokační údaj fyzické předlohy ve vzorovém SIP"
+        language: xml
+        kind: source_excerpt
+        code: "<mods:shelfLocator xmlns:mods=\"http://www.loc.gov/mods/v3\">54 H 001617</mods:shelfLocator>"
+        note:
+          cs: "Skutečný výřez MODSMD_VOLUME_0001 obsahuje siglu ABA001 a/nebo signaturu 54 H 001617 podle zvoleného uzlu. Vzor deklaruje DMF 2.3 a descriptionStandard=aacr. Neověřuje správnost signatury, autoritní registr, původní MARC ani celý SIP; nedokládá alternativy ICO/NARP, RDA ani případ vlastníka bez signatur."
+        source:
+          document: Vzorový SIP monografie dodaný uživatelem, 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS svazku, uložení předlohy
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:location/mods:shelfLocator"
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: 2026-10-28
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-SINGLE-LOCATION
+  - type: related_to
+    target: NDK-MONO-MODS-SINGLE-PHYSICAL-COPY-IDENTIFIER

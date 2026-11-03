@@ -16,6 +16,9 @@ Pracuj v checkoutu `bezverec/standardy`. Cesty příkazů jsou relativní ke ko�
 5. Zachovej M/MA/R/RA/O citované verze. Slovní požadavek bez tabulkového kódu použije `obligation_source: prose`, nikoli vymyšlené M. Plánované zjednodušení kódů nepřenášej zpět do starších DMF.
 6. Kardinalitu vztahuj k přesně určenému rodiči. M uvnitř doporučeného kontejneru není automaticky MA ani požadavek založit kontejner. Příklady nejsou číselníky; číslo v ukázce nemusí určovat datový typ.
 7. Posuď `cataloguing_scope` z pramene: technická nezávislost není totéž jako společný bibliografický předpis AACR2/RDA. Neurčený rozsah neoznačuj jako obě varianty. Pokud přidáváš párování nebo skutečné XML výřezy, použij příslušný skill z [rozcestníku](../../AGENTS.md).
+8. Slovní výjimku uvnitř řádku tabulky posuzuj odděleně od kódu řádku. Například MA u signatury nevylučuje povinnou náhradní identifikaci předlohy, jejíž vlastník signatury nepřiděluje. Podmínku odvozuj ze zdrojové skutečnosti, nikoli z absence kontrolovaného XML; jinak by chybějící zápis vypnul svou vlastní kontrolu.
+9. Při nesouladu tabulky a changelogu zaznamenej oba lokátory a ověř význam v odpovídající verzi XSD/specifikace. Changelog nepřebírej jako automatickou opravu tabulky (např. authority versus type u physicalLocation v DMF 2.3). Neřešitelný rozpor označ jako nejistotu, nikoli tiše zvolenou variantu.
+10. U časových údajů odděl událost, kterou datum označuje, dostupnost, minimální přesnost a kódování. Například recordCreationDate popisuje vznik záznamu, nikoli export SIP. Požadavek na minuty neopravňuje doplnit neznámý čas půlnocí; sekundy či Z ve vzoru nejsou automaticky povinné. Samotný atribut encoding neprokazuje platnost obsahu a řetězcový typ XSD ji nemusí kontrolovat.
 
 ## Kontrola a předání
 
