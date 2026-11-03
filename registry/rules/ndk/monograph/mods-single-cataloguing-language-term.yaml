@@ -1,0 +1,110 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MODS-SINGLE-CATALOGUING-LANGUAGE-TERM
+title:
+  cs: "Jazykový údaj převzatý z MARC 040$b"
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MODS-CATALOGUING-LANGUAGE-TERM
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-record-info
+    cataloguing_rules: [aacr2, rda]
+    cataloguing_scope:
+      applicability: applicable
+      reviewed_on: 2026-11-03
+      note:
+        cs: "Společný předpis správy bibliografického záznamu podle tabulky s. 58–59 a legendy s. 24. DescriptionStandard zachovává vlastní větve AACR2/RDA; ostatní řádky nejsou katalogizačně odlišeny. Nejde o technická data digitalizace ani tvrzení, že každý MODS údaj závisí na katalogizačním režimu."
+      sources:
+        - document: DMF Monografie
+          version: "2.3"
+          page: 59
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — recordInfo"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "V použitém languageOfCataloging je povinné languageTerm převzaté z MARC 040$b."
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: custom
+          expression: "Ověřit alespoň jeden languageTerm v každém použitém languageOfCataloging a převzetí z MARC 040$b. Nedosazovat hodnotu podle 008/35–37, 041 nebo jazyka digitalizované knihy."
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: single_volume
+        - field: element_role
+          operator: equals
+          value: mods_language_of_cataloging
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 59
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — recordInfo"
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: MODS XML Schema
+        version: "3.8"
+        page: null
+        section: "modsGroup; recordInfoDefinition; recordIdentifierDefinition; dateDefinition; languageDefinition; languageTermDefinition; authorityAttributeGroup"
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+      - document: MODS User Guidelines
+        version: "3"
+        page: null
+        section: "recordInfo a jeho potomci"
+        url: https://www.loc.gov/standards/mods/userguide/recordinfo.html
+    verification:
+      status: verified
+      date: 2026-11-03
+      reference: "Vizuálně ověřena tabulka DMF 2.3 s. 58–59 včetně pokračování recordContentSource a legenda s. 24. Ověřeny deklarace MODS XSD 3.8 a význam v LOC recordInfo. Jde o ověřený přepis, nikoli validaci celého SIP nebo nástrojů."
+    interpretation:
+      cs: "Povinnost M potomka nezakládá povinnost použít doporučený kontejner. Cze ve vzoru je konkrétní pozorování, nikoli uzavřený seznam jazyků. Type a authority zde mají vlastní R, nikoli M z pravidel jazyka obsahu. Rozsah je přímé recordInfo MODS svazku jednosvazkové monografie v hlavním METS; nikoli relatedItem, titul vícesvazku, příloha, kapitola ani stránka. Kardinalita se vztahuje k určenému rodiči; opakovatelnost elementů ponechává MODS XSD 3.8, tabulka zde nevyhlašuje neopakovatelnost. Custom kontroly jsou deklarativní a registr je nevykonává."
+    examples:
+      - id: sample-mono-cataloguing-language-term
+        title:
+          cs: "Jazykový údaj převzatý z MARC 040$b — výřez vzorového SIP"
+        language: xml
+        kind: source_excerpt
+        code: |
+          <mods:languageTerm xmlns:mods="http://www.loc.gov/mods/v3" authority="iso639-2b" type="code">cze</mods:languageTerm>
+        note:
+          cs: "Původní výřez MODSMD_VOLUME_0001 ze svazku (genre=volume, issuance=single unit), MODS 3.8, descriptionStandard=aacr; info deklaruje DMF 2.3. Hodnoty jsou zachovány. Původní MARC a skutečná historie záznamu nejsou ověřeny: nelze potvrdit mapování, správnost časů či kódů ani větev RDA. Sekundy, Z, cze a konkrétní institucionální kódy vzoru nejsou novými univerzálními požadavky."
+        source:
+          document: Vzorový SIP 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS svazku, recordInfo
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm"
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: 2026-11-03
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-SINGLE-RECORD-INFO
