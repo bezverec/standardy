@@ -1,0 +1,95 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MODS-SINGLE-IDENTIFIER-ISBN
+title:
+  cs: "ISBN svazku"
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MODS-IDENTIFIER
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-identifiers
+    cataloguing_rules: [aacr2, rda]
+    cataloguing_scope:
+      applicability: applicable
+      reviewed_on: 2026-11-04
+      note:
+        cs: "Společný bibliografický předpis pro identifikátory popisovaného svazku podle tabulky s. 57–58 a legendy s. 24. Toto posouzení se nepřenáší na generování UUID a URN:NBN, které mají vlastní nezávislá pravidla."
+      sources:
+        - document: DMF Monografie
+          version: "2.3"
+          page: 57
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — identifier"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: "2.3"
+          page: 24
+          section: "7.4 METS část dmdSec — povinnosti a barevné kódování AACR2/RDA"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory_if_available
+    obligation_code: MA
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "Je-li údaj dostupný, identifier s type=\"isbn\" se povinně přebírá z MARC 020$a a 020$z."
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: custom
+          expression: "Při dostupnosti relevantních údajů pro svazek požadovat mods:identifier[@type='isbn'] z 020$a i 020$z; neplatné či zrušené hodnoty zachovat s invalid='yes'. Dostupnost $z je rovněž dostupností pro MA. Neomezit množinu na jediné ISBN ani neodmítnout evidenci $z jen kvůli neplatnosti jeho identifikátoru."
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: single_volume
+        - field: element_role
+          operator: equals
+          value: mods_record
+        - field: isbn_metadata_available
+          operator: equals
+          value: true
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 57
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — identifier"
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: "2.3"
+        page: "9–10"
+        section: "4 Identifikátory — přidělení UUID a URN:NBN, úroveň svazku, neplatné hodnoty a Dublin Core"
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: "3.8"
+        page: null
+        section: "modsGroup; identifierDefinition; yes"
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+      - document: MODS User Guidelines
+        version: "3"
+        page: null
+        section: "identifier; type; invalid"
+        url: https://www.loc.gov/standards/mods/userguide/identifier.html
+    verification:
+      status: verified
+      date: 2026-11-04
+      reference: "Vizuálně ověřena tabulka DMF 2.3 s. 57 a pokračování s. 58, kapitola 4 s. 9–10 a legenda s. 24. Ověřeny deklarace MODS XSD 3.8 a význam identifier v LOC. Ověření přepisu neprokazuje platnost či přidělení konkrétních identifikátorů."
+    interpretation:
+      cs: "MA neznamená přidělit chybějící ISBN nebo si je vymyslet. Tato sada nepřidává vlastní normalizaci pomlček, kontrolní součet ani zákaz historických podob ISBN. Platné a neplatné záznamy se nemají sloučit tak, že zanikne jejich význam. Rozsah: přímé identifier v MODS svazku jednosvazkové monografie v hlavním METS, nikoli relatedItem, titul vícesvazku, kapitola, příloha nebo stránka. U pravidla konkrétního typu se kardinalita vztahuje pouze na odpovídající podmnožinu identifier; u atributu na každý příslušný rodičovský element. Horní mez počtu elementů se bez opory ve zdroji neomezuje. Dostupnost a platnost se zjišťují ze zdroje, ne z absence cílového XML; neznámý kontext není false. Custom kontroly jsou deklarativní, registr je nad SIP nespouští."
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-SINGLE-IDENTIFIER
