@@ -22,6 +22,46 @@ versions:
       section: "titleInfoDefinition; nameDefinition; roleDefinition; roleTermDefinition; namePartDefinition; alternativeNameDefinition; etal; typeOfResourceDefinition; genreDefinition; modsGroup; originInfoDefinition; placeDefinition; placeTermDefinition; agent; dateDefinition; dateOtherDefinition; languageDefinition; languageTermDefinition; codeOrText; authorityAttributeGroup; physicalDescriptionDefinition; formDefinition; extent; physicalDescriptionNote; abstractDefinition; noteDefinition"
       url: "https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"
 entities:
+  - id: MODS-IDENTIFIER-TYPE
+    type: attribute
+    version: "3.8"
+    name: "identifier/@type"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Typ identifikátoru zdroje"
+    definition:
+      cs: "IdentifierDefinition deklaruje type jako nepovinný xs:string. XSD 3.8 neobsahuje uzavřený číselník typů ani národní požadavek povinné přítomnosti."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: identifierDefinition; yes
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-04
+      reference: "Ověřena deklarace atributu a jednoduché typy MODS XSD 3.8; národní požadavky jsou oddělené."
+  - id: MODS-IDENTIFIER-INVALID
+    type: attribute
+    version: "3.8"
+    name: "identifier/@invalid"
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: "Označení neplatného identifikátoru"
+    definition:
+      cs: "IdentifierDefinition deklaruje invalid jako nepovinný atribut typu yes, jehož jedinou hodnotou je yes. Označuje neplatný nebo zrušený identifikátor; XSD nedokazuje skutečnou platnost hodnoty ani původ v MARC."
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: "3.8"
+      page: null
+      section: identifierDefinition; yes
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: 2026-11-04
+      reference: "Ověřena deklarace atributu a jednoduché typy MODS XSD 3.8; národní požadavky jsou oddělené."
   - id: MODS-RECORD-INFO
     type: element
     version: "3.8"

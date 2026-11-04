@@ -1,0 +1,114 @@
+schema_version: "1.0"
+kind: rule
+id: NDK-MONO-MODS-SINGLE-IDENTIFIER-UUID
+title:
+  cs: "Povinné UUID svazku"
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: "2.3"
+    status: normative
+    target:
+      entity: MODS-IDENTIFIER
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-identifiers
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: 2026-11-04
+      note:
+        cs: "Identifikátor vzniká pro digitální objekt podle kapitoly 4, s. 9 a tabulky s. 57; jeho povinné přidělení není katalogizačním postupem AACR2/RDA."
+      sources:
+        - document: DMF Monografie
+          version: "2.3"
+          page: 57
+          section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — identifier"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: "2.3"
+          page: 9
+          section: "4 Identifikátory — úroveň svazku"
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values: [monograph]
+    normative_requirement:
+      cs: "Svazek jednosvazkové monografie musí mít identifier s type=\"uuid\". UUID vygeneruje dodavatel; kapitola 4 vyžaduje jeho přidělení jednotlivým úrovním bibliografických metadat."
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: custom
+          expression: "V přímých mods:identifier vybrat podmnožinu s @type='uuid' a požadovat identifikátor skutečně přidělený popisovanému svazku. Podmínkou není dostupnost UUID v původním katalogu ani existence cílového XML. UUID z kapitoly, stránky nebo souboru nenahrazuje identifikaci svazku."
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: single_volume
+        - field: element_role
+          operator: equals
+          value: mods_record
+    source:
+      document: DMF Monografie
+      version: "2.3"
+      page: 57
+      section: "7.4.1.3 Pole MODS a DC pro svazek jednosvazkové monografie — identifier"
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: "2.3"
+        page: "9–10"
+        section: "4 Identifikátory — přidělení UUID a URN:NBN, úroveň svazku, neplatné hodnoty a Dublin Core"
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: "3.8"
+        page: null
+        section: "modsGroup; identifierDefinition; yes"
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+      - document: MODS User Guidelines
+        version: "3"
+        page: null
+        section: "identifier; type; invalid"
+        url: https://www.loc.gov/standards/mods/userguide/identifier.html
+    verification:
+      status: verified
+      date: 2026-11-04
+      reference: "Vizuálně ověřena tabulka DMF 2.3 s. 57 a pokračování s. 58, kapitola 4 s. 9–10 a legenda s. 24. Ověřeny deklarace MODS XSD 3.8 a význam identifier v LOC. Ověření přepisu neprokazuje platnost či přidělení konkrétních identifikátorů."
+    interpretation:
+      cs: "Jde o identifikaci vytvářenou při digitalizaci, nezávislou na AACR2/RDA. Toto pravidlo je omezeno na svazek; nepublikuje kontrolu všech ostatních úrovní, globální jedinečnosti ani všech variant syntaxe UUID. Ze vzoru se neodvozuje povinnost konkrétní verze UUID. Rozsah: přímé identifier v MODS svazku jednosvazkové monografie v hlavním METS, nikoli relatedItem, titul vícesvazku, kapitola, příloha nebo stránka. U pravidla konkrétního typu se kardinalita vztahuje pouze na odpovídající podmnožinu identifier; u atributu na každý příslušný rodičovský element. Horní mez počtu elementů se bez opory ve zdroji neomezuje. Dostupnost a platnost se zjišťují ze zdroje, ne z absence cílového XML; neznámý kontext není false. Custom kontroly jsou deklarativní, registr je nad SIP nespouští."
+    examples:
+      - id: sample-mono-identifier-uuid-uuid
+        title:
+          cs: "Povinné UUID svazku — uuid ve vzorovém SIP"
+        language: xml
+        kind: source_excerpt
+        code: |
+          <mods:identifier xmlns:mods="http://www.loc.gov/mods/v3" type="uuid">75faba8d-c629-11f0-8950-12e8557df20e</mods:identifier>
+        note:
+          cs: "Výřez přímého identifier z MODSMD_VOLUME_0001: genre=volume, issuance=single unit, descriptionStandard=aacr, MODS 3.8; info deklaruje DMF 2.3. Původní hodnota zůstává zachována. Vzor neobsahuje invalid, ISBN, ISSN ani ISMN. Původní MARC, aktuální platnost a přidělení identifikátorů ani služba resolveru nebyly ověřeny."
+        source:
+          document: Vzorový SIP 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS svazku, identifier
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: "/mets:mets/mets:dmdSec[@ID=\"MODSMD_VOLUME_0001\"]/mets:mdWrap/mets:xmlData/mods:mods/mods:identifier[@type=\"uuid\"]"
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: 2026-11-04
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-SINGLE-IDENTIFIER

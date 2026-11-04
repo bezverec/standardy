@@ -19,6 +19,7 @@ Pracuj v checkoutu `bezverec/standardy`. Cesty příkazů jsou relativní ke ko�
 8. Slovní výjimku uvnitř řádku tabulky posuzuj odděleně od kódu řádku. Například MA u signatury nevylučuje povinnou náhradní identifikaci předlohy, jejíž vlastník signatury nepřiděluje. Podmínku odvozuj ze zdrojové skutečnosti, nikoli z absence kontrolovaného XML; jinak by chybějící zápis vypnul svou vlastní kontrolu.
 9. Při nesouladu tabulky a changelogu zaznamenej oba lokátory a ověř význam v odpovídající verzi XSD/specifikace. Changelog nepřebírej jako automatickou opravu tabulky (např. authority versus type u physicalLocation v DMF 2.3). Neřešitelný rozpor označ jako nejistotu, nikoli tiše zvolenou variantu.
 10. U časových údajů odděl událost, kterou datum označuje, dostupnost, minimální přesnost a kódování. Například recordCreationDate popisuje vznik záznamu, nikoli export SIP. Požadavek na minuty neopravňuje doplnit neznámý čas půlnocí; sekundy či Z ve vzoru nejsou automaticky povinné. Samotný atribut encoding neprokazuje platnost obsahu a řetězcový typ XSD ji nemusí kontrolovat.
+11. Rozlišuj neplatnost popisovaného identifikátoru od neplatnosti jeho metadatového zápisu. Pokud DMF vyžaduje převod neplatných či zrušených hodnot (např. MARC $z → MODS identifier s invalid=yes), zahrň je do dostupnosti MA a nezahoď je kvůli syntaktické kontrole identifikátoru. Stav určuj ze zdroje, nikoli přítomností cílového invalid; omezení převodu do jiného formátu posuzuj samostatně.
 
 ## Kontrola a předání
 
