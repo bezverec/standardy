@@ -114,4 +114,5 @@ nav:
       - Uložení předlohy MODS: development/mods-location.md
       - Původ katalogového záznamu MODS: development/mods-record-info.md
       - Identifikátory svazku MODS: development/mods-identifiers.md
+      - Paginace a pořadí stran MODS: development/mods-page-pagination.md
       - Lokální vývoj: development/local-development.md

@@ -2145,3 +2145,179 @@ entities:
       status: "verified"
       date: "2026-10-07"
       reference: "Ověřena deklarace elementu, jeho typ a opakovatelnost v MODS XSD 3.8; národní podmínky jsou vedeny samostatně."
+  - id: MODS-PART
+    type: element
+    version: '3.8'
+    name: part
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Část zdroje
+    definition:
+      cs: Part je opakovatelnou volbou modsGroup. PartDefinition dovoluje nepovinnou opakovatelnou volbu detail, extent,
+        date a text; samotné XSD nevyžaduje národní větev pageNumber ani pageIndex.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
+  - id: MODS-PART-TYPE
+    type: attribute
+    version: '3.8'
+    name: part/@type
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Typ části zdroje
+    definition:
+      cs: Atribut type v partDefinition je nepovinný xs:string bez uzavřeného výčtu hodnot. Není to type na vnořeném
+        detail.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
+  - id: MODS-PART-DETAIL
+    type: element
+    version: '3.8'
+    name: part/detail
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Detail označení části
+    definition:
+      cs: Detail je opakovatelnou volbou v partDefinition. DetailDefinition obsahuje opakovatelnou volbu number, caption
+        a title; XSD samo nepožaduje právě number.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
+  - id: MODS-PART-DETAIL-TYPE
+    type: attribute
+    version: '3.8'
+    name: part/detail/@type
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Typ detailu části
+    definition:
+      cs: Atribut type v detailDefinition je nepovinný xs:string. Hodnoty pageNumber a pageIndex jsou národní aplikací
+        obecného atributu, nikoli výčtem XSD.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
+  - id: MODS-PART-DETAIL-NUMBER
+    type: element
+    version: '3.8'
+    name: part/detail/number
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Označení čísla části
+    definition:
+      cs: Number používá stringPlusLanguage, který rozšiřuje xs:string. Jde o opakovatelnou volbu v detailDefinition,
+        nikoli o xs:integer nebo povinnou položku každého obecného detail.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
+  - id: MODS-PART-EXTENT
+    type: element
+    version: '3.8'
+    name: part/extent
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Rozsah části
+    definition:
+      cs: Extent v partDefinition je opakovatelnou volbou typu extentDefinition. Ten má sekvenci nepovinných start,
+        end, total a list. Nejde o textový physicalDescription/extent.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
+  - id: MODS-PART-EXTENT-UNIT
+    type: attribute
+    version: '3.8'
+    name: part/extent/@unit
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Jednotka rozsahu části
+    definition:
+      cs: Atribut unit v extentDefinition je nepovinný xs:string bez uzavřeného výčtu. XSD nepředepisuje národní hodnotu
+        pages.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
+  - id: MODS-PART-EXTENT-START
+    type: element
+    version: '3.8'
+    name: part/extent/start
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Počáteční označení rozsahu
+    definition:
+      cs: Start je v extentDefinition nepovinný a nejvýše jednou; používá textový stringPlusLanguage. XSD nevynucuje
+        kladné celé číslo.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
+        vedeny samostatně.
