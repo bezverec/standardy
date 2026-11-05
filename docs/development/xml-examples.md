@@ -1,10 +1,10 @@
 # XML ukázky ze vzorových SIP
 
-Registr obsahuje celkem **284 XML ukázek u 223 pravidel**: 277 u 216 monografických a sedm u sedmi periodických pravidel.
+Registr obsahuje celkem **296 XML ukázek u 235 pravidel**: 289 u 228 monografických a sedm u sedmi periodických pravidel.
 
-U 216 pravidel DMF Monografie 2.3 je dostupných 277 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, šestnáct pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, sedmdesát dva pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 277 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
+U 228 pravidel DMF Monografie 2.3 je dostupných 289 XML ukázek. Pravidla s ukázkami zahrnují osm pro `info.xml`, šestnáct pro MIX, padesát čtyři pro hlavní METS, osm pro vedlejší METS, osmdesát čtyři pro MODS, třicet pět pro PREMIS Object, šestnáct pro PREMIS Event a sedm pro PREMIS Agent. Pravidlo file/@ADMID ve vedlejším METS má pět výřezů pro porovnání odkazů s cílovými metadaty; PREMIS format má ukázku MC i ALTO. CreatingApplication a originalName mají ukázky MC, PS i ALTO; preservationLevelValue ukazuje dvě úrovně ochrany. Některá pravidla sdílejí stejný výřez; nejde o 289 různých souborů. Detail pravidla umožňuje kód zkopírovat a zobrazit jeho původ. Ukázky jsou uložené ve verzovaném poli `examples` příslušného YAML pravidla, a proto jsou také součástí API a JSON exportů. Nemění normativní požadavek ani počet pravidel.
 
-Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 277 ukázek.
+Skupina [vnitřních částí](mets-internal-parts.md) nepřidává zdrojové XML ukázky: dodaný SIP neobsahuje kapitoly ani obrazové logické uzly. Ilustrativní zápis v dokumentaci je výslovně autorský, není výřezem balíčku a nezapočítává se do 289 ukázek.
 
 [První sada periodik](periodical-mix-comparison.md) původně XML ukázky neobsahovala. Navazující sada [základních údajů MIX](mix-basic-information.md) přidává sedm monografických a sedm samostatně ověřených periodických výřezů. Shodný technický požadavek neopravňuje přeznačit monografický výřez na periodický.
 
@@ -28,6 +28,8 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 [Podrobnosti jmen MODS](mods-name-details.md) nepřidávají další zdrojové ukázky: přímý původce svazku nemá typované namePart, alternativeName ani etal. Životopisná data Edisona jsou v subject/name, nikoli u původce, a nesmějí být vydávána za ukázku této skupiny.
 
 ## Důležité příklady
+
+- [Paginace a pořadí strany MODS](mods-page-pagination.md) přidávají dvanáct výřezů u dvanácti pravidel. První part stránky má type=titlePage, číslo a start=[1]; druhý part bez type má detail/pageIndex s číslem 1. Závorky se neodstraňují a pořadí skenu se nezaměňuje s paginací. Ověřeno proti XML 5. 11. 2026; předloha a správnost dopočítání tím potvrzeny nejsou.
 
 - [Identifikátory svazku](mods-identifiers.md) přidávají dvanáct výřezů u šesti pravidel: čtyři přímé identifier (urnnbn, barcode, uuid, ccnb) se opakují u pravidel přítomnosti, typu a příslušné podmnožiny. Vzor nemá ISBN, ISSN, ISMN ani invalid. Ověření proti XML 4. 11. 2026 neprokazuje dostupnost neuvedených údajů ani správnost převodu z původního MARC.
 - [Původ katalogového záznamu](mods-record-info.md) přidává patnáct výřezů u patnácti pravidel z recordInfo svazku. Zachovávají aacr, ABA001, skutečně zapsaná data, nkc20102129761 se source=CZ-PrNK, machine generated a cze. Ověření proti XML 3. 11. 2026 neprokazuje převod z původního MARC ani správnost času 00:00:00Z; ukázky nedokládají větev RDA.

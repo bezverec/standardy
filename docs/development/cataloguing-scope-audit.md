@@ -1,6 +1,6 @@
 # Rozsah AACR2/RDA v registru
 
-Aktualizováno 4. 11. 2026: všech 330 evidovaných pravidel: 312 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
+Aktualizováno 5. 11. 2026: všech 342 evidovaných pravidel: 324 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
 Jde o audit relevance katalogizace, nikoli nové ověření každé technické kontroly,
 implementací validátorů nebo úplnosti DMF v registru.
 
@@ -23,7 +23,7 @@ U periodik je podkladem [DMF Periodika 2.2](https://standardy.ndk.cz/ndk/standar
 
 | Rozsah | Počet | Důvod |
 |---|---:|---|
-| Nezávislé na katalogizaci | 206 | 39 MIX (21 monografických a 18 periodických), 18 info.xml, 85 METS, 61 PREMIS a strukturální genre a dva digitální identifikátory (UUID a URN:NBN) v MODS |
+| Nezávislé na katalogizaci | 218 | 39 MIX (21 monografických a 18 periodických), 18 info.xml, 85 METS, 61 PREMIS a strukturální genre a dva digitální identifikátory (UUID a URN:NBN) v MODS, dále 12 pravidel paginace a pořadí strany v MODS |
 | Společný předpis AACR2/RDA | 114 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
 | Pouze AACR2 | 2 | Nepoužití eventType jako výklad vyhrazení pro RDA; základní výčet form/authority |
 | Pouze RDA | 8 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c; autorita form, médium, nosič a form/type |
@@ -34,6 +34,8 @@ a prameny včetně lokátoru. Nejde o runtime výchozí hodnotu podle prefixu ID
 Pravidla bez anotace se nadále považují za neposouzená.
 
 ### Důležité hranice
+
+- **Paginace v MODS:** [dvanáct pravidel stránky](mods-page-pagination.md) rozlišuje číslování předlohy, její typ a pořadí skenu. Řídí se DMF s. 72–73 a PPM 2.4, nikoli AACR2/RDA; nezávislost se nepřenáší automaticky na další metadata stránky.
 
 - **Identifikátory svazku:** [deset pravidel identifier](mods-identifiers.md) rozlišuje dva nezávislé požadavky na přidělení UUID a URN:NBN podle kapitoly 4 a osm společných bibliografických předpisů podle tabulky s. 57–58. Platnost či zrušení identifikátoru není katalogizační režim; MA se zjišťuje ze zdroje včetně neplatných údajů.
 - **Původ katalogového záznamu:** [patnáct pravidel recordInfo](mods-record-info.md) představuje společný předpis podle s. 58–59. DescriptionStandard zachovává větve AACR2/RDA a primární rozlišení přes 040$e; společná povinnost neznamená volný výběr hodnot. Ostatní řádky správy bibliografického záznamu nejsou v tabulce katalogizačně odlišeny. Jazyk katalogizace není jazyk obsahu a čas vzniku záznamu není čas digitalizace.
@@ -84,8 +86,8 @@ se neslučuje ani s jedním z nich. Detail ukazuje zdůvodnění v rozbalovací 
 Relevance katalogizace a významové párování jsou různé osy. Audit nevytváří
 automaticky stovky domnělých ekvivalencí. V příkladu AACR2 proti RDA zůstává
 jedna dvojice eventType s odlišným kontextem a osmnáct shodných technických aspektů MIX;
-285/291 zahrnutých pravidel nemá významový klíč, 8/2 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
-Souhrn uvádí 188/188 nezávislých a 114/114 společných požadavků, nikoli tolik párů.
+297/303 zahrnutých pravidel nemá významový klíč, 8/2 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
+Souhrn uvádí 200/200 nezávislých a 114/114 společných požadavků, nikoli tolik párů.
 
 Testy ověřují úplnost anotací, hranice MODS/METS/PREMIS, zařazení nezávislých
 pravidel s klíčem i bez něj, bezpečné zachování neznámého rozsahu, validaci

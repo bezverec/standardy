@@ -75,8 +75,8 @@ describe("comparison screen", () => {
     expect(html).toContain("NDK-MONO-MODS-SINGLE-ORIGIN-AACR-NO-EVENT-TYPE?version=2.3");
     expect(html).toContain("DMF Monografie · verze 2.3 · s. 51–52");
     expect(html).toContain("Katalogizační rozsah dosud neurčen — A: 0, B: 0");
-    expect(html).toContain("Nezávislé požadavky zahrnuté ve výběru — A: 188, B: 188");
-    expect(html).toContain("Zahrnutá pravidla bez významového klíče — A: 285, B: 291");
+    expect(html).toContain("Nezávislé požadavky zahrnuté ve výběru — A: 200, B: 200");
+    expect(html).toContain("Zahrnutá pravidla bez významového klíče — A: 297, B: 303");
     expect(html).toContain("Rozdíly zaznamenaných polí");
     // Hundreds of unpaired records are not mounted until their disclosure opens.
     expect(html).not.toContain("NDK-MONO-MIX-ICC-PROFILE-VERSION?version=2.3");

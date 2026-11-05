@@ -1,0 +1,149 @@
+schema_version: '1.0'
+kind: rule
+id: NDK-MONO-MODS-PAGE-INDEX-DETAIL
+title:
+  cs: Povinný detail pořadí skenu
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: '2.3'
+    status: normative
+    target:
+      entity: MODS-PART-DETAIL
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-page-pagination
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: '2026-11-05'
+      note:
+        cs: Jde o popis paginace, typu jednotlivé strany a pořadí reprezentace podle DMF § 7.4.1.6 a Pravidel pro popis monografií
+          2.4, nikoli o katalogizační popis podle AACR2/RDA. Nezávislost je posouzena pro tuto skupinu, ne odvozena z namespace
+          MODS.
+      sources:
+        - document: DMF Monografie
+          version: '2.3'
+          page: 73
+          section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — part / detail pro pořadí reprezentace
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: Pravidla pro popis monografií
+          version: '2.4'
+          page: 4–7
+          section: 1 Popis strany; 1.1 Paginace
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/ppp_mono_2.4_final.pdf
+        - document: Pravidla pro popis monografií
+          version: '2.4'
+          page: 8, 14
+          section: 1.2 Typ strany; 1.2.2 Použití hodnot pro popis typu strany a typu vnitřní části
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/ppp_mono_2.4_final.pdf
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Použitý part pro pořadí strany v reprezentaci musí obsahovat detail pro toto pořadí.
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      validations:
+        - type: custom
+          expression: Kontext je mods_page_index_part v přímém MODS záznamu stránky. Použitý part pro pořadí strany v reprezentaci
+            musí obsahovat detail pro toto pořadí.
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: page
+        - field: element_role
+          operator: equals
+          value: mods_page_index_part
+    source:
+      document: DMF Monografie
+      version: '2.3'
+      page: 73
+      section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — part / detail pro pořadí reprezentace
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: '2.3'
+        page: 24
+        section: 7.4 METS část dmdSec — povinnost rodiče a dětí; barevné kódování AACR2/RDA
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: '3.8'
+        page: null
+        section: modsDefinition; modsGroup; partDefinition; detailDefinition; extentDefinition; number; start; stringPlusLanguage
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+      - document: MODS User Guidelines
+        version: '3'
+        page: null
+        section: part; detail; number; extent; start
+        url: https://www.loc.gov/standards/mods/userguide/part.html
+      - document: Pravidla pro popis monografií
+        version: '2.4'
+        page: 4–7
+        section: 1 Popis strany; 1.1 Paginace
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/ppp_mono_2.4_final.pdf
+      - document: Pravidla pro popis monografií
+        version: '2.4'
+        page: 8, 14
+        section: 1.2 Typ strany; 1.2.2 Použití hodnot pro popis typu strany a typu vnitřní části
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/ppp_mono_2.4_final.pdf
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Vizuálně ověřeny řádky a pokračování tabulky DMF 2.3 s. 72–73 a legenda s. 24; přečteny MODS XSD 3.8, LOC
+        part a PPM 2.4 s. 4–8, tabulka s. 14 zkontrolována vizuálně. Ověření přepisu neprokazuje správnost předlohy ani implementaci
+        validátoru.
+    interpretation:
+      cs: M dítěte neukládá přidání volitelného rodiče. Při kontrole již použitého part se nevyžaduje předem existující detail
+        ani jeho správný type; chybějící detail musí zůstat zjistitelný. Rozsah je stránka v hlavním METS, nikoli svazek,
+        relatedItem nebo titul vícesvazku. Kardinalita se vztahuje k určenému rodiči; horní mez zůstává neomezená, pokud ji
+        neomezuje XSD (atribut nebo start). Role větve a dostupnost se určují nezávisle na přítomnosti či správné hodnotě
+        kontrolovaného potomka. Neurčitelná role znamená nevyřešený kontext, ne úspěch kontroly. Custom kontroly jsou deklarativní
+        a registr je nad SIP nespouští.
+    examples:
+      - id: sip-mods-page-index-detail
+        title:
+          cs: Povinný detail pořadí skenu — první stránka vzorového SIP
+        language: xml
+        kind: source_excerpt
+        code: |-
+          <mods:detail xmlns:mods="http://www.loc.gov/mods/v3" type="pageIndex">
+            <mods:number>1</mods:number>
+          </mods:detail>
+        note:
+          cs: Doslovný výřez MODSMD_PAGE_0001 (MODS 3.8, DMF 2.3 deklarována v info). Paginace a start mají [1], pořadí skenu
+            1; závorky zůstávají zachovány. První part má type=titlePage, druhý part nemá type. Ověření XML neprokazuje údaje
+            na obrazu předlohy, správnost dopočítání ani soulad celého SIP; u start jde o pozorování, nikoli potvrzení doslovného
+            požadavku na údaj uvedený v dokumentu.
+        source:
+          document: Vzorový SIP monografie 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS první stránky, paginace a pořadí skenu
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: /mets:mets/mets:dmdSec[@ID="MODSMD_PAGE_0001"]/mets:mdWrap/mets:xmlData/mods:mods/mods:part[2]/mods:detail
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: '2026-11-05'
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-INDEX-PART
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-INDEX-DETAIL-TYPE
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-INDEX
