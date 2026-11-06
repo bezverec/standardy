@@ -1,0 +1,147 @@
+schema_version: '1.0'
+kind: rule
+id: NDK-MONO-MODS-PAGE-SIDE-NOTE
+title:
+  cs: Označení pravé, levé nebo spojené stránky
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: '2.3'
+    status: normative
+    target:
+      entity: MODS-NOTE
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-page-characteristics
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: '2026-11-05'
+      note:
+        cs: Označení pravé, levé či spojené strany vychází z uspořádání digitalizované předlohy podle DMF § 7.4.1.6, nikoli
+          z katalogizačních pravidel AACR2/RDA. Posouzení se vztahuje k uvedené roli stránky, ne k celému namespace MODS.
+      sources:
+        - document: DMF Monografie
+          version: '2.3'
+          page: 73
+          section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — note přímo v mods
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: optional
+    obligation_code: O
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: V přímém note stránky lze uvést right pro pravou stranu nebo left pro levou stranu podle pořadí v dokumentu. Hodnota
+        singlePage slouží pro stranu vzniklou spojením více snímků stránek.
+    requirement:
+      presence: optional
+      cardinality:
+        min: 0
+        max: null
+      allowed_values:
+        - right
+        - left
+        - singlePage
+      validations:
+        - type: custom
+          expression: Kontext je mods_record v přímém MODS záznamu jednotlivé stránky. V přímém note stránky lze uvést right
+            pro pravou stranu nebo left pro levou stranu podle pořadí v dokumentu. Hodnota singlePage slouží pro stranu vzniklou
+            spojením více snímků stránek.
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: page
+        - field: element_role
+          operator: equals
+          value: mods_record
+    source:
+      document: DMF Monografie
+      version: '2.3'
+      page: 73
+      section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — note přímo v mods
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: '2.3'
+        page: 24
+        section: 7.4 METS část dmdSec — povinnosti rodiče a potomků; barevné kódování AACR2/RDA
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: '3.8'
+        page: null
+        section: modsDefinition; modsGroup; identifierDefinition; genreDefinition; typeOfResourceDefinition; noteDefinition;
+          physicalDescriptionDefinition; physicalDescriptionNote
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Vizuálně ověřeny řádky a kódy povinností DMF 2.3 s. 72–73 a legenda s. 24; přečteny příslušné deklarace MODS
+        XSD 3.8. U identifikátorů doplněna kapitola 4 s. 9, u druhů stran PPM 2.4 s. 8 a vizuálně tabulka s. 14. Ověření přepisu
+        není potvrzením správnosti celého SIP.
+    interpretation:
+      cs: Poznámka je volitelná. Nejde o note uvnitř physicalDescription ani o libovolnou poznámku svazku. Hodnoty right/left
+        se neurčují automaticky z parity pořadí skenu; singlePage neznamená obecně každý jednotlivý sken. Vzor obsahuje right
+        a left, nikoli singlePage. Rozsah je přímý MODS záznam PAGE v hlavním METS; nevztahuje se automaticky na svazek, relatedItem
+        ani jinou úroveň. Kardinalita platí v uvedeném rodiči a nepřebírá počet výskytů z ukázky. Kontext rodiče se určuje
+        nezávisle na přítomnosti nebo správné hodnotě kontrolovaného potomka; neurčená role není splněním kontroly. Custom
+        kontroly jsou deklarativní, registr je nad SIP nespouští.
+    examples:
+      - id: sip-mods-page-side-note-0001
+        title:
+          cs: Označení pravé, levé nebo spojené stránky — stránka 0001 vzorového SIP
+        language: xml
+        kind: source_excerpt
+        code: <mods:note xmlns:mods="http://www.loc.gov/mods/v3">right</mods:note>
+        note:
+          cs: Doslovný výřez MODSMD_PAGE_0001 (MODS 3.8, DMF 2.3 deklarována v info.xml). První stránka obsahuje right a genre
+            type=titlePage s textem reprePage; čtvrtá left a genre type=normalPage s textem page. Výřez dokládá uložené hodnoty,
+            nikoli správnost přidělení UUID, reprezentativnosti nebo shodu s obrazem předlohy. Nejde o potvrzení celého SIP.
+        source:
+          document: Vzorový SIP monografie 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS stránky 0001, note přímo v mods
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: /mets:mets/mets:dmdSec[@ID="MODSMD_PAGE_0001"]/mets:mdWrap/mets:xmlData/mods:mods/mods:note
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: '2026-11-05'
+      - id: sip-mods-page-side-note-0004
+        title:
+          cs: Označení pravé, levé nebo spojené stránky — stránka 0004 vzorového SIP
+        language: xml
+        kind: source_excerpt
+        code: <mods:note xmlns:mods="http://www.loc.gov/mods/v3">left</mods:note>
+        note:
+          cs: Doslovný výřez MODSMD_PAGE_0004 (MODS 3.8, DMF 2.3 deklarována v info.xml). První stránka obsahuje right a genre
+            type=titlePage s textem reprePage; čtvrtá left a genre type=normalPage s textem page. Výřez dokládá uložené hodnoty,
+            nikoli správnost přidělení UUID, reprezentativnosti nebo shodu s obrazem předlohy. Nejde o potvrzení celého SIP.
+        source:
+          document: Vzorový SIP monografie 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS stránky 0004, note přímo v mods
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: /mets:mets/mets:dmdSec[@ID="MODSMD_PAGE_0004"]/mets:mdWrap/mets:xmlData/mods:mods/mods:note
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: '2026-11-05'
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-PHYSICAL-NOTE
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-INDEX
