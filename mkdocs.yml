@@ -116,4 +116,5 @@ nav:
       - Identifikátory svazku MODS: development/mods-identifiers.md
       - Paginace a pořadí stran MODS: development/mods-page-pagination.md
       - Identifikace a charakteristiky stran MODS: development/mods-page-characteristics.md
+      - Názvové údaje jednotlivé stránky: development/mods-page-titles.md
       - Lokální vývoj: development/local-development.md

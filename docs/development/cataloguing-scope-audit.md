@@ -1,6 +1,6 @@
 # Rozsah AACR2/RDA v registru
 
-Aktualizováno 5. 11. 2026: všech 350 evidovaných pravidel: 332 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
+Aktualizováno 6. 11. 2026: všech 355 evidovaných pravidel: 337 pro DMF Monografie 2.3 a 18 pro DMF Periodika 2.2.
 Jde o audit relevance katalogizace, nikoli nové ověření každé technické kontroly,
 implementací validátorů nebo úplnosti DMF v registru.
 
@@ -24,7 +24,7 @@ U periodik je podkladem [DMF Periodika 2.2](https://standardy.ndk.cz/ndk/standar
 | Rozsah | Počet | Důvod |
 |---|---:|---|
 | Nezávislé na katalogizaci | 226 | 39 MIX (21 monografických a 18 periodických), 18 info.xml, 85 METS, 61 PREMIS a strukturální genre a dva digitální identifikátory (UUID a URN:NBN) v MODS, dále 12 pravidel paginace a pořadí strany a osm identifikace a charakteristiky strany v MODS |
-| Společný předpis AACR2/RDA | 114 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
+| Společný předpis AACR2/RDA | 119 | Bibliografická pravidla s doloženou společnou povinností nebo mapováním |
 | Pouze AACR2 | 2 | Nepoužití eventType jako výklad vyhrazení pro RDA; základní výčet form/authority |
 | Pouze RDA | 8 | eventType, hlavní událost, nepoužití role pro 264_4 a copyrightDate bez 264_4$c; autorita form, médium, nosič a form/type |
 | Neurčený rozsah | 0 | Stav zůstává dostupný pro nové nebo nedostatečně doložené záznamy |
@@ -34,6 +34,8 @@ a prameny včetně lokátoru. Nejde o runtime výchozí hodnotu podle prefixu ID
 Pravidla bez anotace se nadále považují za neposouzená.
 
 ### Důležité hranice
+
+- **Názvy stránky:** [pět pravidel PAGE](mods-page-titles.md) popisuje přepis názvu z předlohy. Černé řádky oddílu 7.4.1.6 jsou podle legendy společné AACR2/RDA.
 
 - **Identifikace a charakteristiky stránky:** [osm dalších pravidel PAGE](mods-page-characteristics.md) popisuje UUID, reprezentativnost, druh a obsah strany, její stranu v dokumentu a fyzický stav podle DMF s. 72–73. Posouzení nezávislosti neplatí automaticky pro stejnojmenné bibliografické prvky svazku.
 
@@ -88,8 +90,8 @@ se neslučuje ani s jedním z nich. Detail ukazuje zdůvodnění v rozbalovací 
 Relevance katalogizace a významové párování jsou různé osy. Audit nevytváří
 automaticky stovky domnělých ekvivalencí. V příkladu AACR2 proti RDA zůstává
 jedna dvojice eventType s odlišným kontextem a osmnáct shodných technických aspektů MIX;
-305/311 zahrnutých pravidel nemá významový klíč, 8/2 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
-Souhrn uvádí 208/208 nezávislých a 114/114 společných požadavků, nikoli tolik párů.
+310/316 zahrnutých pravidel nemá významový klíč, 8/2 jsou mimo zvolený režim. Neurčených rozsahů je 0/0.
+Souhrn uvádí 208/208 nezávislých a 119/119 společných požadavků, nikoli tolik párů.
 
 Testy ověřují úplnost anotací, hranice MODS/METS/PREMIS, zařazení nezávislých
 pravidel s klíčem i bez něj, bezpečné zachování neznámého rozsahu, validaci

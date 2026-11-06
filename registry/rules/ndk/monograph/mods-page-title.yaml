@@ -1,0 +1,99 @@
+schema_version: '1.0'
+kind: rule
+id: NDK-MONO-MODS-PAGE-TITLE
+title:
+  cs: Nadpis nebo název uvedený na stránce
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: '2.3'
+    status: normative
+    target:
+      entity: MODS-TITLE
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-page-titles
+    cataloguing_rules:
+      - aacr2
+      - rda
+    cataloguing_scope:
+      applicability: applicable
+      reviewed_on: '2026-11-06'
+      note:
+        cs: Jde o bibliografický popis názvu jednotlivé stránky. Řádek na s. 72 je uveden černým písmem. Podle legendy
+          na s. 24 se tento zápis řídí stejným předpisem pro AACR2 i RDA.
+      sources:
+        - document: DMF Monografie
+          version: '2.3'
+          page: 72
+          section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — titleInfo / title
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: '2.3'
+          page: 24
+          section: 7.4 METS část dmdSec — povinnosti uvnitř použitého rodiče a rozlišení AACR2/RDA
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: recommended_if_available
+    obligation_code: RA
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Je-li na dané stránce uveden nadpis nebo název, doporučuje se v použitém titleInfo stránky zapsat tento
+        text do title.
+    requirement:
+      presence: optional
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        - type: custom
+          expression: Porovnat text přímého title s nadpisem nebo názvem uvedeným na stránce. Prázdný element doporučený
+            přepis nedokládá.
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: page
+        - field: element_role
+          operator: equals
+          value: mods_page_titleinfo
+        - field: page_heading_available
+          operator: equals
+          value: true
+    source:
+      document: DMF Monografie
+      version: '2.3'
+      page: 72
+      section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — titleInfo / title
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: '2.3'
+        page: 24
+        section: 7.4 METS část dmdSec — povinnosti uvnitř použitého rodiče a rozlišení AACR2/RDA
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: '3.8'
+        page: null
+        section: modsGroup, titleInfoDefinition a deklarace title, subTitle a nonSort
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-06'
+      reference: Ověřen řádek tabulky DMF 2.3 na s. 72, legenda na s. 24 a odpovídající deklarace MODS XSD 3.8.
+    interpretation:
+      cs: Podkladem je nadpis či název této strany. Dostupnost potvrzuje zjištění z předlohy. Postup při prokázané
+        absenci nadpisu i názvu má samostatný záznam.
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-TITLEINFO
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-TITLE-ABSENT
