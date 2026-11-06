@@ -1,0 +1,93 @@
+schema_version: '1.0'
+kind: rule
+id: NDK-MONO-MODS-PAGE-PHYSICAL-DESCRIPTION
+title:
+  cs: Volitelný popis fyzického stavu stránky
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: '2.3'
+    status: normative
+    target:
+      entity: MODS-PHYSICAL-DESCRIPTION
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-page-characteristics
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: '2026-11-05'
+      note:
+        cs: Fyzický stav jednotlivé digitalizované stránky podle DMF § 7.4.1.6 je odlišný od bibliografického fyzického popisu
+          svazku podle AACR2/RDA. Posouzení se vztahuje k uvedené roli stránky, ne k celému namespace MODS.
+      sources:
+        - document: DMF Monografie
+          version: '2.3'
+          page: 73
+          section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — physicalDescription
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: optional
+    obligation_code: O
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: V MODS záznamu jednotlivé stránky lze uvést physicalDescription pro popis jejího fyzického stavu (O).
+    requirement:
+      presence: optional
+      cardinality:
+        min: 0
+        max: null
+      validations:
+        - type: custom
+          expression: Kontext je mods_record v přímém MODS záznamu jednotlivé stránky. V MODS záznamu jednotlivé stránky lze
+            uvést physicalDescription pro popis jejího fyzického stavu (O).
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: page
+        - field: element_role
+          operator: equals
+          value: mods_record
+    source:
+      document: DMF Monografie
+      version: '2.3'
+      page: 73
+      section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — physicalDescription
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: '2.3'
+        page: 24
+        section: 7.4 METS část dmdSec — povinnosti rodiče a potomků; barevné kódování AACR2/RDA
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: '3.8'
+        page: null
+        section: modsDefinition; modsGroup; identifierDefinition; genreDefinition; typeOfResourceDefinition; noteDefinition;
+          physicalDescriptionDefinition; physicalDescriptionNote
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Vizuálně ověřeny řádky a kódy povinností DMF 2.3 s. 72–73 a legenda s. 24; přečteny příslušné deklarace MODS
+        XSD 3.8. U identifikátorů doplněna kapitola 4 s. 9, u druhů stran PPM 2.4 s. 8 a vizuálně tabulka s. 14. Ověření přepisu
+        není potvrzením správnosti celého SIP.
+    interpretation:
+      cs: 'Kontejner zůstává volitelný. Jde o stav jednotlivé strany, nikoli automaticky o bibliografický fyzický popis celého
+        svazku. O jeho note neznamená povolení prázdného kontejneru v rozporu s XSD: physicalDescriptionDefinition vyžaduje
+        volbu alespoň jednoho svého potomka, ne však právě note. Ve vzoru není physicalDescription u žádné ze 16 stránek;
+        to neprokazuje jejich nepoškozený stav. Rozsah je přímý MODS záznam PAGE v hlavním METS; nevztahuje se automaticky
+        na svazek, relatedItem ani jinou úroveň. Kardinalita platí v uvedeném rodiči a nepřebírá počet výskytů z ukázky. Kontext
+        rodiče se určuje nezávisle na přítomnosti nebo správné hodnotě kontrolovaného potomka; neurčená role není splněním
+        kontroly. Custom kontroly jsou deklarativní, registr je nad SIP nespouští.'
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-PHYSICAL-NOTE

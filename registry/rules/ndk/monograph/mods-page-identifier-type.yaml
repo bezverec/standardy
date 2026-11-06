@@ -1,0 +1,128 @@
+schema_version: '1.0'
+kind: rule
+id: NDK-MONO-MODS-PAGE-IDENTIFIER-TYPE
+title:
+  cs: Typ identifikátoru stránky uuid
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: '2.3'
+    status: normative
+    target:
+      entity: MODS-IDENTIFIER-TYPE
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-page-characteristics
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: '2026-11-05'
+      note:
+        cs: Identifikace digitální stránky a přidělený UUID se řídí DMF § 4 a § 7.4.1.6, nikoli katalogizačním zápisem svazku
+          podle AACR2/RDA. Posouzení se vztahuje k uvedené roli stránky, ne k celému namespace MODS.
+      sources:
+        - document: DMF Monografie
+          version: '2.3'
+          page: 72
+          section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — identifier / @type
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: '2.3'
+          page: 9
+          section: 4 Identifikátory — přidělování UUID při digitalizaci
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory
+    obligation_code: M
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Každý přímý identifier v MODS záznamu jednotlivé stránky musí mít atribut type s hodnotou uuid.
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: 1
+      allowed_values:
+        - uuid
+      validations:
+        - type: custom
+          expression: Kontext je mods_page_identifier v přímém MODS záznamu jednotlivé stránky. Každý přímý identifier v MODS
+            záznamu jednotlivé stránky musí mít atribut type s hodnotou uuid.
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: page
+        - field: element_role
+          operator: equals
+          value: mods_page_identifier
+    source:
+      document: DMF Monografie
+      version: '2.3'
+      page: 72
+      section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — identifier / @type
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: '2.3'
+        page: 24
+        section: 7.4 METS část dmdSec — povinnosti rodiče a potomků; barevné kódování AACR2/RDA
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: '3.8'
+        page: null
+        section: modsDefinition; modsGroup; identifierDefinition; genreDefinition; typeOfResourceDefinition; noteDefinition;
+          physicalDescriptionDefinition; physicalDescriptionNote
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+      - document: DMF Monografie
+        version: '2.3'
+        page: 9
+        section: 4 Identifikátory — přidělování UUID při digitalizaci
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Vizuálně ověřeny řádky a kódy povinností DMF 2.3 s. 72–73 a legenda s. 24; přečteny příslušné deklarace MODS
+        XSD 3.8. U identifikátorů doplněna kapitola 4 s. 9, u druhů stran PPM 2.4 s. 8 a vizuálně tabulka s. 14. Ověření přepisu
+        není potvrzením správnosti celého SIP.
+    interpretation:
+      cs: Povinnost se vztahuje k použitému identifier stránky bez ohledu na přítomnost nebo správnost jeho type. Chybějící
+        či jiný typ se nesmí vyloučit z kontroly výběrem pouze @type=uuid. Samotný správný atribut neprokazuje platnost ani
+        přidělení hodnoty identifikátoru. Rozsah je přímý MODS záznam PAGE v hlavním METS; nevztahuje se automaticky na svazek,
+        relatedItem ani jinou úroveň. Kardinalita platí v uvedeném rodiči a nepřebírá počet výskytů z ukázky. Kontext rodiče
+        se určuje nezávisle na přítomnosti nebo správné hodnotě kontrolovaného potomka; neurčená role není splněním kontroly.
+        Custom kontroly jsou deklarativní, registr je nad SIP nespouští.
+    examples:
+      - id: sip-mods-page-identifier-type-0001
+        title:
+          cs: Typ identifikátoru stránky uuid — stránka 0001 vzorového SIP
+        language: xml
+        kind: source_excerpt
+        code: <mods:identifier xmlns:mods="http://www.loc.gov/mods/v3" type="uuid">02db9be9-7074-11f1-b41e-d6a2fa380025</mods:identifier>
+        note:
+          cs: Doslovný výřez MODSMD_PAGE_0001 (MODS 3.8, DMF 2.3 deklarována v info.xml). První stránka obsahuje right a genre
+            type=titlePage s textem reprePage; čtvrtá left a genre type=normalPage s textem page. Výřez dokládá uložené hodnoty,
+            nikoli správnost přidělení UUID, reprezentativnosti nebo shodu s obrazem předlohy. Nejde o potvrzení celého SIP.
+        source:
+          document: Vzorový SIP monografie 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS stránky 0001, identifier / @type
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: /mets:mets/mets:dmdSec[@ID="MODSMD_PAGE_0001"]/mets:mdWrap/mets:xmlData/mods:mods/mods:identifier
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: '2026-11-05'
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-IDENTIFIER

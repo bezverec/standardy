@@ -1,0 +1,128 @@
+schema_version: '1.0'
+kind: rule
+id: NDK-MONO-MODS-PAGE-RESOURCE-TYPE
+title:
+  cs: Druh obsahu jednotlivé stránky
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: '2.3'
+    status: normative
+    target:
+      entity: MODS-TYPE-OF-RESOURCE
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-page-characteristics
+    cataloguing_scope:
+      applicability: independent
+      reviewed_on: '2026-11-05'
+      note:
+        cs: Obsah jednotlivé digitalizované stránky se určuje podle konkrétního národního předpisu DMF § 7.4.1.6; nejde o
+          převod LDR ani katalogizační popis druhu celého svazku podle AACR2/RDA. Posouzení se vztahuje k uvedené roli stránky,
+          ne k celému namespace MODS.
+      sources:
+        - document: DMF Monografie
+          version: '2.3'
+          page: 73
+          section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — typeOfResource
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: mandatory_if_available
+    obligation_code: MA
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Je-li dostupný údaj o druhu obsahu jednotlivé stránky, zapisuje se do typeOfResource (MA). DMF pro tuto úroveň uvádí
+        hodnoty text, still image, notated music a cartographic.
+    requirement:
+      presence: required
+      cardinality:
+        min: 1
+        max: null
+      allowed_values:
+        - text
+        - still image
+        - notated music
+        - cartographic
+      validations:
+        - type: custom
+          expression: Kontext je mods_record v přímém MODS záznamu jednotlivé stránky. Je-li dostupný údaj o druhu obsahu
+            jednotlivé stránky, zapisuje se do typeOfResource (MA). DMF pro tuto úroveň uvádí hodnoty text, still image, notated
+            music a cartographic. Dostupnost určit z obsahu stránky a zdrojových údajů, nikoli z existence cílového XML.
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: page
+        - field: element_role
+          operator: equals
+          value: mods_record
+        - field: page_content_type_available
+          operator: equals
+          value: true
+    source:
+      document: DMF Monografie
+      version: '2.3'
+      page: 73
+      section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — typeOfResource
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: '2.3'
+        page: 24
+        section: 7.4 METS část dmdSec — povinnosti rodiče a potomků; barevné kódování AACR2/RDA
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: '3.8'
+        page: null
+        section: modsDefinition; modsGroup; identifierDefinition; genreDefinition; typeOfResourceDefinition; noteDefinition;
+          physicalDescriptionDefinition; physicalDescriptionNote
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: Vizuálně ověřeny řádky a kódy povinností DMF 2.3 s. 72–73 a legenda s. 24; přečteny příslušné deklarace MODS
+        XSD 3.8. U identifikátorů doplněna kapitola 4 s. 9, u druhů stran PPM 2.4 s. 8 a vizuálně tabulka s. 14. Ověření přepisu
+        není potvrzením správnosti celého SIP.
+    interpretation:
+      cs: Dostupnost údaje se posuzuje z popisované stránky a zdrojového popisu, nikoli z existence cílového typeOfResource.
+        Jde o obsah stránky, ne formát obrazového souboru. Hodnota se nepřebírá automaticky ze záznamu svazku nebo jeho MARC
+        LDR. Tyto čtyři hodnoty stanoví DMF; XSD 3.8 je pro typeOfResource nevymezuje jako uzavřenou enumeraci. Rozsah je
+        přímý MODS záznam PAGE v hlavním METS; nevztahuje se automaticky na svazek, relatedItem ani jinou úroveň. Kardinalita
+        platí v uvedeném rodiči a nepřebírá počet výskytů z ukázky. Kontext rodiče se určuje nezávisle na přítomnosti nebo
+        správné hodnotě kontrolovaného potomka; neurčená role není splněním kontroly. Custom kontroly jsou deklarativní, registr
+        je nad SIP nespouští.
+    examples:
+      - id: sip-mods-page-resource-type-0001
+        title:
+          cs: Druh obsahu jednotlivé stránky — stránka 0001 vzorového SIP
+        language: xml
+        kind: source_excerpt
+        code: <mods:typeOfResource xmlns:mods="http://www.loc.gov/mods/v3">text</mods:typeOfResource>
+        note:
+          cs: Doslovný výřez MODSMD_PAGE_0001 (MODS 3.8, DMF 2.3 deklarována v info.xml). První stránka obsahuje right a genre
+            type=titlePage s textem reprePage; čtvrtá left a genre type=normalPage s textem page. Výřez dokládá uložené hodnoty,
+            nikoli správnost přidělení UUID, reprezentativnosti nebo shodu s obrazem předlohy. Nejde o potvrzení celého SIP.
+        source:
+          document: Vzorový SIP monografie 75faba8d-c629-11f0-8950-12e8557df20e
+          version: DMF Monografie 2.3 (deklarováno v info.xml)
+          page: null
+          section: Hlavní METS — MODS stránky 0001, typeOfResource
+          url: https://owncloud.cesnet.cz/index.php/s/5ZXf1zfDQYiLgSl/download
+        file_path: mets_75faba8d-c629-11f0-8950-12e8557df20e.xml
+        file_sha256: 7dcc4fe0de7f5eb1f9ea2eb260329957f956657fe5bf6b030fee1807e5741473
+        source_xpath: /mets:mets/mets:dmdSec[@ID="MODSMD_PAGE_0001"]/mets:mdWrap/mets:xmlData/mods:mods/mods:typeOfResource
+        namespaces:
+          mets: http://www.loc.gov/METS/
+          mods: http://www.loc.gov/mods/v3
+        checked_on: '2026-11-05'
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-GENRE-TYPE

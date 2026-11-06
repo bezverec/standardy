@@ -2321,3 +2321,24 @@ entities:
       date: '2026-11-05'
       reference: Ověřeny deklarace, textové typy, atributy a opakovatelnost MODS XSD 3.8; národní povinnosti jsou
         vedeny samostatně.
+  - id: MODS-GENRE-TYPE
+    type: attribute
+    version: '3.8'
+    name: genre/@type
+    namespace: http://www.loc.gov/mods/v3
+    title:
+      cs: Typ žánrového označení
+    definition:
+      cs: Atribut type v genreDefinition je nepovinný xs:string bez výčtu hodnot. XSD nerozděluje obsah genre na národní page/reprePage
+        a nepředepisuje typy stran na tomto atributu; tyto významy stanoví národní pravidla.
+    status: normative
+    source:
+      document: MODS XML Schema
+      version: '3.8'
+      page: null
+      section: genreDefinition / @type
+      url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-05'
+      reference: 'Ověřena deklarace atributu type v genreDefinition MODS XSD 3.8: xs:string, bez use=required a bez enumerace.'

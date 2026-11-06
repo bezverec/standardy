@@ -34,8 +34,8 @@ describe("context-aware comparison foundation", () => {
     }
     expect(result.unresolved_context.left).toHaveLength(0);
     expect(result.unresolved_context.right).toHaveLength(0);
-    expect(result.unmapped.left).toHaveLength(297);
-    expect(result.unmapped.right).toHaveLength(303);
+    expect(result.unmapped.left).toHaveLength(305);
+    expect(result.unmapped.right).toHaveLength(311);
     expect(result.unmapped.right.map((rule) => rule.rule_id)).toContain("NDK-MONO-MODS-SINGLE-ORIGIN-PRIMARY-EVENT");
   });
 
