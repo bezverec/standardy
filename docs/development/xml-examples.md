@@ -29,6 +29,8 @@ Otisk SHA-256 identifikuje konkrétní soubor. Neprokazuje autorství ani správ
 
 ## Důležité příklady
 
+U [názvových údajů stránky](mods-page-titles.md) chybí ve všech 16 stránkových záznamech vzorového SIP přímé `titleInfo`. Název převzatý ze záznamu svazku by měl jiný rozsah. Počet zdrojových výřezů proto tato sada nezvyšuje.
+
 - [Identifikace a charakteristiky stránky MODS](mods-page-characteristics.md) přidávají devět výřezů u šesti pravidel: UUID a typ uuid, right/left, genre s textem reprePage/page a typem titlePage/normalPage, typeOfResource=text. Fyzický popis chybí u všech 16 stránek vzoru, singlePage se také nevyskytuje; pro tyto případy nejsou zdrojové ukázky vytvořeny. Ověřeno proti XML 5. 11. 2026, nikoli proti obrazu předlohy.
 
 - [Paginace a pořadí strany MODS](mods-page-pagination.md) přidávají dvanáct výřezů u dvanácti pravidel. První part stránky má type=titlePage, číslo a start=[1]; druhý part bez type má detail/pageIndex s číslem 1. Závorky se neodstraňují a pořadí skenu se nezaměňuje s paginací. Ověřeno proti XML 5. 11. 2026; předloha a správnost dopočítání tím potvrzeny nejsou.

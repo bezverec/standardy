@@ -1,0 +1,101 @@
+schema_version: '1.0'
+kind: rule
+id: NDK-MONO-MODS-PAGE-TITLE-ABSENT
+title:
+  cs: Vynechání názvu stránky bez nadpisu či názvu
+national_standard:
+  id: ndk-monograph
+versions:
+  - version: '2.3'
+    status: normative
+    target:
+      entity: MODS-TITLE
+    relation_to_target:
+      type: restricts
+    category: metadata/mods-page-titles
+    cataloguing_rules:
+      - aacr2
+      - rda
+    cataloguing_scope:
+      applicability: applicable
+      reviewed_on: '2026-11-06'
+      note:
+        cs: Jde o bibliografický popis názvu jednotlivé stránky. Řádek na s. 72 je uveden černým písmem. Podle legendy
+          na s. 24 se tento zápis řídí stejným předpisem pro AACR2 i RDA.
+      sources:
+        - document: DMF Monografie
+          version: '2.3'
+          page: 72
+          section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — titleInfo / title — věta o nepoužití
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+        - document: DMF Monografie
+          version: '2.3'
+          page: 24
+          section: 7.4 METS část dmdSec — povinnosti uvnitř použitého rodiče a rozlišení AACR2/RDA
+          url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    obligation: forbidden
+    obligation_source: prose
+    non_use:
+      basis: explicit
+      note:
+        cs: Druhá věta řádku title výslovně požaduje vynechání při absenci názvu na předloze. Tabulkový kód RA patří
+          doporučení zapsat dostupný nadpis nebo název.
+    object_types:
+      vocabulary: NDK-OBJECT-TYPES
+      values:
+        - monograph
+    normative_requirement:
+      cs: Pokud daná stránka neobsahuje nadpis ani název, element title se v jejím titleInfo vynechá.
+    requirement:
+      presence: forbidden
+      cardinality:
+        min: 0
+        max: 0
+      validations:
+        - type: custom
+          expression: V použitém titleInfo stránky ověřit nulový počet přímých title, včetně prázdných. Podmínku
+            posoudit z předlohy nezávisle na testovaném elementu.
+    condition:
+      all:
+        - field: object_type
+          operator: equals
+          value: monograph
+        - field: document_role
+          operator: equals
+          value: main_mets
+        - field: bibliographic_level
+          operator: equals
+          value: page
+        - field: element_role
+          operator: equals
+          value: mods_page_titleinfo
+        - field: page_heading_available
+          operator: equals
+          value: false
+    source:
+      document: DMF Monografie
+      version: '2.3'
+      page: 72
+      section: 7.4.1.6 Pole MODS a DC pro jednotlivou stranu — titleInfo / title — věta o nepoužití
+      url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+    references:
+      - document: DMF Monografie
+        version: '2.3'
+        page: 24
+        section: 7.4 METS část dmdSec — povinnosti uvnitř použitého rodiče a rozlišení AACR2/RDA
+        url: https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_monografie_2.3_final.pdf
+      - document: MODS XML Schema
+        version: '3.8'
+        page: null
+        section: modsGroup, titleInfoDefinition a deklarace title, subTitle a nonSort
+        url: https://www.loc.gov/standards/mods/v3/mods-3-8.xsd
+    verification:
+      status: verified
+      date: '2026-11-06'
+      reference: Ověřen řádek tabulky DMF 2.3 na s. 72, legenda na s. 24 a odpovídající deklarace MODS XSD 3.8.
+    interpretation:
+      cs: Tato větev vyžaduje potvrzenou absenci na předloze. Neprověřenou dostupnost nelze vyhodnotit jako zápornou.
+        Výslovný pokyn platí pro title, nikoli pro všechny ostatní děti titleInfo.
+relations:
+  - type: related_to
+    target: NDK-MONO-MODS-PAGE-TITLE
